@@ -1,3 +1,4 @@
+/* eslint-disable  */
 const scriptFilename = 'OidcTrustedDomains.js'; /* global trustedDomains */
 this.importScripts(scriptFilename);
 

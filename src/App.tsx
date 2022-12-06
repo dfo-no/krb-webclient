@@ -1,7 +1,5 @@
 import React, { ReactElement } from 'react';
 import { CssBaseline } from '@mui/material';
-import { MsalProvider } from '@azure/msal-react';
-import { PublicClientApplication } from '@azure/msal-browser';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import {
   ApplicationInsights,
@@ -25,7 +23,6 @@ import SpecModule from './pages/SpecEditor/SpecModule';
 import styles from './App.module.scss';
 import WorkbenchModule from './pages/Workbench/WorkbenchModule';
 import { HeaderContainer } from './components/Header/HeaderContext';
-import { msalConfig } from './authentication/authConfig';
 import Breadcrumbs from './components/Breadcrumbs/Breadcrumbs';
 import Footer from './Footer/Footer';
 import {
@@ -37,7 +34,7 @@ import {
 } from './common/PathConstants';
 
 const configuration = {
-  client_id: 'frontend',
+  client_id: 'frontend', // Utils.ensure(process.env.REACT_APP_CLIENTID) //TODO: Oppdater i GitHub secrets. Kanskje fallback til frontend? Fiks feilmelding for den her...!
   redirect_uri: window.location.origin + '/authentication/callback',
   silent_redirect_uri:
     window.location.origin + '/authentication/silent-callback', // Optional activate silent-signin that use cookies between OIDC server and client javascript to restore the session
@@ -78,8 +75,6 @@ appInsights.addTelemetryInitializer((env: ITelemetryItem) => {
   env.data.environment = process.env.REACT_APP_APPLICATION_INSIGHTS_ENVIRONMENT;
 });
 
-const msalInstance = new PublicClientApplication(msalConfig);
-
 function App(): ReactElement {
   const location = useLocation();
 
@@ -87,33 +82,28 @@ function App(): ReactElement {
 
   function renderContent(): ReactElement {
     return (
-      <OidcProvider configuration={configuration}>
-        <AppInsightsContext.Provider value={reactPlugin}>
-          <Switch>
-            <Route exact path="/">
-              <HomePage />
-            </Route>
-            <Route path={`/${WORKBENCH}`} component={WorkbenchModule} />
-            <Route path={`/${SPECIFICATION}`} component={SpecModule} />
-            <Route
-              path={`/${RESPONSE}/:responseId`}
-              component={ResponseModule}
-            />
-            <Route path={`/${EVALUATION}`} component={EvaluationModule} />
-            <Route
-              path={`/${PREFILLED_RESPONSE}`}
-              component={PrefilledResponseModule}
-            />
-          </Switch>
-        </AppInsightsContext.Provider>
-      </OidcProvider>
+      <AppInsightsContext.Provider value={reactPlugin}>
+        <Switch>
+          <Route exact path="/">
+            <HomePage />
+          </Route>
+          <Route path={`/${WORKBENCH}`} component={WorkbenchModule} />
+          <Route path={`/${SPECIFICATION}`} component={SpecModule} />
+          <Route path={`/${RESPONSE}/:responseId`} component={ResponseModule} />
+          <Route path={`/${EVALUATION}`} component={EvaluationModule} />
+          <Route
+            path={`/${PREFILLED_RESPONSE}`}
+            component={PrefilledResponseModule}
+          />
+        </Switch>
+      </AppInsightsContext.Provider>
     );
   }
 
   return (
     <div>
-      <Theme>
-        <MsalProvider instance={msalInstance}>
+      <OidcProvider configuration={configuration}>
+        <Theme>
           <CssBaseline />
           <AlertList />
           <HeaderContainer.Provider>
@@ -126,8 +116,8 @@ function App(): ReactElement {
               {isHomePage && <Footer />}
             </div>
           </HeaderContainer.Provider>
-        </MsalProvider>
-      </Theme>
+        </Theme>
+      </OidcProvider>
     </div>
   );
 }
