@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useOidc } from '@axa-fr/react-oidc';
 
 import css from './HomePage.module.scss';
 import HomeDisplayList from './HomeDisplayList';
@@ -14,6 +15,7 @@ import { WORKBENCH } from '../../common/PathConstants';
 export default function HomePage(): React.ReactElement {
   const { t } = useTranslation();
   const [selectedBank, setSelectedBank] = useState<IBank | null>(null);
+  const { isAuthenticated } = useOidc();
 
   const [latestPublishedProjects, setLatestPublishedProjects] = useState<
     IBank[]
@@ -57,12 +59,14 @@ export default function HomePage(): React.ReactElement {
             />
           </div>
           <div className={classnames(css.Column, css.Cards)}>
-            <div className={classnames(css.Card, css.Primary)}>
-              <Link to={`/${WORKBENCH}`}>
-                <label>{t('common.Workbench')}</label>
-                <span>{t('HomePage.Create projects')}</span>
-              </Link>
-            </div>
+            {isAuthenticated && (
+              <div className={classnames(css.Card, css.Primary)}>
+                <Link to={`/${WORKBENCH}`}>
+                  <label>{t('common.Workbench')}</label>
+                  <span>{t('HomePage.Create projects')}</span>
+                </Link>
+              </div>
+            )}
             <HomePageUpload
               selectedBank={selectedBank}
               setSelectedBank={setSelectedBank}
