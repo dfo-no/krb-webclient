@@ -32,11 +32,11 @@ export type paths = {
       };
     };
   };
-  "/api/v1/projects/{projcetRef}": {
+  "/api/v1/projects/{projectRef}": {
     get: {
       parameters: {
         path: {
-          projcetRef: string;
+          projectRef: string;
         };
       };
       responses: {
@@ -51,7 +51,7 @@ export type paths = {
     put: {
       parameters: {
         path: {
-          projcetRef: string;
+          projectRef: string;
         };
       };
       requestBody?: {
@@ -71,7 +71,7 @@ export type paths = {
     delete: {
       parameters: {
         path: {
-          projcetRef: string;
+          projectRef: string;
         };
       };
       responses: {
@@ -903,7 +903,7 @@ export type components = {
       requirementText?: string;
       instruction?: string;
       useProduct?: boolean;
-      useSpesification?: boolean;
+      useSpecification?: boolean;
       useQualification?: boolean;
     };
   };
