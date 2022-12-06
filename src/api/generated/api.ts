@@ -268,7 +268,7 @@ export interface RequirementVariantForm {
      * @type {boolean}
      * @memberof RequirementVariantForm
      */
-    'useSpesification'?: boolean;
+    'useSpecification'?: boolean;
     /**
      * 
      * @type {boolean}
@@ -2120,15 +2120,15 @@ export const ProjectResourceApiAxiosParamCreator = function (configuration?: Con
         },
         /**
          * 
-         * @param {string} projcetRef 
+         * @param {string} projectRef 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1ProjectsProjcetRefDelete: async (projcetRef: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'projcetRef' is not null or undefined
-            assertParamExists('apiV1ProjectsProjcetRefDelete', 'projcetRef', projcetRef)
-            const localVarPath = `/api/v1/projects/{projcetRef}`
-                .replace(`{${"projcetRef"}}`, encodeURIComponent(String(projcetRef)));
+        apiV1ProjectsProjectRefDelete: async (projectRef: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'projectRef' is not null or undefined
+            assertParamExists('apiV1ProjectsProjectRefDelete', 'projectRef', projectRef)
+            const localVarPath = `/api/v1/projects/{projectRef}`
+                .replace(`{${"projectRef"}}`, encodeURIComponent(String(projectRef)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2157,15 +2157,15 @@ export const ProjectResourceApiAxiosParamCreator = function (configuration?: Con
         },
         /**
          * 
-         * @param {string} projcetRef 
+         * @param {string} projectRef 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1ProjectsProjcetRefGet: async (projcetRef: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'projcetRef' is not null or undefined
-            assertParamExists('apiV1ProjectsProjcetRefGet', 'projcetRef', projcetRef)
-            const localVarPath = `/api/v1/projects/{projcetRef}`
-                .replace(`{${"projcetRef"}}`, encodeURIComponent(String(projcetRef)));
+        apiV1ProjectsProjectRefGet: async (projectRef: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'projectRef' is not null or undefined
+            assertParamExists('apiV1ProjectsProjectRefGet', 'projectRef', projectRef)
+            const localVarPath = `/api/v1/projects/{projectRef}`
+                .replace(`{${"projectRef"}}`, encodeURIComponent(String(projectRef)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2194,16 +2194,16 @@ export const ProjectResourceApiAxiosParamCreator = function (configuration?: Con
         },
         /**
          * 
-         * @param {string} projcetRef 
+         * @param {string} projectRef 
          * @param {ProjectForm} [projectForm] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1ProjectsProjcetRefPut: async (projcetRef: string, projectForm?: ProjectForm, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'projcetRef' is not null or undefined
-            assertParamExists('apiV1ProjectsProjcetRefPut', 'projcetRef', projcetRef)
-            const localVarPath = `/api/v1/projects/{projcetRef}`
-                .replace(`{${"projcetRef"}}`, encodeURIComponent(String(projcetRef)));
+        apiV1ProjectsProjectRefPut: async (projectRef: string, projectForm?: ProjectForm, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'projectRef' is not null or undefined
+            assertParamExists('apiV1ProjectsProjectRefPut', 'projectRef', projectRef)
+            const localVarPath = `/api/v1/projects/{projectRef}`
+                .replace(`{${"projectRef"}}`, encodeURIComponent(String(projectRef)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -2264,33 +2264,33 @@ export const ProjectResourceApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @param {string} projcetRef 
+         * @param {string} projectRef 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1ProjectsProjcetRefDelete(projcetRef: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1ProjectsProjcetRefDelete(projcetRef, options);
+        async apiV1ProjectsProjectRefDelete(projectRef: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1ProjectsProjectRefDelete(projectRef, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @param {string} projcetRef 
+         * @param {string} projectRef 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1ProjectsProjcetRefGet(projcetRef: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1ProjectsProjcetRefGet(projcetRef, options);
+        async apiV1ProjectsProjectRefGet(projectRef: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1ProjectsProjectRefGet(projectRef, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @param {string} projcetRef 
+         * @param {string} projectRef 
          * @param {ProjectForm} [projectForm] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1ProjectsProjcetRefPut(projcetRef: string, projectForm?: ProjectForm, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1ProjectsProjcetRefPut(projcetRef, projectForm, options);
+        async apiV1ProjectsProjectRefPut(projectRef: string, projectForm?: ProjectForm, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1ProjectsProjectRefPut(projectRef, projectForm, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2322,31 +2322,31 @@ export const ProjectResourceApiFactory = function (configuration?: Configuration
         },
         /**
          * 
-         * @param {string} projcetRef 
+         * @param {string} projectRef 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1ProjectsProjcetRefDelete(projcetRef: string, options?: any): AxiosPromise<void> {
-            return localVarFp.apiV1ProjectsProjcetRefDelete(projcetRef, options).then((request) => request(axios, basePath));
+        apiV1ProjectsProjectRefDelete(projectRef: string, options?: any): AxiosPromise<void> {
+            return localVarFp.apiV1ProjectsProjectRefDelete(projectRef, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {string} projcetRef 
+         * @param {string} projectRef 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1ProjectsProjcetRefGet(projcetRef: string, options?: any): AxiosPromise<void> {
-            return localVarFp.apiV1ProjectsProjcetRefGet(projcetRef, options).then((request) => request(axios, basePath));
+        apiV1ProjectsProjectRefGet(projectRef: string, options?: any): AxiosPromise<void> {
+            return localVarFp.apiV1ProjectsProjectRefGet(projectRef, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {string} projcetRef 
+         * @param {string} projectRef 
          * @param {ProjectForm} [projectForm] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1ProjectsProjcetRefPut(projcetRef: string, projectForm?: ProjectForm, options?: any): AxiosPromise<void> {
-            return localVarFp.apiV1ProjectsProjcetRefPut(projcetRef, projectForm, options).then((request) => request(axios, basePath));
+        apiV1ProjectsProjectRefPut(projectRef: string, projectForm?: ProjectForm, options?: any): AxiosPromise<void> {
+            return localVarFp.apiV1ProjectsProjectRefPut(projectRef, projectForm, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2381,36 +2381,36 @@ export class ProjectResourceApi extends BaseAPI {
 
     /**
      * 
-     * @param {string} projcetRef 
+     * @param {string} projectRef 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectResourceApi
      */
-    public apiV1ProjectsProjcetRefDelete(projcetRef: string, options?: AxiosRequestConfig) {
-        return ProjectResourceApiFp(this.configuration).apiV1ProjectsProjcetRefDelete(projcetRef, options).then((request) => request(this.axios, this.basePath));
+    public apiV1ProjectsProjectRefDelete(projectRef: string, options?: AxiosRequestConfig) {
+        return ProjectResourceApiFp(this.configuration).apiV1ProjectsProjectRefDelete(projectRef, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {string} projcetRef 
+     * @param {string} projectRef 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectResourceApi
      */
-    public apiV1ProjectsProjcetRefGet(projcetRef: string, options?: AxiosRequestConfig) {
-        return ProjectResourceApiFp(this.configuration).apiV1ProjectsProjcetRefGet(projcetRef, options).then((request) => request(this.axios, this.basePath));
+    public apiV1ProjectsProjectRefGet(projectRef: string, options?: AxiosRequestConfig) {
+        return ProjectResourceApiFp(this.configuration).apiV1ProjectsProjectRefGet(projectRef, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {string} projcetRef 
+     * @param {string} projectRef 
      * @param {ProjectForm} [projectForm] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof ProjectResourceApi
      */
-    public apiV1ProjectsProjcetRefPut(projcetRef: string, projectForm?: ProjectForm, options?: AxiosRequestConfig) {
-        return ProjectResourceApiFp(this.configuration).apiV1ProjectsProjcetRefPut(projcetRef, projectForm, options).then((request) => request(this.axios, this.basePath));
+    public apiV1ProjectsProjectRefPut(projectRef: string, projectForm?: ProjectForm, options?: AxiosRequestConfig) {
+        return ProjectResourceApiFp(this.configuration).apiV1ProjectsProjectRefPut(projectRef, projectForm, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
