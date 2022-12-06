@@ -37,12 +37,12 @@ import {
 } from './common/PathConstants';
 
 const configuration = {
-  client_id: 'interactive.public.short',
+  client_id: 'frontend',
   redirect_uri: window.location.origin + '/authentication/callback',
   silent_redirect_uri:
     window.location.origin + '/authentication/silent-callback', // Optional activate silent-signin that use cookies between OIDC server and client javascript to restore the session
-  scope: 'openid profile email api offline_access',
-  authority: 'https://krb-backend-auth.azurewebsites.net',
+  scope: 'openid profile email',
+  authority: 'https://krb-backend-auth.azurewebsites.net/realms/kravbank',
   service_worker_relative_url: '/OidcServiceWorker.js',
   service_worker_only: true,
 };
