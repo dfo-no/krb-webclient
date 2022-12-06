@@ -3,5 +3,4 @@
 .vscode
 build
 node_modules
-src/api/generated.ts
-src/models/*
+src/api/generated/*
