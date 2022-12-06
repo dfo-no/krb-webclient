@@ -11,7 +11,7 @@ import {
 } from '@microsoft/applicationinsights-react-js';
 import { createBrowserHistory } from 'history';
 import { Theme } from '@dfo-no/components.design.theme';
-import { OidcProvider } from '@axa-fr/react-oidc';
+import { OidcConfiguration, OidcProvider } from '@axa-fr/react-oidc';
 
 import AlertList from './components/Alert/AlertList';
 import EvaluationModule from './pages/Evaluation/EvaluationModule';
@@ -33,7 +33,7 @@ import {
   WORKBENCH,
 } from './common/PathConstants';
 
-const configuration = {
+const configuration: OidcConfiguration = {
   client_id: 'frontend', // Utils.ensure(process.env.REACT_APP_CLIENTID) //TODO: Oppdater i GitHub secrets. Kanskje fallback til frontend? Fiks feilmelding for den her...!
   redirect_uri: window.location.origin + '/authentication/callback',
   silent_redirect_uri:
