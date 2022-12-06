@@ -2,7 +2,10 @@ import { Typography } from '@mui/material/';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+// import 'whatwg-fetch';
+import { Fetcher } from 'openapi-typescript-fetch';
 
+import { paths } from '../../../api/generated';
 import Nexus from '../../../Nexus/Nexus';
 import ProjectService from '../../../Nexus/services/ProjectService';
 import theme from '../../../theme';
@@ -27,10 +30,25 @@ const NewProjectForm = ({ handleClose }: Props) => {
   const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
+  const fetcher = Fetcher.for<paths>();
+
+  fetcher.configure({
+    baseUrl: 'https://krb-backend-api.azurewebsites.net',
+    // init: {
+    //   headers: {
+    //     ...
+    // },
+    // },
+    // use: [...] // middlewares
+  });
+
+  const findProjects = fetcher.path('/api/v1/projects').method('get').create();
+  findProjects({}).then((projects) => console.log(projects));
 
   // TODO Should contain a defaultValue from options to fully control the Select
   const defaultValues = ProjectService.defaultProject();
   const [postProject] = usePostProjectMutation();
+
   const methods = useForm<IBank>({
     resolver: nexus.resolverService.postResolver(ModelType.bank),
     defaultValues,
