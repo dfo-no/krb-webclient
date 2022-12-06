@@ -90,6 +90,7 @@ export default class QuestionService {
             periodMin: 0,
             periodMax: 1,
             duration: 0,
+            weekdays: [],
             defaultDiscount: 1,
             dateScores: [],
           },

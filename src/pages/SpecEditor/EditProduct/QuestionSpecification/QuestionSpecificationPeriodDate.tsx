@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ChangeEvent, ReactElement, useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import { t } from 'i18next';
@@ -12,10 +12,15 @@ import DateCtrl from '../../../../FormProvider/DateCtrl';
 import DateUtils from '../../../../common/DateUtils';
 import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
 import UuidService from '../../../../Nexus/services/UuidService';
-import { IPeriodDateQuestion } from '../../../../Nexus/entities/IPeriodDateQuestion';
+import {
+  IPeriodDateQuestion,
+  WeekdayPair,
+  Weekdays,
+} from '../../../../Nexus/entities/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { DFOCheckbox } from '../../../../components/DFOCheckbox/DFOCheckbox';
 import ToolbarItem from '../../../../components/UI/Toolbar/ToolbarItem';
+import { WeekdaysCheckboxList } from '../../../../components/WeekdaysCheckboxList/WeekdaysCheckboxList';
 
 interface IProps {
   item: IPeriodDateQuestion;
@@ -24,6 +29,10 @@ interface IProps {
 const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
   const { control, formState, setValue } = useFormContext<IRequirementAnswer>();
   const [awardCriteria, setAwardCriteria] = useState(false);
+  const { fields: weekdays, append: appendWeekday } = useFieldArray({
+    control,
+    name: 'question.config.weekdays',
+  });
 
   const useFromBoundary = useWatch({
     name: 'question.config.fromBoundary',
@@ -65,6 +74,39 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
   }, [fields, awardCriteria, append]);
 
   useEffect(() => {
+    if (!weekdays.length && item.config.isPeriod) {
+      appendWeekday({
+        day: Weekdays.MONDAY,
+        isChecked: false,
+      });
+      appendWeekday({
+        day: Weekdays.TUESDAY,
+        isChecked: false,
+      });
+      appendWeekday({
+        day: Weekdays.WEDNESDAY,
+        isChecked: false,
+      });
+      appendWeekday({
+        day: Weekdays.THURSDAY,
+        isChecked: false,
+      });
+      appendWeekday({
+        day: Weekdays.FRIDAY,
+        isChecked: false,
+      });
+      appendWeekday({
+        day: Weekdays.SATURDAYS,
+        isChecked: false,
+      });
+      appendWeekday({
+        day: Weekdays.SUNDAY,
+        isChecked: false,
+      });
+    }
+  }, [weekdays, item.config.isPeriod, appendWeekday]);
+
+  useEffect(() => {
     if (
       awardCriteria &&
       useMinScore &&
@@ -103,6 +145,26 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
     setAwardCriteria((prev) => !prev);
   };
 
+  const [checked, setChecked] = useState<string[]>([]);
+
+  const handleCheck = (event: ChangeEvent<HTMLInputElement>, index: number) => {
+    let updatedList = [...checked];
+    if (event.target.checked) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      updatedList = [...checked, event.target.checked];
+    } else {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      updatedList.splice(checked.indexOf(event.target.checked), 1);
+    }
+    setChecked(updatedList);
+    setValue('question.config.weekdays.0', {
+      day: weekdays[index].day,
+      isChecked: event.target.checked,
+    });
+  };
+
   return (
     <div>
       <div className={css.QuestionDateAndTimePeriod}>
@@ -129,6 +191,23 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
             adornment={t('Days')}
             color={'var(--text-primary-color)'}
           />
+        )}
+        {item.config.isPeriod && (
+          <div className={css.WeekdaysContainer}>
+            <span>{t('Available weekdays')}</span>
+            <div className={css.WeekdaysContainer__checkboxes}>
+              {weekdays.map((weekday, index) => {
+                return (
+                  <WeekdaysCheckboxList
+                    key={weekday.id}
+                    name={`question.config.weekdays[${index}].isChecked`}
+                    label={weekday.day}
+                    onChange={(event) => handleCheck(event, index)}
+                  />
+                );
+              })}
+            </div>
+          </div>
         )}
         <div onClick={onCheckboxClick}>
           <DFOCheckbox

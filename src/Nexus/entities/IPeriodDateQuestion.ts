@@ -25,18 +25,50 @@ export interface IPeriodDateConfig extends IConfigBase {
   periodMin: number;
   periodMax: number;
   duration: number;
+  weekdays: WeekdayPair[];
   dateScores: DateScorePair[];
 }
 
 export interface DateScorePair {
-  id?: string;
+  id: string;
   date: string | null;
   score: number;
 }
 
+export interface WeekdayPair {
+  day: Weekdays;
+  isChecked: boolean;
+}
+
+export enum Weekdays {
+  SUNDAY = 'S',
+  MONDAY = 'M',
+  TUESDAY = 'TI',
+  WEDNESDAY = 'O',
+  THURSDAY = 'TO',
+  FRIDAY = 'F',
+  SATURDAYS = 'L',
+}
+
+const WorkbenchWeekdayPairSchema = CustomJoi.object().keys({
+  day: CustomJoi.validateOptionalTextNotRequired(),
+  isChecked: CustomJoi.validateOptionalBoolean(),
+});
+
+const WeekdayPairSchema = CustomJoi.object().keys({
+  day: CustomJoi.validateOptionalTextNotRequired(),
+  isChecked: CustomJoi.validateOptionalBoolean(),
+});
+
 const WorkbenchDateScoreSchema = CustomJoi.object().keys({
   score: CustomJoi.validateScore(),
   date: CustomJoi.validateEmptyDate(),
+});
+
+const DateScoreSchema = CustomJoi.object().keys({
+  id: CustomJoi.validateId(),
+  date: CustomJoi.validateDateScore(),
+  score: CustomJoi.validateScore(),
 });
 
 export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
@@ -48,14 +80,9 @@ export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
     periodMin: CustomJoi.validateNumber(),
     periodMax: CustomJoi.validateNumber(),
     duration: CustomJoi.validateDuration(),
+    weekdays: CustomJoi.validateNotRequiredArray(WorkbenchWeekdayPairSchema),
     dateScores: CustomJoi.validateArray(WorkbenchDateScoreSchema),
   }),
-});
-
-const DateScoreSchema = CustomJoi.object().keys({
-  id: CustomJoi.validateId(),
-  date: CustomJoi.validateDateScore(),
-  score: CustomJoi.validateScore(),
 });
 
 export const PeriodDateAnswerSchema = PeriodDateWorkbenchSchema.keys({
@@ -66,6 +93,7 @@ export const PeriodDateAnswerSchema = PeriodDateWorkbenchSchema.keys({
     periodMin: CustomJoi.validatePeriodMin(),
     periodMax: CustomJoi.validatePeriodMax(),
     duration: CustomJoi.validateDuration(),
+    weekdays: CustomJoi.validateNotRequiredArray(WeekdayPairSchema),
     dateScores: CustomJoi.validateDateScoreValues(DateScoreSchema),
   }),
   answer: CustomJoi.object().keys({
