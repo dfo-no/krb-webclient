@@ -13,6 +13,7 @@ import {
 } from '@microsoft/applicationinsights-react-js';
 import { createBrowserHistory } from 'history';
 import { Theme } from '@dfo-no/components.design.theme';
+import { OidcProvider } from '@axa-fr/react-oidc';
 
 import AlertList from './components/Alert/AlertList';
 import EvaluationModule from './pages/Evaluation/EvaluationModule';
@@ -34,6 +35,17 @@ import {
   SPECIFICATION,
   WORKBENCH,
 } from './common/PathConstants';
+
+const configuration = {
+  client_id: 'interactive.public.short',
+  redirect_uri: window.location.origin + '/authentication/callback',
+  silent_redirect_uri:
+    window.location.origin + '/authentication/silent-callback', // Optional activate silent-signin that use cookies between OIDC server and client javascript to restore the session
+  scope: 'openid profile email api offline_access',
+  authority: 'https://krb-backend-auth.azurewebsites.net',
+  service_worker_relative_url: '/OidcServiceWorker.js',
+  service_worker_only: true,
+};
 
 const browserHistory = createBrowserHistory();
 const reactPlugin = new ReactPlugin();
@@ -75,21 +87,26 @@ function App(): ReactElement {
 
   function renderContent(): ReactElement {
     return (
-      <AppInsightsContext.Provider value={reactPlugin}>
-        <Switch>
-          <Route exact path="/">
-            <HomePage />
-          </Route>
-          <Route path={`/${WORKBENCH}`} component={WorkbenchModule} />
-          <Route path={`/${SPECIFICATION}`} component={SpecModule} />
-          <Route path={`/${RESPONSE}/:responseId`} component={ResponseModule} />
-          <Route path={`/${EVALUATION}`} component={EvaluationModule} />
-          <Route
-            path={`/${PREFILLED_RESPONSE}`}
-            component={PrefilledResponseModule}
-          />
-        </Switch>
-      </AppInsightsContext.Provider>
+      <OidcProvider configuration={configuration}>
+        <AppInsightsContext.Provider value={reactPlugin}>
+          <Switch>
+            <Route exact path="/">
+              <HomePage />
+            </Route>
+            <Route path={`/${WORKBENCH}`} component={WorkbenchModule} />
+            <Route path={`/${SPECIFICATION}`} component={SpecModule} />
+            <Route
+              path={`/${RESPONSE}/:responseId`}
+              component={ResponseModule}
+            />
+            <Route path={`/${EVALUATION}`} component={EvaluationModule} />
+            <Route
+              path={`/${PREFILLED_RESPONSE}`}
+              component={PrefilledResponseModule}
+            />
+          </Switch>
+        </AppInsightsContext.Provider>
+      </OidcProvider>
     );
   }
 
