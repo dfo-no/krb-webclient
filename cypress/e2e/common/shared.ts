@@ -70,7 +70,7 @@ Then('Ser jeg {string} knappen er inaktiv', (value: string) => {
 });
 
 Then('Jeg klikker på {string} knapp for å lagre', (button: string) => {
-  cy.get('button').contains(button).click();
+  cy.get('button').contains(button).click({waitForAnimations: true});
 });
 
 Then('Ser jeg url inneholder {string}', (url: string) => {
