@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { FormControl, FormLabel } from '@mui/material';
 import { Controller, useFormContext } from 'react-hook-form';
 import { get } from 'lodash';
 
 import css from './WeekdaysCheckboxList.module.scss';
+import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 
 interface IProps {
   name: string;
   label: string;
   checked?: boolean;
-  onChange?: (event: any) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const WeekdaysCheckboxList = ({
@@ -20,7 +21,7 @@ export const WeekdaysCheckboxList = ({
 }: IProps): React.ReactElement => {
   const {
     formState: { errors },
-  } = useFormContext();
+  } = useFormContext<IRequirementAnswer>();
   return (
     <FormControl error={!!get(errors, name)}>
       <Controller

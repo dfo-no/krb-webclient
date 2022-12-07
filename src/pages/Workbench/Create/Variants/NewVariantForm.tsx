@@ -94,7 +94,6 @@ function NewVariantForm({
                 {t('Save')}
               </Button>
             </Box>
-            {console.log(methods.formState.errors)}
             <GeneralErrorMessage errors={methods.formState.errors} />
           </Box>
         </form>
