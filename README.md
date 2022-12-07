@@ -70,3 +70,18 @@ To restart it in GitHub Actions, go to https://github.com/dfo-no/krb-webclient/a
 ... and restart just the job (i.e. part of the workflow) that failed:
 
 ![](docs/images/cypress-github-actions-restart-job.png)
+
+### Keycloak
+
+Keycloak is the OpenID Connect (OIDC) - an authentication and authorization protocol. We're using it as an identity and Access Management (IAM) tool for kravbank. To simplify and secure the process of requesting access from the Keycloak server, we're using react-oidc as a service worker.
+
+The OidcConfiguration uses the frontend client id, within the keycloak kravbank realm.
+
+Keycloak is live at https://krb-backend-auth.azurewebsites.net
+
+Log in to the administration console to manage users, roles, realm settings, client settings and more.
+
+Read more from Kravbank confluence, keycloak docs and react-oidc repo:
+https://dfo-no.atlassian.net/wiki/spaces/KRB/pages/2562654209/Keycloak
+https://www.keycloak.org/docs/latest/securing_apps/index.html
+https://github.com/AxaGuilDEv/react-oidc
