@@ -89,6 +89,7 @@ export default class QuestionService {
             isPeriod: false,
             periodMin: 0,
             periodMax: 1,
+            duration: 0,
             defaultDiscount: 1,
             dateScores: [],
           },
