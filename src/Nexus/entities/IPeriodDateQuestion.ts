@@ -25,7 +25,7 @@ export interface IPeriodDateConfig extends IConfigBase {
   periodMin: number;
   periodMax: number;
   duration: number;
-  weekdays: WeekdayPair[];
+  weekdays: WeekdayValues[];
   dateScores: DateScorePair[];
 }
 
@@ -35,7 +35,7 @@ export interface DateScorePair {
   score: number;
 }
 
-export interface WeekdayPair {
+export interface WeekdayValues {
   day: Weekdays;
   isChecked: boolean;
 }
