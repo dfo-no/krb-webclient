@@ -32,6 +32,7 @@ Feature: Spesifikasjon
     And Jeg skriver "Test beskrivelse til produkt" i feltet "Beskrivelse"
     And Jeg skriver 2 i feltet "Antall"
     Then Jeg klikker på "Lagre" knapp for å lagre
+    And Jeg venter litt
     And Jeg klikker på "Lagre produkt" knapp for å lagre
 
   Scenario: Jeg kan laste ned spesifikasjon

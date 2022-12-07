@@ -69,6 +69,12 @@ Then('Ser jeg {string} knappen er inaktiv', (value: string) => {
   cy.get('button').contains(value).should('be.disabled');
 });
 
+
+Then('Jeg venter litt', () => {
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(200);
+});
+
 Then('Jeg klikker på {string} knapp for å lagre', (button: string) => {
   cy.get('button').contains(button).click();
 });

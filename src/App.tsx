@@ -1,7 +1,5 @@
 import React, { ReactElement } from 'react';
 import { CssBaseline } from '@mui/material';
-import { MsalProvider } from '@azure/msal-react';
-import { PublicClientApplication } from '@azure/msal-browser';
 import { Route, Switch, useLocation } from 'react-router-dom';
 import {
   ApplicationInsights,
@@ -13,6 +11,7 @@ import {
 } from '@microsoft/applicationinsights-react-js';
 import { createBrowserHistory } from 'history';
 import { Theme } from '@dfo-no/components.design.theme';
+import { OidcConfiguration, OidcProvider } from '@axa-fr/react-oidc';
 
 import AlertList from './components/Alert/AlertList';
 import EvaluationModule from './pages/Evaluation/EvaluationModule';
@@ -24,7 +23,6 @@ import SpecModule from './pages/SpecEditor/SpecModule';
 import styles from './App.module.scss';
 import WorkbenchModule from './pages/Workbench/WorkbenchModule';
 import { HeaderContainer } from './components/Header/HeaderContext';
-import { msalConfig } from './authentication/authConfig';
 import Breadcrumbs from './components/Breadcrumbs/Breadcrumbs';
 import Footer from './Footer/Footer';
 import {
@@ -34,6 +32,17 @@ import {
   SPECIFICATION,
   WORKBENCH,
 } from './common/PathConstants';
+
+const configuration: OidcConfiguration = {
+  client_id: 'frontend', // Utils.ensure(process.env.REACT_APP_CLIENTID) //TODO: Oppdater i GitHub secrets. Kanskje fallback til frontend? Fiks feilmelding for den her...!
+  redirect_uri: window.location.origin + '/authentication/callback',
+  silent_redirect_uri:
+    window.location.origin + '/authentication/silent-callback', // Optional activate silent-signin that use cookies between OIDC server and client javascript to restore the session
+  scope: 'openid profile email',
+  authority: 'https://krb-backend-auth.azurewebsites.net/realms/kravbank',
+  service_worker_relative_url: '/OidcServiceWorker.js',
+  service_worker_only: true,
+};
 
 const browserHistory = createBrowserHistory();
 const reactPlugin = new ReactPlugin();
@@ -66,8 +75,6 @@ appInsights.addTelemetryInitializer((env: ITelemetryItem) => {
   env.data.environment = process.env.REACT_APP_APPLICATION_INSIGHTS_ENVIRONMENT;
 });
 
-const msalInstance = new PublicClientApplication(msalConfig);
-
 function App(): ReactElement {
   const location = useLocation();
 
@@ -95,8 +102,8 @@ function App(): ReactElement {
 
   return (
     <div>
-      <Theme>
-        <MsalProvider instance={msalInstance}>
+      <OidcProvider configuration={configuration}>
+        <Theme>
           <CssBaseline />
           <AlertList />
           <HeaderContainer.Provider>
@@ -109,8 +116,8 @@ function App(): ReactElement {
               {isHomePage && <Footer />}
             </div>
           </HeaderContainer.Provider>
-        </MsalProvider>
-      </Theme>
+        </Theme>
+      </OidcProvider>
     </div>
   );
 }
