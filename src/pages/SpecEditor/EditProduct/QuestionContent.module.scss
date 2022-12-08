@@ -186,19 +186,4 @@
   .CheckboxLabel {
     margin-left: var(--tiny-gap);
   }
-
-  .WeekdaysContainer {
-    display: flex;
-    flex-direction: column;
-    gap: var(--tiny-gap);
-
-    span {
-      font-weight: var(--font-weight-semibold);
-    }
-
-    &__checkboxes {
-      display: flex;
-      gap: var(--small-gap);
-    }
-  }
 }

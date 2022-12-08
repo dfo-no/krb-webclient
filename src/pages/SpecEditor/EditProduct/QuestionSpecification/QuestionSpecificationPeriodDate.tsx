@@ -1,4 +1,4 @@
-import React, { ChangeEvent, ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import { t } from 'i18next';
@@ -12,15 +12,11 @@ import DateCtrl from '../../../../FormProvider/DateCtrl';
 import DateUtils from '../../../../common/DateUtils';
 import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
 import UuidService from '../../../../Nexus/services/UuidService';
-import {
-  IPeriodDateQuestion,
-  Weekdays,
-} from '../../../../Nexus/entities/IPeriodDateQuestion';
+import { IPeriodDateQuestion } from '../../../../Nexus/entities/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { DFOCheckbox } from '../../../../components/DFOCheckbox/DFOCheckbox';
 import ToolbarItem from '../../../../components/UI/Toolbar/ToolbarItem';
 import { WeekdaysCheckboxList } from '../../../../components/WeekdaysCheckboxList/WeekdaysCheckboxList';
-
 interface IProps {
   item: IPeriodDateQuestion;
 }
@@ -28,45 +24,6 @@ interface IProps {
 const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
   const { control, formState, setValue } = useFormContext<IRequirementAnswer>();
   const [awardCriteria, setAwardCriteria] = useState(false);
-
-  const { fields: weekdays } = useFieldArray({
-    control,
-    name: 'question.config.weekdays',
-  });
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const weekdaysData = [
-    {
-      day: Weekdays.MONDAY,
-      isChecked: false,
-    },
-    {
-      day: Weekdays.TUESDAY,
-      isChecked: false,
-    },
-    {
-      day: Weekdays.WEDNESDAY,
-      isChecked: false,
-    },
-    {
-      day: Weekdays.THURSDAY,
-      isChecked: false,
-    },
-    {
-      day: Weekdays.FRIDAY,
-      isChecked: false,
-    },
-    {
-      day: Weekdays.SATURDAYS,
-      isChecked: false,
-    },
-    {
-      day: Weekdays.SUNDAY,
-      isChecked: false,
-    },
-  ];
-
-  const [data, setData] = useState(weekdaysData);
 
   const useFromBoundary = useWatch({
     name: 'question.config.fromBoundary',
@@ -142,23 +99,8 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
     }
   }, [fields]);
 
-  useEffect(() => {
-    const undefinedWeekday = () => {
-      return weekdays.find((weekday) => weekday.isChecked === undefined);
-    };
-    if ((!weekdays.length && item.config.isPeriod) || !!undefinedWeekday())
-      setValue('question.config.weekdays', data);
-  }, [weekdays.length, item.config.isPeriod, setValue, data, weekdays]);
-
   const onCheckboxClick = (): void => {
     setAwardCriteria((prev) => !prev);
-  };
-
-  const handleCheck = (event: ChangeEvent<HTMLInputElement>, index: number) => {
-    const newData = [...data];
-    newData[index].isChecked = event.target.checked;
-    setData(newData);
-    setValue('question.config.weekdays', data);
   };
 
   return (
@@ -188,22 +130,11 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
               adornment={t('Days')}
               color={'var(--text-primary-color)'}
             />
-            <div className={css.WeekdaysContainer}>
-              <span>{t('Available weekdays')}</span>
-              <div className={css.WeekdaysContainer__checkboxes}>
-                {weekdays.map((weekday, index) => {
-                  return (
-                    <WeekdaysCheckboxList
-                      key={weekday.id}
-                      name={`question.config.weekdays[${index}].isChecked`}
-                      label={weekday.day}
-                      checked={weekday.isChecked}
-                      onChange={(event) => handleCheck(event, index)}
-                    />
-                  );
-                })}
-              </div>
-            </div>
+            <WeekdaysCheckboxList
+              item={item}
+              control={control}
+              setValue={setValue}
+            />
           </>
         )}
         <div onClick={onCheckboxClick}>

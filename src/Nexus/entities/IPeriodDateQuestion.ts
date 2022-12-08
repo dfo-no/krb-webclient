@@ -6,7 +6,7 @@ import {
   IQuestionBase,
   QuestionBaseSchema,
 } from './IQuestionBase';
-import { QuestionVariant } from '../enums';
+import { QuestionVariant, Weekdays } from '../enums';
 
 export interface IPeriodDateQuestion
   extends IQuestionBase<IPeriodDateAnswer, IPeriodDateConfig> {
@@ -36,26 +36,19 @@ export interface DateScorePair {
 }
 
 export interface WeekdayValues {
+  id: string;
   day: Weekdays;
   isChecked: boolean;
 }
 
-export enum Weekdays {
-  SUNDAY = 'S',
-  MONDAY = 'M',
-  TUESDAY = 'TI',
-  WEDNESDAY = 'O',
-  THURSDAY = 'TO',
-  FRIDAY = 'F',
-  SATURDAYS = 'L',
-}
-
-const WorkbenchWeekdayPairSchema = CustomJoi.object().keys({
+const WorkbenchWeekdayValuesSchema = CustomJoi.object().keys({
+  id: CustomJoi.validateId(),
   day: CustomJoi.validateOptionalTextNotRequired(),
   isChecked: CustomJoi.validateOptionalBoolean(),
 });
 
-const WeekdayPairSchema = CustomJoi.object().keys({
+const WeekdayValuesSchema = CustomJoi.object().keys({
+  id: CustomJoi.validateId(),
   day: CustomJoi.validateOptionalTextNotRequired(),
   isChecked: CustomJoi.validateOptionalBoolean(),
 });
@@ -80,7 +73,7 @@ export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
     periodMin: CustomJoi.validateNumber(),
     periodMax: CustomJoi.validateNumber(),
     duration: CustomJoi.validateDuration(),
-    weekdays: CustomJoi.validateNotRequiredArray(WorkbenchWeekdayPairSchema),
+    weekdays: CustomJoi.validateNotRequiredArray(WorkbenchWeekdayValuesSchema),
     dateScores: CustomJoi.validateArray(WorkbenchDateScoreSchema),
   }),
 });
@@ -93,7 +86,7 @@ export const PeriodDateAnswerSchema = PeriodDateWorkbenchSchema.keys({
     periodMin: CustomJoi.validatePeriodMin(),
     periodMax: CustomJoi.validatePeriodMax(),
     duration: CustomJoi.validateDuration(),
-    weekdays: CustomJoi.validateNotRequiredArray(WeekdayPairSchema),
+    weekdays: CustomJoi.validateNotRequiredArray(WeekdayValuesSchema),
     dateScores: CustomJoi.validateDateScoreValues(DateScoreSchema),
   }),
   answer: CustomJoi.object().keys({

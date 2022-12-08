@@ -2,6 +2,7 @@ import Utils from '../../common/Utils';
 import UuidService from './UuidService';
 import { QuestionType } from '../entities/QuestionType';
 import { QuestionVariant } from '../enums';
+import { weekdaysData } from '../entities/WeekdaysData';
 
 export default class QuestionService {
   UuidService = new UuidService();
@@ -90,7 +91,7 @@ export default class QuestionService {
             periodMin: 0,
             periodMax: 1,
             duration: 0,
-            weekdays: [],
+            weekdays: weekdaysData,
             defaultDiscount: 1,
             dateScores: [],
           },
