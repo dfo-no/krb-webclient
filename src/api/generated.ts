@@ -9,7 +9,11 @@ export type paths = {
     get: {
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": (components["schemas"]["ProjectForm"])[];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -41,7 +45,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": components["schemas"]["ProjectForm"];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -61,7 +69,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": components["schemas"]["ProjectForm"];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
