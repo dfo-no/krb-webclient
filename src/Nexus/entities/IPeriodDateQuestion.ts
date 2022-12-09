@@ -41,12 +41,6 @@ export interface WeekdayValues {
   isChecked: boolean;
 }
 
-const WorkbenchWeekdayValuesSchema = CustomJoi.object().keys({
-  id: CustomJoi.validateId(),
-  day: CustomJoi.validateOptionalTextNotRequired(),
-  isChecked: CustomJoi.validateOptionalBoolean(),
-});
-
 const WeekdayValuesSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
   day: CustomJoi.validateOptionalTextNotRequired(),
@@ -73,7 +67,7 @@ export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
     periodMin: CustomJoi.validateNumber(),
     periodMax: CustomJoi.validateNumber(),
     duration: CustomJoi.validateDuration(),
-    weekdays: CustomJoi.validateNotRequiredArray(WorkbenchWeekdayValuesSchema),
+    weekdays: CustomJoi.validateNotRequiredArray(WeekdayValuesSchema),
     dateScores: CustomJoi.validateArray(WorkbenchDateScoreSchema),
   }),
 });

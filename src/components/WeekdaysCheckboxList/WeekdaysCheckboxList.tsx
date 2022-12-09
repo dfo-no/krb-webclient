@@ -12,7 +12,6 @@ import { useTranslation } from 'react-i18next';
 import css from './WeekdaysCheckboxList.module.scss';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { weekdaysData } from '../../Nexus/entities/WeekdaysData';
-import UuidService from '../../Nexus/services/UuidService';
 import { IPeriodDateQuestion } from '../../Nexus/entities/IPeriodDateQuestion';
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -57,7 +56,7 @@ export const WeekdaysCheckboxList = ({
       setValue('question.config.weekdays', weekdays);
     }
     updateWeekdays(index, {
-      id: weekdaysData[index].id ?? new UuidService().generateId(),
+      id: weekdaysData[index].id,
       day: weekdaysData[index].day,
       isChecked: event.target.checked,
     });
