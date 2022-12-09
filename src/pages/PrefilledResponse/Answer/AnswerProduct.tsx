@@ -81,8 +81,7 @@ export default function AnswerProduct(): React.ReactElement {
         {product && !editingProduct && (
           <>
             <Typography variant="lgBold">{product?.title}</Typography>
-            {product.requirementAnswers.length === 0 &&
-              renderProductActionsToolbar()}
+            {renderProductActionsToolbar()}
             {renderProductInfoToolbar()}
             <Typography variant="md">{product?.description}</Typography>
           </>

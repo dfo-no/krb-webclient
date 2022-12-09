@@ -63,3 +63,14 @@ Then(
     );
   }
 );
+
+Then(
+    'Velger jeg Ja til å legge flere relaterte produkter',
+    () => {
+        cy.get('[type="radio"]').first().click();
+    }
+);
+
+Then('Velger jeg {string} som relaterte produkt', (value: string) => {
+    cy.get('[class*="Selection"]').contains(value).click();
+});
