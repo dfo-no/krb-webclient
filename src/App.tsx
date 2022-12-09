@@ -89,6 +89,7 @@ function App(): ReactElement {
             <HomePage />
           </Route>
           <Route path={`/${WORKBENCH}`} component={WorkbenchModule} />
+          <Route path={`/${WORKBENCH}_new`} component={WorkbenchModule} />
           <Route path={`/${SPECIFICATION}`} component={SpecModule} />
           <Route path={`/${RESPONSE}/:responseId`} component={ResponseModule} />
           <Route path={`/${EVALUATION}`} component={EvaluationModule} />
