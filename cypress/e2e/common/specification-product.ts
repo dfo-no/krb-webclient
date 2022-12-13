@@ -85,12 +85,12 @@ When(
   (label: string, date: number) => {
     if (label === 'Fra') {
       cy.get('[aria-label="Choose date"]').first().click({ force: true });
-      cy.contains(date).click();
+      cy.contains(date).click({ force: true });
     } else if (label === 'Til') {
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(500);
       cy.get('[aria-label="Choose date"]').last().click({ force: true });
-      cy.contains(date).click();
+      cy.contains(date).click({ force: true });
     }
   }
 );
