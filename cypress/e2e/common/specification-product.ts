@@ -79,6 +79,28 @@ Then('Ser jeg valgte krav er {int} av 7', (value: number) => {
   cy.get('[data-cy="chosen-requirements"]').contains(value);
 });
 
+When(
+  'Jeg velger {string} dato {int} for krav',
+  (label: string, date: number) => {
+    if (label === 'Fra') {
+      cy.get('[data-testid="CalendarIcon"]').first().click();
+      cy.contains(date).click();
+    } else if (label === 'Til') {
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(500);
+      cy.get('[data-testid="CalendarIcon"]').last().click();
+      cy.contains(date).click();
+    }
+  }
+);
+
+Then('Ser jeg {string} har verdi {string}', (text: string, value: string) => {
+  cy.get('[data-cy="chosen-configuration"]')
+    .contains(text)
+    .parent()
+    .contains(value);
+});
+
 Then('Jeg ser en {string}-merkelapp', (text: string) => {
   cy.get('[class*="Badge"]').contains(text);
 });

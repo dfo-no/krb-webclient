@@ -121,7 +121,7 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
         {item.config.isPeriod && (
           <HorizontalTextCtrl
             className={css.QuestionCriteria__Ctrl__inputCtrl}
-            label={t('Duration')}
+            label={t('Enter duration')}
             name={`question.config.duration`}
             defaultValue={0}
             placeholder={t('Value')}

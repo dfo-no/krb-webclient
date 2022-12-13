@@ -39,3 +39,13 @@ Feature: Spesifikasjonsprodukt
       And Jeg klikker på "Avbryt" knappen
       When Jeg klikker på "Velg variant" til produktkrav "Bekreftelse som informasjon"
       Then Jeg ser en "Informasjon"-merkelapp
+
+   Scenario: Jeg kan angi varighet for krav som har svartype datoperiode
+     Given Jeg åpner spesifikasjon "specification_all_answer_typer.pdf"
+     When Jeg redigerer produkt "Dato"
+     And Jeg klikker på "Velg variant" til produktkrav "Dato med periode som krav"
+     And Jeg velger "Fra" dato 10 for krav
+     And Jeg velger "Til" dato 19 for krav
+     And Jeg skriver 5 i feltet "Verdi"
+     And Jeg klikker på "Lagre krav" knapp for å lagre
+     Then Ser jeg "Varighet" har verdi "5"
