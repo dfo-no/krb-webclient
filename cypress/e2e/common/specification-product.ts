@@ -1,4 +1,5 @@
 import { Then, When } from '@badeball/cypress-cucumber-preprocessor';
+import { svgIconClasses } from "@mui/material";
 
 When('Jeg redigerer produkt {string}', (productName: string) => {
   cy.get('[class*="EditorFullPage"]')
@@ -83,12 +84,12 @@ When(
   'Jeg velger {string} dato {int} for krav',
   (label: string, date: number) => {
     if (label === 'Fra') {
-      cy.get('[data-testid="CalendarIcon"]').first().click();
+      cy.get('[aria-label="Choose date"]').first().click();
       cy.contains(date).click();
     } else if (label === 'Til') {
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(500);
-      cy.get('[data-testid="CalendarIcon"]').last().click();
+      cy.get('[aria-label="Choose date"]').last().click();
       cy.contains(date).click();
     }
   }
