@@ -68,35 +68,26 @@ const CodeSelection = ({
   return (
     <Controller
       render={({ field: { value: selected = [], onChange } }) => (
-        <ScrollableContainer className={css.Selection}>
-          <List>
-            {codes?.map((item) => {
-              return (
-                <ListItem
-                  key={item.id}
-                  className={css.listItem}
-                  onClick={() => onClick(item, selected, onChange)}
-                >
-                  <Box className={css.checkbox}>
-                    <DFOCheckbox checked={codeChecked(item, selected)} />
-                  </Box>
-                  {codeMandatory(item) ? (
-                    <Typography variant={'smBold'} className={css.itemTitle}>
-                      {item.title}
-                    </Typography>
-                  ) : (
-                    <Typography variant={'sm'} className={css.itemTitle}>
-                      {item.title}
-                    </Typography>
-                  )}
-                  <Typography className={css.itemDescription} variant={'sm'}>
-                    {item.description}
-                  </Typography>
-                </ListItem>
-              );
-            })}
-          </List>
-        </ScrollableContainer>
+        <div className={css.Selection}>
+          {codes?.map((item) => {
+            return (
+              <div
+                key={item.id}
+                className={css.SelectionItems}
+                onClick={() => onClick(item, selected, onChange)}
+              >
+                <div className={css.itemTitle}>
+                  <DFOCheckbox
+                    checked={codeChecked(item, selected)}
+                    _color={'var(--text-primary-color)'}
+                  />
+                  <span data-mandatory={codeMandatory(item)}>{item.title}</span>
+                </div>
+                <span>{item.description}</span>
+              </div>
+            );
+          })}
+        </div>
       )}
       name={name}
     />

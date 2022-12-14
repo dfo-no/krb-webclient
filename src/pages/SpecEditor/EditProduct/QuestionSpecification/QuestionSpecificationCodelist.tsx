@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Typography } from '@mui/material';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -19,6 +19,7 @@ interface IProps {
 
 const QuestionSpecificationCodelist = ({ item }: IProps) => {
   const { t } = useTranslation();
+  const [awardCriteria, setAwardCriteria] = useState(false);
   const { control } = useFormContext<IRequirementAnswer>();
   const { fields, append, remove } = useFieldArray({
     control,
@@ -48,68 +49,78 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
     }
   };
 
+  const onCheckboxClick = (): void => {
+    setAwardCriteria((prev) => !prev);
+  };
+
   return (
-    <div className={css.QuestionFlex}>
-      <Typography variant={'smBold'}>{t('Minimum codes')}</Typography>
-      <HorizontalTextCtrl
-        name={'question.config.optionalCodeMinAmount'}
-        placeholder={t('Minimum')}
-        type={'number'}
-      />
-      <Typography className={css.TopMargin} variant={'smBold'}>
-        {t('Maximum codes')}
-      </Typography>
-      <HorizontalTextCtrl
-        name={'question.config.optionalCodeMaxAmount'}
-        placeholder={t('Maximum')}
-        type={'number'}
-      />
-      <Typography className={css.TopMargin} variant={'smBold'}>
-        {t('Codes')}
-      </Typography>
+    <div className={css.QuestionCodeList}>
+      <span>{t('Enter the minimum and maximum optional alternatives')}</span>
+      <div className={css.CodeCtrl}>
+        <HorizontalTextCtrl
+          name={'question.config.optionalCodeMinAmount'}
+          placeholder={t('Minimum')}
+          type={'number'}
+          color={'var(--text-primary-color)'}
+          adornment={t('Codes')}
+        />
+        <HorizontalTextCtrl
+          name={'question.config.optionalCodeMaxAmount'}
+          placeholder={t('Maximum')}
+          type={'number'}
+          color={'var(--text-primary-color)'}
+          adornment={t('Codes')}
+        />
+      </div>
+      <span className={css.GuidanceText}>{t('Codes hint text')}</span>
+      <div onClick={onCheckboxClick}>
+        <DFOCheckbox
+          checked={awardCriteria}
+          _color={'var(--text-primary-color)'}
+        />
+        <Typography variant={'smBold'}>
+          {t('Is the requirement an award criteria')}
+        </Typography>
+      </div>
       <ul>
         {codelist.codes.map((code) => {
           return (
             <li key={code.id}>
-              <DFOCheckbox
-                className={css.Ctrl}
-                onClick={() => onSelect(code)}
-                checked={codeChecked(code)}
-              />
-              <Typography
-                className={css.Title}
-                variant={'smBold'}
-                onClick={() => onSelect(code)}
-              >
-                {code.title}
-              </Typography>
-              <Typography
-                className={css.Description}
-                variant={'sm'}
-                onClick={() => onSelect(code)}
-              >
-                {code.description}
-              </Typography>
+              <div className={css.ItemTitleAndDescription}>
+                <DFOCheckbox
+                  className={css.Checkbox}
+                  onClick={() => onSelect(code)}
+                  checked={codeChecked(code)}
+                  _color={'var(--text-primary-color)'}
+                />
+                <span className={css.Title}>{code.title}</span>
+                <span className={css.Description}>{code.description}</span>
+              </div>
               {codeChecked(code) && (
-                <>
+                <div className={css.Options}>
                   <div className={css.Ctrl}>
                     <CheckboxCtrl
                       name={`question.config.codes.${codeIndex(
                         code
                       )}.mandatory`}
+                      color={'var(--text-primary-color)'}
                     />
                     <Typography variant={'sm'}>{t('Mandatory')}</Typography>
                   </div>
-                  <div className={css.Ctrl}>
-                    <HorizontalTextCtrl
-                      name={`question.config.codes.${codeIndex(code)}.score`}
-                      placeholder={t('Score')}
-                      type={'number'}
-                      size={'small'}
-                    />
-                    <Typography variant={'sm'}>{t('Score')}</Typography>
-                  </div>
-                </>
+                  {awardCriteria && (
+                    <div className={css.Ctrl}>
+                      <Typography variant={'sm'}>{t('Discount')}</Typography>
+                      <HorizontalTextCtrl
+                        name={`question.config.codes.${codeIndex(code)}.score`}
+                        placeholder={t('Value')}
+                        type={'number'}
+                        size={'small'}
+                        color={'var(--text-primary-color)'}
+                        adornment={t('NOK')}
+                      />
+                    </div>
+                  )}
+                </div>
               )}
             </li>
           );
