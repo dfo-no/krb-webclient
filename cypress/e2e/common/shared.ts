@@ -49,7 +49,9 @@ When(
 When(
   'Jeg skriver {int} i feltet {string}',
   (text: string, fieldName: number) => {
-    cy.get(`input[placeholder="${fieldName}"]`).clear({ force: true }).type(text, { force: true });
+    cy.get(`input[placeholder="${fieldName}"]`)
+      .clear({ force: true })
+      .type(text, { force: true });
   }
 );
 
@@ -76,6 +78,8 @@ Then('Jeg venter litt', () => {
 
 Then('Jeg klikker på {string} knapp for å lagre', (button: string) => {
   cy.get('button').contains(button).click({ force: true });
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(1000);
 });
 
 Then('Ser jeg url inneholder {string}', (url: string) => {
