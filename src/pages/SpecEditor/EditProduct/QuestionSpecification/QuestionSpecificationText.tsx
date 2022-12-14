@@ -38,6 +38,9 @@ export default function QuestionSpecificationText(): ReactElement {
       });
     }
     setAwardCriteria((prev) => !prev);
+    if (fields.length) {
+      remove();
+    }
   };
 
   return (

@@ -93,6 +93,9 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
 
   const onCheckboxClick = (): void => {
     setAwardCriteria((prev) => !prev);
+    if (fields.length) {
+      remove();
+    }
   };
 
   return (

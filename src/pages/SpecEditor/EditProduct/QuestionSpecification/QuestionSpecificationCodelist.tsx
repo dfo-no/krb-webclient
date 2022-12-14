@@ -12,6 +12,7 @@ import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 import { ICodelistQuestion } from '../../../../Nexus/entities/ICodelistQuestion';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { useSpecificationState } from '../../SpecificationContext';
+import { Parentable } from '../../../../models/Parentable';
 
 interface IProps {
   item: ICodelistQuestion;
@@ -20,8 +21,9 @@ interface IProps {
 const QuestionSpecificationCodelist = ({ item }: IProps) => {
   const { t } = useTranslation();
   const [awardCriteria, setAwardCriteria] = useState(false);
+  const [discountCriteria, setDiscountCriteria] = useState(false);
   const { control } = useFormContext<IRequirementAnswer>();
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, update, remove } = useFieldArray({
     control,
     name: 'question.config.codes',
   });
@@ -51,6 +53,21 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
 
   const onCheckboxClick = (): void => {
     setAwardCriteria((prev) => !prev);
+    if (fields.length) {
+      remove();
+    }
+  };
+
+  const handleMandatoryClick = (code: Parentable<ICode>): void => {
+    setDiscountCriteria((prev) => !prev);
+    if (fields.length) {
+      const index = codeIndex(code);
+      update(index, {
+        code: code.id,
+        mandatory: true,
+        score: 0,
+      });
+    }
   };
 
   return (
@@ -62,14 +79,14 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
           placeholder={t('Minimum')}
           type={'number'}
           color={'var(--text-primary-color)'}
-          adornment={t('Codes')}
+          adornment={t('Alternative')}
         />
         <HorizontalTextCtrl
           name={'question.config.optionalCodeMaxAmount'}
           placeholder={t('Maximum')}
           type={'number'}
           color={'var(--text-primary-color)'}
-          adornment={t('Codes')}
+          adornment={t('Alternative')}
         />
       </div>
       <span className={css.GuidanceText}>{t('Codes hint text')}</span>
@@ -98,7 +115,10 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
               </div>
               {codeChecked(code) && (
                 <div className={css.Options}>
-                  <div className={css.Ctrl}>
+                  <div
+                    className={css.Ctrl}
+                    onClick={() => handleMandatoryClick(code)}
+                  >
                     <CheckboxCtrl
                       name={`question.config.codes.${codeIndex(
                         code
@@ -108,15 +128,19 @@ const QuestionSpecificationCodelist = ({ item }: IProps) => {
                     <Typography variant={'sm'}>{t('Mandatory')}</Typography>
                   </div>
                   {awardCriteria && (
-                    <div className={css.Ctrl}>
+                    <div className={css.Ctrl} data-disabled={discountCriteria}>
                       <Typography variant={'sm'}>{t('Discount')}</Typography>
                       <HorizontalTextCtrl
                         name={`question.config.codes.${codeIndex(code)}.score`}
                         placeholder={t('Value')}
                         type={'number'}
+                        defaultValue={`question.config.codes.${codeIndex(
+                          code
+                        )}.score`}
                         size={'small'}
                         color={'var(--text-primary-color)'}
                         adornment={t('NOK')}
+                        isDisabled={discountCriteria}
                       />
                     </div>
                   )}

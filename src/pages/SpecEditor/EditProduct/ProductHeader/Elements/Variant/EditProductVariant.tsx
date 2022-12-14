@@ -2,7 +2,6 @@ import React, { ReactElement } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFormContext, useWatch } from 'react-hook-form';
-import Tune from '@mui/icons-material/Tune';
 
 import css from './EditProductVariant.module.scss';
 import ProductQuestionList from '../QuestionList/ProductQuestionList';
@@ -31,12 +30,41 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
     control,
   });
 
-  const isAwardCriteria = () => {
-    return awardCriteriaDiscount > 0 || awardCriteriaUnConfirmedDiscount > 0;
-  };
+  const awardCriteriaDateDiscount = useWatch({
+    name: 'question.config.dateScores',
+    control,
+  });
 
-  const questionsTypeCodeList = () => {
-    return variant.questions.filter((q) => q.type === 'Q_CODELIST');
+  const awardCriteriaTimeDiscount = useWatch({
+    name: 'question.config.timeScores',
+    control,
+  });
+
+  const awardCriteriaCodesDiscount = useWatch({
+    name: 'question.config.codes',
+    control,
+  });
+
+  const awardCriteriaTextDiscount = useWatch({
+    name: 'question.config.discountValues',
+    control,
+  });
+
+  const awardCriteriaSliderDiscount = useWatch({
+    name: 'question.config.scoreValues',
+    control,
+  });
+
+  const isAwardCriteria = () => {
+    return (
+      awardCriteriaDiscount > 0 ||
+      awardCriteriaUnConfirmedDiscount > 0 ||
+      awardCriteriaDateDiscount?.length ||
+      awardCriteriaTimeDiscount?.length ||
+      awardCriteriaCodesDiscount?.length ||
+      awardCriteriaTextDiscount?.length ||
+      awardCriteriaSliderDiscount?.length
+    );
   };
 
   const renderBadge = () => {
@@ -46,25 +74,11 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
       );
     } else if (isAwardCriteria()) {
       return <Badge type={BadgeType.Award} displayText={t('Award criteria')} />;
-    } else if (
-      variant.type === VariantType.requirement &&
-      questionsTypeCodeList().length === 0
-    ) {
+    } else if (variant.type === VariantType.requirement) {
       return (
         <Badge
           type={BadgeType.Requirement}
           displayText={t('Mandatory requirement')}
-        />
-      );
-    } else if (
-      variant.type === VariantType.requirement &&
-      questionsTypeCodeList().length > 0
-    ) {
-      return (
-        <Badge
-          type={BadgeType.CombinationRequirements}
-          icon={<Tune />}
-          displayText={t('Combination requirements')}
         />
       );
     }

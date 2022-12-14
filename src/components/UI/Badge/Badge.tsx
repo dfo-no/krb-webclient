@@ -7,7 +7,6 @@ export enum BadgeType {
   Information = 'information',
   Requirement = 'requirement',
   Award = 'award',
-  CombinationRequirements = 'combinationRequirements',
   Warning = 'warning',
   Error = 'error',
   Primary = 'primary',

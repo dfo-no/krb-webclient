@@ -102,6 +102,9 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
 
   const onCheckboxClick = (): void => {
     setAwardCriteria((prev) => !prev);
+    if (fields.length) {
+      remove();
+    }
   };
 
   const fromTimeLabel = `${
