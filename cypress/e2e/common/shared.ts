@@ -49,7 +49,7 @@ When(
 When(
   'Jeg skriver {int} i feltet {string}',
   (text: string, fieldName: number) => {
-    cy.get(`input[placeholder="${fieldName}"]`).clear({ force: true }).type(text);
+    cy.get(`input[placeholder="${fieldName}"]`).clear({ force: true }).type(text, { force: true });
   }
 );
 
