@@ -96,7 +96,7 @@ When(
 );
 
 Then('Ser jeg {string} har verdi {string}', (text: string, value: string) => {
-  cy.get('[data-cy="chosen-configuration"]')
+  cy.get('[dataCy="chosen-configuration"]')
     .contains(text)
     .parent()
     .contains(value);
