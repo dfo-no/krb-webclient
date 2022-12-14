@@ -96,9 +96,9 @@ When(
 );
 
 Then('Ser jeg {string} har verdi {string}', (text: string, value: string) => {
-  cy.contains(text)
-    .parent()
-    .contains(value);
+  // eslint-disable-next-line cypress/no-unnecessary-waiting
+  cy.wait(1000);
+  cy.contains(text).parent().contains(value);
 });
 
 Then('Jeg ser en {string}-merkelapp', (text: string) => {

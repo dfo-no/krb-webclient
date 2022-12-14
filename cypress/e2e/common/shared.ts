@@ -78,8 +78,6 @@ Then('Jeg venter litt', () => {
 
 Then('Jeg klikker på {string} knapp for å lagre', (button: string) => {
   cy.get('button').contains(button).click({ force: true });
-  // eslint-disable-next-line cypress/no-unnecessary-waiting
-  cy.wait(1000);
 });
 
 Then('Ser jeg url inneholder {string}', (url: string) => {
