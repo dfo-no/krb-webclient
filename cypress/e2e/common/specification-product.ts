@@ -96,8 +96,7 @@ When(
 );
 
 Then('Ser jeg {string} har verdi {string}', (text: string, value: string) => {
-  cy.get('[class*="card__description"]')
-    .contains(text)
+  cy.contains(text)
     .parent()
     .contains(value);
 });
