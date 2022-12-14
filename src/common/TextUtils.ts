@@ -269,7 +269,11 @@ class TextUtils {
     if (isPeriod)
       TextUtils.setChosenConfigs(chosenConfig, t('Maximum'), `${max}`);
     if (isPeriod)
-      TextUtils.setChosenConfigs(chosenConfig, t('Duration'), `${duration}`);
+      TextUtils.setChosenConfigs(
+        chosenConfig,
+        t('Duration'),
+        `${duration} ${t('Days')}`
+      );
     return chosenConfig;
   };
 
