@@ -80,15 +80,21 @@ Then('Ser jeg valgte krav er {int} av 7', (value: number) => {
 });
 
 When(
-  'Jeg velger {string} dato {string} for krav',
-  (label: string, date: string) => {
+  'Jeg velger {string} dato {int} for krav',
+  (label: string, date: number) => {
     if (label === 'Fra') {
-      cy.get('input')
+      cy.get('[aria-label="Choose date"]')
         .first()
-        .click({ force: true })
-        .type(date, { force: true });
+        .click({ waitForAnimations: true });
+      cy.get('.MuiCalendarPicker-root')
+        .contains(date)
+        .click({ waitForAnimations: true });
     } else if (label === 'Til') {
-      cy.get('input').eq(1).click({ force: true }).type(date, { force: true });
+      cy.get('[aria-label="Choose date"]')
+        .last()
+        .click({ waitForAnimations: true });
+      cy.get('.MuiCalendarPicker-root');
+      cy.contains(date).click({ waitForAnimations: true });
     }
   }
 );
