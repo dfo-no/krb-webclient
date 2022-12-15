@@ -2248,7 +2248,7 @@ export const ProjectResourceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1ProjectsGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async apiV1ProjectsGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProjectForm>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1ProjectsGet(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2278,7 +2278,7 @@ export const ProjectResourceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1ProjectsProjectRefGet(projectRef: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async apiV1ProjectsProjectRefGet(projectRef: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectForm>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1ProjectsProjectRefGet(projectRef, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2289,7 +2289,7 @@ export const ProjectResourceApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1ProjectsProjectRefPut(projectRef: string, projectForm?: ProjectForm, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async apiV1ProjectsProjectRefPut(projectRef: string, projectForm?: ProjectForm, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProjectForm>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1ProjectsProjectRefPut(projectRef, projectForm, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -2308,7 +2308,7 @@ export const ProjectResourceApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1ProjectsGet(options?: any): AxiosPromise<void> {
+        apiV1ProjectsGet(options?: any): AxiosPromise<Array<ProjectForm>> {
             return localVarFp.apiV1ProjectsGet(options).then((request) => request(axios, basePath));
         },
         /**
@@ -2335,7 +2335,7 @@ export const ProjectResourceApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1ProjectsProjectRefGet(projectRef: string, options?: any): AxiosPromise<void> {
+        apiV1ProjectsProjectRefGet(projectRef: string, options?: any): AxiosPromise<ProjectForm> {
             return localVarFp.apiV1ProjectsProjectRefGet(projectRef, options).then((request) => request(axios, basePath));
         },
         /**
@@ -2345,7 +2345,7 @@ export const ProjectResourceApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1ProjectsProjectRefPut(projectRef: string, projectForm?: ProjectForm, options?: any): AxiosPromise<void> {
+        apiV1ProjectsProjectRefPut(projectRef: string, projectForm?: ProjectForm, options?: any): AxiosPromise<ProjectForm> {
             return localVarFp.apiV1ProjectsProjectRefPut(projectRef, projectForm, options).then((request) => request(axios, basePath));
         },
     };
