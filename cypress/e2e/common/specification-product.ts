@@ -80,7 +80,7 @@ Then('Ser jeg valgte krav er {int} av 7', (value: number) => {
 });
 
 When(
-  'Jeg velger {string} dato {int} for krav',
+  'Jeg velger {string} dato {int} for kravet',
   (label: string, date: number) => {
     if (label === 'Fra') {
       cy.get('[aria-label="Choose date"]')
