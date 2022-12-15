@@ -90,16 +90,15 @@ When(
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(500);
       cy.get('[aria-label="Choose date"]').last().click({ force: true });
-      cy.contains(date).click({ force: true });
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(500);
+      cy.contains(date, { timeout: 1000 }).click({ force: true });
     }
   }
 );
 
 Then('Ser jeg {string} har verdi {string}', (text: string, value: string) => {
-  cy.get('[data-cy="product-need"]', { timeout: 1000 })
-    .contains(text)
-    .parent()
-    .contains(value);
+  cy.get('[data-cy="product-need"]').contains(text).parent().contains(value);
 });
 
 Then('Jeg ser en {string}-merkelapp', (text: string) => {
