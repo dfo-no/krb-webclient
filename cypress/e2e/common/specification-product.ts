@@ -84,15 +84,15 @@ When(
   'Jeg velger {string} dato {int} for krav',
   (label: string, date: number) => {
     if (label === 'Fra') {
-      cy.get('[aria-label="Choose date"]').first().click({ force: true });
-      cy.contains(date).click({ force: true });
+      cy.get('[aria-label="Choose date"]')
+        .first()
+        .click({ waitForAnimations: true });
+      cy.contains(date).click({ waitForAnimations: true });
     } else if (label === 'Til') {
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(500);
-      cy.get('[aria-label="Choose date"]').last().click({ force: true });
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
-      cy.wait(500);
-      cy.contains(date, { timeout: 1000 }).click({ force: true });
+      cy.get('[aria-label="Choose date"]')
+        .last()
+        .click({ waitForAnimations: true });
+      cy.contains(date).click({ waitForAnimations: true });
     }
   }
 );
