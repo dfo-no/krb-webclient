@@ -86,14 +86,11 @@ When(
       cy.get('[aria-label="Choose date"]')
         .first()
         .click({ waitForAnimations: true });
-      cy.get('.MuiCalendarPicker-root')
-        .contains(date)
-        .click({ waitForAnimations: true });
+      cy.contains(date).click({ waitForAnimations: true });
     } else if (label === 'Til') {
       cy.get('[aria-label="Choose date"]')
         .last()
         .click({ waitForAnimations: true });
-      cy.get('.MuiCalendarPicker-root');
       cy.contains(date).click({ waitForAnimations: true });
     }
   }
