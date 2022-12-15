@@ -1,5 +1,4 @@
 import { Then, When } from '@badeball/cypress-cucumber-preprocessor';
-import { svgIconClasses } from '@mui/material';
 
 When('Jeg redigerer produkt {string}', (productName: string) => {
   cy.get('[class*="EditorFullPage"]')
@@ -81,24 +80,24 @@ Then('Ser jeg valgte krav er {int} av 7', (value: number) => {
 });
 
 When(
-  'Jeg velger {string} dato {int} for krav',
-  (label: string, date: number) => {
+  'Jeg velger {string} dato {string} for krav',
+  (label: string, date: string) => {
     if (label === 'Fra') {
-      cy.get('[aria-label="Choose date"]')
+      cy.get('input')
         .first()
-        .click({ waitForAnimations: true });
-      cy.contains(date).click({ waitForAnimations: true });
+        .click({ force: true })
+        .type(date, { force: true });
     } else if (label === 'Til') {
-      cy.get('[aria-label="Choose date"]')
-        .last()
-        .click({ waitForAnimations: true });
-      cy.contains(date).click({ waitForAnimations: true });
+      cy.get('input').eq(1).click({ force: true }).type(date, { force: true });
     }
   }
 );
 
 Then('Ser jeg {string} har verdi {string}', (text: string, value: string) => {
-  cy.get('[data-cy="product-need"]').contains(text).parent().contains(value);
+  cy.get('[data-cy="product-need"]')
+    .contains(text)
+    .parent()
+    .should('include.text', value);
 });
 
 Then('Jeg ser en {string}-merkelapp', (text: string) => {
