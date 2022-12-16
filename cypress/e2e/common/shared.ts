@@ -32,10 +32,17 @@ Then('Jeg klikker på {string} knappen', (button: string) => {
   cy.get('button').contains(button).click();
 });
 
+Then('Jeg klikker på avbryt knappen for å lukke kravet', () => {
+  cy.get('[class*="ProductRequirement"]').contains('Avbryt').click();
+});
+
 When(
-  'Jeg kan velge navn ved å klikke på {string} knappen',
-  (button: string) => {
-    cy.get('li > div > button').contains(button).click();
+  'Jeg kan velge organisasjon {string} ved å klikke på {string} knappen',
+  (text: string, button: string) => {
+    cy.get(`input[placeholder="Navn"]`).clear().type(text);
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(200);
+    cy.get('li > div > button').contains(button).first().click();
   }
 );
 
@@ -77,7 +84,7 @@ Then('Jeg venter litt', () => {
 });
 
 Then('Jeg klikker på {string} knapp for å lagre', (button: string) => {
-  cy.get('button').contains(button).click({ force: true });
+  cy.contains(button).click({ force: true });
 });
 
 Then('Ser jeg url inneholder {string}', (url: string) => {

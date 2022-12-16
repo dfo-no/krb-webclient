@@ -36,7 +36,7 @@ Feature: Spesifikasjonsprodukt
       Then Jeg ser en "Absolutt krav"-merkelapp
       When Jeg klikker på checkbox
       Then Jeg ser en "Tildelingskriterie"-merkelapp
-      And Jeg klikker på "Avbryt" knappen
+      And Jeg klikker på avbryt knappen for å lukke kravet
       When Jeg klikker på "Velg variant" til produktkrav "Bekreftelse som informasjon"
       Then Jeg ser en "Informasjon"-merkelapp
 
@@ -44,10 +44,10 @@ Feature: Spesifikasjonsprodukt
      Given Jeg åpner spesifikasjon "specification_all_answer_typer.pdf"
      When Jeg redigerer produkt "Dato"
      And Jeg klikker på "Velg variant" til produktkrav "Dato med periode som krav"
-     And Jeg velger "Fra" dato 10 for kravet
-     And Jeg velger "Til" dato 19 for kravet
+     And Jeg velger "Fra" dato "10.12.22" for kravet
+     And Jeg velger "Til" dato "19.12.22" for kravet
      And Jeg skriver 5 i feltet "Verdi"
      And Jeg klikker på "Lagre krav" knapp for å lagre
      Then Ser jeg "Varighet" har verdi "5"
-     And Ser jeg "Fra" har verdi "10"
-     And Ser jeg "Til" har verdi "19"
+     And Ser jeg "Fra" har verdi "10. desember"
+     And Ser jeg "Til" har verdi "19. desember"

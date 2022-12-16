@@ -80,18 +80,12 @@ Then('Ser jeg valgte krav er {int} av 7', (value: number) => {
 });
 
 When(
-  'Jeg velger {string} dato {int} for kravet',
-  (label: string, date: number) => {
+  'Jeg velger {string} dato {string} for kravet',
+  (label: string, date: string) => {
     if (label === 'Fra') {
-      cy.get('[aria-label="Choose date"]')
-        .first()
-        .click({ waitForAnimations: true });
-      cy.contains(date).click({ waitForAnimations: true });
+      cy.get(`input[placeholder="dd.mm.y"]`).first().clear().type(date);
     } else if (label === 'Til') {
-      cy.get('[aria-label="Choose date"]')
-        .last()
-        .click({ waitForAnimations: true });
-      cy.contains(date).click({ waitForAnimations: true });
+      cy.get(`input[placeholder="dd.mm.y"]`).last().clear().type(date);
     }
   }
 );
