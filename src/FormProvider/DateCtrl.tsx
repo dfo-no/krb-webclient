@@ -18,6 +18,7 @@ interface IProps {
   maxDate?: string;
   color?: string;
   className?: string;
+  dataCy?: string;
 }
 
 const DateCtrl = ({
@@ -27,6 +28,7 @@ const DateCtrl = ({
   maxDate,
   color,
   className,
+  dataCy,
 }: IProps): React.ReactElement => {
   const {
     formState: { errors },
@@ -80,6 +82,7 @@ const DateCtrl = ({
                   {...params}
                   error={!!get(errors, name)}
                   helperText={get(errors, name)?.message ?? ''}
+                  data-cy={dataCy}
                 />
               )}
             />

@@ -108,11 +108,13 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
       <div className={css.QuestionDateAndTimePeriod}>
         <div className={css.QuestionDateAndTimePeriod__datetimeContainer}>
           <DateCtrl
+            dataCy={'date-input'}
             label={t('From')}
             name={'question.config.fromBoundary'}
             color={'var(--text-primary-color)'}
           />
           <DateCtrl
+            dataCy={'date-input'}
             label={t('To')}
             name={'question.config.toBoundary'}
             color={'var(--text-primary-color)'}

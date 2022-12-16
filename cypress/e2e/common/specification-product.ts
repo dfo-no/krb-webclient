@@ -1,3 +1,4 @@
+/* eslint-disable cypress/no-unnecessary-waiting */
 import { Then, When } from '@badeball/cypress-cucumber-preprocessor';
 
 When('Jeg redigerer produkt {string}', (productName: string) => {
@@ -83,9 +84,11 @@ When(
   'Jeg velger {string} dato {string} for kravet',
   (label: string, date: string) => {
     if (label === 'Fra') {
-      cy.get(`input[type="tel"]`).first().clear().type(date);
+      cy.wait(1000);
+      cy.get('[data-cy="date-input"] input').first().clear().type(date);
     } else if (label === 'Til') {
-      cy.get(`input[type="tel"]`).last().clear().type(date);
+      cy.wait(1000);
+      cy.get('[data-cy="date-input"] input').last().clear().type(date);
     }
   }
 );
