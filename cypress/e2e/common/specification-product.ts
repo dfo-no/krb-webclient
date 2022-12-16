@@ -83,9 +83,15 @@ When(
   'Jeg velger {string} dato {string} for kravet',
   (label: string, date: string) => {
     if (label === 'Fra') {
-      cy.get(`input[placeholder="dd.mm.y"]`).first().clear().type(date);
+      cy.get(`[class*="EditProductVariant"] button`)
+        .first()
+        .click({ force: true });
+      cy.get('button').contains(date).click({ force: true });
     } else if (label === 'Til') {
-      cy.get(`input[placeholder="dd.mm.y"]`).last().clear().type(date);
+      cy.get(`[class*="EditProductVariant"] button`)
+        .last()
+        .click({ force: true });
+      cy.get('button').contains(date).last().click({ force: true });
     }
   }
 );

@@ -44,8 +44,8 @@ Feature: Spesifikasjonsprodukt
      Given Jeg åpner spesifikasjon "specification_all_answer_typer.pdf"
      When Jeg redigerer produkt "Dato"
      And Jeg klikker på "Velg variant" til produktkrav "Dato med periode som krav"
-     And Jeg velger "Fra" dato "10.12.22" for kravet
-     And Jeg velger "Til" dato "19.12.22" for kravet
+     And Jeg velger "Fra" dato "10" for krav
+     And Jeg velger "Til" dato "19" for krav
      And Jeg skriver 5 i feltet "Verdi"
      And Jeg klikker på "Lagre krav" knapp for å lagre
      Then Ser jeg "Varighet" har verdi "5"
