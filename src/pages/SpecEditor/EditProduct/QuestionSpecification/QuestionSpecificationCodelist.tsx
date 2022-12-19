@@ -175,7 +175,9 @@ const QuestionSpecificationCodelist = ({
                         size={'small'}
                         color={'var(--text-primary-color)'}
                         adornment={t('NOK')}
-                        // isDisabled={}
+                        isDisabled={disabledDiscountIndex?.includes(
+                          codeIndex(code)
+                        )}
                       />
                     </div>
                   )}
