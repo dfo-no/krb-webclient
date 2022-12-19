@@ -106,7 +106,7 @@ const QuestionSpecificationCodelist = ({
           type={'number'}
           color={'var(--text-primary-color)'}
           adornment={t('Alternative')}
-          defaultValue={0}
+          defaultValue={1}
         />
       </div>
       <span className={css.GuidanceText}>{t('Codes hint text')}</span>
