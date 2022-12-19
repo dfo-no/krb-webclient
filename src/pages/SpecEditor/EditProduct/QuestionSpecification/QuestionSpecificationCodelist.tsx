@@ -25,7 +25,7 @@ const QuestionSpecificationCodelist = ({
   const { t } = useTranslation();
   const [codesAwardCriteria, setCodesAwardCriteria] = useState(false);
   const [disabledDiscountIndex, setDisabledDiscountIndex] = useState<
-    number | null
+    number[] | null
   >(null);
   const { control, setValue } = useFormContext<IRequirementAnswer>();
   const { fields, append, remove } = useFieldArray({
@@ -81,10 +81,20 @@ const QuestionSpecificationCodelist = ({
     handleAwardCriteria(!codesAwardCriteria);
   };
 
-  const handleMandatoryClick = (index: number): void => {
+  const handleMandatoryClick = (codesIndex: number): void => {
+    const indexes: number[] = [];
+    if (disabledDiscountIndex !== null) {
+      indexes.push(...disabledDiscountIndex);
+    }
     if (fields.length) {
-      setValue(`question.config.codes.${index}.score`, 0);
-      setDisabledDiscountIndex(index);
+      setValue(`question.config.codes.${codesIndex}.score`, 0);
+      if (!disabledDiscountIndex?.includes(codesIndex)) {
+        indexes?.push(codesIndex);
+        setDisabledDiscountIndex(indexes);
+      } else {
+        indexes.splice(indexes.indexOf(codesIndex), 1);
+        setDisabledDiscountIndex(indexes);
+      }
     }
   };
 
@@ -149,9 +159,10 @@ const QuestionSpecificationCodelist = ({
                   </div>
                   {codesAwardCriteria && (
                     <div
-                      key={codeIndex(code)}
                       className={css.Ctrl}
-                      data-disabled={disabledDiscountIndex == codeIndex(code)}
+                      data-disabled={disabledDiscountIndex?.includes(
+                        codeIndex(code)
+                      )}
                     >
                       <Typography variant={'sm'}>{t('Discount')}</Typography>
                       <HorizontalTextCtrl
@@ -164,7 +175,7 @@ const QuestionSpecificationCodelist = ({
                         size={'small'}
                         color={'var(--text-primary-color)'}
                         adornment={t('NOK')}
-                        isDisabled={disabledDiscountIndex == codeIndex(code)}
+                        // isDisabled={}
                       />
                     </div>
                   )}
