@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useFormContext, useWatch } from 'react-hook-form';
@@ -20,6 +20,7 @@ interface IProps {
 export default function EditProductVariant({ variant }: IProps): ReactElement {
   const { t } = useTranslation();
   const { control } = useFormContext<IRequirementAnswer>();
+  const [awardCriteria, setAwardCriteria] = useState(false);
   const awardCriteriaDiscount = useWatch({
     name: 'question.config.discountNonPrefered',
     control,
@@ -40,11 +41,6 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
     control,
   });
 
-  const awardCriteriaCodesDiscount = useWatch({
-    name: 'question.config.codes',
-    control,
-  });
-
   const awardCriteriaTextDiscount = useWatch({
     name: 'question.config.discountValues',
     control,
@@ -55,13 +51,17 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
     control,
   });
 
+  const handleAwardCriteriaCodesDiscount = (value: boolean) => {
+    setAwardCriteria(value);
+  };
+
   const isAwardCriteria = () => {
     return (
       awardCriteriaDiscount > 0 ||
       awardCriteriaUnConfirmedDiscount > 0 ||
       awardCriteriaDateDiscount?.length ||
       awardCriteriaTimeDiscount?.length ||
-      awardCriteriaCodesDiscount?.length ||
+      awardCriteria ||
       awardCriteriaTextDiscount?.length ||
       awardCriteriaSliderDiscount?.length
     );
@@ -96,7 +96,10 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
         </Typography>
       )}
       {variant.instruction && <GuidanceText text={variant.instruction} />}
-      <ProductQuestionList variant={variant} />
+      <ProductQuestionList
+        variant={variant}
+        handleAwardCriteria={handleAwardCriteriaCodesDiscount}
+      />
     </Box>
   );
 }

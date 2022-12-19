@@ -125,51 +125,6 @@
   .CheckboxLabel {
     margin-left: var(--tiny-gap);
   }
-
-  ul {
-    list-style: none;
-
-    li {
-      display: grid;
-      grid-template-columns: auto 1fr 1fr 15rem 15rem;
-      border: 0.1rem solid var(--gray-color);
-      background: white;
-      margin-top: -0.1rem;
-      min-height: 5rem;
-      align-content: center;
-
-      .ItemTitleAndDescription {
-        display: grid;
-        grid-template-areas:
-          'checkbox title'
-          'checkbox description';
-        gap: var(--tiny-gap);
-        font-size: var(--small-fontsize);
-
-        .Checkbox {
-          grid-area: checkbox;
-        }
-
-        .Title {
-          grid-area: title;
-          font-weight: var(--font-weight-semibold);
-        }
-
-        .Description {
-          grid-area: description;
-        }
-      }
-
-      .Ctrl {
-        display: flex;
-        gap: var(--tiny-gap);
-        align-items: center;
-        height: 3.4rem;
-        padding: 0 var(--small-gap);
-        margin: auto;
-      }
-    }
-  }
 }
 
 .QuestionDateAndTime {
