@@ -17,6 +17,7 @@ import { QuestionVariant } from '../../../Nexus/enums';
 import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import Nexus from '../../../Nexus/Nexus';
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;
@@ -28,6 +29,7 @@ export default function QuestionAnswer({
   existingAnswer,
 }: IProps): React.ReactElement {
   const dispatch = useAppDispatch();
+  const nexus = Nexus.getInstance();
   const { prefilledResponse } = useAppSelector(
     (state) => state.prefilledResponse
   );
@@ -36,8 +38,11 @@ export default function QuestionAnswer({
 
   const onSubmit = (post: QuestionType): void => {
     const newAnswer = {
-      ...requirementAnswer,
+      ...nexus.prefilledResponseService.createRequirementAnswerWithId(
+        requirementAnswer
+      ),
       question: post,
+      questionId: requirementAnswer.question.id,
     };
     if (productIndex === -1) {
       dispatch(addAnswer(newAnswer));
