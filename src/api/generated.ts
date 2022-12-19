@@ -105,7 +105,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": (components["schemas"]["CodelistForm"])[];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -143,7 +147,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": components["schemas"]["CodelistForm"];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -164,7 +172,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": components["schemas"]["CodelistForm"];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -198,7 +210,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": (components["schemas"]["CodeForm"])[];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -238,7 +254,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": components["schemas"]["CodeForm"];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -260,7 +280,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": components["schemas"]["CodeForm"];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -294,7 +318,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": (components["schemas"]["NeedForm"])[];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -332,7 +360,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": components["schemas"]["NeedForm"];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -353,7 +385,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": components["schemas"]["NeedForm"];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -386,7 +422,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": (components["schemas"]["ProductForm"])[];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -424,7 +464,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": components["schemas"]["ProductForm"];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -445,7 +489,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": components["schemas"]["ProductForm"];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -478,7 +526,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": (components["schemas"]["RequirementForm"])[];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -516,7 +568,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": components["schemas"]["RequirementForm"];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -537,7 +593,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": components["schemas"]["RequirementForm"];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -571,7 +631,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": (components["schemas"]["RequirementVariantForm"])[];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -611,7 +675,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": components["schemas"]["RequirementVariantForm"];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -633,7 +701,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": components["schemas"]["RequirementVariantForm"];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -667,7 +739,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": (components["schemas"]["PublicationForm"])[];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -705,7 +781,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": components["schemas"]["PublicationForm"];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -726,7 +806,11 @@ export type paths = {
       };
       responses: {
         /** @description OK */
-        200: never;
+        200: {
+          content: {
+            "application/json": components["schemas"]["PublicationForm"];
+          };
+        };
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
