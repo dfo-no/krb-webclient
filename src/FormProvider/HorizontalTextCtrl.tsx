@@ -16,6 +16,7 @@ interface IProps {
   adornment?: string;
   color?: string;
   defaultValue?: string | number;
+  isDisabled?: boolean;
 }
 
 const HorizontalTextCtrl = ({
@@ -29,6 +30,7 @@ const HorizontalTextCtrl = ({
   adornment,
   color,
   defaultValue,
+  isDisabled,
 }: IProps): React.ReactElement => {
   const {
     formState: { errors },
@@ -59,6 +61,7 @@ const HorizontalTextCtrl = ({
               disableUnderline
               sx={size === 'small' ? { height: 26 } : { height: 45 }}
               autoFocus={autoFocus}
+              disabled={isDisabled}
             />
           </>
         )}

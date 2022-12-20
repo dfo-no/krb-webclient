@@ -125,46 +125,6 @@
   .CheckboxLabel {
     margin-left: var(--tiny-gap);
   }
-
-  ul {
-    border: 0.1rem solid var(--gray-color);
-    background: var(--light-gray-color);
-    padding: var(--small-gap);
-    margin: 0;
-    list-style: none;
-
-    li {
-      display: grid;
-      grid-template-columns: 6rem 1fr 1fr 15rem 15rem;
-      border: 0.1rem solid var(--gray-color);
-      background: white;
-      margin-top: -0.1rem;
-      min-height: 5rem;
-
-      .Title {
-        align-self: center;
-        padding: 0 var(--small-gap);
-        cursor: pointer;
-      }
-
-      .Description {
-        align-self: center;
-        padding: 0 var(--small-gap);
-        margin: var(--tiny-gap) 0;
-        border-left: 0.1rem solid var(--gray-color);
-        cursor: pointer;
-      }
-
-      .Ctrl {
-        display: flex;
-        gap: var(--tiny-gap);
-        align-items: center;
-        height: 3.4rem;
-        padding: 0 var(--small-gap);
-        margin: auto;
-      }
-    }
-  }
 }
 
 .QuestionDateAndTime {
@@ -185,5 +145,89 @@
 
   .CheckboxLabel {
     margin-left: var(--tiny-gap);
+  }
+}
+
+.QuestionCodeList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--small-gap);
+
+  span:nth-of-type(1) {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .GuidanceText {
+    color: var(--dark-gray-color);
+    font-size: var(--small-fontsize);
+  }
+
+  .CodeCtrl {
+    display: flex;
+    gap: var(--small-gap);
+    max-width: 50%;
+  }
+
+  ul {
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 0.1rem solid var(--gray-color);
+      align-content: center;
+      padding: 0.5rem 0;
+      height: 6rem;
+
+      &:last-child {
+        border: none;
+      }
+
+      .ItemTitleAndDescription {
+        display: grid;
+        grid-template-areas:
+          'checkbox title'
+          'checkbox description';
+        gap: var(--tiny-gap);
+        font-size: var(--small-fontsize);
+
+        .Checkbox {
+          grid-area: checkbox;
+        }
+
+        .Title {
+          grid-area: title;
+          font-weight: var(--font-weight-semibold);
+        }
+
+        .Description {
+          grid-area: description;
+          color: var(--dark-gray-color);
+        }
+      }
+
+      .Options {
+        display: flex;
+        justify-content: space-between;
+        gap: var(--small-gap);
+        align-items: center;
+
+        .Ctrl {
+          display: flex;
+          gap: var(--tiny-gap);
+          align-items: center;
+          height: 3.4rem;
+          padding: 0 var(--small-gap);
+          margin-left: auto;
+
+          &[data-disabled='true'] {
+            div {
+              background-color: var(--gray-color);
+            }
+          }
+        }
+      }
+    }
   }
 }

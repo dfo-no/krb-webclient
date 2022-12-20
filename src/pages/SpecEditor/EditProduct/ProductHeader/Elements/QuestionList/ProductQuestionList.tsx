@@ -11,9 +11,13 @@ import { VariantType } from '../../../../../../Nexus/enums';
 
 interface IProps {
   variant: IVariant;
+  handleAwardCriteria: (value: boolean) => void;
 }
 
-const ProductQuestionsList = ({ variant }: IProps): ReactElement => {
+const ProductQuestionsList = ({
+  variant,
+  handleAwardCriteria,
+}: IProps): ReactElement => {
   const { control, setValue } = useFormContext<IRequirementAnswer>();
   const useQuestionId = useWatch({ name: 'questionId', control });
   const item = variant.questions[0];
@@ -37,7 +41,10 @@ const ProductQuestionsList = ({ variant }: IProps): ReactElement => {
       {variant.type === VariantType.info ? (
         <QuestionAnswer item={item} />
       ) : (
-        <QuestionSpecification item={item} />
+        <QuestionSpecification
+          item={item}
+          handleAwardCriteria={handleAwardCriteria}
+        />
       )}
     </Box>
   );

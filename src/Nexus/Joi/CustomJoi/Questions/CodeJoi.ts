@@ -33,10 +33,9 @@ const QuestionCodesValidator = (joi: Joi.Root) => ({
         .guid({ version: ['uuidv4'] })
         .required(),
       mandatory: joi.boolean().required(),
-      score: joi.number().required().min(0).max(100).messages({
+      discount: joi.number().required().min(0).messages({
         'number.base': 'Må være et gyldig tall',
         'number.min': 'Må være minimum 0',
-        'number.max': 'Må være maksimum 100',
       }),
     })
   ),

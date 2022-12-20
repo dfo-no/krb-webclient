@@ -99,7 +99,10 @@ class Utils {
     return newList;
   }
 
-  static findScoreFromCodes(codes: string[], config: ICodelistConfig): number {
+  static findDiscountFromCodes(
+    codes: string[],
+    config: ICodelistConfig
+  ): number {
     const mandatorySelected = codes.reduce((sum, code) => {
       const foundCode = config.codes.find(
         (selection) => selection.code === code
@@ -112,7 +115,7 @@ class Utils {
 
     const topMandatory = config.codes
       .filter((selection) => selection.mandatory)
-      .sort((a, b) => b.score - a.score)
+      .sort((a, b) => b.discount - a.discount)
       .slice(0, config.optionalCodeMinAmount);
     const topRest = config.codes
       .filter(
@@ -121,10 +124,10 @@ class Utils {
             (mandatorySelection) => selection.code === mandatorySelection.code
           )
       )
-      .sort((a, b) => b.score - a.score)
+      .sort((a, b) => b.discount - a.discount)
       .slice(0, config.optionalCodeMaxAmount - config.optionalCodeMinAmount);
     const maxScore = [...topMandatory, ...topRest].reduce(
-      (sum, selection) => sum + selection.score,
+      (sum, selection) => sum + selection.discount,
       0
     );
 
@@ -132,7 +135,7 @@ class Utils {
       const foundCode = config.codes.find(
         (selection) => selection.code === code
       );
-      return foundCode ? sum + foundCode.score : sum;
+      return foundCode ? sum + foundCode.discount : sum;
     }, 0);
 
     return maxScore > 0 ? Math.min(score / maxScore, 1) * 100 : 100;

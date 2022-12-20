@@ -1,48 +1,35 @@
 .Selection {
-  background: var(--light-gray-color);
-  border: 0.1rem solid var(--primary-light-color);
-  max-height: 400px;
-  padding: var(--tiny-gap) var(--small-gap);
+  display: flex;
+  flex-direction: column;
+  font-size: var(--small-fontsize);
+  box-sizing: border-box;
 
-  .listItem {
+  .SelectionItems {
     display: flex;
-    background: white;
-    border: 0.1rem solid silver;
-    min-height: 4rem;
-    padding: var(--tiny-gap) 0;
-    margin-top: -0.1rem;
-    cursor: pointer;
+    gap: var(--large-gap);
+    border-bottom: 0.1rem solid var(--gray-color);
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0.3rem;
 
-    &:hover {
-      background: var(--link-hover-color);
-      color: white;
-      & .MuiSvgIcon-root {
-        background: transparent;
-        color: white;
-      }
+    > * {
+      flex: 0 auto;
     }
 
-    .checkbox {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 2.2rem;
-      height: 2.2rem;
-      margin-right: var(--normal-gap);
-      margin-left: var(--small-gap);
+    &:last-child {
+      border: none;
     }
 
     .itemTitle {
-      align-self: center;
-      padding-left: var(--small-gap);
-      flex: 1 1 auto;
-    }
+      display: flex;
+      gap: var(--tiny-gap);
+      align-items: center;
+      width: 10%;
 
-    .itemDescription {
-      margin-left: auto;
-      border-left: 0.1rem solid silver;
-      padding-left: var(--small-gap);
-      flex: 0 0 25vw;
+      &[data-manatory='true'] {
+        font-weight: bold;
+      }
     }
   }
 }

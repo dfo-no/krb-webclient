@@ -32,13 +32,6 @@
       background-color: var(--award-color);
       --badge-border-color: var(--warning-color);
     }
-    &[data-badge-type='combinationRequirements'] {
-      background-color: var(--combination-color);
-      --badge-border-color: var(--secondary-color);
-      svg {
-        transform: rotate(90deg);
-      }
-    }
     &[data-badge-type='error'] {
       background-color: var(--error-color);
     }
