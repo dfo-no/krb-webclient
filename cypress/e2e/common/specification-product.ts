@@ -84,8 +84,7 @@ When(
   'Jeg legge til {string} fradrag for kode {string}',
   (discount: string, code: string) => {
     cy.contains(code)
-      .parent()
-      .parent()
+      .parentsUntil('ul')
       .contains('Fradrag')
       .parent()
       .children()
@@ -99,8 +98,7 @@ When(
   'Jeg klikker på obligatorisk checkbox for kode {string}',
   (code: string) => {
     cy.contains(code)
-      .parent()
-      .parent()
+      .parentsUntil('ul')
       .contains('Obligatorisk')
       .parent()
       .children()
@@ -111,8 +109,7 @@ When(
 
 Then('Ser jeg fradrag for kode {string} er inaktiv', (code: string) => {
   cy.contains(code)
-    .parent()
-    .parent()
+    .parentsUntil('ul')
     .contains('Fradrag')
     .parent()
     .should('have.attr', 'data-disabled', 'true');

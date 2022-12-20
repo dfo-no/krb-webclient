@@ -25,7 +25,7 @@ export interface ICodelistConfig extends IConfigBase {
 export interface ICodeSelection {
   code: string;
   mandatory: boolean;
-  score: number;
+  discount: number;
 }
 
 export interface ICodelistAnswer extends IAnswerBase {
@@ -48,6 +48,6 @@ export const CodelistQuestionAnswerSchema =
   CodelistQuestionWorkbenchSchema.keys({
     answer: CustomJoi.object().keys({
       codes: CustomJoi.validateIdArray(),
-      discount: CustomJoi.validateScore(),
+      discount: CustomJoi.validateDiscount(),
     }),
   });

@@ -171,7 +171,10 @@ export default class QuestionService {
         const answer = question.answer.value;
         return preferred === answer ? 100 : question.config.discountNonPrefered;
       case QuestionVariant.Q_CODELIST:
-        return Utils.findScoreFromCodes(question.answer.codes, question.config);
+        return Utils.findDiscountFromCodes(
+          question.answer.codes,
+          question.config
+        );
       case QuestionVariant.Q_CONFIRMATION:
         return question.answer.value
           ? 100

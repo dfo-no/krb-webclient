@@ -31,7 +31,7 @@ const CodeSelection = ({
       if (aSelection.mandatory !== bSelection.mandatory) {
         return +bSelection.mandatory - +aSelection.mandatory;
       }
-      return bSelection.score - aSelection.score;
+      return bSelection.discount - aSelection.discount;
     });
   };
 

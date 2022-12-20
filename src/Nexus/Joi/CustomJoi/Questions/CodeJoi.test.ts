@@ -59,7 +59,7 @@ describe('CodeJoi', () => {
         {
           code: uuidv4(),
           mandatory: false,
-          score: -1,
+          discount: -1,
         },
       ],
     });
@@ -68,7 +68,7 @@ describe('CodeJoi', () => {
         {
           code: uuidv4(),
           mandatory: false,
-          score: 120,
+          discount: 120,
         },
       ],
     });
@@ -77,15 +77,12 @@ describe('CodeJoi', () => {
         {
           code: uuidv4(),
           mandatory: false,
-          score: 12,
+          discount: 12,
         },
       ],
     });
     expect(reportError1?.error?.details[0].message).toEqual(
       'Må være minimum 0'
-    );
-    expect(reportError2?.error?.details[0].message).toEqual(
-      'Må være maksimum 100'
     );
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });

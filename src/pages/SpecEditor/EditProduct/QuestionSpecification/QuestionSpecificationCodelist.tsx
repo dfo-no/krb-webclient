@@ -50,7 +50,7 @@ const QuestionSpecificationCodelist = ({
 
   useEffect(() => {
     const codes = () => {
-      return awardCriteriaCodesDiscount?.find((code) => code.score > 0);
+      return awardCriteriaCodesDiscount?.find((code) => code.discount > 0);
     };
     if (awardCriteriaCodesDiscount?.length && !!codes()) {
       setCodesAwardCriteria(true);
@@ -71,7 +71,7 @@ const QuestionSpecificationCodelist = ({
   const onSelect = (code: ICode): void => {
     const index = codeIndex(code);
     if (index === -1) {
-      append({ code: code.id, mandatory: false, score: 0 });
+      append({ code: code.id, mandatory: false, discount: 0 });
     } else {
       remove(index);
     }
@@ -84,7 +84,7 @@ const QuestionSpecificationCodelist = ({
 
   const handleMandatoryClick = (codesIndex: number): void => {
     if (fields.length) {
-      setValue(`question.config.codes.${codesIndex}.score`, 0);
+      setValue(`question.config.codes.${codesIndex}.discount`, 0);
     }
   };
 
@@ -158,12 +158,14 @@ const QuestionSpecificationCodelist = ({
                     >
                       <Typography variant={'sm'}>{t('Discount')}</Typography>
                       <HorizontalTextCtrl
-                        name={`question.config.codes.${codeIndex(code)}.score`}
+                        name={`question.config.codes.${codeIndex(
+                          code
+                        )}.discount`}
                         placeholder={t('Value')}
                         type={'number'}
                         defaultValue={`question.config.codes.${codeIndex(
                           code
-                        )}.score`}
+                        )}.discount`}
                         size={'small'}
                         color={'var(--text-primary-color)'}
                         adornment={t('NOK')}
