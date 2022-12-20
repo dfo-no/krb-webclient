@@ -36,3 +36,25 @@ Feature: Forberedt besvarelse
   Scenario: Jeg kan laste ned forberedt besvarelse
     Given Jeg åpner forberedt besvarelse
     Then Klikker jeg på "Last ned forberedt besvarelse" knapp for å laste ned forberedt besvarelse
+
+  Scenario: Jeg kan rediger produktdetaljer
+    Given Jeg åpner forberedt besvarelse
+    And Jeg klikker på "Rediger produktet" knapp
+    When Jeg klikker på "Rediger produktdetaljer" knapp
+    And Jeg skriver "Bil produkt" i feltet "Navn på produkt"
+    And Velger jeg Ja til å legge flere relaterte produkter
+    And Velger jeg "El-bil" som relaterte produkt
+    Then Jeg klikker på "Lagre" knapp for å lagre
+    And Ser jeg "Bil produkt" på siden
+
+  Scenario: Jeg kan svare kravbesvarelse og etterpå rediger produktdetaljer
+    Given Jeg åpner forberedt besvarelse
+    When Jeg klikker på "Rediger produktet" knapp
+    And Jeg klikker på "Ikke besvart" av kravet "Tilbehør i kupé" for å besvare
+    And Velger jeg "Koppholder for sjåfør" fra kodeliste
+    And Jeg klikker på "Lagre" knappen for å lagre besvare
+    Then Ser jeg svaret "Koppholder for sjåfør" på siden
+    Then Jeg klikker på "Rediger produktdetaljer" knapp
+    And Jeg skriver "Bil produkt lagret etter svare kravbesvarelse" i feltet "Beskrivelse av produktet"
+    Then Jeg klikker på "Lagre" knapp for å lagre
+    And Ser jeg "Bil produkt lagret etter svare kravbesvarelse" på siden

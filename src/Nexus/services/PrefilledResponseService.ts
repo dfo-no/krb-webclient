@@ -3,6 +3,7 @@ import { IBank } from '../entities/IBank';
 import { IPrefilledResponse } from '../entities/IPrefilledResponse';
 import { IPrefilledResponseProduct } from '../entities/IPrefilledResponseProduct';
 import { ModelType } from '../enums';
+import { IRequirementAnswer } from '../entities/IRequirementAnswer';
 
 export default class PrefilledResponseService {
   UuidService = new UuidService();
@@ -45,5 +46,13 @@ export default class PrefilledResponseService {
     const prefResProd = { ...item };
     prefResProd.id = this.UuidService.generateId();
     return prefResProd;
+  };
+
+  createRequirementAnswerWithId = (
+    requirementAnswer: IRequirementAnswer
+  ): IRequirementAnswer => {
+    const reqAnswer = { ...requirementAnswer };
+    reqAnswer.id = this.UuidService.generateId();
+    return reqAnswer;
   };
 }
