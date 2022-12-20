@@ -1,4 +1,5 @@
 import { Then, When } from '@badeball/cypress-cucumber-preprocessor';
+import { chosenWeekday } from './helpers';
 
 When('Jeg redigerer produkt {string}', (productName: string) => {
   cy.get('[class*="EditorFullPage"]')
@@ -51,6 +52,21 @@ When(
     cy.get('label').contains(answer).click();
   }
 );
+
+When(
+  'Jeg velger {string} fra tilgjengelige ukedager checkboxes',
+  (day: string) => {
+    cy.get(
+      `input[name="question.config.weekdays[${chosenWeekday(day)}].isChecked"]`
+    ).check({ force: true });
+  }
+);
+
+Then('Ser jeg {string} er valgt', (day: string) => {
+  cy.get(
+    `input[name="question.config.weekdays[${chosenWeekday(day)}].isChecked"]`
+  ).should('be.checked');
+});
 
 When('Jeg klikker på checkbox', () => {
   cy.get('input[type="checkbox"]').click();

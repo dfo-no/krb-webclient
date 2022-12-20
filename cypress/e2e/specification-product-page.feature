@@ -39,3 +39,10 @@ Feature: Spesifikasjonsprodukt
       And Jeg klikker på "Avbryt" knappen
       When Jeg klikker på "Velg variant" til produktkrav "Bekreftelse som informasjon"
       Then Jeg ser en "Informasjon"-merkelapp
+
+    Scenario: Jeg kan velge tilgjengelige ukedager for krav som har svartype datoperiode
+      Given Jeg åpner spesifikasjon "specification_all_answer_typer.pdf"
+      When Jeg redigerer produkt "Dato"
+      And Jeg klikker på "Velg variant" til produktkrav "Dato med periode som krav"
+      And Jeg velger "torsdag" fra tilgjengelige ukedager checkboxes
+      Then Ser jeg "torsdag" er valgt

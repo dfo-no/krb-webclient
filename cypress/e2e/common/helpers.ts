@@ -47,9 +47,45 @@ const uploadResponseFileForEvaluation = (fileName: string) => {
     .selectFile(fileName);
 };
 
+const chosenWeekday = (day: string) => {
+  let value: string | undefined;
+  switch (day) {
+    case 'mandag': {
+      value = '0';
+      break;
+    }
+    case 'tirsdag': {
+      value = '1';
+      break;
+    }
+    case 'onsdag': {
+      value = '2';
+      break;
+    }
+    case 'torsdag': {
+      value = '3';
+      break;
+    }
+    case 'fredag': {
+      value = '4';
+      break;
+    }
+    case 'lørdag': {
+      value = '5';
+      break;
+    }
+    case 'søndag': {
+      value = '6';
+      break;
+    }
+  }
+  return value;
+};
+
 export {
   visitHomePageAndWaitBank,
   clickAndWaitForResponse,
   uploadFile,
   uploadResponseFileForEvaluation,
+  chosenWeekday,
 };
