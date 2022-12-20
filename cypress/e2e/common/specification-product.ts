@@ -56,6 +56,52 @@ When('Jeg klikker på checkbox', () => {
   cy.get('input[type="checkbox"]').click();
 });
 
+When('Jeg klikker på tildelingskriterie checkbox', () => {
+  cy.get('input[type="checkbox"]').first().click();
+});
+
+When('Jeg velger kodelist {string}', (code: string) => {
+  cy.contains(code).parent().children().eq(0).click();
+});
+
+When(
+  'Jeg legge til {string} fradrag for kode {string}',
+  (discount: string, code: string) => {
+    cy.contains(code)
+      .parent()
+      .parent()
+      .contains('Fradrag')
+      .parent()
+      .children()
+      .eq(1)
+      .clear()
+      .type(discount);
+  }
+);
+
+When(
+  'Jeg klikker på obligatorisk checkbox for kode {string}',
+  (code: string) => {
+    cy.contains(code)
+      .parent()
+      .parent()
+      .contains('Obligatorisk')
+      .parent()
+      .children()
+      .eq(0)
+      .click();
+  }
+);
+
+Then('Ser jeg fradrag for kode {string} er inaktiv', (code: string) => {
+  cy.contains(code)
+    .parent()
+    .parent()
+    .contains('Fradrag')
+    .parent()
+    .should('have.attr', 'data-disabled', 'true');
+});
+
 Then(
   'Ser jeg valgt krav {string} inneholder {string} for ja og {string} for nei',
   (requirement: string, yesPoint: string, noPoint: string) => {
@@ -74,6 +120,13 @@ Then(
       .contains(noPoint);
   }
 );
+
+Then('Ser jeg {string} har verdi {string}', (text: string, value: string) => {
+  cy.get('[data-cy="product-need"]')
+    .contains(text)
+    .parent()
+    .should('include.text', value);
+});
 
 Then('Ser jeg valgte krav er {int} av 7', (value: number) => {
   cy.get('[data-cy="chosen-requirements"]').contains(value);

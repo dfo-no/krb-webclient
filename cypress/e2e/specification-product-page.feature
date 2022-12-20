@@ -39,3 +39,19 @@ Feature: Spesifikasjonsprodukt
       And Jeg klikker på "Avbryt" knappen
       When Jeg klikker på "Velg variant" til produktkrav "Bekreftelse som informasjon"
       Then Jeg ser en "Informasjon"-merkelapp
+
+   Scenario: Jeg kan velger koder for krav som har svartype kodeliste
+     Given Jeg åpner spesifikasjon "specification_all_answer_typer.pdf"
+     When Jeg redigerer produkt "Kodeliste"
+     And Jeg klikker på "Velg variant" til produktkrav "Kodeliste som krav (1)"
+     And Jeg skriver 1 i feltet "Minimum"
+     And Jeg skriver 4 i feltet "Maksimum"
+     And Jeg klikker på tildelingskriterie checkbox
+     And Jeg velger kodelist "Hvit"
+     And Jeg legge til "10" fradrag for kode "Hvit"
+     And Jeg velger kodelist "Rød"
+     And Jeg legge til "100" fradrag for kode "Rød"
+     And Jeg klikker på obligatorisk checkbox for kode "Rød"
+     Then Ser jeg fradrag for kode "Rød" er inaktiv
+     When Jeg klikker på "Lagre krav" knapp for å lagre
+     Then Ser jeg "Koder" har verdi "Hvit, Rød"
