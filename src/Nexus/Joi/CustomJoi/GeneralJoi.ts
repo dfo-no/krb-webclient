@@ -32,6 +32,11 @@ const BooleanValidator = (joi: Joi.Root) => ({
   base: joi.boolean().required(),
 });
 
+const BooleanOptionalValidator = (joi: Joi.Root) => ({
+  type: 'validateOptionalBoolean',
+  base: joi.boolean(),
+});
+
 const NumberValidator = (joi: Joi.Root) => ({
   type: 'validateNumber',
   base: joi.number().required(),
@@ -98,6 +103,7 @@ const GeneralJoi = [
   OptionalTextValidator,
   OptionalTextNotRequiredValidator,
   BooleanValidator,
+  BooleanOptionalValidator,
   NumberValidator,
   TypeValidator,
   TypesValidator,

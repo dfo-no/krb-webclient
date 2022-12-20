@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Typography } from '@mui/material';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Button, Type, Variant } from '@dfo-no/components.button';
@@ -61,10 +60,7 @@ const QuestionAnswerConfirmation = ({
           autoComplete="off"
           noValidate
         >
-          <div className={css.HorizontalContent}>
-            <CheckboxCtrl name={'answer.value'} />
-            <Typography>{t('Confirm')}</Typography>
-          </div>
+          <CheckboxCtrl name={'answer.value'} label={t('Confirm')} />
           <div className={css.Buttons}>
             <Button type={Type.Submit}>{t('Save')}</Button>
             <Button variant={Variant.Inverted} onClick={() => methods.reset()}>

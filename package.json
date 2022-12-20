@@ -174,7 +174,10 @@
       ],
       "react/jsx-props-no-spreading": 0
     },
-    "ignorePatterns": "analyse.js",
+    "ignorePatterns": [
+      "analyse.js",
+      "public/OidcServiceWorker.js"
+    ],
     "overrides": [
       {
         "files": [

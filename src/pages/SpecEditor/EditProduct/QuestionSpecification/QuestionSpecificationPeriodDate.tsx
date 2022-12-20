@@ -16,7 +16,7 @@ import { IPeriodDateQuestion } from '../../../../Nexus/entities/IPeriodDateQuest
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { DFOCheckbox } from '../../../../components/DFOCheckbox/DFOCheckbox';
 import ToolbarItem from '../../../../components/UI/Toolbar/ToolbarItem';
-
+import { WeekdaysCheckboxList } from '../../../../components/WeekdaysCheckboxList/WeekdaysCheckboxList';
 interface IProps {
   item: IPeriodDateQuestion;
 }
@@ -122,16 +122,23 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
           />
         </div>
         {item.config.isPeriod && (
-          <HorizontalTextCtrl
-            className={css.QuestionCriteria__Ctrl__inputCtrl}
-            label={t('Duration')}
-            name={`question.config.duration`}
-            defaultValue={0}
-            placeholder={t('Value')}
-            type={'number'}
-            adornment={t('Days')}
-            color={'var(--text-primary-color)'}
-          />
+          <>
+            <HorizontalTextCtrl
+              className={css.QuestionCriteria__Ctrl__inputCtrl}
+              label={t('Duration')}
+              name={`question.config.duration`}
+              defaultValue={0}
+              placeholder={t('Value')}
+              type={'number'}
+              adornment={t('Days')}
+              color={'var(--text-primary-color)'}
+            />
+            <WeekdaysCheckboxList
+              item={item}
+              control={control}
+              setValue={setValue}
+            />
+          </>
         )}
         <div onClick={onCheckboxClick}>
           <DFOCheckbox
