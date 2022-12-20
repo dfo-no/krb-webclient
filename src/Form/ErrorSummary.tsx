@@ -2,6 +2,8 @@ import Alert from '@mui/material/Alert';
 import React from 'react';
 import { FieldError, FieldErrors, FieldValues } from 'react-hook-form';
 
+import Utils from '../common/Utils';
+
 /*
  * Test class used to show errormessages under development
  */
@@ -30,14 +32,19 @@ export default function ErrorSummary<T extends FieldValues>({
 
   const errorMessages: string[] = [];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function traverse(o: any) {
+  function traverse(o: unknown) {
     // eslint-disable-next-line no-restricted-syntax
-    for (const i in o) {
-      if (!!o[i] && typeof o[i] === 'object') {
-        if (!isFieldError(o[i])) {
-          traverse(o[i]);
-        } else {
-          errorMessages.push(o[i].message);
+    if (Utils.isRecord(o)) {
+      for (const i in o) {
+        const property = o[i];
+        if (!!property && typeof property === 'object') {
+          if (!isFieldError(property)) {
+            traverse(property);
+          } else {
+            if (property.message !== undefined) {
+              errorMessages.push(property.message);
+            }
+          }
         }
       }
     }

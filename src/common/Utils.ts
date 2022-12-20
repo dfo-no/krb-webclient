@@ -463,9 +463,15 @@ class Utils {
     );
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  static isNumeric = (val: any): boolean => {
-    return !(val instanceof Array) && val - parseFloat(val) + 1 >= 0;
+  static isRecord = (value: unknown): value is Record<string, unknown> => {
+    return typeof value === 'object' && value !== null;
+  };
+
+  // Based on answers to this question: https://stackoverflow.com/questions/23437476/in-typescript-how-to-check-if-a-string-is-numeric
+  // "To steal ideas from one person is plagiarism; to steal from many is research." - https://quoteinvestigator.com/2010/09/20/plagiarism/
+  static isNumeric = (value: unknown): value is number => {
+    if (value === '' || value === null) return false;
+    return !isNaN(Number(value));
   };
 }
 

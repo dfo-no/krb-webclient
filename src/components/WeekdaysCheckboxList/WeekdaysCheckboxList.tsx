@@ -5,6 +5,7 @@ import {
   Controller,
   useFieldArray,
   useFormContext,
+  UseFormSetValue,
 } from 'react-hook-form';
 import { get } from 'lodash';
 import { useTranslation } from 'react-i18next';
@@ -14,11 +15,10 @@ import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { weekdaysData } from '../../Nexus/entities/WeekdaysData';
 import { IPeriodDateQuestion } from '../../Nexus/entities/IPeriodDateQuestion';
 
-/* eslint-disable  @typescript-eslint/no-explicit-any */
 interface IProps {
   item: IPeriodDateQuestion;
-  control: Control<IRequirementAnswer, any>;
-  setValue: (name: any, value: any) => void;
+  control: Control<IRequirementAnswer, unknown>;
+  setValue: UseFormSetValue<IRequirementAnswer>;
 }
 
 interface ICheckboxProps {
