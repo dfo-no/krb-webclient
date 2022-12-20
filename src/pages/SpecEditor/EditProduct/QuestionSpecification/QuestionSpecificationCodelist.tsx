@@ -24,9 +24,6 @@ const QuestionSpecificationCodelist = ({
 }: IProps) => {
   const { t } = useTranslation();
   const [codesAwardCriteria, setCodesAwardCriteria] = useState(false);
-  const [disabledDiscountIndex, setDisabledDiscountIndex] = useState<
-    number[] | null
-  >(null);
   const { control, setValue } = useFormContext<IRequirementAnswer>();
   const { fields, append, remove } = useFieldArray({
     control,
@@ -43,9 +40,17 @@ const QuestionSpecificationCodelist = ({
     control,
   });
 
+  const codeChecked = (code: ICode): boolean => {
+    return fields.some((elem) => elem.code === code.id);
+  };
+
+  const codeIndex = (code: ICode): number => {
+    return fields.findIndex((elem) => elem.code === code.id);
+  };
+
   useEffect(() => {
     const codes = () => {
-      return awardCriteriaCodesDiscount.find((code) => code.score > 0);
+      return awardCriteriaCodesDiscount?.find((code) => code.score > 0);
     };
     if (awardCriteriaCodesDiscount?.length && !!codes()) {
       setCodesAwardCriteria(true);
@@ -57,15 +62,11 @@ const QuestionSpecificationCodelist = ({
     handleAwardCriteria,
   ]);
 
+  const mandatoryCodeList = () => {
+    return awardCriteriaCodesDiscount?.filter((code) => code.mandatory);
+  };
+
   if (!codelist) return <></>;
-
-  const codeChecked = (code: ICode): boolean => {
-    return fields.some((elem) => elem.code === code.id);
-  };
-
-  const codeIndex = (code: ICode): number => {
-    return fields.findIndex((elem) => elem.code === code.id);
-  };
 
   const onSelect = (code: ICode): void => {
     const index = codeIndex(code);
@@ -82,20 +83,13 @@ const QuestionSpecificationCodelist = ({
   };
 
   const handleMandatoryClick = (codesIndex: number): void => {
-    const indexes: number[] = [];
-    if (disabledDiscountIndex !== null) {
-      indexes.push(...disabledDiscountIndex);
-    }
     if (fields.length) {
       setValue(`question.config.codes.${codesIndex}.score`, 0);
-      if (!disabledDiscountIndex?.includes(codesIndex)) {
-        indexes?.push(codesIndex);
-        setDisabledDiscountIndex(indexes);
-      } else {
-        indexes.splice(indexes.indexOf(codesIndex), 1);
-        setDisabledDiscountIndex(indexes);
-      }
     }
+  };
+
+  const discountDisabled = (codeId: string) => {
+    return !!mandatoryCodeList()?.find((c) => c.code === codeId);
   };
 
   return (
@@ -160,9 +154,7 @@ const QuestionSpecificationCodelist = ({
                   {codesAwardCriteria && (
                     <div
                       className={css.Ctrl}
-                      data-disabled={disabledDiscountIndex?.includes(
-                        codeIndex(code)
-                      )}
+                      data-disabled={discountDisabled(code.id)}
                     >
                       <Typography variant={'sm'}>{t('Discount')}</Typography>
                       <HorizontalTextCtrl
@@ -175,9 +167,7 @@ const QuestionSpecificationCodelist = ({
                         size={'small'}
                         color={'var(--text-primary-color)'}
                         adornment={t('NOK')}
-                        isDisabled={disabledDiscountIndex?.includes(
-                          codeIndex(code)
-                        )}
+                        isDisabled={discountDisabled(code.id)}
                       />
                     </div>
                   )}
