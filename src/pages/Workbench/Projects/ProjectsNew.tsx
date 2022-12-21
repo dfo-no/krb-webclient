@@ -2,6 +2,7 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { Box, Button, List, Typography } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
 import { Fetcher } from 'openapi-typescript-fetch';
+import { RateLimit } from 'async-sema';
 
 import css from './Projects.module.scss';
 import DFODialog from '../../../components/DFODialog/DFODialog';
@@ -26,7 +27,8 @@ import { ProjectItemNew } from './ProjectItemNew';
 const fetcher = Fetcher.for<paths>();
 
 fetcher.configure({
-  baseUrl: 'https://krb-backend-api.azurewebsites.net',
+  // baseUrl: 'https://krb-backend-api.azurewebsites.net',
+  baseUrl: 'http://localhost:8080',
   // init: {
   //   headers: {
   //     ...
@@ -36,10 +38,14 @@ fetcher.configure({
 });
 
 const findProjects = fetcher.path('/api/v1/projects').method('get').create();
+const deleteProject = fetcher
+  .path('/api/v1/projects/{projectRef}')
+  .method('delete')
+  .create();
 
 export type ProjectForm = components['schemas']['ProjectForm'];
 export function ProjectsNew(): React.ReactElement {
-  console.log('yo');
+  const lim = RateLimit(15, { uniformDistribution: true });
   const { t } = useTranslation();
   const [projectList, setProjectList] = useState<ProjectForm[]>();
   const [allProjects, setAllProjects] = useState<ProjectForm[]>();
@@ -53,15 +59,32 @@ export function ProjectsNew(): React.ReactElement {
   // });
 
   useEffect(() => {
-    console.log('yo');
-
-    findProjects({}).then((projectsResponse) => {
+    findProjects({}).then(async (projectsResponse) => {
       if (projectsResponse) {
         setProjectList(projectsResponse.data);
         setAllProjects(projectsResponse.data);
       }
     });
   }, [setProjectList, setAllProjects]);
+
+  // useEffect(() => {
+  //   const x = async () => {
+  //     if (!allProjects) return;
+  //     console.log(`yo allprojects length: ${allProjects.length} `);
+  //     for (let i = 0; i < allProjects.length; i++) {
+  //       console.log(i);
+
+  //       const project = allProjects[i];
+  //       await lim();
+  //       console.log('hmmm:', i);
+  //       if (i < 5) continue;
+  //       if (project.ref) {
+  //         deleteProject({ projectRef: project.ref });
+  //       }
+  //     }
+  //   };
+  //   x();
+  // }, [allProjects, lim]);
 
   // const searchFunction = (searchString: string, list: IBank[]) => {
   //   return SearchUtils.searchBaseModel(list, searchString) as IBank[];
