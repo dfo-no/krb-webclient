@@ -283,4 +283,41 @@ describe('Utils functions should work', () => {
     expect(result3).toEqual(12.4);
     expect(result4).toEqual(46);
   });
+
+  it('Has a working isNumeric function', () => {
+    enum Test {
+      ONE,
+      TWO,
+    }
+
+    // Based on answers to this question: https://stackoverflow.com/questions/23437476/in-typescript-how-to-check-if-a-string-is-numeric
+    // "To steal ideas from one person is plagiarism; to steal from many is research." - https://quoteinvestigator.com/2010/09/20/plagiarism/
+    expect(Utils.isNumeric('')).toEqual(false);
+    expect(Utils.isNumeric('1243w')).toEqual(false);
+    // enum:
+    expect(Utils.isNumeric(Test.ONE)).toEqual(true);
+    // decimal:
+    expect(Utils.isNumeric(10)).toEqual(true);
+    // hexaDecimal:
+    expect(Utils.isNumeric(0xf10b)).toEqual(true);
+    // binary:
+    expect(Utils.isNumeric(0b110100)).toEqual(true);
+    // octal:
+    expect(Utils.isNumeric(0o410)).toEqual(true);
+    // stringNumber:
+    expect(Utils.isNumeric('10')).toEqual(true);
+    //
+    // string:
+    expect(Utils.isNumeric('Hello')).toEqual(false);
+    // undefined:
+    expect(Utils.isNumeric(undefined)).toEqual(false);
+    // null:
+    expect(Utils.isNumeric(null)).toEqual(false);
+    // function:
+    expect(Utils.isNumeric(() => {})).toEqual(false);
+    // array:
+    expect(Utils.isNumeric([80, 85, 75])).toEqual(false);
+    // object:
+    expect(Utils.isNumeric({})).toEqual(false);
+  });
 });

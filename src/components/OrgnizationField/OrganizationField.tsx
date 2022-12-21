@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import { debounce } from 'lodash';
 import { useTranslation } from 'react-i18next';
@@ -22,9 +21,11 @@ const searchFun = (
     .then((data) => {
       setResults(
         data._embedded.enheter.length > 0
-          ? data._embedded.enheter.map((entry: any) => {
-              return { name: entry.navn, orgNr: entry.organisasjonsnummer };
-            })
+          ? data._embedded.enheter.map(
+              (entry: { navn: string; organisasjonsnummer: string }) => {
+                return { name: entry.navn, orgNr: entry.organisasjonsnummer };
+              }
+            )
           : []
       );
     })
