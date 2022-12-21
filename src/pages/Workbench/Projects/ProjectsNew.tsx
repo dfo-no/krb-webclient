@@ -2,16 +2,16 @@ import React, { ReactElement, useEffect, useState } from 'react';
 import { Box, Button, List, Typography } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
 import { Fetcher } from 'openapi-typescript-fetch';
-import { RateLimit } from 'async-sema';
+// import { RateLimit } from 'async-sema';
 
 import css from './Projects.module.scss';
 import DFODialog from '../../../components/DFODialog/DFODialog';
-// import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
-// import LoaderSpinner from '../../../common/LoaderSpinner';
+import { DFOSearchBar } from '../../../components/DFOSearchBar/DFOSearchBarNew';
+import LoaderSpinner from '../../../common/LoaderSpinner';
 import mainIllustration from '../../../assets/images/main-illustration.svg';
 import NewProjectForm from './NewProjectForm';
-// import ProjectItem from './ProjectItem';
-// import SearchUtils from '../../../common/SearchUtils';
+import ProjectItem from './ProjectItem';
+import SearchUtils from '../../../common/SearchUtils';
 import { EditableProvider } from '../../../components/EditableContext/EditableContext';
 // import { IBank } from '../../../Nexus/entities/IBank';
 import {
@@ -21,8 +21,7 @@ import {
 } from '../../../components/SearchContainer/SearchContainer';
 import { paths, components } from '../../../api/generated';
 import { ProjectItemNew } from './ProjectItemNew';
-// import { PAGE_SIZE } from '../../../common/Constants';
-// import { useGetProjectsQuery } from '../../../store/api/bankApi';
+import { PAGE_SIZE } from '../../../common/Constants';
 
 const fetcher = Fetcher.for<paths>();
 
@@ -38,16 +37,17 @@ fetcher.configure({
 });
 
 const findProjects = fetcher.path('/api/v1/projects').method('get').create();
-const deleteProject = fetcher
-  .path('/api/v1/projects/{projectRef}')
-  .method('delete')
-  .create();
+// const deleteProject = fetcher
+//   .path('/api/v1/projects/{projectRef}')
+//   .method('delete')
+//   .create();
 
 export type ProjectForm = components['schemas']['ProjectForm'];
 export function ProjectsNew(): React.ReactElement {
-  const lim = RateLimit(15, { uniformDistribution: true });
+  // const lim = RateLimit(15, { uniformDistribution: true });
   const { t } = useTranslation();
   const [projectList, setProjectList] = useState<ProjectForm[]>();
+  const [loading, setLoading] = useState<boolean>(true);
   const [allProjects, setAllProjects] = useState<ProjectForm[]>();
   const [isOpen, setOpen] = useState(false);
 
@@ -60,12 +60,17 @@ export function ProjectsNew(): React.ReactElement {
 
   useEffect(() => {
     findProjects({}).then(async (projectsResponse) => {
+      setLoading(false);
       if (projectsResponse) {
         setProjectList(projectsResponse.data);
         setAllProjects(projectsResponse.data);
       }
     });
   }, [setProjectList, setAllProjects]);
+
+  if (loading) {
+    return <LoaderSpinner />;
+  }
 
   // useEffect(() => {
   //   const x = async () => {
@@ -86,13 +91,13 @@ export function ProjectsNew(): React.ReactElement {
   //   x();
   // }, [allProjects, lim]);
 
-  // const searchFunction = (searchString: string, list: IBank[]) => {
-  //   return SearchUtils.searchBaseModel(list, searchString) as IBank[];
-  // };
+  const searchFunction = (searchString: string, list: ProjectForm[]) => {
+    return SearchUtils.searchTitleAndDescription(list, searchString);
+  };
 
-  // const searchFieldCallback = (result: IBank[]) => {
-  //   setProjectList(result);
-  // };
+  const searchFieldCallback = (result: ProjectForm[]) => {
+    setProjectList(result);
+  };
 
   const renderProjects = (list: ProjectForm[]) => {
     return list.map((element) => {
@@ -149,12 +154,12 @@ export function ProjectsNew(): React.ReactElement {
       <div className={css.ContentContainer}>
         <SearchContainer className={css.SearchContainer}>
           <SearchFieldContainer>
-            {/* <DFOSearchBar
+            <DFOSearchBar
               list={allProjects}
               placeholder={t('common.Search for banks')}
               callback={searchFieldCallback}
               searchFunction={searchFunction}
-            /> */}
+            />
           </SearchFieldContainer>
           <NewButtonContainer>{renderNewBankButton()}</NewButtonContainer>
         </SearchContainer>

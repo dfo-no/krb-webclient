@@ -3,6 +3,7 @@ import { IBaseModelWithTitleAndDesc } from '../models/IBaseModelWithTitleAndDesc
 import { Parentable } from '../models/Parentable';
 import Utils from './Utils';
 import { ICodelist } from '../Nexus/entities/ICodelist';
+import { TitleAndDescription } from '../components/DFOSearchBar/DFOSearchBarNew';
 
 interface SearchableParams {
   inSearch?: boolean;
@@ -10,14 +11,15 @@ interface SearchableParams {
 
 type Searchable = SearchableParams & Nestable<IBaseModelWithTitleAndDesc>;
 
+// TODO: Get rid of this class :-D (return only functions)
 class SearchUtils {
   private static inTitleOrDescription(
-    item: IBaseModelWithTitleAndDesc,
+    item: TitleAndDescription,
     searchString: string
   ) {
-    const inTitle = item.title
-      .toLowerCase()
-      .includes(searchString.toLowerCase());
+    const inTitle =
+      item.title &&
+      item.title.toLowerCase().includes(searchString.toLowerCase());
     const inDescription =
       item.description &&
       item.description.toLowerCase().includes(searchString.toLowerCase());
@@ -74,10 +76,20 @@ class SearchUtils {
     return Utils.nestableList2Parentable(returnList);
   }
 
+  // TODO: can this be removed before I create the pull request?
   static searchBaseModel(
     items: IBaseModelWithTitleAndDesc[],
     searchString: string
   ): IBaseModelWithTitleAndDesc[] {
+    return items.filter((item) =>
+      this.inTitleOrDescription(item, searchString)
+    );
+  }
+
+  static searchTitleAndDescription(
+    items: TitleAndDescription[],
+    searchString: string
+  ) {
     return items.filter((item) =>
       this.inTitleOrDescription(item, searchString)
     );

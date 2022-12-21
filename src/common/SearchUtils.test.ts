@@ -108,6 +108,12 @@ describe('SearchUtils functions should work', () => {
     expect(result.length).toEqual(2);
     expect(result[0].title).toEqual('A_match');
     expect(result[1].title).toEqual('B');
+
+    const newResult = SearchUtils.searchTitleAndDescription(tags, 'match');
+
+    expect(newResult.length).toEqual(2);
+    expect(newResult[0].title).toEqual('A_match');
+    expect(newResult[1].title).toEqual('B');
   });
 
   test('SearcUtils.searchCodelist', () => {
