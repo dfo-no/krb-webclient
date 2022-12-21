@@ -8,6 +8,7 @@ const trustedDomains = {
   default: [
     'https://krb-backend-auth.azurewebsites.net',
     'https://krb-backend-api.azurewebsites.net',
+    'http://localhost:8080',
   ],
   // We can have more configurations
   // default: ['https://demo.duendesoftware.com', 'https://kdhttps.auth0.com'],
