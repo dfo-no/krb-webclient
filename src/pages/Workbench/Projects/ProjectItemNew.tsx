@@ -9,8 +9,8 @@ import css from './Projects.module.scss';
 import { FormIconButton } from '../../../components/Form/FormIconButton';
 import { useEditableState } from '../../../components/EditableContext/EditableContext';
 import { WORKBENCH } from '../../../common/PathConstants';
-import { ProjectForm } from './ProjectsNew';
 import { DeleteProjectForm } from './DeleteProjectFormNew';
+import { ProjectForm } from '../../../api/openapi-fetch';
 
 interface IProps {
   project: ProjectForm;

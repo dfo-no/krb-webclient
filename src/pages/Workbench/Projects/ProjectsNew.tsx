@@ -1,7 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Box, Button, List, Typography } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
-import { Fetcher } from 'openapi-typescript-fetch';
 // import { RateLimit } from 'async-sema';
 
 import css from './Projects.module.scss';
@@ -19,30 +18,9 @@ import {
   SearchContainer,
   SearchFieldContainer,
 } from '../../../components/SearchContainer/SearchContainer';
-import { paths, components } from '../../../api/generated';
 import { PAGE_SIZE } from '../../../common/Constants';
+import { findProjects, ProjectForm } from '../../../api/openapi-fetch';
 
-const fetcher = Fetcher.for<paths>();
-
-fetcher.configure({
-  // baseUrl: 'https://krb-backend-api.azurewebsites.net',
-  baseUrl: 'http://localhost:8080',
-  // init: {
-  //   headers: {
-  //     ...
-  // },
-  // },
-  // use: [...] // middlewares
-});
-
-const findProjects = fetcher.path('/api/v1/projects').method('get').create();
-// const deleteProject = fetcher
-//   .path('/api/v1/projects/{projectRef}')
-//   .method('delete')
-//   .create();
-
-// TODO: Put somewhere else
-export type ProjectForm = components['schemas']['ProjectForm'];
 export function ProjectsNew(): React.ReactElement {
   // const lim = RateLimit(15, { uniformDistribution: true });
   const { t } = useTranslation();
