@@ -131,13 +131,13 @@ describe('TimeJoi', () => {
     expect(reportSuccess2?.error?.details[0].message).toBeUndefined();
   });
 
-  test('Joi validateTimeScore() validates towards boundaries', () => {
+  test('Joi validateTimeDiscount() validates towards boundaries', () => {
     const schema = CustomJoi.object().keys({
       fromBoundary: CustomJoi.validateFromBoundaryTime(),
       toBoundary: CustomJoi.validateToBoundaryTime(),
       timeScores: CustomJoi.validateUniqueArray(
         CustomJoi.object().keys({
-          time: CustomJoi.validateTimeScore(),
+          time: CustomJoi.validateTimeDiscount(),
         })
       ),
     });

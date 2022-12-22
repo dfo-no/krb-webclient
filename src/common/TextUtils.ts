@@ -189,15 +189,19 @@ class TextUtils {
     question: ISliderQuestion
   ): ChosenConfig[] => {
     const config = question.config;
-    const scoreValues = config.scoreValues
-      .map((sv) => `${sv.value}: ${sv.score}`)
+    const discountValues = config.discountsValue
+      .map((sv) => `${sv.value}: ${sv.discount}`)
       .join(', ');
     const chosenConfig: ChosenConfig[] = [];
     TextUtils.setChosenConfigs(chosenConfig, t('Minimum'), `${config.min}`);
     TextUtils.setChosenConfigs(chosenConfig, t('Maximum'), `${config.max}`);
     TextUtils.setChosenConfigs(chosenConfig, t('Step'), `${config.step}`);
     TextUtils.setChosenConfigs(chosenConfig, t('Unit'), `${config.unit}`);
-    TextUtils.setChosenConfigs(chosenConfig, t('Scorevalues'), scoreValues);
+    TextUtils.setChosenConfigs(
+      chosenConfig,
+      t('Discountvalues'),
+      discountValues
+    );
     return chosenConfig;
   };
 

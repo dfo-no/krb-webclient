@@ -93,6 +93,7 @@ export default class QuestionService {
             duration: 0,
             weekdays: weekdaysData,
             defaultDiscount: 1,
+            dateDiscounts: [],
             dateScores: [],
           },
           answer: {
@@ -113,6 +114,7 @@ export default class QuestionService {
             step: 1,
             unit: '',
             defaultDiscount: 1,
+            discountsValue: [],
             scoreValues: [],
           },
           answer: {
@@ -149,6 +151,7 @@ export default class QuestionService {
             periodMinutes: 0,
             periodHours: 0,
             defaultDiscount: 1,
+            timeDiscounts: [],
             timeScores: [],
           },
           answer: {
@@ -180,21 +183,21 @@ export default class QuestionService {
           ? 100
           : question.config.discountUnconfirmed;
       case QuestionVariant.Q_PERIOD_DATE:
-        return Utils.findScoreFromDate(
+        return Utils.findDiscountFromDate(
           question.answer.fromDate,
-          question.config.dateScores
+          question.config.dateDiscounts
         );
       case QuestionVariant.Q_SLIDER:
-        return Utils.findScoreFromValue(
+        return Utils.findDiscountFromValue(
           question.answer.value,
-          question.config.scoreValues
+          question.config.discountsValue
         );
       case QuestionVariant.Q_TEXT:
         return question.answer.text.length > 0 ? 100 : 0;
       case QuestionVariant.Q_TIME:
-        return Utils.findScoreFromTime(
+        return Utils.findDiscountFromTime(
           question.answer.fromTime,
-          question.config.timeScores
+          question.config.timeDiscounts
         );
       case QuestionVariant.Q_FILEUPLOAD:
       default:

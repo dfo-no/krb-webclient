@@ -10,9 +10,9 @@ import {
   productsTestData,
   projectTestData,
 } from './TestData';
-import { DateScorePair } from '../Nexus/entities/IPeriodDateQuestion';
-import { ScoreValuePair } from '../Nexus/entities/ISliderQuestion';
-import { TimeScorePair } from '../Nexus/entities/ITimeQuestion';
+import { DateDiscountPair } from '../Nexus/entities/IPeriodDateQuestion';
+import { DiscountValuePair } from '../Nexus/entities/ISliderQuestion';
+import { TimeDiscountPair } from '../Nexus/entities/ITimeQuestion';
 
 describe('Utils functions should work', () => {
   test('Utils.parentable2Nestable', () => {
@@ -194,55 +194,55 @@ describe('Utils functions should work', () => {
     expect(isInUse2).toBeFalsy();
   });
 
-  it('Utils.findScoreFromValue returns correct score for values', () => {
-    const scoreValuePairs: ScoreValuePair[] = [
-      { id: uuidv4(), value: 0, score: 0 },
-      { id: uuidv4(), value: 30, score: 100 },
-      { id: uuidv4(), value: 2, score: 12 },
-      { id: uuidv4(), value: 3, score: 16 },
-      { id: uuidv4(), value: 10, score: 30 },
-      { id: uuidv4(), value: 20, score: 50 },
-      { id: uuidv4(), value: 22, score: 60 },
-      { id: uuidv4(), value: 25, score: 70 },
+  it('Utils.findDiscountFromValue returns correct discount for values', () => {
+    const discountValuePairs: DiscountValuePair[] = [
+      { id: uuidv4(), value: 0, discount: 0 },
+      { id: uuidv4(), value: 30, discount: 100 },
+      { id: uuidv4(), value: 2, discount: 12 },
+      { id: uuidv4(), value: 3, discount: 16 },
+      { id: uuidv4(), value: 10, discount: 30 },
+      { id: uuidv4(), value: 20, discount: 50 },
+      { id: uuidv4(), value: 22, discount: 60 },
+      { id: uuidv4(), value: 25, discount: 70 },
     ];
 
-    const result1 = Utils.findScoreFromValue(2, scoreValuePairs);
-    const result2 = Utils.findScoreFromValue(27.5, scoreValuePairs);
-    const result3 = Utils.findScoreFromValue(2.1, scoreValuePairs);
-    const result4 = Utils.findScoreFromValue(18, scoreValuePairs);
+    const result1 = Utils.findDiscountFromValue(2, discountValuePairs);
+    const result2 = Utils.findDiscountFromValue(27.5, discountValuePairs);
+    const result3 = Utils.findDiscountFromValue(2.1, discountValuePairs);
+    const result4 = Utils.findDiscountFromValue(18, discountValuePairs);
     expect(result1).toEqual(12);
     expect(result2).toEqual(85);
     expect(result3).toEqual(12.4);
     expect(result4).toEqual(46);
   });
 
-  it('Utils.findScoreFromDate returns correct score for dates', () => {
-    const scoreDatePairs: DateScorePair[] = [
-      { id: uuidv4(), date: '2022-02-10T12:00:00.000Z', score: 0 },
-      { id: uuidv4(), date: '2022-03-12T12:00:00.000Z', score: 100 },
-      { id: uuidv4(), date: '2022-02-12T12:00:00.000Z', score: 12 },
-      { id: uuidv4(), date: '2022-02-13T12:00:00.000Z', score: 16 },
-      { id: uuidv4(), date: '2022-02-20T12:00:00.000Z', score: 30 },
-      { id: uuidv4(), date: '2022-03-02T12:00:00.000Z', score: 50 },
-      { id: uuidv4(), date: '2022-03-04T12:00:00.000Z', score: 60 },
-      { id: uuidv4(), date: '2022-03-07T12:00:00.000Z', score: 70 },
+  it('Utils.findDiscountFromDate returns correct discount for dates', () => {
+    const discountDatePairs: DateDiscountPair[] = [
+      { id: uuidv4(), date: '2022-02-10T12:00:00.000Z', discount: 0 },
+      { id: uuidv4(), date: '2022-03-12T12:00:00.000Z', discount: 100 },
+      { id: uuidv4(), date: '2022-02-12T12:00:00.000Z', discount: 12 },
+      { id: uuidv4(), date: '2022-02-13T12:00:00.000Z', discount: 16 },
+      { id: uuidv4(), date: '2022-02-20T12:00:00.000Z', discount: 30 },
+      { id: uuidv4(), date: '2022-03-02T12:00:00.000Z', discount: 50 },
+      { id: uuidv4(), date: '2022-03-04T12:00:00.000Z', discount: 60 },
+      { id: uuidv4(), date: '2022-03-07T12:00:00.000Z', discount: 70 },
     ];
 
-    const result1 = Utils.findScoreFromDate(
+    const result1 = Utils.findDiscountFromDate(
       '2022-02-12T12:00:00.000Z',
-      scoreDatePairs
+      discountDatePairs
     );
-    const result2 = Utils.findScoreFromDate(
+    const result2 = Utils.findDiscountFromDate(
       '2022-03-10T12:00:00.000Z',
-      scoreDatePairs
+      discountDatePairs
     );
-    const result3 = Utils.findScoreFromDate(
+    const result3 = Utils.findDiscountFromDate(
       '2022-02-11T12:00:00.000Z',
-      scoreDatePairs
+      discountDatePairs
     );
-    const result4 = Utils.findScoreFromDate(
+    const result4 = Utils.findDiscountFromDate(
       '2022-02-28T12:00:00.000Z',
-      scoreDatePairs
+      discountDatePairs
     );
     expect(result1).toEqual(12);
     expect(result2).toEqual(88);
@@ -250,33 +250,33 @@ describe('Utils functions should work', () => {
     expect(result4).toEqual(46);
   });
 
-  it('Utils.findScoreFromTime returns correct score for times', () => {
-    const scoreTimePairs: TimeScorePair[] = [
-      { id: uuidv4(), time: '2022-02-10T07:00:00.000Z', score: 0 },
-      { id: uuidv4(), time: '2022-02-10T12:00:00.000Z', score: 100 },
-      { id: uuidv4(), time: '2022-02-10T07:20:00.000Z', score: 12 },
-      { id: uuidv4(), time: '2022-02-10T07:30:00.000Z', score: 16 },
-      { id: uuidv4(), time: '2022-02-10T08:40:00.000Z', score: 30 },
-      { id: uuidv4(), time: '2022-02-10T10:20:00.000Z', score: 50 },
-      { id: uuidv4(), time: '2022-02-10T10:40:00.000Z', score: 60 },
-      { id: uuidv4(), time: '2022-02-10T11:10:00.000Z', score: 70 },
+  it('Utils.findDiscountFromTime returns correct discount for times', () => {
+    const discountTimePairs: TimeDiscountPair[] = [
+      { id: uuidv4(), time: '2022-02-10T07:00:00.000Z', discount: 0 },
+      { id: uuidv4(), time: '2022-02-10T12:00:00.000Z', discount: 100 },
+      { id: uuidv4(), time: '2022-02-10T07:20:00.000Z', discount: 12 },
+      { id: uuidv4(), time: '2022-02-10T07:30:00.000Z', discount: 16 },
+      { id: uuidv4(), time: '2022-02-10T08:40:00.000Z', discount: 30 },
+      { id: uuidv4(), time: '2022-02-10T10:20:00.000Z', discount: 50 },
+      { id: uuidv4(), time: '2022-02-10T10:40:00.000Z', discount: 60 },
+      { id: uuidv4(), time: '2022-02-10T11:10:00.000Z', discount: 70 },
     ];
 
-    const result1 = Utils.findScoreFromTime(
+    const result1 = Utils.findDiscountFromTime(
       '2022-02-12T07:20:00.000Z',
-      scoreTimePairs
+      discountTimePairs
     );
-    const result2 = Utils.findScoreFromTime(
+    const result2 = Utils.findDiscountFromTime(
       '2022-03-10T11:35:00.000Z',
-      scoreTimePairs
+      discountTimePairs
     );
-    const result3 = Utils.findScoreFromTime(
+    const result3 = Utils.findDiscountFromTime(
       '2022-02-11T07:21:00.000Z',
-      scoreTimePairs
+      discountTimePairs
     );
-    const result4 = Utils.findScoreFromTime(
+    const result4 = Utils.findDiscountFromTime(
       '2022-02-28T10:00:00.000Z',
-      scoreTimePairs
+      discountTimePairs
     );
     expect(result1).toEqual(12);
     expect(result2).toEqual(85);

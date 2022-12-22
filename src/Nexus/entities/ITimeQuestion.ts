@@ -23,17 +23,18 @@ export interface ITimeConfig extends IConfigBase {
   toBoundary: string | null;
   periodMinutes: number;
   periodHours: number;
-  timeScores: TimeScorePair[];
+  timeDiscounts: TimeDiscountPair[];
+  timeScores: [];
 }
 
-export interface TimeScorePair {
+export interface TimeDiscountPair {
   id?: string;
   time: string | null;
-  score: number;
+  discount: number;
 }
 
-const WorkbenchTimeScoreSchema = CustomJoi.object().keys({
-  score: CustomJoi.validateScore(),
+const WorkbenchTimeDiscountSchema = CustomJoi.object().keys({
+  discount: CustomJoi.validateDiscount(),
   time: CustomJoi.validateEmptyDate(),
 });
 
@@ -45,14 +46,17 @@ export const TimeQuestionWorkbenchSchema = QuestionBaseSchema.keys({
     toBoundary: CustomJoi.validateOptionalDate(),
     periodMinutes: CustomJoi.validateNumber(),
     periodHours: CustomJoi.validateNumber(),
-    timeScores: CustomJoi.validateArray(WorkbenchTimeScoreSchema),
+    timeDiscounts: CustomJoi.validateNotRequiredArray(
+      WorkbenchTimeDiscountSchema
+    ),
+    timeScores: CustomJoi.validateNotRequiredArray(),
   }),
 });
 
-const TimeScoreSchema = CustomJoi.object().keys({
+const TimeDiscountSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
-  score: CustomJoi.validateScore(),
-  time: CustomJoi.validateTimeScore(),
+  discount: CustomJoi.validateDiscount(),
+  time: CustomJoi.validateTimeDiscount(),
 });
 
 export const TimeQuestionAnswerSchema = TimeQuestionWorkbenchSchema.keys({
@@ -62,11 +66,12 @@ export const TimeQuestionAnswerSchema = TimeQuestionWorkbenchSchema.keys({
     toBoundary: CustomJoi.validateToBoundaryTime(),
     periodMinutes: CustomJoi.validatePeriodMinutes(),
     periodHours: CustomJoi.validatePeriodHours(),
-    timeScores: CustomJoi.validateTimeScoreValues(TimeScoreSchema),
+    timeDiscounts: CustomJoi.validateTimeDiscountValues(TimeDiscountSchema),
+    timeScores: CustomJoi.validateNotRequiredArray(),
   }),
   answer: CustomJoi.object().keys({
     fromTime: CustomJoi.validateFromTime(),
     toTime: CustomJoi.validateToTime(),
-    discount: CustomJoi.validateScore(),
+    discount: CustomJoi.validateDiscount(),
   }),
 });

@@ -82,8 +82,8 @@ const DurationValidator = (joi: Joi.Root) => ({
   base: joi.number().integer().min(0),
 });
 
-const DateScoreValidator = (joi: Joi.Root) => ({
-  type: 'validateDateScore',
+const DateDiscountValidator = (joi: Joi.Root) => ({
+  type: 'validateDateDiscount',
   base: joi.date().iso().raw().messages({
     'date.base': 'Dato må ha en verdi',
   }),
@@ -197,8 +197,8 @@ const ToDateValidator = (joi: Joi.Root) => ({
   },
 });
 
-const DateScoreValuesValidator = (joi: Joi.Root) => ({
-  type: 'validateDateScoreValues',
+const DateDiscountValuesValidator = (joi: Joi.Root) => ({
+  type: 'validateDateDiscountValues',
   args(value: Schema, type: Schema) {
     return joi.array().items(type).required().unique('date').messages({
       'array.unique': 'Dato kan ikke være like',
@@ -212,10 +212,10 @@ const DateJoi = [
   FromBoundaryDateValidator,
   ToBoundaryDateValidator,
   DurationValidator,
-  DateScoreValidator,
+  DateDiscountValidator,
   FromDateValidator,
   ToDateValidator,
-  DateScoreValuesValidator,
+  DateDiscountValuesValidator,
 ];
 
 export default DateJoi;

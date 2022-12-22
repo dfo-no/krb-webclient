@@ -19,10 +19,15 @@ describe('EvaluationService', () => {
         step: 5,
         unit: 'TB',
         defaultDiscount: 1,
-        scoreValues: [
-          { id: 'd7f3cd3b-5428-470a-97fe-ce001ac096a6', value: 0, score: 0 },
-          { id: 'ec712301-4bf7-4d22-8d33-e96630ed0440', value: 10, score: 100 },
+        discountsValue: [
+          { id: 'd7f3cd3b-5428-470a-97fe-ce001ac096a6', value: 0, discount: 0 },
+          {
+            id: 'ec712301-4bf7-4d22-8d33-e96630ed0440',
+            value: 10,
+            discount: 100,
+          },
         ],
+        scoreValues: [],
       },
       answer: {
         discount: 0,
@@ -44,18 +49,19 @@ describe('EvaluationService', () => {
         defaultDiscount: 1,
         fromBoundary: '2021-10-01T00:00:00.0000000Z',
         toBoundary: '2021-12-30T00:00:00.0000000Z',
-        dateScores: [
+        dateDiscounts: [
           {
             id: '8175d0e1-de2c-4d5e-ae97-d1dc837d5f55',
             date: '2021-10-01T00:00:00.0000000Z',
-            score: 0,
+            discount: 0,
           },
           {
             id: 'b6f872ed-3497-4622-bee5-8117c5fa5e51',
             date: '2021-12-30T00:00:00.0000000Z',
-            score: 100,
+            discount: 100,
           },
         ],
+        dateScores: [],
       },
       answer: {
         discount: 0,

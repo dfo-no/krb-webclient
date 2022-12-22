@@ -21,17 +21,18 @@ export interface ISliderConfig extends IConfigBase {
   min: number;
   max: number;
   unit: string;
-  scoreValues: ScoreValuePair[];
+  discountsValue: DiscountValuePair[];
+  scoreValues: [];
 }
 
-export interface ScoreValuePair {
+export interface DiscountValuePair {
   id?: string;
-  score: number;
+  discount: number;
   value: number;
 }
 
-const WorkbenchScoreValueSchema = CustomJoi.object().keys({
-  score: CustomJoi.validateScore(),
+const WorkbenchDiscountValueSchema = CustomJoi.object().keys({
+  discount: CustomJoi.validateDiscount(),
   value: CustomJoi.validateNumber(),
 });
 
@@ -42,13 +43,16 @@ export const SliderQuestionWorkbenchSchema = QuestionBaseSchema.keys({
     min: CustomJoi.validateSliderMin(),
     max: CustomJoi.validateSliderMax(),
     unit: CustomJoi.validateOptionalText(),
-    scoreValues: CustomJoi.validateArray(WorkbenchScoreValueSchema),
+    discountsValue: CustomJoi.validateNotRequiredArray(
+      WorkbenchDiscountValueSchema
+    ),
+    scoreValues: CustomJoi.validateNotRequiredArray(),
   }),
 });
 
-const ScoreValueSchema = CustomJoi.object().keys({
+const DiscountValueSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
-  score: CustomJoi.validateScore(),
+  discount: CustomJoi.validateDiscount(),
   value: CustomJoi.validateSliderValue(),
 });
 
@@ -58,10 +62,11 @@ export const SliderQuestionAnswerSchema = SliderQuestionWorkbenchSchema.keys({
     min: CustomJoi.validateSliderMin(),
     max: CustomJoi.validateSliderMax(),
     unit: CustomJoi.validateOptionalText(),
-    scoreValues: CustomJoi.validateSliderValues(ScoreValueSchema),
+    discountsValue: CustomJoi.validateSliderValues(DiscountValueSchema),
+    scoreValues: CustomJoi.validateNotRequiredArray(),
   }),
   answer: CustomJoi.object().keys({
     value: CustomJoi.validateSliderAnswer(),
-    discount: CustomJoi.validateScore(),
+    discount: CustomJoi.validateDiscount(),
   }),
 });
