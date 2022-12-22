@@ -10,7 +10,7 @@ import { DFOSearchBar } from '../../../components/DFOSearchBar/DFOSearchBarNew';
 import LoaderSpinner from '../../../common/LoaderSpinner';
 import mainIllustration from '../../../assets/images/main-illustration.svg';
 import NewProjectForm from './NewProjectForm';
-import ProjectItem from './ProjectItem';
+import { ProjectItem } from './ProjectItemNew';
 import SearchUtils from '../../../common/SearchUtils';
 import { EditableProvider } from '../../../components/EditableContext/EditableContext';
 // import { IBank } from '../../../Nexus/entities/IBank';
@@ -20,7 +20,6 @@ import {
   SearchFieldContainer,
 } from '../../../components/SearchContainer/SearchContainer';
 import { paths, components } from '../../../api/generated';
-import { ProjectItemNew } from './ProjectItemNew';
 import { PAGE_SIZE } from '../../../common/Constants';
 
 const fetcher = Fetcher.for<paths>();
@@ -42,6 +41,7 @@ const findProjects = fetcher.path('/api/v1/projects').method('get').create();
 //   .method('delete')
 //   .create();
 
+// TODO: Put somewhere else
 export type ProjectForm = components['schemas']['ProjectForm'];
 export function ProjectsNew(): React.ReactElement {
   // const lim = RateLimit(15, { uniformDistribution: true });
@@ -103,7 +103,7 @@ export function ProjectsNew(): React.ReactElement {
     return list.map((element) => {
       return (
         <EditableProvider key={element.ref}>
-          <ProjectItemNew project={element} />
+          <ProjectItem project={element} />
         </EditableProvider>
       );
     });
