@@ -1,7 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Box, Button, List, Typography } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
-import { Fetcher } from 'openapi-typescript-fetch';
 import { RateLimit } from 'async-sema';
 
 import css from './Projects.module.scss';
@@ -21,7 +20,7 @@ import {
 } from '../../../components/SearchContainer/SearchContainer';
 import { PAGE_SIZE } from '../../../common/Constants';
 import { useGetProjectsQuery } from '../../../store/api/bankApi';
-import { paths } from '../../../api/generated';
+import { createProject } from '../../../api/openapi-fetch';
 
 export default function Projects(): React.ReactElement {
   const { t } = useTranslation();
@@ -29,20 +28,7 @@ export default function Projects(): React.ReactElement {
   const [allProjects, setAllProjects] = useState<IBank[]>();
   const [isOpen, setOpen] = useState(false);
 
-  // declare fetcher for paths
-  const fetcher = Fetcher.for<paths>();
   const lim = RateLimit(5, { uniformDistribution: true });
-
-  fetcher.configure({
-    // baseUrl: 'https://krb-backend-api.azurewebsites.net',
-    baseUrl: 'http://localhost:8080',
-    // init: {
-    //   headers: {
-    //     ...
-    // },
-    // },
-    // use: [...] // middlewares
-  });
 
   const { data: projects, isLoading } = useGetProjectsQuery({
     pageSize: PAGE_SIZE,
@@ -59,22 +45,17 @@ export default function Projects(): React.ReactElement {
   }, [setProjectList, setAllProjects, projects]);
 
   useEffect(() => {
-    const postProject = fetcher
-      .path('/api/v1/projects')
-      .method('post')
-      .create();
-
     if (allProjects) {
       allProjects.forEach(async (project) => {
         await lim();
-        postProject({
+        createProject({
           description: project.description,
           ref: project.id,
           title: project.title,
         }).then((result) => console.log(result));
       });
     }
-  }, [allProjects, fetcher, lim]);
+  }, [allProjects, lim]);
 
   if (isLoading) {
     return <LoaderSpinner />;

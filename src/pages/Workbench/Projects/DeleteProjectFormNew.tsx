@@ -11,7 +11,7 @@ import { IAlert } from '../../../models/IAlert';
 import { ModelType } from '../../../Nexus/enums';
 import { useAppDispatch } from '../../../store/hooks';
 import { useEditableState } from '../../../components/EditableContext/EditableContext';
-import { ProjectForm } from './ProjectsNew';
+import { deleteProject, ProjectForm } from '../../../api/openapi-fetch';
 
 interface IProps {
   children: ReactElement;
@@ -44,15 +44,17 @@ export function DeleteProjectForm({
   // const infoText = isPublished ? t('Project is published') : '';
   const infoText = 'dummy';
 
-  const onSubmit = (post: ProjectForm): void => {
-    deleteProject(post).then(() => {
-      const alert: IAlert = {
-        id: uuidService.generateId(),
-        style: 'success',
-        text: 'Successfully deleted project',
-      };
-      dispatch(addAlert({ alert }));
-    });
+  const onSubmit = (projectForm: ProjectForm): void => {
+    if (projectForm.ref) {
+      deleteProject({ projectRef: projectForm.ref }).then(() => {
+        const alert: IAlert = {
+          id: uuidService.generateId(),
+          style: 'success',
+          text: 'Successfully deleted project',
+        };
+        dispatch(addAlert({ alert }));
+      });
+    }
   };
 
   return (
