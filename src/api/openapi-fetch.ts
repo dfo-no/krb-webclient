@@ -17,6 +17,7 @@ fetcher.configure({
 });
 
 export type ProjectForm = components['schemas']['ProjectForm'];
+export type PublicationForm = components['schemas']['PublicationForm'];
 
 export const createProject = fetcher
   .path('/api/v1/projects')
@@ -31,4 +32,9 @@ export const findProjects = fetcher
 export const deleteProject = fetcher
   .path('/api/v1/projects/{projectRef}')
   .method('delete')
+  .create();
+
+export const findPublications = fetcher
+  .path('/api/v1/projects/{projectref}/publications')
+  .method('get')
   .create();
