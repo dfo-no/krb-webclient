@@ -24,7 +24,6 @@ export interface ITimeConfig extends IConfigBase {
   periodMinutes: number;
   periodHours: number;
   timeDiscounts: TimeDiscountPair[];
-  timeScores: [];
 }
 
 export interface TimeDiscountPair {
@@ -49,7 +48,6 @@ export const TimeQuestionWorkbenchSchema = QuestionBaseSchema.keys({
     timeDiscounts: CustomJoi.validateNotRequiredArray(
       WorkbenchTimeDiscountSchema
     ),
-    timeScores: CustomJoi.validateNotRequiredArray(),
   }),
 });
 
@@ -67,7 +65,6 @@ export const TimeQuestionAnswerSchema = TimeQuestionWorkbenchSchema.keys({
     periodMinutes: CustomJoi.validatePeriodMinutes(),
     periodHours: CustomJoi.validatePeriodHours(),
     timeDiscounts: CustomJoi.validateTimeDiscountValues(TimeDiscountSchema),
-    timeScores: CustomJoi.validateNotRequiredArray(),
   }),
   answer: CustomJoi.object().keys({
     fromTime: CustomJoi.validateFromTime(),

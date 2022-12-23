@@ -22,7 +22,6 @@ export interface ISliderConfig extends IConfigBase {
   max: number;
   unit: string;
   discountsValue: DiscountValuePair[];
-  scoreValues: [];
 }
 
 export interface DiscountValuePair {
@@ -46,7 +45,6 @@ export const SliderQuestionWorkbenchSchema = QuestionBaseSchema.keys({
     discountsValue: CustomJoi.validateNotRequiredArray(
       WorkbenchDiscountValueSchema
     ),
-    scoreValues: CustomJoi.validateNotRequiredArray(),
   }),
 });
 
@@ -63,7 +61,6 @@ export const SliderQuestionAnswerSchema = SliderQuestionWorkbenchSchema.keys({
     max: CustomJoi.validateSliderMax(),
     unit: CustomJoi.validateOptionalText(),
     discountsValue: CustomJoi.validateSliderValues(DiscountValueSchema),
-    scoreValues: CustomJoi.validateNotRequiredArray(),
   }),
   answer: CustomJoi.object().keys({
     value: CustomJoi.validateSliderAnswer(),

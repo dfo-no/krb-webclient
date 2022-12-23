@@ -94,7 +94,6 @@ export default class QuestionService {
             weekdays: weekdaysData,
             defaultDiscount: 1,
             dateDiscounts: [],
-            dateScores: [],
           },
           answer: {
             discount: 0,
@@ -115,7 +114,6 @@ export default class QuestionService {
             unit: '',
             defaultDiscount: 1,
             discountsValue: [],
-            scoreValues: [],
           },
           answer: {
             discount: 0,
@@ -152,7 +150,6 @@ export default class QuestionService {
             periodHours: 0,
             defaultDiscount: 1,
             timeDiscounts: [],
-            timeScores: [],
           },
           answer: {
             discount: 0,

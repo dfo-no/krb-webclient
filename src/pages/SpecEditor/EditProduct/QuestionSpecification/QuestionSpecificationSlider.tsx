@@ -148,10 +148,10 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
         <div className={css.QuestionCriteria}>
           <div className={css.QuestionCriteria__wrapper}>
             <div className={css.QuestionCriteria__wrapper__CtrlContainer}>
-              {fields.map((scoreValue, index) => {
+              {fields.map((discountValue, index) => {
                 return (
                   <div
-                    key={scoreValue.id}
+                    key={discountValue.id}
                     className={css.QuestionCriteria__Ctrl}
                   >
                     <HorizontalTextCtrl

@@ -161,12 +161,12 @@ class TextUtils {
     TextUtils.setChosenConfigs(
       chosenConfig,
       `${preferedAlternative ? t('common.Yes') : t('common.No')}`,
-      `100 ${t('Score')}`
+      `100 ${t('Discount')}`
     );
     TextUtils.setChosenConfigs(
       chosenConfig,
       `${preferedAlternative ? t('common.No') : t('common.Yes')}`,
-      `${discountNonPrefered} ${t('Score')}`
+      `${discountNonPrefered} ${t('Discount')}`
     );
     return chosenConfig;
   };
@@ -176,7 +176,11 @@ class TextUtils {
   ): ChosenConfig[] => {
     const discountUnconfirmed = question.config.discountUnconfirmed;
     const chosenConfig: ChosenConfig[] = [];
-    TextUtils.setChosenConfigs(chosenConfig, t('Score for confirmed'), '100');
+    TextUtils.setChosenConfigs(
+      chosenConfig,
+      t('Discount for confirmed'),
+      '100'
+    );
     TextUtils.setChosenConfigs(
       chosenConfig,
       t('Discount'),
@@ -199,7 +203,7 @@ class TextUtils {
     TextUtils.setChosenConfigs(chosenConfig, t('Unit'), `${config.unit}`);
     TextUtils.setChosenConfigs(
       chosenConfig,
-      t('Discountvalues'),
+      t('Discount values'),
       discountValues
     );
     return chosenConfig;

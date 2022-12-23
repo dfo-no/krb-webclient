@@ -27,7 +27,6 @@ export interface IPeriodDateConfig extends IConfigBase {
   duration: number;
   weekdays: WeekdayValues[];
   dateDiscounts: DateDiscountPair[];
-  dateScores: [];
 }
 
 export interface DateDiscountPair {
@@ -72,7 +71,6 @@ export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
     dateDiscounts: CustomJoi.validateNotRequiredArray(
       WorkbenchDateDiscountSchema
     ),
-    dateScores: CustomJoi.validateNotRequiredArray(),
   }),
 });
 
@@ -86,7 +84,6 @@ export const PeriodDateAnswerSchema = PeriodDateWorkbenchSchema.keys({
     duration: CustomJoi.validateDuration(),
     weekdays: CustomJoi.validateNotRequiredArray(WeekdayValuesSchema),
     dateDiscounts: CustomJoi.validateDateDiscountValues(DateDiscountSchema),
-    dateScores: CustomJoi.validateNotRequiredArray(),
   }),
   answer: CustomJoi.object().keys({
     fromDate: CustomJoi.validateFromDate(),

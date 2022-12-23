@@ -150,10 +150,10 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
         <div className={css.QuestionCriteria}>
           <div className={css.QuestionCriteria__wrapper}>
             <div className={css.QuestionCriteria__wrapper__CtrlContainer}>
-              {fields.map((timeScore, index) => {
+              {fields.map((timeDiscount, index) => {
                 return (
                   <div
-                    key={timeScore.id}
+                    key={timeDiscount.id}
                     className={css.QuestionCriteria__Ctrl}
                   >
                     <TimeCtrl
@@ -202,7 +202,7 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
               <div>
                 <ArrayUniqueErrorMessage
                   errors={formState.errors}
-                  path={'question.config.timeScores'}
+                  path={'question.config.timeDiscounts'}
                   length={fields.length}
                 />
               </div>

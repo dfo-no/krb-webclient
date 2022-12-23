@@ -50,6 +50,6 @@ export const TextQuestionAnswerSchema = TextQuestionWorkbenchSchema.keys({
   }),
   answer: CustomJoi.object().keys({
     text: CustomJoi.validateAnswerText(),
-    discount: CustomJoi.validateScore(),
+    discount: CustomJoi.validateDiscount(),
   }),
 });

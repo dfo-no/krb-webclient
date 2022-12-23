@@ -126,19 +126,19 @@ class Utils {
       )
       .sort((a, b) => b.discount - a.discount)
       .slice(0, config.optionalCodeMaxAmount - config.optionalCodeMinAmount);
-    const maxScore = [...topMandatory, ...topRest].reduce(
+    const maxDiscount = [...topMandatory, ...topRest].reduce(
       (sum, selection) => sum + selection.discount,
       0
     );
 
-    const score = codes.reduce((sum, code) => {
+    const discount = codes.reduce((sum, code) => {
       const foundCode = config.codes.find(
         (selection) => selection.code === code
       );
       return foundCode ? sum + foundCode.discount : sum;
     }, 0);
 
-    return maxScore > 0 ? Math.min(score / maxScore, 1) * 100 : 100;
+    return maxDiscount > 0 ? Math.min(discount / maxDiscount, 1) * 100 : 100;
   }
 
   private static dateToValue(dateStr: string): number {

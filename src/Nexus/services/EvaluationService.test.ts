@@ -27,7 +27,6 @@ describe('EvaluationService', () => {
             discount: 100,
           },
         ],
-        scoreValues: [],
       },
       answer: {
         discount: 0,
@@ -61,7 +60,6 @@ describe('EvaluationService', () => {
             discount: 100,
           },
         ],
-        dateScores: [],
       },
       answer: {
         discount: 0,
