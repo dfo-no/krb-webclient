@@ -122,24 +122,18 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
           />
         </div>
         {item.config.isPeriod && (
-          <>
-            <HorizontalTextCtrl
-              className={css.QuestionCriteria__Ctrl__inputCtrl}
-              label={t('Duration')}
-              name={`question.config.duration`}
-              defaultValue={0}
-              placeholder={t('Value')}
-              type={'number'}
-              adornment={t('Days')}
-              color={'var(--text-primary-color)'}
-            />
-            <WeekdaysCheckboxList
-              item={item}
-              control={control}
-              setValue={setValue}
-            />
-          </>
+          <HorizontalTextCtrl
+            className={css.QuestionCriteria__Ctrl__inputCtrl}
+            label={t('Duration')}
+            name={`question.config.duration`}
+            defaultValue={0}
+            placeholder={t('Value')}
+            type={'number'}
+            adornment={t('Days')}
+            color={'var(--text-primary-color)'}
+          />
         )}
+        <WeekdaysCheckboxList control={control} setValue={setValue} />
         <div onClick={onCheckboxClick}>
           <DFOCheckbox
             checked={awardCriteria}
