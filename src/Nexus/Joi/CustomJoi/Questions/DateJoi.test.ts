@@ -123,13 +123,13 @@ describe('DateJoi', () => {
     expect(reportSuccess2?.error?.details[0].message).toBeUndefined();
   });
 
-  test('Joi validateDateScore() validates towards boundaries', () => {
+  test('Joi validateDateDiscount() validates towards boundaries', () => {
     const schema = CustomJoi.object().keys({
       fromBoundary: CustomJoi.validateFromBoundaryDate(),
       toBoundary: CustomJoi.validateToBoundaryDate(),
-      dateScores: CustomJoi.validateUniqueArray(
+      dateDiscounts: CustomJoi.validateUniqueArray(
         CustomJoi.object().keys({
-          date: CustomJoi.validateDateScore(),
+          date: CustomJoi.validateDateDiscount(),
         })
       ),
     });
@@ -137,7 +137,7 @@ describe('DateJoi', () => {
     const reportError1 = schema.validate({
       fromBoundary: '2022-02-10T12:00:00.000Z',
       toBoundary: '2022-02-18T12:00:00.000Z',
-      dateScores: [
+      dateDiscounts: [
         {
           date: '2022-02-08T12:00:00.000Z',
         },
@@ -146,7 +146,7 @@ describe('DateJoi', () => {
     const reportError2 = schema.validate({
       fromBoundary: '2022-02-10T12:00:00.000Z',
       toBoundary: '2022-02-18T12:00:00.000Z',
-      dateScores: [
+      dateDiscounts: [
         {
           date: '2022-02-20T12:00:00.000Z',
         },
@@ -155,7 +155,7 @@ describe('DateJoi', () => {
     const reportError3 = schema.validate({
       fromBoundary: '2022-02-10T12:00:00.000Z',
       toBoundary: '2022-02-18T12:00:00.000Z',
-      dateScores: [
+      dateDiscounts: [
         {
           date: null,
         },
@@ -164,7 +164,7 @@ describe('DateJoi', () => {
     const reportSuccess = schema.validate({
       fromBoundary: '2022-02-10T12:00:00.000Z',
       toBoundary: '2022-02-18T12:00:00.000Z',
-      dateScores: [
+      dateDiscounts: [
         {
           date: '2022-02-11T12:00:00.000Z',
         },

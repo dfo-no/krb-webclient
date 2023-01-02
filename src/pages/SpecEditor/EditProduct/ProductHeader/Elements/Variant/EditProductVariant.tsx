@@ -32,12 +32,12 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
   });
 
   const awardCriteriaDateDiscount = useWatch({
-    name: 'question.config.dateScores',
+    name: 'question.config.dateDiscounts',
     control,
   });
 
   const awardCriteriaTimeDiscount = useWatch({
-    name: 'question.config.timeScores',
+    name: 'question.config.timeDiscounts',
     control,
   });
 
@@ -47,7 +47,7 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
   });
 
   const awardCriteriaSliderDiscount = useWatch({
-    name: 'question.config.scoreValues',
+    name: 'question.config.discountValues',
     control,
   });
 

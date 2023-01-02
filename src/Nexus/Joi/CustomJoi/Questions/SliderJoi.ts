@@ -123,8 +123,8 @@ const SliderAnswerValidator = (joi: Joi.Root) => ({
 const SliderValuesValidator = (joi: Joi.Root) => ({
   type: 'validateSliderValues',
   args(value: Schema, type: Schema) {
-    return joi.array().items(type).required().unique('value').messages({
-      'array.unique': 'Verdiscore kan ikke være like',
+    return joi.array().items(type).unique('value').messages({
+      'array.unique': 'Verdi kan ikke være like',
     });
   },
 });

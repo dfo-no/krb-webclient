@@ -62,8 +62,8 @@ const ToBoundaryTimeValidator = (joi: Joi.Root) => ({
   },
 });
 
-const TimeScoreValidator = (joi: Joi.Root) => ({
-  type: 'validateTimeScore',
+const TimeDiscountValidator = (joi: Joi.Root) => ({
+  type: 'validateTimeDiscount',
   base: joi.date().iso().raw().required().messages({
     'date.base': 'Tidspunkt må ha en verdi',
   }),
@@ -171,8 +171,8 @@ const ToTimeValidator = (joi: Joi.Root) => ({
   },
 });
 
-const TimeScoreValuesValidator = (joi: Joi.Root) => ({
-  type: 'validateTimeScoreValues',
+const TimeDiscountValuesValidator = (joi: Joi.Root) => ({
+  type: 'validateTimeDiscountValues',
   args(value: Schema, type: Schema) {
     return joi.array().items(type).required().unique('time').messages({
       'array.unique': 'Tidspunkt kan ikke være like',
@@ -185,10 +185,10 @@ const TimeJoi = [
   PeriodHoursValidator,
   FromBoundaryTimeValidator,
   ToBoundaryTimeValidator,
-  TimeScoreValidator,
+  TimeDiscountValidator,
   FromTimeValidator,
   ToTimeValidator,
-  TimeScoreValuesValidator,
+  TimeDiscountValuesValidator,
 ];
 
 export default TimeJoi;

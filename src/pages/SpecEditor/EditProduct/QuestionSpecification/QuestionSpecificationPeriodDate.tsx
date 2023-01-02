@@ -34,18 +34,18 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
     control,
   });
 
-  const useMinScore = useWatch({
-    name: 'question.config.dateScores.0',
+  const useMinDiscount = useWatch({
+    name: 'question.config.dateDiscounts.0',
     control,
   });
-  const useMaxScore = useWatch({
-    name: 'question.config.dateScores.1',
+  const useMaxDiscount = useWatch({
+    name: 'question.config.dateDiscounts.1',
     control,
   });
 
   const { fields, append, remove, update } = useFieldArray({
     control,
-    name: 'question.config.dateScores',
+    name: 'question.config.dateDiscounts',
   });
 
   useEffect(() => {
@@ -59,39 +59,40 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
 
   useEffect(() => {
     if (!fields.length && awardCriteria) {
-      append({ id: new UuidService().generateId(), date: null, score: 0 });
-      append({ id: new UuidService().generateId(), date: null, score: 100 });
+      append({ id: new UuidService().generateId(), date: null, discount: 0 });
+      append({ id: new UuidService().generateId(), date: null, discount: 0 });
     }
   }, [fields, awardCriteria, append]);
 
   useEffect(() => {
     if (
       awardCriteria &&
-      useMinScore &&
-      (!DateUtils.sameTime(useFromBoundary, useMinScore.date) ||
-        !useMinScore.id)
+      useMinDiscount &&
+      (!DateUtils.sameTime(useFromBoundary, useMinDiscount.date) ||
+        !useMinDiscount.id)
     ) {
       update(0, {
-        id: useMinScore.id ?? new UuidService().generateId(),
+        id: useMinDiscount.id ?? new UuidService().generateId(),
         date: useFromBoundary,
-        score: useMinScore.score,
+        discount: useMinDiscount.discount,
       });
     }
-  }, [awardCriteria, useFromBoundary, useMinScore, update, append]);
+  }, [awardCriteria, useFromBoundary, useMinDiscount, update, append]);
 
   useEffect(() => {
     if (
       awardCriteria &&
-      useMaxScore &&
-      (!DateUtils.sameTime(useToBoundary, useMaxScore.date) || !useMaxScore.id)
+      useMaxDiscount &&
+      (!DateUtils.sameTime(useToBoundary, useMaxDiscount.date) ||
+        !useMaxDiscount.id)
     ) {
       update(1, {
-        id: useMaxScore.id ?? new UuidService().generateId(),
+        id: useMaxDiscount.id ?? new UuidService().generateId(),
         date: useToBoundary,
-        score: useMaxScore.score,
+        discount: useMaxDiscount.discount,
       });
     }
-  }, [awardCriteria, useToBoundary, useMaxScore, update, append]);
+  }, [awardCriteria, useToBoundary, useMaxDiscount, update, append]);
 
   useEffect(() => {
     if (fields.length > 0) {
@@ -147,22 +148,22 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
           <div className={css.QuestionCriteria}>
             <div className={css.QuestionCriteria__wrapper}>
               <div className={css.QuestionCriteria__wrapper__CtrlContainer}>
-                {fields.map((dateScore, index) => {
+                {fields.map((dateDiscount, index) => {
                   return (
                     <div
-                      key={dateScore.id}
+                      key={dateDiscount.id}
                       className={css.QuestionCriteria__Ctrl}
                     >
                       <DateCtrl
                         className={css.QuestionCriteria__Ctrl__inputCtrl}
                         label={index == 0 ? `${t('Date')}` : ''}
-                        name={`question.config.dateScores[${index}].date`}
+                        name={`question.config.dateDiscounts[${index}].date`}
                         color={'var(--text-primary-color)'}
                       />
                       <HorizontalTextCtrl
                         className={css.QuestionCriteria__Ctrl__inputCtrl}
                         label={index == 0 ? t('Discount') : ''}
-                        name={`question.config.dateScores[${index}].score`}
+                        name={`question.config.dateDiscounts[${index}].discount`}
                         placeholder={t('Value')}
                         type={'number'}
                         adornment={t('NOK')}
@@ -178,7 +179,7 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
                             append({
                               id: new UuidService().generateId(),
                               date: useFromBoundary,
-                              score: 0,
+                              discount: 0,
                             })
                           }
                         >
@@ -199,7 +200,7 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
                 <div>
                   <ArrayUniqueErrorMessage
                     errors={formState.errors}
-                    path={'question.config.dateScores'}
+                    path={'question.config.dateDiscounts'}
                     length={fields.length}
                   />
                 </div>

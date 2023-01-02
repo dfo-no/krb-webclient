@@ -26,13 +26,13 @@ export interface IPeriodDateConfig extends IConfigBase {
   periodMax: number;
   duration: number;
   weekdays: WeekdayValues[];
-  dateScores: DateScorePair[];
+  dateDiscounts: DateDiscountPair[];
 }
 
-export interface DateScorePair {
+export interface DateDiscountPair {
   id: string;
   date: string | null;
-  score: number;
+  discount: number;
 }
 
 export interface WeekdayValues {
@@ -47,15 +47,15 @@ const WeekdayValuesSchema = CustomJoi.object().keys({
   isChecked: CustomJoi.validateOptionalBoolean(),
 });
 
-const WorkbenchDateScoreSchema = CustomJoi.object().keys({
-  score: CustomJoi.validateScore(),
+const WorkbenchDateDiscountSchema = CustomJoi.object().keys({
+  discount: CustomJoi.validateDiscount(),
   date: CustomJoi.validateEmptyDate(),
 });
 
-const DateScoreSchema = CustomJoi.object().keys({
+const DateDiscountSchema = CustomJoi.object().keys({
   id: CustomJoi.validateId(),
-  date: CustomJoi.validateDateScore(),
-  score: CustomJoi.validateScore(),
+  date: CustomJoi.validateDateDiscount(),
+  discount: CustomJoi.validateDiscount(),
 });
 
 export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
@@ -68,7 +68,9 @@ export const PeriodDateWorkbenchSchema = QuestionBaseSchema.keys({
     periodMax: CustomJoi.validateNumber(),
     duration: CustomJoi.validateDuration(),
     weekdays: CustomJoi.validateNotRequiredArray(WeekdayValuesSchema),
-    dateScores: CustomJoi.validateArray(WorkbenchDateScoreSchema),
+    dateDiscounts: CustomJoi.validateNotRequiredArray(
+      WorkbenchDateDiscountSchema
+    ),
   }),
 });
 
@@ -81,11 +83,11 @@ export const PeriodDateAnswerSchema = PeriodDateWorkbenchSchema.keys({
     periodMax: CustomJoi.validatePeriodMax(),
     duration: CustomJoi.validateDuration(),
     weekdays: CustomJoi.validateNotRequiredArray(WeekdayValuesSchema),
-    dateScores: CustomJoi.validateDateScoreValues(DateScoreSchema),
+    dateDiscounts: CustomJoi.validateDateDiscountValues(DateDiscountSchema),
   }),
   answer: CustomJoi.object().keys({
     fromDate: CustomJoi.validateFromDate(),
     toDate: CustomJoi.validateToDate(),
-    discount: CustomJoi.validateScore(),
+    discount: CustomJoi.validateDiscount(),
   }),
 });

@@ -1,4 +1,3 @@
-import { DateScorePair } from '../Nexus/entities/IPeriodDateQuestion';
 import { IBank } from '../Nexus/entities/IBank';
 import { IBaseModel } from '../Nexus/entities/IBaseModel';
 import { ICodelist } from '../Nexus/entities/ICodelist';
@@ -14,8 +13,9 @@ import { Nestable } from '../models/Nestable';
 import { Parentable } from '../models/Parentable';
 import { QuestionType } from '../Nexus/entities/QuestionType';
 import { QuestionVariant } from '../Nexus/enums';
-import { ScoreValuePair } from '../Nexus/entities/ISliderQuestion';
-import { TimeScorePair } from '../Nexus/entities/ITimeQuestion';
+import { DiscountValuePair } from '../Nexus/entities/ISliderQuestion';
+import { TimeDiscountPair } from '../Nexus/entities/ITimeQuestion';
+import { DateDiscountPair } from '../Nexus/entities/IPeriodDateQuestion';
 
 class Utils {
   static ensure<T>(
@@ -126,19 +126,19 @@ class Utils {
       )
       .sort((a, b) => b.discount - a.discount)
       .slice(0, config.optionalCodeMaxAmount - config.optionalCodeMinAmount);
-    const maxScore = [...topMandatory, ...topRest].reduce(
+    const maxDiscount = [...topMandatory, ...topRest].reduce(
       (sum, selection) => sum + selection.discount,
       0
     );
 
-    const score = codes.reduce((sum, code) => {
+    const discount = codes.reduce((sum, code) => {
       const foundCode = config.codes.find(
         (selection) => selection.code === code
       );
       return foundCode ? sum + foundCode.discount : sum;
     }, 0);
 
-    return maxScore > 0 ? Math.min(score / maxScore, 1) * 100 : 100;
+    return maxDiscount > 0 ? Math.min(discount / maxDiscount, 1) * 100 : 100;
   }
 
   private static dateToValue(dateStr: string): number {
@@ -146,27 +146,27 @@ class Utils {
     return date.getTime();
   }
 
-  static findScoreFromDate(
+  static findDiscountFromDate(
     date: string | null,
-    pairs: DateScorePair[]
+    pairs: DateDiscountPair[]
   ): number {
     if (!date) {
       return 0;
     }
     const valuePairs = pairs.reduce(
-      (allPairs: ScoreValuePair[], pair: DateScorePair) => {
+      (allPairs: DiscountValuePair[], pair: DateDiscountPair) => {
         if (pair.date) {
           allPairs.push({
             id: pair.id,
             value: this.dateToValue(pair.date),
-            score: pair.score,
+            discount: pair.discount,
           });
         }
         return allPairs;
       },
       []
     );
-    return this.findScoreFromValue(this.dateToValue(date), valuePairs);
+    return this.findDiscountFromValue(this.dateToValue(date), valuePairs);
   }
 
   private static timeToValue(timeStr: string): number {
@@ -174,33 +174,36 @@ class Utils {
     return date.getMinutes() + 60 * date.getHours();
   }
 
-  static findScoreFromTime(
+  static findDiscountFromTime(
     time: string | null,
-    pairs: TimeScorePair[]
+    pairs: TimeDiscountPair[]
   ): number {
     if (!time) {
       return 0;
     }
     const valuePairs = pairs.reduce(
-      (allPairs: ScoreValuePair[], pair: TimeScorePair) => {
+      (allPairs: DiscountValuePair[], pair: TimeDiscountPair) => {
         if (pair.time) {
           allPairs.push({
             id: pair.id,
             value: this.timeToValue(pair.time),
-            score: pair.score,
+            discount: pair.discount,
           });
         }
         return allPairs;
       },
       []
     );
-    return this.findScoreFromValue(this.timeToValue(time), valuePairs);
+    return this.findDiscountFromValue(this.timeToValue(time), valuePairs);
   }
 
-  static findScoreFromValue(value: number, pairs: ScoreValuePair[]): number {
+  static findDiscountFromValue(
+    value: number,
+    pairs: DiscountValuePair[]
+  ): number {
     const exact = pairs.find((svp) => svp.value === value);
     if (exact) {
-      return exact.score;
+      return exact.discount;
     }
     const sortedHigher = pairs
       .filter((svp) => svp.value > value)
@@ -213,8 +216,8 @@ class Utils {
       const higher = sortedHigher[0];
       const lower = sortedLower[0];
       return (
-        lower.score +
-        ((higher.score - lower.score) / (higher.value - lower.value)) *
+        lower.discount +
+        ((higher.discount - lower.discount) / (higher.value - lower.value)) *
           (value - lower.value)
       );
     }

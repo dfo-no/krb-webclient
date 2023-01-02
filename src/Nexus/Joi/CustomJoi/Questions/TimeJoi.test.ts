@@ -131,13 +131,13 @@ describe('TimeJoi', () => {
     expect(reportSuccess2?.error?.details[0].message).toBeUndefined();
   });
 
-  test('Joi validateTimeScore() validates towards boundaries', () => {
+  test('Joi validateTimeDiscount() validates towards boundaries', () => {
     const schema = CustomJoi.object().keys({
       fromBoundary: CustomJoi.validateFromBoundaryTime(),
       toBoundary: CustomJoi.validateToBoundaryTime(),
-      timeScores: CustomJoi.validateUniqueArray(
+      timeDiscounts: CustomJoi.validateUniqueArray(
         CustomJoi.object().keys({
-          time: CustomJoi.validateTimeScore(),
+          time: CustomJoi.validateTimeDiscount(),
         })
       ),
     });
@@ -145,7 +145,7 @@ describe('TimeJoi', () => {
     const reportError1 = schema.validate({
       fromBoundary: '2022-10-02T16:00:00.000Z',
       toBoundary: '2022-10-02T20:00:00.000Z',
-      timeScores: [
+      timeDiscounts: [
         {
           time: '2022-10-02T14:00:00.000Z',
         },
@@ -154,7 +154,7 @@ describe('TimeJoi', () => {
     const reportError2 = schema.validate({
       fromBoundary: '2022-10-02T16:00:00.000Z',
       toBoundary: '2022-10-02T20:00:00.000Z',
-      timeScores: [
+      timeDiscounts: [
         {
           time: '2022-10-02T22:00:00.000Z',
         },
@@ -163,7 +163,7 @@ describe('TimeJoi', () => {
     const reportError3 = schema.validate({
       fromBoundary: '2022-10-02T16:00:00.000Z',
       toBoundary: '2022-10-02T20:00:00.000Z',
-      timeScores: [
+      timeDiscounts: [
         {
           time: null,
         },
@@ -172,7 +172,7 @@ describe('TimeJoi', () => {
     const reportSuccess = schema.validate({
       fromBoundary: '2022-10-02T16:00:00.000Z',
       toBoundary: '2022-10-02T20:00:00.000Z',
-      timeScores: [
+      timeDiscounts: [
         {
           time: '2022-10-02T18:00:00.000Z',
         },

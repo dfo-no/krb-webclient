@@ -27,18 +27,18 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
   const useMinValue = useWatch({ name: 'question.config.min', control });
   const useMaxValue = useWatch({ name: 'question.config.max', control });
 
-  const useMinScore = useWatch({
-    name: 'question.config.scoreValues.0',
+  const useMinDiscount = useWatch({
+    name: 'question.config.discountsValue.0',
     control,
   });
-  const useMaxScore = useWatch({
-    name: 'question.config.scoreValues.1',
+  const useMaxDiscount = useWatch({
+    name: 'question.config.discountsValue.1',
     control,
   });
 
   const { fields, append, remove, update } = useFieldArray({
     control,
-    name: 'question.config.scoreValues',
+    name: 'question.config.discountsValue',
   });
 
   useEffect(() => {
@@ -46,12 +46,12 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
       append({
         id: new UuidService().generateId(),
         value: 0,
-        score: 0,
+        discount: 0,
       });
       append({
         id: new UuidService().generateId(),
         value: 0,
-        score: 100,
+        discount: 0,
       });
     }
   }, [fields, awardCriteria, append]);
@@ -59,31 +59,31 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
   useEffect(() => {
     if (
       awardCriteria &&
-      useMinScore &&
-      (useMinValue !== useMinScore.value || !useMinScore.id)
+      useMinDiscount &&
+      (useMinValue !== useMinDiscount.value || !useMinDiscount.id)
     ) {
       update(0, {
-        id: useMinScore.id ?? new UuidService().generateId(),
+        id: useMinDiscount.id ?? new UuidService().generateId(),
         value: useMinValue,
-        score: useMinScore.score,
+        discount: useMinDiscount.discount,
       });
       setValue('question.answer.value', useMinValue);
     }
-  }, [awardCriteria, useMinValue, useMinScore, update, setValue]);
+  }, [awardCriteria, useMinValue, useMinDiscount, update, setValue]);
 
   useEffect(() => {
     if (
       awardCriteria &&
-      useMaxScore &&
-      (useMaxValue !== useMaxScore.value || !useMaxScore.id)
+      useMaxDiscount &&
+      (useMaxValue !== useMaxDiscount.value || !useMaxDiscount.id)
     ) {
       update(1, {
-        id: useMaxScore.id ?? new UuidService().generateId(),
+        id: useMaxDiscount.id ?? new UuidService().generateId(),
         value: useMaxValue,
-        score: useMaxScore.score,
+        discount: useMaxDiscount.discount,
       });
     }
-  }, [awardCriteria, useMaxValue, useMaxScore, update]);
+  }, [awardCriteria, useMaxValue, useMaxDiscount, update]);
 
   useEffect(() => {
     if (fields.length > 0) {
@@ -148,10 +148,10 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
         <div className={css.QuestionCriteria}>
           <div className={css.QuestionCriteria__wrapper}>
             <div className={css.QuestionCriteria__wrapper__CtrlContainer}>
-              {fields.map((scoreValue, index) => {
+              {fields.map((discountValue, index) => {
                 return (
                   <div
-                    key={scoreValue.id}
+                    key={discountValue.id}
                     className={css.QuestionCriteria__Ctrl}
                   >
                     <HorizontalTextCtrl
@@ -159,7 +159,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
                       label={
                         index == 0 ? `${t('Quantity')} ${item.config.unit}` : ''
                       }
-                      name={`question.config.scoreValues[${index}].value`}
+                      name={`question.config.discountsValue[${index}].value`}
                       placeholder={t('Value')}
                       type={'number'}
                       adornment={item.config.unit}
@@ -168,7 +168,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
                     <HorizontalTextCtrl
                       className={css.QuestionCriteria__Ctrl__inputCtrl}
                       label={index == 0 ? t('Discount') : ''}
-                      name={`question.config.scoreValues[${index}].score`}
+                      name={`question.config.discountsValue[${index}].discount`}
                       placeholder={t('Value')}
                       type={'number'}
                       adornment={t('NOK')}
@@ -184,7 +184,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
                           append({
                             id: new UuidService().generateId(),
                             value: useMinValue,
-                            score: 0,
+                            discount: 0,
                           })
                         }
                       >
@@ -205,7 +205,7 @@ const QuestionSpecificationSlider = ({ item }: IProps): ReactElement => {
               <div>
                 <ArrayUniqueErrorMessage
                   errors={formState.errors}
-                  path={'question.config.scoreValues'}
+                  path={'question.config.discountsValue'}
                   length={fields.length}
                 />
               </div>

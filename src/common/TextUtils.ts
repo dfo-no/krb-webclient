@@ -161,12 +161,12 @@ class TextUtils {
     TextUtils.setChosenConfigs(
       chosenConfig,
       `${preferedAlternative ? t('common.Yes') : t('common.No')}`,
-      `100 ${t('Score')}`
+      `100 ${t('Discount')}`
     );
     TextUtils.setChosenConfigs(
       chosenConfig,
       `${preferedAlternative ? t('common.No') : t('common.Yes')}`,
-      `${discountNonPrefered} ${t('Score')}`
+      `${discountNonPrefered} ${t('Discount')}`
     );
     return chosenConfig;
   };
@@ -176,7 +176,11 @@ class TextUtils {
   ): ChosenConfig[] => {
     const discountUnconfirmed = question.config.discountUnconfirmed;
     const chosenConfig: ChosenConfig[] = [];
-    TextUtils.setChosenConfigs(chosenConfig, t('Score for confirmed'), '100');
+    TextUtils.setChosenConfigs(
+      chosenConfig,
+      t('Discount for confirmed'),
+      '100'
+    );
     TextUtils.setChosenConfigs(
       chosenConfig,
       t('Discount'),
@@ -189,15 +193,19 @@ class TextUtils {
     question: ISliderQuestion
   ): ChosenConfig[] => {
     const config = question.config;
-    const scoreValues = config.scoreValues
-      .map((sv) => `${sv.value}: ${sv.score}`)
+    const discountValues = config.discountsValue
+      .map((sv) => `${sv.value}: ${sv.discount}`)
       .join(', ');
     const chosenConfig: ChosenConfig[] = [];
     TextUtils.setChosenConfigs(chosenConfig, t('Minimum'), `${config.min}`);
     TextUtils.setChosenConfigs(chosenConfig, t('Maximum'), `${config.max}`);
     TextUtils.setChosenConfigs(chosenConfig, t('Step'), `${config.step}`);
     TextUtils.setChosenConfigs(chosenConfig, t('Unit'), `${config.unit}`);
-    TextUtils.setChosenConfigs(chosenConfig, t('Scorevalues'), scoreValues);
+    TextUtils.setChosenConfigs(
+      chosenConfig,
+      t('Discount values'),
+      discountValues
+    );
     return chosenConfig;
   };
 

@@ -34,18 +34,18 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
     control,
   });
 
-  const useMinScore = useWatch({
-    name: 'question.config.timeScores.0',
+  const useMinDiscount = useWatch({
+    name: 'question.config.timeDiscounts.0',
     control,
   });
-  const useMaxScore = useWatch({
-    name: 'question.config.timeScores.1',
+  const useMaxDiscount = useWatch({
+    name: 'question.config.timeDiscounts.1',
     control,
   });
 
   const { fields, append, remove, update } = useFieldArray({
     control,
-    name: 'question.config.timeScores',
+    name: 'question.config.timeDiscounts',
   });
 
   useEffect(() => {
@@ -59,40 +59,41 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
 
   useEffect(() => {
     if (!fields.length && awardCriteria) {
-      append({ id: new UuidService().generateId(), time: null, score: 0 });
-      append({ id: new UuidService().generateId(), time: null, score: 100 });
+      append({ id: new UuidService().generateId(), time: null, discount: 0 });
+      append({ id: new UuidService().generateId(), time: null, discount: 0 });
     }
   }, [fields, awardCriteria, append]);
 
   useEffect(() => {
     if (
       awardCriteria &&
-      useMinScore &&
-      (!DateUtils.sameTime(useFromBoundary, useMinScore.time) ||
-        !useMinScore.id)
+      useMinDiscount &&
+      (!DateUtils.sameTime(useFromBoundary, useMinDiscount.time) ||
+        !useMinDiscount.id)
     ) {
       update(0, {
-        id: useMinScore.id ?? new UuidService().generateId(),
+        id: useMinDiscount.id ?? new UuidService().generateId(),
         time: useFromBoundary,
-        score: useMinScore.score,
+        discount: useMinDiscount.discount,
       });
     }
-  }, [awardCriteria, useFromBoundary, useMinScore, update]);
+  }, [awardCriteria, useFromBoundary, useMinDiscount, update]);
 
   useEffect(() => {
     if (
       awardCriteria &&
-      useMaxScore &&
+      useMaxDiscount &&
       useToBoundary &&
-      (!DateUtils.sameTime(useToBoundary, useMaxScore.time) || !useMaxScore.id)
+      (!DateUtils.sameTime(useToBoundary, useMaxDiscount.time) ||
+        !useMaxDiscount.id)
     ) {
       update(1, {
-        id: useMaxScore.id ?? new UuidService().generateId(),
+        id: useMaxDiscount.id ?? new UuidService().generateId(),
         time: useToBoundary,
-        score: useMaxScore.score,
+        discount: useMaxDiscount.discount,
       });
     }
-  }, [awardCriteria, useToBoundary, useMaxScore, update, append]);
+  }, [awardCriteria, useToBoundary, useMaxDiscount, update, append]);
 
   useEffect(() => {
     if (fields.length > 0) {
@@ -149,22 +150,22 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
         <div className={css.QuestionCriteria}>
           <div className={css.QuestionCriteria__wrapper}>
             <div className={css.QuestionCriteria__wrapper__CtrlContainer}>
-              {fields.map((timeScore, index) => {
+              {fields.map((timeDiscount, index) => {
                 return (
                   <div
-                    key={timeScore.id}
+                    key={timeDiscount.id}
                     className={css.QuestionCriteria__Ctrl}
                   >
                     <TimeCtrl
                       className={css.QuestionCriteria__Ctrl__inputCtrl}
                       label={index == 0 ? `${t('Time')}` : ''}
-                      name={`question.config.timeScores[${index}].time`}
+                      name={`question.config.timeDiscounts[${index}].time`}
                       color={'var(--text-primary-color)'}
                     />
                     <HorizontalTextCtrl
                       className={css.QuestionCriteria__Ctrl__inputCtrl}
                       label={index == 0 ? t('Discount') : ''}
-                      name={`question.config.timeScores[${index}].score`}
+                      name={`question.config.timeDiscounts[${index}].discount`}
                       placeholder={t('Value')}
                       type={'number'}
                       adornment={t('NOK')}
@@ -180,7 +181,7 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
                           append({
                             id: new UuidService().generateId(),
                             time: useFromBoundary,
-                            score: 0,
+                            discount: 0,
                           })
                         }
                       >
@@ -201,7 +202,7 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
               <div>
                 <ArrayUniqueErrorMessage
                   errors={formState.errors}
-                  path={'question.config.timeScores'}
+                  path={'question.config.timeDiscounts'}
                   length={fields.length}
                 />
               </div>
