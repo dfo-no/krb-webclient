@@ -47,22 +47,19 @@ export const updateObject = <T extends Record<string, unknown>>(
           // eslint-disable-next-line no-param-reassign
           delete input[key];
         } else if (key.includes('timeScores')) {
-          const keyParts = key.split('timeScores');
-          const translatedKey = keyParts[0] + 'timeDiscounts' + keyParts[1];
+          const translatedKey = 'timeDiscounts';
           // eslint-disable-next-line no-param-reassign
           input[translatedKey] = input[key];
           // eslint-disable-next-line no-param-reassign
           delete input[key];
         } else if (key.includes('scoreValues')) {
-          const keyParts = key.split('scoreValues');
-          const translatedKey = keyParts[0] + 'discountsValue' + keyParts[1];
+          const translatedKey = 'discountsValue';
           // eslint-disable-next-line no-param-reassign
           input[translatedKey] = input[key];
           // eslint-disable-next-line no-param-reassign
           delete input[key];
         } else if (key.includes('dateScores')) {
-          const keyParts = key.split('dateScores');
-          const translatedKey = keyParts[0] + 'dateDiscounts' + keyParts[1];
+          const translatedKey = 'dateDiscounts';
           // eslint-disable-next-line no-param-reassign
           input[translatedKey] = input[key];
           // eslint-disable-next-line no-param-reassign
