@@ -38,11 +38,7 @@ const QuestionAnswerPeriodDate = ({ item }: IProps): ReactElement => {
       </div>
       {item.config.isPeriod && (
         <div className={css.WeekdaysContainer}>
-          <WeekdaysCheckboxList
-            item={item}
-            control={control}
-            setValue={setValue}
-          />
+          <WeekdaysCheckboxList control={control} setValue={setValue} />
         </div>
       )}
     </div>

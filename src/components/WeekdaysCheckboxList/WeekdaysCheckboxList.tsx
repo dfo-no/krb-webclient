@@ -13,10 +13,8 @@ import { useTranslation } from 'react-i18next';
 import css from './WeekdaysCheckboxList.module.scss';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { weekdaysData } from '../../Nexus/entities/WeekdaysData';
-import { IPeriodDateQuestion } from '../../Nexus/entities/IPeriodDateQuestion';
 
 interface IProps {
-  item: IPeriodDateQuestion;
   control: Control<IRequirementAnswer, unknown>;
   setValue: UseFormSetValue<IRequirementAnswer>;
 }
@@ -29,7 +27,6 @@ interface ICheckboxProps {
 }
 
 export const WeekdaysCheckboxList = ({
-  item,
   control,
   setValue,
 }: IProps): React.ReactElement => {
@@ -47,9 +44,9 @@ export const WeekdaysCheckboxList = ({
     const undefinedWeekday = () => {
       return weekdays.find((weekday) => weekday.isChecked === undefined);
     };
-    if ((!weekdays.length && item.config.isPeriod) || !!undefinedWeekday())
+    if (!weekdays.length || !!undefinedWeekday())
       setValue('question.config.weekdays', weekdaysData);
-  }, [weekdays.length, item.config.isPeriod, setValue, weekdays]);
+  }, [weekdays.length, setValue, weekdays]);
 
   const handleCheck = (event: ChangeEvent<HTMLInputElement>, index: number) => {
     if (setValue) {
