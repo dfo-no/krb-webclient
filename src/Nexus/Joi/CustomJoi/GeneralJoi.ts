@@ -42,6 +42,11 @@ const NumberValidator = (joi: Joi.Root) => ({
   base: joi.number().required(),
 });
 
+const EmptyNumberValidator = (joi: Joi.Root) => ({
+  type: 'validateEmptyNumber',
+  base: joi.number().equal(null).required(),
+});
+
 const TypeValidator = (joi: Joi.Root) => ({
   type: 'validateType',
   base: joi.string().required(),
@@ -105,6 +110,7 @@ const GeneralJoi = [
   BooleanValidator,
   BooleanOptionalValidator,
   NumberValidator,
+  EmptyNumberValidator,
   TypeValidator,
   TypesValidator,
   DateValidator,

@@ -257,6 +257,7 @@ export default function ProductRequirement({
                 })}
               </Box>
               {renderActiveVariant()}
+              {console.log(methods.formState.errors)}
               <GeneralErrorMessage errors={methods.formState.errors} />
             </form>
           </FormProvider>

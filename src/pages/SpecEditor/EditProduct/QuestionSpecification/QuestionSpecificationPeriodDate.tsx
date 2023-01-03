@@ -24,6 +24,7 @@ interface IProps {
 const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
   const { control, formState, setValue } = useFormContext<IRequirementAnswer>();
   const [awardCriteria, setAwardCriteria] = useState(false);
+  const [variationNumberDays, setVariationNumberDays] = useState(false);
 
   const useFromBoundary = useWatch({
     name: 'question.config.fromBoundary',
@@ -48,6 +49,34 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
     name: 'question.config.dateDiscounts',
   });
 
+  const usePeriodMin = useWatch({
+    name: 'question.config.periodMin',
+    control,
+  });
+  const usePeriodMax = useWatch({
+    name: 'question.config.periodMax',
+    control,
+  });
+
+  const usePeriodMinDiscount = useWatch({
+    name: 'question.config.numberDayDiscounts.0',
+    control,
+  });
+  const usePeriodMaxDiscount = useWatch({
+    name: 'question.config.numberDayDiscounts.1',
+    control,
+  });
+
+  const {
+    fields: daysDiscount,
+    append: appendDaysDiscount,
+    remove: removeDaysDiscount,
+    update: updateDaysDiscount,
+  } = useFieldArray({
+    control,
+    name: 'question.config.numberDayDiscounts',
+  });
+
   useEffect(() => {
     if (useFromBoundary) {
       setValue('question.answer.fromDate', useFromBoundary);
@@ -58,11 +87,43 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
   }, [useFromBoundary, setValue, item.config.isPeriod]);
 
   useEffect(() => {
+    if (usePeriodMin) {
+      setValue('question.answer.minDays', usePeriodMin);
+      if (item.config.isPeriod) {
+        setValue('question.answer.maxDays', usePeriodMax);
+      }
+    }
+  }, [usePeriodMin, setValue, item.config.isPeriod, usePeriodMax]);
+
+  useEffect(() => {
     if (!fields.length && awardCriteria) {
       append({ id: new UuidService().generateId(), date: null, discount: 0 });
       append({ id: new UuidService().generateId(), date: null, discount: 0 });
     }
   }, [fields, awardCriteria, append]);
+
+  useEffect(() => {
+    if (!daysDiscount.length && variationNumberDays) {
+      appendDaysDiscount({
+        id: new UuidService().generateId(),
+        numberDays: null,
+        discount: 0,
+      });
+      appendDaysDiscount({
+        id: new UuidService().generateId(),
+        numberDays: null,
+        discount: 0,
+      });
+      // setValue('question.config.periodMin', 0);
+      // setValue('question.config.periodMax', usePeriodMin);
+    }
+  }, [
+    daysDiscount.length,
+    variationNumberDays,
+    appendDaysDiscount,
+    setValue,
+    usePeriodMin,
+  ]);
 
   useEffect(() => {
     if (
@@ -81,6 +142,26 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
 
   useEffect(() => {
     if (
+      variationNumberDays &&
+      usePeriodMinDiscount &&
+      (usePeriodMin !== usePeriodMinDiscount.numberDays ||
+        !usePeriodMinDiscount.id)
+    ) {
+      updateDaysDiscount(0, {
+        id: usePeriodMinDiscount.id ?? new UuidService().generateId(),
+        numberDays: usePeriodMin,
+        discount: usePeriodMinDiscount.discount,
+      });
+    }
+  }, [
+    variationNumberDays,
+    usePeriodMinDiscount,
+    usePeriodMin,
+    updateDaysDiscount,
+  ]);
+
+  useEffect(() => {
+    if (
       awardCriteria &&
       useMaxDiscount &&
       (!DateUtils.sameTime(useToBoundary, useMaxDiscount.date) ||
@@ -95,15 +176,48 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
   }, [awardCriteria, useToBoundary, useMaxDiscount, update, append]);
 
   useEffect(() => {
+    if (
+      variationNumberDays &&
+      usePeriodMaxDiscount &&
+      (usePeriodMax !== usePeriodMaxDiscount.numberDays ||
+        !usePeriodMaxDiscount.id)
+    ) {
+      updateDaysDiscount(1, {
+        id: usePeriodMaxDiscount.id ?? new UuidService().generateId(),
+        numberDays: usePeriodMax,
+        discount: usePeriodMaxDiscount.discount,
+      });
+    }
+  }, [
+    variationNumberDays,
+    usePeriodMaxDiscount,
+    updateDaysDiscount,
+    usePeriodMax,
+  ]);
+
+  useEffect(() => {
     if (fields.length > 0) {
       setAwardCriteria(true);
     }
   }, [fields]);
 
+  useEffect(() => {
+    if (daysDiscount.length > 0) {
+      setVariationNumberDays(true);
+    }
+  }, [daysDiscount]);
+
   const onCheckboxClick = (): void => {
     setAwardCriteria((prev) => !prev);
     if (fields.length) {
       remove();
+    }
+  };
+
+  const handleVariationNumberDays = (): void => {
+    setVariationNumberDays((prev) => !prev);
+    if (daysDiscount.length) {
+      removeDaysDiscount();
     }
   };
 
@@ -123,26 +237,58 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
           />
         </div>
         {item.config.isPeriod && (
-          <HorizontalTextCtrl
-            className={css.QuestionCriteria__Ctrl__inputCtrl}
-            label={t('Duration')}
-            name={`question.config.duration`}
-            defaultValue={0}
-            placeholder={t('Value')}
-            type={'number'}
-            adornment={t('Days')}
-            color={'var(--text-primary-color)'}
-          />
+          <div className={css.DurationContainer}>
+            <span className={css.DurationContainer__title}>
+              {variationNumberDays
+                ? t('Enter the lowest and highest number of days')
+                : t('Duration')}
+            </span>
+            <div className={css.QuestionDateAndTimePeriod__datetimeContainer}>
+              {variationNumberDays && (
+                <HorizontalTextCtrl
+                  className={css.QuestionCriteria__Ctrl__inputCtrl}
+                  name={`question.config.periodMin`}
+                  defaultValue={0}
+                  placeholder={t('Value')}
+                  type={'number'}
+                  adornment={t('Days')}
+                  color={'var(--text-primary-color)'}
+                />
+              )}
+              <HorizontalTextCtrl
+                className={css.QuestionCriteria__Ctrl__inputCtrl}
+                name={`question.config.periodMax`}
+                defaultValue={0}
+                placeholder={t('Value')}
+                type={'number'}
+                adornment={t('Days')}
+                color={'var(--text-primary-color)'}
+              />
+            </div>
+          </div>
         )}
         <WeekdaysCheckboxList control={control} setValue={setValue} />
-        <div onClick={onCheckboxClick}>
-          <DFOCheckbox
-            checked={awardCriteria}
-            _color={'var(--text-primary-color)'}
-          />
-          <Typography className={css.CheckboxLabel} variant={'smBold'}>
-            {t('Is the requirement an award criteria')}
-          </Typography>
+        <div className={css.CheckboxContainer}>
+          <div onClick={onCheckboxClick}>
+            <DFOCheckbox
+              checked={awardCriteria}
+              _color={'var(--text-primary-color)'}
+            />
+            <Typography className={css.CheckboxLabel} variant={'smBold'}>
+              {t('Is the requirement an award criteria')}
+            </Typography>
+          </div>
+          {awardCriteria && item.config.isPeriod && (
+            <div onClick={handleVariationNumberDays}>
+              <DFOCheckbox
+                checked={variationNumberDays}
+                _color={'var(--text-primary-color)'}
+              />
+              <Typography className={css.CheckboxLabel} variant={'smBold'}>
+                {t('Is there room for variation in the number of days')}
+              </Typography>
+            </div>
+          )}
         </div>
         {awardCriteria && (
           <div className={css.QuestionCriteria}>
@@ -192,6 +338,7 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
                           icon={<ClearIcon />}
                           handleClick={() => remove(index)}
                           fontSize={'small'}
+                          disablePadding={true}
                         />
                       )}
                     </div>
@@ -205,6 +352,68 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
                   />
                 </div>
               </div>
+              {variationNumberDays && (
+                <div className={css.QuestionCriteria__wrapper__CtrlContainer}>
+                  {daysDiscount.map((dayDiscount, index) => {
+                    return (
+                      <div
+                        key={dayDiscount.id}
+                        className={css.QuestionCriteria__Ctrl}
+                      >
+                        <HorizontalTextCtrl
+                          className={css.QuestionCriteria__Ctrl__inputCtrl}
+                          label={index == 0 ? `${t('Days')}` : ''}
+                          name={`question.config.numberDayDiscounts[${index}].numberDays`}
+                          placeholder={t('Days')}
+                          type={'number'}
+                          color={'var(--text-primary-color)'}
+                        />
+                        <HorizontalTextCtrl
+                          className={css.QuestionCriteria__Ctrl__inputCtrl}
+                          label={index == 0 ? t('Discount') : ''}
+                          name={`question.config.numberDayDiscounts[${index}].discount`}
+                          placeholder={t('Value')}
+                          type={'number'}
+                          adornment={t('NOK')}
+                          color={'var(--text-primary-color)'}
+                        />
+                        {index == 0 && (
+                          <Button
+                            className={css.QuestionCriteria__Ctrl__action}
+                            icon={Symbols.Plus}
+                            iconLocation={Location.Before}
+                            variant={Variant.Ghost}
+                            onClick={() =>
+                              appendDaysDiscount({
+                                id: new UuidService().generateId(),
+                                numberDays: usePeriodMin,
+                                discount: 0,
+                              })
+                            }
+                          >
+                            {t('Add row')}
+                          </Button>
+                        )}
+                        {index > 0 && (
+                          <ToolbarItem
+                            secondaryText={t('Remove')}
+                            icon={<ClearIcon />}
+                            handleClick={() => removeDaysDiscount(index)}
+                            fontSize={'small'}
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
+                  <div>
+                    <ArrayUniqueErrorMessage
+                      errors={formState.errors}
+                      path={'question.config.numberDayDiscounts'}
+                      length={fields.length}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}

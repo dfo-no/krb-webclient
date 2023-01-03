@@ -197,11 +197,130 @@ const ToDateValidator = (joi: Joi.Root) => ({
   },
 });
 
+const DaysValidator = (joi: Joi.Root) => ({
+  type: 'validateDays',
+  messages: {
+    'number.base': 'Må være et tall',
+    'number.min': 'Må være større enn {{#limit}}',
+    'number.max': 'Må være mindre enn {{#limit}}',
+  },
+  base: joi.number(),
+  validate(value: number, helpers: Joi.CustomHelpers) {
+    const minDay = helpers.state.ancestors[2].periodMin;
+    const maxDay = helpers.state.ancestors[2].periodMax;
+    if (minDay && minDay > value) {
+      return {
+        value,
+        errors: helpers.error('number.min', {
+          limit: minDay - 1,
+        }),
+      };
+    }
+    if (maxDay && maxDay < value) {
+      return {
+        value,
+        errors: helpers.error('number.max', {
+          limit: maxDay + 1,
+        }),
+      };
+    }
+    return { value };
+  },
+});
+
+const MinDaysValidator = (joi: Joi.Root) => ({
+  type: 'validateMinDays',
+  messages: {
+    'number.base': 'Må være et tall',
+    'number.min': 'Må være større enn {{#limit}}',
+    'number.max': 'Må være mindre enn {{#limit}}',
+  },
+  base: joi.alternatives(joi.number(), null),
+  validate(value: number | null, helpers: Joi.CustomHelpers) {
+    const min = helpers.state.ancestors[1].config.periodMin;
+    const max = helpers.state.ancestors[1].config.periodMax;
+    if (value && min && max) {
+      if (min && min > value) {
+        return {
+          value,
+          errors: helpers.error('number.min', {
+            limit: min,
+          }),
+        };
+      }
+      if (max && max < value) {
+        return {
+          value,
+          errors: helpers.error('number.max', {
+            limit: max,
+          }),
+        };
+      }
+    }
+    if (!value && !min && !max) {
+      return {
+        value,
+        errors: helpers.error('number.only'),
+      };
+    }
+    return { value };
+  },
+});
+
+const MaxDaysValidator = (joi: Joi.Root) => ({
+  type: 'validateMaxDays',
+  messages: {
+    'number.base': 'Må være et tall',
+    'number.min': 'Må være større enn {{#limit}}',
+    'number.max': 'Må være mindre enn {{#limit}}',
+  },
+  base: joi.alternatives(joi.number(), null),
+  validate(value: number, helpers: Joi.CustomHelpers) {
+    const isPeriod = helpers.state.ancestors[1].config.isPeriod;
+    const min = helpers.state.ancestors[0].minDays;
+    const max = helpers.state.ancestors[1].config.periodMax;
+    if (isPeriod && value) {
+      if (min && min > value) {
+        return {
+          value,
+          errors: helpers.error('number.min', {
+            limit: min,
+          }),
+        };
+      }
+      if (max && max < value) {
+        return {
+          value,
+          errors: helpers.error('number.max', {
+            limit: max,
+          }),
+        };
+      }
+    }
+    if (isPeriod && !value) {
+      return {
+        value,
+        errors: helpers.error('number.only'),
+      };
+    }
+    return { value };
+  },
+});
+
 const DateDiscountValuesValidator = (joi: Joi.Root) => ({
   type: 'validateDateDiscountValues',
   args(value: Schema, type: Schema) {
     return joi.array().items(type).required().unique('date').messages({
       'array.unique': 'Dato kan ikke være like',
+    });
+  },
+});
+
+const DaysValuesValidator = (joi: Joi.Root) => ({
+  type: 'validateDaysValues',
+  args(value: Schema, type: Schema) {
+    return joi.array().items(type).required().unique('numberDays').messages({
+      'array.unique': 'Antall dager kan ikke være like',
     });
   },
 });
@@ -215,7 +334,11 @@ const DateJoi = [
   DateDiscountValidator,
   FromDateValidator,
   ToDateValidator,
+  DaysValidator,
+  MinDaysValidator,
+  MaxDaysValidator,
   DateDiscountValuesValidator,
+  DaysValuesValidator,
 ];
 
 export default DateJoi;
