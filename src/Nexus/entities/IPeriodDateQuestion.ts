@@ -51,7 +51,7 @@ export interface WeekdayValues {
 }
 
 const WeekdayValuesSchema = CustomJoi.object().keys({
-  id: CustomJoi.validateId(),
+  id: CustomJoi.validateOptionalId(),
   day: CustomJoi.validateOptionalTextNotRequired(),
   isChecked: CustomJoi.validateOptionalBoolean(),
 });

@@ -213,7 +213,7 @@ const MinTimePeriodValidator = (joi: Joi.Root) => ({
     'date.min': 'Tidspunkt kan ikke være før {{#limit}}',
     'date.max': 'Tidspunkt kan ikke være etter {{#limit}}',
   },
-  base: joi.alternatives(joi.date().iso().raw(), null).required(),
+  base: joi.alternatives(joi.date().iso().raw(), null),
   validate(value: string | null, helpers: Joi.CustomHelpers) {
     const timePeriodMin = helpers.state.ancestors[1].config.timePeriodMin;
     const timePeriodMax = helpers.state.ancestors[1].config.timePeriodMax;
@@ -246,7 +246,7 @@ const MaxTimePeriodValidator = (joi: Joi.Root) => ({
     'date.min': 'Tidspunkt kan ikke være før {{#limit}}',
     'date.max': 'Tidspunkt kan ikke være etter {{#limit}}',
   },
-  base: joi.alternatives(joi.date().iso().raw(), null).required(),
+  base: joi.alternatives(joi.date().iso().raw(), null),
   validate(value: string | null, helpers: Joi.CustomHelpers) {
     const isPeriod = helpers.state.ancestors[1].config.isPeriod;
     const timePeriodMax = helpers.state.ancestors[1].config.timePeriodMax;
@@ -292,7 +292,7 @@ const TimeDiscountValuesValidator = (joi: Joi.Root) => ({
 const TimePeriodDiscountValuesValidator = (joi: Joi.Root) => ({
   type: 'validateTimePeriodDiscountValues',
   args(value: Schema, type: Schema) {
-    return joi.array().items(type).required().unique('timePeriod').messages({
+    return joi.array().items(type).unique('timePeriod').messages({
       'array.unique': 'Tidspunkt kan ikke være like',
     });
   },

@@ -75,7 +75,7 @@ const EmptyDateTimeValidator = (joi: Joi.Root) => ({
 
 const OptionalDateValidator = (joi: Joi.Root) => ({
   type: 'validateOptionalDate',
-  base: joi.date().iso().raw().allow(null).required(),
+  base: joi.date().iso().raw().allow(null),
 });
 
 const ArrayValidator = (joi: Joi.Root) => ({

@@ -307,7 +307,7 @@ const DateDiscountValuesValidator = (joi: Joi.Root) => ({
 const DaysValuesValidator = (joi: Joi.Root) => ({
   type: 'validateDaysValues',
   args(value: Schema, type: Schema) {
-    return joi.array().items(type).required().unique('numberDays').messages({
+    return joi.array().items(type).unique('numberDays').messages({
       'array.unique': 'Antall dager kan ikke være like',
     });
   },
