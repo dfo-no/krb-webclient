@@ -109,9 +109,9 @@ describe('GeneralJoi', () => {
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });
 
-  test('Joi validateEmptyDate() should show error message if not null', () => {
+  test('Joi validateEmptyDateTime() should show error message if not null', () => {
     const schema = CustomJoi.object().keys({
-      date: CustomJoi.validateEmptyDate(),
+      date: CustomJoi.validateEmptyDateTime(),
     });
 
     const reportError = schema.validate({

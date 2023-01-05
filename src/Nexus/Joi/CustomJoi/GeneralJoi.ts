@@ -68,8 +68,8 @@ const DateValidator = (joi: Joi.Root) => ({
   base: joi.date().iso().raw().required(),
 });
 
-const EmptyDateValidator = (joi: Joi.Root) => ({
-  type: 'validateEmptyDate',
+const EmptyDateTimeValidator = (joi: Joi.Root) => ({
+  type: 'validateEmptyDateTime',
   base: joi.string().equal(null).required(),
 });
 
@@ -114,7 +114,7 @@ const GeneralJoi = [
   TypeValidator,
   TypesValidator,
   DateValidator,
-  EmptyDateValidator,
+  EmptyDateTimeValidator,
   OptionalDateValidator,
   ArrayValidator,
   ArrayNotRequiredValidator,

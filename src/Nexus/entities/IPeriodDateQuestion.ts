@@ -58,7 +58,7 @@ const WeekdayValuesSchema = CustomJoi.object().keys({
 
 const WorkbenchDateDiscountSchema = CustomJoi.object().keys({
   discount: CustomJoi.validateDiscount(),
-  date: CustomJoi.validateEmptyDate(),
+  date: CustomJoi.validateEmptyDateTime(),
 });
 
 const DateDiscountSchema = CustomJoi.object().keys({

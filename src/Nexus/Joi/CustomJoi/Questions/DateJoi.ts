@@ -257,12 +257,6 @@ const MinDaysValidator = (joi: Joi.Root) => ({
         };
       }
     }
-    if (!value && !min && !max) {
-      return {
-        value,
-        errors: helpers.error('number.only'),
-      };
-    }
     return { value };
   },
 });
@@ -296,12 +290,6 @@ const MaxDaysValidator = (joi: Joi.Root) => ({
           }),
         };
       }
-    }
-    if (isPeriod && !value) {
-      return {
-        value,
-        errors: helpers.error('number.only'),
-      };
     }
     return { value };
   },

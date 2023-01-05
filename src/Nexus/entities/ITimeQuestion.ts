@@ -15,6 +15,8 @@ export interface ITimeQuestion extends IQuestionBase<ITimeAnswer, ITimeConfig> {
 export interface ITimeAnswer extends IAnswerBase {
   fromTime: string | null;
   toTime: string | null;
+  minTimePeriod: string | null;
+  maxTimePeriod: string | null;
 }
 
 export interface ITimeConfig extends IConfigBase {
@@ -23,7 +25,10 @@ export interface ITimeConfig extends IConfigBase {
   toBoundary: string | null;
   periodMinutes: number;
   periodHours: number;
+  timePeriodMin: string | null;
+  timePeriodMax: string | null;
   timeDiscounts: TimeDiscountPair[];
+  timePeriodDiscount: TimePeriodDiscounts[];
 }
 
 export interface TimeDiscountPair {
@@ -32,9 +37,20 @@ export interface TimeDiscountPair {
   discount: number;
 }
 
+export interface TimePeriodDiscounts {
+  id: string;
+  timePeriod: string | null;
+  discount: number;
+}
+
 const WorkbenchTimeDiscountSchema = CustomJoi.object().keys({
   discount: CustomJoi.validateDiscount(),
-  time: CustomJoi.validateEmptyDate(),
+  time: CustomJoi.validateEmptyDateTime(),
+});
+
+const WorkbenchTimePeriodDiscountsSchema = CustomJoi.object().keys({
+  discount: CustomJoi.validateDiscount(),
+  timePeriod: CustomJoi.validateEmptyDateTime(),
 });
 
 export const TimeQuestionWorkbenchSchema = QuestionBaseSchema.keys({
@@ -45,8 +61,13 @@ export const TimeQuestionWorkbenchSchema = QuestionBaseSchema.keys({
     toBoundary: CustomJoi.validateOptionalDate(),
     periodMinutes: CustomJoi.validateNumber(),
     periodHours: CustomJoi.validateNumber(),
+    timePeriodMin: CustomJoi.validateOptionalDate(),
+    timePeriodMax: CustomJoi.validateOptionalDate(),
     timeDiscounts: CustomJoi.validateNotRequiredArray(
       WorkbenchTimeDiscountSchema
+    ),
+    timePeriodDiscount: CustomJoi.validateNotRequiredArray(
+      WorkbenchTimePeriodDiscountsSchema
     ),
   }),
 });
@@ -57,6 +78,12 @@ const TimeDiscountSchema = CustomJoi.object().keys({
   time: CustomJoi.validateTimeDiscount(),
 });
 
+const TimePeriodDiscountsSchema = CustomJoi.object().keys({
+  id: CustomJoi.validateId(),
+  discount: CustomJoi.validateDiscount(),
+  timePeriod: CustomJoi.validateTimePeriod(),
+});
+
 export const TimeQuestionAnswerSchema = TimeQuestionWorkbenchSchema.keys({
   config: ConfigBaseSchema.keys({
     isPeriod: CustomJoi.validateBoolean(),
@@ -64,11 +91,18 @@ export const TimeQuestionAnswerSchema = TimeQuestionWorkbenchSchema.keys({
     toBoundary: CustomJoi.validateToBoundaryTime(),
     periodMinutes: CustomJoi.validatePeriodMinutes(),
     periodHours: CustomJoi.validatePeriodHours(),
+    timePeriodMin: CustomJoi.validateOptionalDate(),
+    timePeriodMax: CustomJoi.validateOptionalDate(),
     timeDiscounts: CustomJoi.validateTimeDiscountValues(TimeDiscountSchema),
+    timePeriodDiscount: CustomJoi.validateTimePeriodDiscountValues(
+      TimePeriodDiscountsSchema
+    ),
   }),
   answer: CustomJoi.object().keys({
     fromTime: CustomJoi.validateFromTime(),
     toTime: CustomJoi.validateToTime(),
+    minTimePeriod: CustomJoi.validateMinTimePeriod(),
+    maxTimePeriod: CustomJoi.validateMaxTimePeriod(),
     discount: CustomJoi.validateDiscount(),
   }),
 });

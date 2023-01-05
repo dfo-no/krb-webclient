@@ -90,10 +90,10 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
     if (usePeriodMin) {
       setValue('question.answer.minDays', usePeriodMin);
       if (item.config.isPeriod) {
-        setValue('question.answer.maxDays', usePeriodMax);
+        setValue('question.answer.maxDays', usePeriodMin);
       }
     }
-  }, [usePeriodMin, setValue, item.config.isPeriod, usePeriodMax]);
+  }, [usePeriodMin, setValue, item.config.isPeriod]);
 
   useEffect(() => {
     if (!fields.length && awardCriteria) {
@@ -106,16 +106,14 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
     if (!daysDiscount.length && variationNumberDays) {
       appendDaysDiscount({
         id: new UuidService().generateId(),
-        numberDays: null,
+        numberDays: usePeriodMin,
         discount: 0,
       });
       appendDaysDiscount({
         id: new UuidService().generateId(),
-        numberDays: null,
+        numberDays: usePeriodMax,
         discount: 0,
       });
-      // setValue('question.config.periodMin', 0);
-      // setValue('question.config.periodMax', usePeriodMin);
     }
   }, [
     daysDiscount.length,
@@ -123,6 +121,7 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
     appendDaysDiscount,
     setValue,
     usePeriodMin,
+    usePeriodMax,
   ]);
 
   useEffect(() => {
@@ -142,26 +141,6 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
 
   useEffect(() => {
     if (
-      variationNumberDays &&
-      usePeriodMinDiscount &&
-      (usePeriodMin !== usePeriodMinDiscount.numberDays ||
-        !usePeriodMinDiscount.id)
-    ) {
-      updateDaysDiscount(0, {
-        id: usePeriodMinDiscount.id ?? new UuidService().generateId(),
-        numberDays: usePeriodMin,
-        discount: usePeriodMinDiscount.discount,
-      });
-    }
-  }, [
-    variationNumberDays,
-    usePeriodMinDiscount,
-    usePeriodMin,
-    updateDaysDiscount,
-  ]);
-
-  useEffect(() => {
-    if (
       awardCriteria &&
       useMaxDiscount &&
       (!DateUtils.sameTime(useToBoundary, useMaxDiscount.date) ||
@@ -178,9 +157,27 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
   useEffect(() => {
     if (
       variationNumberDays &&
+      usePeriodMinDiscount &&
+      !usePeriodMinDiscount.id
+    ) {
+      updateDaysDiscount(0, {
+        id: usePeriodMinDiscount.id ?? new UuidService().generateId(),
+        numberDays: usePeriodMin,
+        discount: usePeriodMinDiscount.discount,
+      });
+    }
+  }, [
+    variationNumberDays,
+    usePeriodMinDiscount,
+    usePeriodMin,
+    updateDaysDiscount,
+  ]);
+
+  useEffect(() => {
+    if (
+      variationNumberDays &&
       usePeriodMaxDiscount &&
-      (usePeriodMax !== usePeriodMaxDiscount.numberDays ||
-        !usePeriodMaxDiscount.id)
+      !usePeriodMaxDiscount.id
     ) {
       updateDaysDiscount(1, {
         id: usePeriodMaxDiscount.id ?? new UuidService().generateId(),
@@ -386,7 +383,7 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
                             onClick={() =>
                               appendDaysDiscount({
                                 id: new UuidService().generateId(),
-                                numberDays: usePeriodMin,
+                                numberDays: 0,
                                 discount: 0,
                               })
                             }
