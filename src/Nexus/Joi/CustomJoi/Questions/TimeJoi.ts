@@ -217,6 +217,8 @@ const MinTimePeriodValidator = (joi: Joi.Root) => ({
   validate(value: string | null, helpers: Joi.CustomHelpers) {
     const timePeriodMin = helpers.state.ancestors[1].config.timePeriodMin;
     const timePeriodMax = helpers.state.ancestors[1].config.timePeriodMax;
+    console.log('2', helpers.state.ancestors[2].question.config.timePeriodMin);
+    console.log('1', helpers.state.ancestors[1].config.timePeriodMin);
     if (value && timePeriodMin) {
       if (new Date(value).getTime() < new Date(timePeriodMin).getTime()) {
         return {
