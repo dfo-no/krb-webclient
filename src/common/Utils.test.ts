@@ -36,7 +36,8 @@ describe('Utils functions should work', () => {
     expect(result4).toEqual('K');
 
     // Make sure end-items have children property
-    const result5 = get(items, `[1].children`);
+    const result5 = get(items, [1, 'children']);
+
     expect(result5.length).toBe(1);
 
     const result6 = get(
@@ -45,10 +46,19 @@ describe('Utils functions should work', () => {
     );
     expect(result6).toEqual('F_4');
 
-    const result7 = get(
-      items,
-      `[0].children[1].children[0].children[0].children[0].children`
-    );
+    const result7 = get(items, [
+      0,
+      'children',
+      1,
+      'children',
+      0,
+      'children',
+      0,
+      'children',
+      0,
+      'children',
+    ]);
+
     expect(result7.length).toBe(0);
   });
 
