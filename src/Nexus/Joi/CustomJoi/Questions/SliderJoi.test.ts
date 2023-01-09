@@ -13,7 +13,7 @@ describe('SliderJoi', () => {
       min: 1,
     });
     expect(reportError?.error?.details[0].message).toEqual(
-      'Må være et positivt tall'
+      'Må være et positivt heltall'
     );
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });
@@ -33,7 +33,7 @@ describe('SliderJoi', () => {
       max: 10,
     });
     expect(reportError?.error?.details[0].message).toEqual(
-      'Må være større enn 10'
+      'Kan ikke være mindre enn 10'
     );
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });
@@ -61,7 +61,7 @@ describe('SliderJoi', () => {
       step: 1,
     });
     expect(reportError1?.error?.details[0].message).toEqual(
-      'Må være et positivt tall'
+      'Må være et positivt heltall'
     );
     expect(reportError2?.error?.details[0].message).toEqual(
       'Overskrider forksjell mellom maks og min (9)'
@@ -108,10 +108,10 @@ describe('SliderJoi', () => {
       ],
     });
     expect(reportError1?.error?.details[0].message).toEqual(
-      'Må være større enn 1'
+      'Kan ikke være mindre enn 1'
     );
     expect(reportError2?.error?.details[0].message).toEqual(
-      'Må være mindre enn 10'
+      'Kan ikke være større enn 10'
     );
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });
@@ -155,10 +155,10 @@ describe('SliderJoi', () => {
       },
     });
     expect(reportError1?.error?.details[0].message).toEqual(
-      'Må være større enn 1'
+      'Kan ikke være mindre enn 1'
     );
     expect(reportError2?.error?.details[0].message).toEqual(
-      'Må være mindre enn 10'
+      'Kan ikke være større enn 10'
     );
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });

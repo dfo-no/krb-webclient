@@ -1,14 +1,15 @@
 import Joi, { Schema } from 'joi';
 
 import DateUtils from '../../../../common/DateUtils';
+import { ErrorMessage } from './ErrorMessage';
 
 const PeriodMinutesValidator = (joi: Joi.Root) => ({
   type: 'validatePeriodMinutes',
   messages: {
-    'number.base': 'Må være et tall',
-    'number.integer': 'Må være et positivt heltall',
-    'number.min': 'Må være et positivt heltall',
-    'number.max': 'Må være mindre enn 60',
+    'number.base': ErrorMessage.VAL_NUMBER_BASE,
+    'number.integer': ErrorMessage.VAL_NUMBER_INT,
+    'number.min': ErrorMessage.VAL_NUMBER_INT,
+    'number.max': ErrorMessage.VAL_NUMBER_MINUTE_MAX,
   },
   base: joi.number().integer().min(0).max(59).required(),
 });
@@ -16,10 +17,10 @@ const PeriodMinutesValidator = (joi: Joi.Root) => ({
 const PeriodHoursValidator = (joi: Joi.Root) => ({
   type: 'validatePeriodHours',
   messages: {
-    'number.base': 'Må være et tall',
-    'number.integer': 'Må være et positivt heltall',
-    'number.min': 'Må være et positivt heltall',
-    'number.max': 'Må være mindre enn 24',
+    'number.base': ErrorMessage.VAL_NUMBER_BASE,
+    'number.integer': ErrorMessage.VAL_NUMBER_INT,
+    'number.min': ErrorMessage.VAL_NUMBER_INT,
+    'number.max': ErrorMessage.VAL_NUMBER_HOUR_MAX,
   },
   base: joi.number().integer().min(0).max(23).required(),
 });
@@ -27,7 +28,7 @@ const PeriodHoursValidator = (joi: Joi.Root) => ({
 const FromBoundaryTimeValidator = (joi: Joi.Root) => ({
   type: 'validateFromBoundaryTime',
   messages: {
-    'date.only': 'Tidspunkt må være fylt ut',
+    'date.only': ErrorMessage.VAL_TIME_ONLY,
   },
   base: joi.alternatives(joi.date().iso().raw(), null).required(),
   validate(value: string | null, helpers: Joi.CustomHelpers) {
@@ -43,8 +44,8 @@ const FromBoundaryTimeValidator = (joi: Joi.Root) => ({
 const ToBoundaryTimeValidator = (joi: Joi.Root) => ({
   type: 'validateToBoundaryTime',
   messages: {
-    'date.only': 'Tidspunkt må være fylt ut',
-    'date.min': 'Til må være senere enn fra',
+    'date.only': ErrorMessage.VAL_TIME_ONLY,
+    'date.min': ErrorMessage.VAL_TIME_TO,
   },
   base: joi.alternatives(joi.date().iso().raw(), null).required(),
   validate(value: string | null, helpers: Joi.CustomHelpers) {
@@ -62,14 +63,52 @@ const ToBoundaryTimeValidator = (joi: Joi.Root) => ({
   },
 });
 
+const TimePeriodMinValidator = (joi: Joi.Root) => ({
+  type: 'validateTimePeriodMin',
+  messages: {
+    'date.only': ErrorMessage.VAL_TIME_ONLY,
+  },
+  base: joi.alternatives(joi.date().iso().raw(), null),
+  validate(value: string | null, helpers: Joi.CustomHelpers) {
+    const timePeriodMax = helpers.state.ancestors[0].timePeriodMax;
+    const minDaysAnswer = helpers.state.ancestors[1]?.answer?.minDays;
+    if (!value && (timePeriodMax || !minDaysAnswer)) {
+      return { value, errors: helpers.error('date.only') };
+    }
+    return { value };
+  },
+});
+
+const TimePeriodMaxValidator = (joi: Joi.Root) => ({
+  type: 'validateTimePeriodMax',
+  messages: {
+    'date.only': ErrorMessage.VAL_TIME_ONLY,
+    'date.min': ErrorMessage.VAL_TIME_PERIOD_MIN,
+  },
+  base: joi.alternatives(joi.date().iso().raw(), null),
+  validate(value: string | null, helpers: Joi.CustomHelpers) {
+    const timePeriodMin = helpers.state.ancestors[0].timePeriodMin;
+    const minDaysAnswer = helpers.state.ancestors[1]?.answer?.minDays;
+    if (!value && (timePeriodMin || !minDaysAnswer)) {
+      return { value, errors: helpers.error('date.only') };
+    }
+    if (value && timePeriodMin) {
+      if (new Date(value).getTime() < new Date(timePeriodMin).getTime()) {
+        return { value, errors: helpers.error('date.min') };
+      }
+    }
+    return { value };
+  },
+});
+
 const TimeDiscountValidator = (joi: Joi.Root) => ({
   type: 'validateTimeDiscount',
   base: joi.date().iso().raw().required().messages({
-    'date.base': 'Tidspunkt må ha en verdi',
+    'date.base': ErrorMessage.VAL_TIME_BASE,
   }),
   messages: {
-    'date.min': 'Tidspunkt kan ikke være før {{#limit}}',
-    'date.max': 'Tidspunkt kan ikke være etter {{#limit}}',
+    'date.min': ErrorMessage.VAL_TIME_MIN,
+    'date.max': ErrorMessage.VAL_TIME_MAX,
   },
   validate(value: string, helpers: Joi.CustomHelpers) {
     const fromBoundary = helpers.state.ancestors[2].fromBoundary;
@@ -100,9 +139,9 @@ const TimeDiscountValidator = (joi: Joi.Root) => ({
 const FromTimeValidator = (joi: Joi.Root) => ({
   type: 'validateFromTime',
   messages: {
-    'date.only': 'Tidspunkt må være fylt ut',
-    'date.min': 'Tidspunkt kan ikke være før {{#limit}}',
-    'date.max': 'Tidspunkt kan ikke være etter {{#limit}}',
+    'date.only': ErrorMessage.VAL_TIME_ONLY,
+    'date.min': ErrorMessage.VAL_TIME_MIN,
+    'date.max': ErrorMessage.VAL_TIME_MAX,
   },
   base: joi.alternatives(joi.date().iso().raw(), null).required(),
   validate(value: string | null, helpers: Joi.CustomHelpers) {
@@ -133,9 +172,9 @@ const FromTimeValidator = (joi: Joi.Root) => ({
 const ToTimeValidator = (joi: Joi.Root) => ({
   type: 'validateToTime',
   messages: {
-    'date.only': 'Tidspunkt må være fylt ut',
-    'date.min': 'Tidspunkt kan ikke være før {{#limit}}',
-    'date.max': 'Tidspunkt kan ikke være etter {{#limit}}',
+    'date.only': ErrorMessage.VAL_TIME_ONLY,
+    'date.min': ErrorMessage.VAL_TIME_MIN,
+    'date.max': ErrorMessage.VAL_TIME_MAX,
   },
   base: joi.alternatives(joi.date().iso().raw(), null).required(),
   validate(value: string | null, helpers: Joi.CustomHelpers) {
@@ -174,11 +213,11 @@ const ToTimeValidator = (joi: Joi.Root) => ({
 const TimePeriodValidator = (joi: Joi.Root) => ({
   type: 'validateTimePeriod',
   messages: {
-    'date.min': 'Tidspunkt kan ikke være før {{#limit}}',
-    'date.max': 'Tidspunkt kan ikke være etter {{#limit}}',
+    'date.min': ErrorMessage.VAL_TIME_MIN,
+    'date.max': ErrorMessage.VAL_TIME_MAX,
   },
   base: joi.date().iso().raw().messages({
-    'date.base': 'Tidspunkt må ha en verdi',
+    'date.base': ErrorMessage.VAL_TIME_BASE,
   }),
   validate(value: string, helpers: Joi.CustomHelpers) {
     const minTimePeriod = helpers.state.ancestors[2].timePeriodMin;
@@ -209,16 +248,14 @@ const TimePeriodValidator = (joi: Joi.Root) => ({
 const MinTimePeriodValidator = (joi: Joi.Root) => ({
   type: 'validateMinTimePeriod',
   messages: {
-    'date.only': 'Tidspunkt må være fylt ut',
-    'date.min': 'Tidspunkt kan ikke være før {{#limit}}',
-    'date.max': 'Tidspunkt kan ikke være etter {{#limit}}',
+    'date.only': ErrorMessage.VAL_TIME_ONLY,
+    'date.min': ErrorMessage.VAL_TIME_MIN,
+    'date.max': ErrorMessage.VAL_TIME_MAX,
   },
   base: joi.alternatives(joi.date().iso().raw(), null),
   validate(value: string | null, helpers: Joi.CustomHelpers) {
     const timePeriodMin = helpers.state.ancestors[1].config.timePeriodMin;
     const timePeriodMax = helpers.state.ancestors[1].config.timePeriodMax;
-    console.log('2', helpers.state.ancestors[2].question.config.timePeriodMin);
-    console.log('1', helpers.state.ancestors[1].config.timePeriodMin);
     if (value && timePeriodMin) {
       if (new Date(value).getTime() < new Date(timePeriodMin).getTime()) {
         return {
@@ -244,9 +281,9 @@ const MinTimePeriodValidator = (joi: Joi.Root) => ({
 const MaxTimePeriodValidator = (joi: Joi.Root) => ({
   type: 'validateMaxTimePeriod',
   messages: {
-    'date.only': 'Tidspunkt må være fylt ut',
-    'date.min': 'Tidspunkt kan ikke være før {{#limit}}',
-    'date.max': 'Tidspunkt kan ikke være etter {{#limit}}',
+    'date.only': ErrorMessage.VAL_TIME_ONLY,
+    'date.min': ErrorMessage.VAL_TIME_MIN,
+    'date.max': ErrorMessage.VAL_TIME_MAX,
   },
   base: joi.alternatives(joi.date().iso().raw(), null),
   validate(value: string | null, helpers: Joi.CustomHelpers) {
@@ -286,7 +323,7 @@ const TimeDiscountValuesValidator = (joi: Joi.Root) => ({
   type: 'validateTimeDiscountValues',
   args(value: Schema, type: Schema) {
     return joi.array().items(type).required().unique('time').messages({
-      'array.unique': 'Tidspunkt kan ikke være like',
+      'array.unique': ErrorMessage.VAL_TIME_UNIQUE,
     });
   },
 });
@@ -295,7 +332,7 @@ const TimePeriodDiscountValuesValidator = (joi: Joi.Root) => ({
   type: 'validateTimePeriodDiscountValues',
   args(value: Schema, type: Schema) {
     return joi.array().items(type).unique('timePeriod').messages({
-      'array.unique': 'Tidspunkt kan ikke være like',
+      'array.unique': ErrorMessage.VAL_TIME_UNIQUE,
     });
   },
 });
@@ -305,6 +342,8 @@ const TimeJoi = [
   PeriodHoursValidator,
   FromBoundaryTimeValidator,
   ToBoundaryTimeValidator,
+  TimePeriodMinValidator,
+  TimePeriodMaxValidator,
   TimeDiscountValidator,
   FromTimeValidator,
   ToTimeValidator,

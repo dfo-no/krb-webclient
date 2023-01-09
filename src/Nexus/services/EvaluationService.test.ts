@@ -43,7 +43,6 @@ describe('EvaluationService', () => {
         isPeriod: false,
         periodMax: 0,
         periodMin: 0,
-        duration: 0,
         weekdays: [],
         defaultDiscount: 1,
         fromBoundary: '2021-10-01T00:00:00.0000000Z',

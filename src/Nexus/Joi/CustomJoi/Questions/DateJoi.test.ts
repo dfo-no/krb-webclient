@@ -46,12 +46,68 @@ describe('DateJoi', () => {
       periodMax: 3,
     });
     expect(reportError1?.error?.details[0].message).toEqual(
-      'Må være større enn 2'
+      'Kan ikke være mindre enn 2'
     );
     expect(reportError2?.error?.details[0].message).toEqual(
       'Må være et positivt heltall'
     );
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
+  });
+
+  test('Joi validatePeriodMin() and validatePeriodMax() ensure minimum and maximum validation and should work together', () => {
+    const schema = CustomJoi.object().keys({
+      config: {
+        periodMin: CustomJoi.validatePeriodMin(),
+        periodMax: CustomJoi.validatePeriodMax(),
+      },
+      answer: {
+        minDays: CustomJoi.validateMinDays(),
+      },
+    });
+
+    const reportError1 = schema.validate({
+      config: {
+        periodMin: null,
+        periodMax: 1,
+      },
+      answer: {
+        minDays: 1,
+      },
+    });
+    const reportError2 = schema.validate({
+      config: {
+        periodMin: 1,
+        periodMax: null,
+      },
+      answer: {
+        minDays: 1,
+      },
+    });
+    const reportError3 = schema.validate({
+      config: {
+        periodMin: 2,
+        periodMax: 1,
+      },
+      answer: {
+        minDays: 1,
+      },
+    });
+    const reportSuccess1 = schema.validate({
+      config: {
+        periodMin: 1,
+        periodMax: 2,
+      },
+      answer: {
+        minDays: 1,
+      },
+    });
+
+    expect(reportError1?.error?.details[0].message).toEqual('Må være et tall');
+    expect(reportError2?.error?.details[0].message).toEqual('Må være et tall');
+    expect(reportError3?.error?.details[0].message).toEqual(
+      'Kan ikke være mindre enn 2'
+    );
+    expect(reportSuccess1?.error?.details[0].message).toBeUndefined();
   });
 
   test('Joi validateFromBoundaryDate() and validateToBoundaryDate should work together', () => {
@@ -319,5 +375,174 @@ describe('DateJoi', () => {
     );
     expect(reportSuccess1?.error?.details[0].message).toBeUndefined();
     expect(reportSuccess2?.error?.details[0].message).toBeUndefined();
+  });
+
+  test('Joi validateMinDays() validates the minimum numberDays towards periodMin and periodMax', () => {
+    const schema = CustomJoi.object().keys({
+      config: {
+        periodMin: CustomJoi.validatePeriodMin(),
+        periodMax: CustomJoi.validatePeriodMax(),
+      },
+      answer: {
+        minDays: CustomJoi.validateMinDays(),
+      },
+    });
+    const reportError1 = schema.validate({
+      config: {
+        periodMin: 2,
+        periodMax: 3,
+      },
+      answer: {
+        minDays: 1,
+      },
+    });
+    const reportError2 = schema.validate({
+      config: {
+        periodMin: 1,
+        periodMax: 2,
+      },
+      answer: {
+        minDays: 3,
+      },
+    });
+    const reportSuccess1 = schema.validate({
+      config: {
+        periodMin: 1,
+        periodMax: 1,
+      },
+      answer: {
+        minDays: null,
+      },
+    });
+    const reportSuccess2 = schema.validate({
+      config: {
+        periodMin: 1,
+        periodMax: 2,
+      },
+      answer: {
+        minDays: 2,
+      },
+    });
+    expect(reportError1?.error?.details[0].message).toEqual(
+      'Kan ikke være mindre enn 2'
+    );
+    expect(reportError2?.error?.details[0].message).toEqual(
+      'Kan ikke være større enn 2'
+    );
+    expect(reportSuccess1?.error?.details[0].message).toBeUndefined();
+    expect(reportSuccess2?.error?.details[0].message).toBeUndefined();
+  });
+
+  test('Joi validateMaxDays() validates the maximum numberDays towards periodMin and periodMax', () => {
+    const schema = CustomJoi.object().keys({
+      config: {
+        periodMin: CustomJoi.validatePeriodMin(),
+        periodMax: CustomJoi.validatePeriodMax(),
+        isPeriod: CustomJoi.validateBoolean(),
+      },
+      answer: {
+        minDays: CustomJoi.validateMinDays(),
+        maxDays: CustomJoi.validateMaxDays(),
+      },
+    });
+    const reportError1 = schema.validate({
+      config: {
+        periodMin: 2,
+        periodMax: 3,
+        isPeriod: true,
+      },
+      answer: {
+        minDays: 4,
+        maxDays: 5,
+      },
+    });
+    const reportError2 = schema.validate({
+      config: {
+        periodMin: 1,
+        periodMax: 4,
+        isPeriod: true,
+      },
+      answer: {
+        minDays: 3,
+        maxDays: 2,
+      },
+    });
+    const reportSuccess1 = schema.validate({
+      config: {
+        periodMin: 1,
+        periodMax: 4,
+        isPeriod: false,
+      },
+      answer: {
+        minDays: 2,
+        maxDays: 5,
+      },
+    });
+    const reportSuccess2 = schema.validate({
+      config: {
+        periodMin: 1,
+        periodMax: 4,
+        isPeriod: true,
+      },
+      answer: {
+        minDays: 2,
+        maxDays: 3,
+      },
+    });
+    expect(reportError1?.error?.details[0].message).toEqual(
+      'Kan ikke være større enn 3'
+    );
+    expect(reportError2?.error?.details[0].message).toEqual(
+      'Kan ikke være mindre enn 3'
+    );
+    expect(reportSuccess1?.error?.details[0].message).toBeUndefined();
+    expect(reportSuccess2?.error?.details[0].message).toBeUndefined();
+  });
+
+  test('Joi validateDays() should show error message on numberDays under periodMin or larger than periodMax', () => {
+    const schema = CustomJoi.object().keys({
+      periodMin: CustomJoi.validatePeriodMin(),
+      periodMax: CustomJoi.validatePeriodMax(),
+      numberDayDiscounts: CustomJoi.validateUniqueArray(
+        CustomJoi.object().keys({
+          numberDays: CustomJoi.validateDays(),
+        })
+      ),
+    });
+
+    const reportError1 = schema.validate({
+      periodMin: 1,
+      periodMax: 10,
+      numberDayDiscounts: [
+        {
+          numberDays: 0,
+        },
+      ],
+    });
+    const reportError2 = schema.validate({
+      periodMin: 1,
+      periodMax: 10,
+      numberDayDiscounts: [
+        {
+          numberDays: 12,
+        },
+      ],
+    });
+    const reportSuccess = schema.validate({
+      periodMin: 1,
+      periodMax: 10,
+      numberDayDiscounts: [
+        {
+          numberDays: 5,
+        },
+      ],
+    });
+    expect(reportError1?.error?.details[0].message).toEqual(
+      'Kan ikke være mindre enn 1'
+    );
+    expect(reportError2?.error?.details[0].message).toEqual(
+      'Kan ikke være større enn 10'
+    );
+    expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });
 });

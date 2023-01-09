@@ -91,8 +91,8 @@ export const TimeQuestionAnswerSchema = TimeQuestionWorkbenchSchema.keys({
     toBoundary: CustomJoi.validateToBoundaryTime(),
     periodMinutes: CustomJoi.validatePeriodMinutes(),
     periodHours: CustomJoi.validatePeriodHours(),
-    timePeriodMin: CustomJoi.validateOptionalDate(),
-    timePeriodMax: CustomJoi.validateOptionalDate(),
+    timePeriodMin: CustomJoi.validateTimePeriodMin(),
+    timePeriodMax: CustomJoi.validateTimePeriodMax(),
     timeDiscounts: CustomJoi.validateTimeDiscountValues(TimeDiscountSchema),
     timePeriodDiscount: CustomJoi.validateTimePeriodDiscountValues(
       TimePeriodDiscountsSchema
