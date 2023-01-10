@@ -20,6 +20,7 @@ export interface ICodelistConfig extends IConfigBase {
   optionalCodeMinAmount: number;
   optionalCodeMaxAmount: number;
   codes: ICodeSelection[];
+  discountSumMax: number;
 }
 
 export interface ICodeSelection {
@@ -41,6 +42,7 @@ export const CodelistQuestionWorkbenchSchema = QuestionBaseSchema.keys({
     optionalCodeMinAmount: CustomJoi.validateMinCodes(),
     optionalCodeMaxAmount: CustomJoi.validateMaxCodes(),
     codes: CustomJoi.validateQuestionCodes(),
+    discountSumMax: CustomJoi.validateHighestDiscount(),
   }),
 });
 

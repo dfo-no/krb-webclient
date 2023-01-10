@@ -25,9 +25,19 @@ const DiscountValidator = (joi: Joi.Root) => ({
   base: joi.number().min(0).required(),
 });
 
+const HighestDiscountValidator = (joi: Joi.Root) => ({
+  type: 'validateHighestDiscount',
+  messages: {
+    'number.base': 'Fradrag må være et gyldig tall',
+    'number.min': 'Fradrag må være minimum 0',
+  },
+  base: joi.number().min(0),
+});
+
 const QuestionJoi = [
   ScoreValidator,
   DiscountValidator,
+  HighestDiscountValidator,
   ...CodeJoi,
   ...DateJoi,
   ...SliderJoi,

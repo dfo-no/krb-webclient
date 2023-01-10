@@ -62,3 +62,10 @@ Feature: Spesifikasjonsprodukt
      Then Ser jeg fradrag for kode "Rød" er inaktiv
      When Jeg klikker på "Lagre krav" knapp for å lagre
      Then Ser jeg "Koder" har verdi "Hvit, Rød"
+
+  Scenario: Jeg kan angi høyeste mulige fradragssum for krav som har svartype kodeliste
+    Given Jeg åpner spesifikasjon "specification_all_answer_typer.pdf"
+    When Jeg redigerer produkt "Kodeliste"
+    And Jeg klikker på "Velg variant" til produktkrav "Kodeliste som krav (1)"
+    And Jeg skriver 1000 i feltet "Fradragssum"
+    Then Ser jeg "Fradragssum" har verdi 1000

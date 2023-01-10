@@ -36,6 +36,7 @@ export default class QuestionService {
             optionalCodes: [],
             codelist: '',
             codes: [],
+            discountSumMax: 0,
             defaultDiscount: 1,
             optionalCodeMinAmount: 0,
             optionalCodeMaxAmount: 1,

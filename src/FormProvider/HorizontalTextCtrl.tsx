@@ -2,13 +2,16 @@ import { FormControl, FormLabel, InputAdornment } from '@mui/material';
 import { get } from 'lodash';
 import React from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
+import classNames from 'classnames';
 
 import DFOInput from '../components/DFOTextField/DFOTextField';
+import css from './FormProvider.module.scss';
 
 interface IProps {
   className?: string;
   name: string;
   label?: string;
+  hintText?: string;
   placeholder: string;
   type?: string;
   size?: string;
@@ -23,6 +26,7 @@ const HorizontalTextCtrl = ({
   className,
   name,
   label,
+  hintText,
   placeholder = '',
   type = 'text',
   size = '',
@@ -38,7 +42,7 @@ const HorizontalTextCtrl = ({
 
   return (
     <FormControl
-      className={className}
+      className={classNames([css.FormProvider, className])}
       error={!!get(errors, name)}
       sx={{ width: '100%' }}
     >
@@ -46,7 +50,7 @@ const HorizontalTextCtrl = ({
         name={name}
         defaultValue={defaultValue}
         render={({ field }) => (
-          <>
+          <div className={css.HorizontalTextCtrl}>
             {label && <span aria-label={'label'}>{label}</span>}
             <DFOInput
               {...field}
@@ -63,7 +67,12 @@ const HorizontalTextCtrl = ({
               autoFocus={autoFocus}
               disabled={isDisabled}
             />
-          </>
+            {hintText && (
+              <span className={css.HorizontalTextCtrl__hintText}>
+                {hintText}
+              </span>
+            )}
+          </div>
         )}
       />
       {!!get(errors, name) && (
