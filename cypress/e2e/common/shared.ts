@@ -81,3 +81,7 @@ Then('Jeg klikker på {string} knapp for å lagre', (button: string) => {
 Then('Ser jeg url inneholder {string}', (url: string) => {
   cy.url().should('include', url);
 });
+
+Then('Ser jeg {string} har verdi {int}', (fieldName: string, value: number) => {
+  cy.get(`input[placeholder="${fieldName}"]`).should('have.value', value);
+});

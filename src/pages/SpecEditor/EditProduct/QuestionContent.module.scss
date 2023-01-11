@@ -42,7 +42,6 @@
 
     &__textCtrl {
       span[aria-label='label'] {
-        margin-bottom: var(--tiny-gap);
         font-weight: var(--font-weight-semibold);
       }
     }
@@ -181,6 +180,14 @@
     display: flex;
     gap: var(--small-gap);
     max-width: 50%;
+  }
+
+  .MaxDiscountAmount {
+    div {
+      div {
+        max-width: 20rem;
+      }
+    }
   }
 
   ul {

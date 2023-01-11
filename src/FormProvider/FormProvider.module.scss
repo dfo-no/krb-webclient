@@ -9,6 +9,18 @@
     }
   }
 
+  .HorizontalTextCtrl {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--tiny-gap);
+
+    &__hintText {
+      color: var(--dark-gray-color);
+      font-size: var(--small-fontsize);
+    }
+  }
+
   span:first-child {
     &[data-required='true'] {
       &:after {

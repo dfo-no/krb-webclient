@@ -59,7 +59,8 @@
   "Close open requirement to save the product": "Lukk åpne krav for å lagre produkt",
   "Code": "Kode",
   "Codes": "Koder",
-
+  "Highest discount amount": "Høyeste mulige fradragssum",
+  "Highest discount amount hint text": "Valgte koder kan ikke oppnå en høyere fradragssum enn denne summen",
   "Codes hint text": "Minimum kan ikke være lavere enn antallet obligatoriske koder i listen",
   "Codelist": "Kodeliste",
   "Codelist has connected requirements": "Kodelisten har tilknyttede krav.",
@@ -82,6 +83,7 @@
   "Discount levels": "Fradragsnivåer",
   "Discount levels text": "Gruppering av pengeverdier med intervaller kan være til hjelp for å evaluere etter kvalitative egenskaper med små forskjeller",
   "Discount values": "Fradragsverdier",
+  "Discount sum": "Fradragssum",
   "Discount for confirmed": "Fradrag for bekreftet",
   "Delete": "Slett",
   "Delete product": "Fjern produkt",
