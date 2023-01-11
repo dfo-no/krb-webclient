@@ -1,10 +1,12 @@
 import Joi, { Schema } from 'joi';
 
+import { ErrorMessage } from './ErrorMessage';
+
 const SliderMinValidator = (joi: Joi.Root) => ({
   type: 'validateSliderMin',
   messages: {
-    'number.base': 'Må være et tall',
-    'number.min': 'Må være et positivt tall',
+    'number.base': ErrorMessage.VAL_NUMBER_BASE,
+    'number.min': ErrorMessage.VAL_NUMBER_INT,
   },
   base: joi.number().min(0).required(),
 });
@@ -12,8 +14,8 @@ const SliderMinValidator = (joi: Joi.Root) => ({
 const SliderMaxValidator = (joi: Joi.Root) => ({
   type: 'validateSliderMax',
   messages: {
-    'number.base': 'Må være et tall',
-    'number.min': 'Må være større enn {{#limit}}',
+    'number.base': ErrorMessage.VAL_NUMBER_BASE,
+    'number.min': ErrorMessage.VAL_NUMBER_MIN,
   },
   base: joi.number().required(),
   validate(value: number, helpers: Joi.CustomHelpers) {
@@ -35,9 +37,9 @@ const SliderMaxValidator = (joi: Joi.Root) => ({
 const SliderStepValidator = (joi: Joi.Root) => ({
   type: 'validateSliderStep',
   messages: {
-    'number.base': 'Må være et tall',
-    'number.min': 'Må være et positivt tall',
-    'number.max': 'Overskrider forksjell mellom maks og min ({{#limit}})',
+    'number.base': ErrorMessage.VAL_NUMBER_BASE,
+    'number.min': ErrorMessage.VAL_NUMBER_INT,
+    'number.max': ErrorMessage.VAL_NUMBER_SLIDER_MAX,
   },
   base: joi.number().min(0).required(),
   validate(value: number, helpers: Joi.CustomHelpers) {
@@ -61,9 +63,9 @@ const SliderStepValidator = (joi: Joi.Root) => ({
 const SliderValueValidator = (joi: Joi.Root) => ({
   type: 'validateSliderValue',
   messages: {
-    'number.base': 'Må være et tall',
-    'number.min': 'Må være større enn {{#limit}}',
-    'number.max': 'Må være mindre enn {{#limit}}',
+    'number.base': ErrorMessage.VAL_NUMBER_BASE,
+    'number.min': ErrorMessage.VAL_NUMBER_MIN,
+    'number.max': ErrorMessage.VAL_NUMBER_MAX,
   },
   base: joi.number().required(),
   validate(value: number, helpers: Joi.CustomHelpers) {
@@ -92,9 +94,9 @@ const SliderValueValidator = (joi: Joi.Root) => ({
 const SliderAnswerValidator = (joi: Joi.Root) => ({
   type: 'validateSliderAnswer',
   messages: {
-    'number.base': 'Må være et tall',
-    'number.min': 'Må være større enn {{#limit}}',
-    'number.max': 'Må være mindre enn {{#limit}}',
+    'number.base': ErrorMessage.VAL_NUMBER_BASE,
+    'number.min': ErrorMessage.VAL_NUMBER_MIN,
+    'number.max': ErrorMessage.VAL_NUMBER_MAX,
   },
   base: joi.number().required(),
   validate(value: number, helpers: Joi.CustomHelpers) {
@@ -124,7 +126,7 @@ const SliderValuesValidator = (joi: Joi.Root) => ({
   type: 'validateSliderValues',
   args(value: Schema, type: Schema) {
     return joi.array().items(type).unique('value').messages({
-      'array.unique': 'Verdi kan ikke være like',
+      'array.unique': ErrorMessage.VAL_VALUE_UNIQUE,
     });
   },
 });

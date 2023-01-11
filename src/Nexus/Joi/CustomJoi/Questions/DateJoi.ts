@@ -1,13 +1,14 @@
 import Joi, { Schema } from 'joi';
 
 import DateUtils from '../../../../common/DateUtils';
+import { ErrorMessage } from './ErrorMessage';
 
 const PeriodMinValidator = (joi: Joi.Root) => ({
   type: 'validatePeriodMin',
   messages: {
-    'number.base': 'Må være et tall',
-    'number.integer': 'Må være et positivt heltall',
-    'number.min': 'Må være et positivt heltall',
+    'number.base': ErrorMessage.VAL_NUMBER_BASE,
+    'number.integer': ErrorMessage.VAL_NUMBER_INT,
+    'number.min': ErrorMessage.VAL_NUMBER_INT,
   },
   base: joi.number().integer().min(0).required(),
 });
@@ -15,9 +16,9 @@ const PeriodMinValidator = (joi: Joi.Root) => ({
 const PeriodMaxValidator = (joi: Joi.Root) => ({
   type: 'validatePeriodMax',
   messages: {
-    'number.base': 'Må være et tall',
-    'number.integer': 'Må være et positivt heltall',
-    'number.min': 'Må være større enn {{#limit}}',
+    'number.base': ErrorMessage.VAL_NUMBER_BASE,
+    'number.integer': ErrorMessage.VAL_NUMBER_INT,
+    'number.min': ErrorMessage.VAL_NUMBER_MIN,
   },
   base: joi.number().integer().required(),
   validate(value: number, helpers: Joi.CustomHelpers) {
@@ -37,7 +38,7 @@ const PeriodMaxValidator = (joi: Joi.Root) => ({
 const FromBoundaryDateValidator = (joi: Joi.Root) => ({
   type: 'validateFromBoundaryDate',
   messages: {
-    'date.only': 'Dato må være fylt ut',
+    'date.only': ErrorMessage.VAL_DATE_ONLY,
   },
   base: joi.alternatives(joi.date().iso().raw(), null).required(),
   validate(value: string | null, helpers: Joi.CustomHelpers) {
@@ -53,8 +54,8 @@ const FromBoundaryDateValidator = (joi: Joi.Root) => ({
 const ToBoundaryDateValidator = (joi: Joi.Root) => ({
   type: 'validateToBoundaryDate',
   messages: {
-    'date.only': 'Dato må være fylt ut',
-    'date.min': 'Til må være senere enn fra',
+    'date.only': ErrorMessage.VAL_DATE_ONLY,
+    'date.min': ErrorMessage.VAL_DATE_TO,
   },
   base: joi.alternatives(joi.date().iso().raw(), null).required(),
   validate(value: string | null, helpers: Joi.CustomHelpers) {
@@ -72,24 +73,14 @@ const ToBoundaryDateValidator = (joi: Joi.Root) => ({
   },
 });
 
-const DurationValidator = (joi: Joi.Root) => ({
-  type: 'validateDuration',
-  messages: {
-    'number.base': 'Må være et tall',
-    'number.integer': 'Må være et positivt heltall',
-    'number.min': 'Må være et positivt heltall',
-  },
-  base: joi.number().integer().min(0),
-});
-
 const DateDiscountValidator = (joi: Joi.Root) => ({
   type: 'validateDateDiscount',
   base: joi.date().iso().raw().messages({
     'date.base': 'Dato må ha en verdi',
   }),
   messages: {
-    'date.min': 'Dato kan ikke være før {{#limit}}',
-    'date.max': 'Dato kan ikke være etter {{#limit}}',
+    'date.min': ErrorMessage.VAL_DATE_MIN,
+    'date.max': ErrorMessage.VAL_DATE_MAX,
   },
   validate(value: string | null, helpers: Joi.CustomHelpers) {
     const fromBoundary = helpers.state.ancestors[2].fromBoundary;
@@ -120,9 +111,9 @@ const DateDiscountValidator = (joi: Joi.Root) => ({
 const FromDateValidator = (joi: Joi.Root) => ({
   type: 'validateFromDate',
   messages: {
-    'date.only': 'Dato må være fylt ut',
-    'date.min': 'Dato kan ikke være før {{#limit}}',
-    'date.max': 'Dato kan ikke være etter {{#limit}}',
+    'date.only': ErrorMessage.VAL_DATE_ONLY,
+    'date.min': ErrorMessage.VAL_DATE_MIN,
+    'date.max': ErrorMessage.VAL_DATE_MAX,
   },
   base: joi.alternatives(joi.date().iso().raw(), null).required(),
   validate(value: string | null, helpers: Joi.CustomHelpers) {
@@ -159,9 +150,9 @@ const FromDateValidator = (joi: Joi.Root) => ({
 const ToDateValidator = (joi: Joi.Root) => ({
   type: 'validateToDate',
   messages: {
-    'date.only': 'Dato må være fylt ut',
-    'date.min': 'Dato kan ikke være før {{#limit}}',
-    'date.max': 'Dato kan ikke være etter {{#limit}}',
+    'date.only': ErrorMessage.VAL_DATE_ONLY,
+    'date.min': ErrorMessage.VAL_DATE_MIN,
+    'date.max': ErrorMessage.VAL_DATE_MAX,
   },
   base: joi.alternatives(joi.date().iso().raw(), null).required(),
   validate(value: string | null, helpers: Joi.CustomHelpers) {
@@ -197,11 +188,118 @@ const ToDateValidator = (joi: Joi.Root) => ({
   },
 });
 
+const DaysValidator = (joi: Joi.Root) => ({
+  type: 'validateDays',
+  messages: {
+    'number.base': ErrorMessage.VAL_NUMBER_BASE,
+    'number.min': ErrorMessage.VAL_NUMBER_MIN,
+    'number.max': ErrorMessage.VAL_NUMBER_MAX,
+  },
+  base: joi.number(),
+  validate(value: number, helpers: Joi.CustomHelpers) {
+    const minDay = helpers.state.ancestors[2].periodMin;
+    const maxDay = helpers.state.ancestors[2].periodMax;
+    if (minDay && minDay > value) {
+      return {
+        value,
+        errors: helpers.error('number.min', {
+          limit: minDay,
+        }),
+      };
+    }
+    if (maxDay && maxDay < value) {
+      return {
+        value,
+        errors: helpers.error('number.max', {
+          limit: maxDay,
+        }),
+      };
+    }
+    return { value };
+  },
+});
+
+const MinDaysValidator = (joi: Joi.Root) => ({
+  type: 'validateMinDays',
+  messages: {
+    'number.base': ErrorMessage.VAL_NUMBER_BASE,
+    'number.min': ErrorMessage.VAL_NUMBER_MIN,
+    'number.max': ErrorMessage.VAL_NUMBER_MAX,
+  },
+  base: joi.alternatives(joi.number(), null),
+  validate(value: number | null, helpers: Joi.CustomHelpers) {
+    const min = helpers.state.ancestors[1].config.periodMin;
+    const max = helpers.state.ancestors[1].config.periodMax;
+    if (value && min && max) {
+      if (min && min > value) {
+        return {
+          value,
+          errors: helpers.error('number.min', {
+            limit: min,
+          }),
+        };
+      }
+      if (max && max < value) {
+        return {
+          value,
+          errors: helpers.error('number.max', {
+            limit: max,
+          }),
+        };
+      }
+    }
+    return { value };
+  },
+});
+
+const MaxDaysValidator = (joi: Joi.Root) => ({
+  type: 'validateMaxDays',
+  messages: {
+    'number.base': ErrorMessage.VAL_NUMBER_BASE,
+    'number.min': ErrorMessage.VAL_NUMBER_MIN,
+    'number.max': ErrorMessage.VAL_NUMBER_MAX,
+  },
+  base: joi.alternatives(joi.number(), null),
+  validate(value: number, helpers: Joi.CustomHelpers) {
+    const isPeriod = helpers.state.ancestors[1].config.isPeriod;
+    const min = helpers.state.ancestors[0].minDays;
+    const max = helpers.state.ancestors[1].config.periodMax;
+    if (isPeriod && value) {
+      if (min && min > value) {
+        return {
+          value,
+          errors: helpers.error('number.min', {
+            limit: min,
+          }),
+        };
+      }
+      if (max && max < value) {
+        return {
+          value,
+          errors: helpers.error('number.max', {
+            limit: max,
+          }),
+        };
+      }
+    }
+    return { value };
+  },
+});
+
 const DateDiscountValuesValidator = (joi: Joi.Root) => ({
   type: 'validateDateDiscountValues',
   args(value: Schema, type: Schema) {
     return joi.array().items(type).required().unique('date').messages({
-      'array.unique': 'Dato kan ikke være like',
+      'array.unique': ErrorMessage.VAL_DATE_UNIQUE,
+    });
+  },
+});
+
+const DaysValuesValidator = (joi: Joi.Root) => ({
+  type: 'validateDaysValues',
+  args(value: Schema, type: Schema) {
+    return joi.array().items(type).unique('numberDays').messages({
+      'array.unique': ErrorMessage.VAL_DATE_NUMBER_UNIQUE,
     });
   },
 });
@@ -211,11 +309,14 @@ const DateJoi = [
   PeriodMaxValidator,
   FromBoundaryDateValidator,
   ToBoundaryDateValidator,
-  DurationValidator,
   DateDiscountValidator,
   FromDateValidator,
   ToDateValidator,
+  DaysValidator,
+  MinDaysValidator,
+  MaxDaysValidator,
   DateDiscountValuesValidator,
+  DaysValuesValidator,
 ];
 
 export default DateJoi;

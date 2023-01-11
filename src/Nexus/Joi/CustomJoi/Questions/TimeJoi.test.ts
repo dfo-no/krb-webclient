@@ -328,4 +328,202 @@ describe('TimeJoi', () => {
     expect(reportSuccess1?.error?.details[0].message).toBeUndefined();
     expect(reportSuccess2?.error?.details[0].message).toBeUndefined();
   });
+
+  test('Joi validateMinTimePeriod() validates the minimum tidspunkt towards timePeriodMin and timePeriodMax', () => {
+    const schema = CustomJoi.object().keys({
+      config: {
+        timePeriodMin: CustomJoi.validateTimePeriodMin(),
+        timePeriodMax: CustomJoi.validateTimePeriodMax(),
+      },
+      answer: {
+        minTimePeriod: CustomJoi.validateMinTimePeriod(),
+      },
+    });
+
+    const reportError1 = schema.validate({
+      config: {
+        timePeriodMin: '2022-10-02T16:00:00.000Z',
+        timePeriodMax: '2022-10-02T20:00:00.000Z',
+      },
+      answer: {
+        minTimePeriod: '2022-10-02T14:00:00.000Z',
+      },
+    });
+    const reportError2 = schema.validate({
+      config: {
+        timePeriodMin: '2022-10-02T16:00:00.000Z',
+        timePeriodMax: '2022-10-02T20:00:00.000Z',
+      },
+      answer: {
+        minTimePeriod: '2022-10-02T22:00:00.000Z',
+      },
+    });
+    const reportSuccess1 = schema.validate({
+      config: {
+        timePeriodMin: '2022-10-02T16:00:00.000Z',
+        timePeriodMax: '2022-10-02T20:00:00.000Z',
+      },
+      answer: {
+        minTimePeriod: null,
+      },
+    });
+    const reportSuccess2 = schema.validate({
+      config: {
+        timePeriodMin: '2022-10-02T16:00:00.000Z',
+        timePeriodMax: '2022-10-02T20:00:00.000Z',
+      },
+      answer: {
+        minTimePeriod: '2022-10-02T18:00:00.000Z',
+      },
+    });
+    expect(reportError1?.error?.details[0].message).toEqual(
+      'Tidspunkt kan ikke være før 16:00'
+    );
+    expect(reportError2?.error?.details[0].message).toEqual(
+      'Tidspunkt kan ikke være etter 20:00'
+    );
+    expect(reportSuccess1?.error?.details[0].message).toBeUndefined();
+    expect(reportSuccess2?.error?.details[0].message).toBeUndefined();
+  });
+
+  test('Joi validateMaxTimePeriod() validates the maximum tidspunkt towards timePeriodMin and timePeriodMax', () => {
+    const schema = CustomJoi.object().keys({
+      config: {
+        timePeriodMin: CustomJoi.validateTimePeriodMin(),
+        timePeriodMax: CustomJoi.validateTimePeriodMax(),
+        isPeriod: CustomJoi.validateBoolean(),
+      },
+      answer: {
+        minTimePeriod: CustomJoi.validateMinTimePeriod(),
+        maxTimePeriod: CustomJoi.validateMaxTimePeriod(),
+      },
+    });
+
+    const reportError1 = schema.validate({
+      config: {
+        timePeriodMin: '2022-10-02T16:00:00.000Z',
+        timePeriodMax: '2022-10-02T20:00:00.000Z',
+        isPeriod: true,
+      },
+      answer: {
+        minTimePeriod: '2022-10-02T18:00:00.000Z',
+        maxTimePeriod: '2022-10-02T21:00:00.000Z',
+      },
+    });
+    const reportError2 = schema.validate({
+      config: {
+        timePeriodMin: '2022-10-02T16:00:00.000Z',
+        timePeriodMax: '2022-10-02T20:00:00.000Z',
+        isPeriod: true,
+      },
+      answer: {
+        minTimePeriod: '2022-10-02T18:00:00.000Z',
+        maxTimePeriod: '2022-10-02T17:00:00.000Z',
+      },
+    });
+
+    const reportError3 = schema.validate({
+      config: {
+        timePeriodMin: '2022-10-02T16:00:00.000Z',
+        timePeriodMax: '2022-10-02T20:00:00.000Z',
+        isPeriod: true,
+      },
+      answer: {
+        minTimePeriod: '2022-10-02T18:00:00.000Z',
+        maxTimePeriod: null,
+      },
+    });
+    const reportSuccess1 = schema.validate({
+      config: {
+        timePeriodMin: '2022-10-02T16:00:00.000Z',
+        timePeriodMax: '2022-10-02T20:00:00.000Z',
+        isPeriod: false,
+      },
+      answer: {
+        minTimePeriod: '2022-10-02T18:00:00.000Z',
+        maxTimePeriod: null,
+      },
+    });
+    const reportSuccess2 = schema.validate({
+      config: {
+        timePeriodMin: '2022-10-02T16:00:00.000Z',
+        timePeriodMax: '2022-10-02T20:00:00.000Z',
+        isPeriod: true,
+      },
+      answer: {
+        minTimePeriod: '2022-10-02T18:00:00.000Z',
+        maxTimePeriod: '2022-10-02T19:00:00.000Z',
+      },
+    });
+    expect(reportError1?.error?.details[0].message).toEqual(
+      'Tidspunkt kan ikke være etter 20:00'
+    );
+    expect(reportError2?.error?.details[0].message).toEqual(
+      'Tidspunkt kan ikke være før 18:00'
+    );
+    expect(reportError3?.error?.details[0].message).toEqual(
+      'Tidspunkt må være fylt ut'
+    );
+    expect(reportSuccess1?.error?.details[0].message).toBeUndefined();
+    expect(reportSuccess2?.error?.details[0].message).toBeUndefined();
+  });
+
+  test('Joi validateTimePeriod() validates timePeriod towards timePeriodMin and timePeriodMax', () => {
+    const schema = CustomJoi.object().keys({
+      timePeriodMin: CustomJoi.validateTimePeriodMin(),
+      timePeriodMax: CustomJoi.validateTimePeriodMax(),
+      timePeriodDiscount: CustomJoi.validateUniqueArray(
+        CustomJoi.object().keys({
+          timePeriod: CustomJoi.validateTimePeriod(),
+        })
+      ),
+    });
+
+    const reportError1 = schema.validate({
+      timePeriodMin: '2022-10-02T16:00:00.000Z',
+      timePeriodMax: '2022-10-02T20:00:00.000Z',
+      timePeriodDiscount: [
+        {
+          timePeriod: '2022-10-02T14:00:00.000Z',
+        },
+      ],
+    });
+    const reportError2 = schema.validate({
+      timePeriodMin: '2022-10-02T16:00:00.000Z',
+      timePeriodMax: '2022-10-02T20:00:00.000Z',
+      timePeriodDiscount: [
+        {
+          timePeriod: '2022-10-02T22:00:00.000Z',
+        },
+      ],
+    });
+    const reportError3 = schema.validate({
+      timePeriodMin: '2022-10-02T16:00:00.000Z',
+      timePeriodMax: '2022-10-02T20:00:00.000Z',
+      timePeriodDiscount: [
+        {
+          timePeriod: null,
+        },
+      ],
+    });
+    const reportSuccess = schema.validate({
+      timePeriodMin: '2022-10-02T16:00:00.000Z',
+      timePeriodMax: '2022-10-02T20:00:00.000Z',
+      timePeriodDiscount: [
+        {
+          timePeriod: '2022-10-02T18:00:00.000Z',
+        },
+      ],
+    });
+    expect(reportError1?.error?.details[0].message).toEqual(
+      'Tidspunkt kan ikke være før 16:00'
+    );
+    expect(reportError2?.error?.details[0].message).toEqual(
+      'Tidspunkt kan ikke være etter 20:00'
+    );
+    expect(reportError3?.error?.details[0].message).toEqual(
+      'Tidspunkt må ha en verdi'
+    );
+    expect(reportSuccess?.error?.details[0].message).toBeUndefined();
+  });
 });

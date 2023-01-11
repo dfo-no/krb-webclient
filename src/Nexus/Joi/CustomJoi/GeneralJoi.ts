@@ -42,6 +42,11 @@ const NumberValidator = (joi: Joi.Root) => ({
   base: joi.number().required(),
 });
 
+const EmptyNumberValidator = (joi: Joi.Root) => ({
+  type: 'validateEmptyNumber',
+  base: joi.number().equal(null).required(),
+});
+
 const TypeValidator = (joi: Joi.Root) => ({
   type: 'validateType',
   base: joi.string().required(),
@@ -63,14 +68,14 @@ const DateValidator = (joi: Joi.Root) => ({
   base: joi.date().iso().raw().required(),
 });
 
-const EmptyDateValidator = (joi: Joi.Root) => ({
-  type: 'validateEmptyDate',
+const EmptyDateTimeValidator = (joi: Joi.Root) => ({
+  type: 'validateEmptyDateTime',
   base: joi.string().equal(null).required(),
 });
 
 const OptionalDateValidator = (joi: Joi.Root) => ({
   type: 'validateOptionalDate',
-  base: joi.date().iso().raw().allow(null).required(),
+  base: joi.date().iso().raw().allow(null),
 });
 
 const ArrayValidator = (joi: Joi.Root) => ({
@@ -105,10 +110,11 @@ const GeneralJoi = [
   BooleanValidator,
   BooleanOptionalValidator,
   NumberValidator,
+  EmptyNumberValidator,
   TypeValidator,
   TypesValidator,
   DateValidator,
-  EmptyDateValidator,
+  EmptyDateTimeValidator,
   OptionalDateValidator,
   ArrayValidator,
   ArrayNotRequiredValidator,

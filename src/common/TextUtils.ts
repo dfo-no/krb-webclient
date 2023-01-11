@@ -282,8 +282,8 @@ class TextUtils {
     const from = DateUtils.prettyFormatTime(question.config.fromBoundary);
     const to = DateUtils.prettyFormatTime(question.config.toBoundary);
     const isPeriod = question.config.isPeriod;
-    const minutes = question.config.periodMinutes;
-    const hours = question.config.periodHours;
+    const minPeriodTime = question.config.timePeriodMin;
+    const maxPeriodTime = question.config.timePeriodMax;
     const chosenConfig: ChosenConfig[] = [];
     TextUtils.setChosenConfigs(chosenConfig, t('From'), from);
     TextUtils.setChosenConfigs(chosenConfig, t('To'), to);
@@ -291,7 +291,9 @@ class TextUtils {
       TextUtils.setChosenConfigs(
         chosenConfig,
         t('Period'),
-        `${t('Minutes')}: ${minutes}, ${t('Hours')}: ${hours}`
+        `${t('From')}: ${DateUtils.prettyFormatTime(minPeriodTime)}, ${t(
+          'To'
+        )}: ${DateUtils.prettyFormatTime(maxPeriodTime)}`
       );
     return chosenConfig;
   };

@@ -24,6 +24,7 @@ interface IProps {
 const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
   const { control, formState, setValue } = useFormContext<IRequirementAnswer>();
   const [awardCriteria, setAwardCriteria] = useState(false);
+  const [timePeriod, setTimePeriod] = useState(false);
 
   const useFromBoundary = useWatch({
     name: 'question.config.fromBoundary',
@@ -48,6 +49,34 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
     name: 'question.config.timeDiscounts',
   });
 
+  const useTimePeriodMin = useWatch({
+    name: 'question.config.timePeriodMin',
+    control,
+  });
+  const useTimePeriodMax = useWatch({
+    name: 'question.config.timePeriodMax',
+    control,
+  });
+
+  const useTimePeriodMinDiscount = useWatch({
+    name: 'question.config.timePeriodDiscount.0',
+    control,
+  });
+  const useTimePeriodMaxDiscount = useWatch({
+    name: 'question.config.timePeriodDiscount.1',
+    control,
+  });
+
+  const {
+    fields: timePeriodDiscount,
+    append: appendTimePeriodDiscount,
+    remove: removeTimePeriodDiscount,
+    update: updateTimePeriodDiscount,
+  } = useFieldArray({
+    control,
+    name: 'question.config.timePeriodDiscount',
+  });
+
   useEffect(() => {
     if (useFromBoundary) {
       setValue('question.answer.fromTime', useFromBoundary);
@@ -58,11 +87,42 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
   }, [useFromBoundary, setValue, item.config.isPeriod]);
 
   useEffect(() => {
+    if (useTimePeriodMin) {
+      setValue('question.answer.minTimePeriod', useTimePeriodMin);
+      if (item.config.isPeriod) {
+        setValue('question.answer.maxTimePeriod', useTimePeriodMin);
+      }
+    }
+  }, [useTimePeriodMin, setValue, item.config.isPeriod]);
+
+  useEffect(() => {
     if (!fields.length && awardCriteria) {
       append({ id: new UuidService().generateId(), time: null, discount: 0 });
       append({ id: new UuidService().generateId(), time: null, discount: 0 });
     }
   }, [fields, awardCriteria, append]);
+
+  useEffect(() => {
+    if (!timePeriodDiscount.length && timePeriod) {
+      appendTimePeriodDiscount({
+        id: new UuidService().generateId(),
+        timePeriod: useTimePeriodMin,
+        discount: 0,
+      });
+      appendTimePeriodDiscount({
+        id: new UuidService().generateId(),
+        timePeriod: useTimePeriodMax,
+        discount: 0,
+      });
+    }
+  }, [
+    timePeriodDiscount.length,
+    timePeriod,
+    appendTimePeriodDiscount,
+    setValue,
+    useTimePeriodMin,
+    useTimePeriodMax,
+  ]);
 
   useEffect(() => {
     if (
@@ -96,15 +156,66 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
   }, [awardCriteria, useToBoundary, useMaxDiscount, update, append]);
 
   useEffect(() => {
+    if (
+      timePeriod &&
+      useTimePeriodMinDiscount &&
+      !useTimePeriodMinDiscount.id
+    ) {
+      updateTimePeriodDiscount(0, {
+        id: useTimePeriodMinDiscount.id ?? new UuidService().generateId(),
+        timePeriod: useTimePeriodMin,
+        discount: useTimePeriodMinDiscount.discount,
+      });
+    }
+  }, [
+    timePeriod,
+    useTimePeriodMinDiscount,
+    useTimePeriodMin,
+    updateTimePeriodDiscount,
+  ]);
+
+  useEffect(() => {
+    if (
+      timePeriod &&
+      useTimePeriodMaxDiscount &&
+      !useTimePeriodMaxDiscount.id
+    ) {
+      updateTimePeriodDiscount(1, {
+        id: useTimePeriodMaxDiscount.id ?? new UuidService().generateId(),
+        timePeriod: useTimePeriodMax,
+        discount: useTimePeriodMaxDiscount.discount,
+      });
+    }
+  }, [
+    timePeriod,
+    useTimePeriodMaxDiscount,
+    updateTimePeriodDiscount,
+    useTimePeriodMax,
+  ]);
+
+  useEffect(() => {
     if (fields.length > 0) {
       setAwardCriteria(true);
     }
   }, [fields]);
 
+  useEffect(() => {
+    if (timePeriodDiscount.length > 0) {
+      setTimePeriod(true);
+    }
+  }, [timePeriodDiscount]);
+
   const onCheckboxClick = (): void => {
     setAwardCriteria((prev) => !prev);
     if (fields.length) {
       remove();
+    }
+  };
+
+  const handleTimePeriodDiscount = (): void => {
+    setTimePeriod((prev) => !prev);
+    if (timePeriodDiscount.length) {
+      removeTimePeriodDiscount();
     }
   };
 
@@ -136,14 +247,50 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
             color={'var(--text-primary-color)'}
           />
         </div>
-        <div onClick={onCheckboxClick}>
-          <DFOCheckbox
-            checked={awardCriteria}
-            _color={'var(--text-primary-color)'}
-          />
-          <Typography className={css.CheckboxLabel} variant={'smBold'}>
-            {t('Is the requirement an award criteria')}
-          </Typography>
+        {item.config.isPeriod && (
+          <div className={css.DurationContainer}>
+            <span className={css.DurationContainer__title}>
+              {timePeriod
+                ? t('Enter the lowest and highest duration')
+                : t('Preferred duration')}
+            </span>
+            <div className={css.QuestionDateAndTimePeriod__datetimeContainer}>
+              {timePeriod && (
+                <TimeCtrl
+                  className={css.QuestionCriteria__Ctrl__inputCtrl}
+                  name={`question.config.timePeriodMin`}
+                  color={'var(--text-primary-color)'}
+                />
+              )}
+              <TimeCtrl
+                className={css.QuestionCriteria__Ctrl__inputCtrl}
+                name={`question.config.timePeriodMax`}
+                color={'var(--text-primary-color)'}
+              />
+            </div>
+          </div>
+        )}
+        <div className={css.CheckboxContainer}>
+          <div onClick={onCheckboxClick}>
+            <DFOCheckbox
+              checked={awardCriteria}
+              _color={'var(--text-primary-color)'}
+            />
+            <Typography className={css.CheckboxLabel} variant={'smBold'}>
+              {t('Is the requirement an award criteria')}
+            </Typography>
+          </div>
+          {awardCriteria && item.config.isPeriod && (
+            <div onClick={handleTimePeriodDiscount}>
+              <DFOCheckbox
+                checked={timePeriod}
+                _color={'var(--text-primary-color)'}
+              />
+              <Typography className={css.CheckboxLabel} variant={'smBold'}>
+                {t('Is there room for variation in duration')}
+              </Typography>
+            </div>
+          )}
         </div>
       </div>
       {awardCriteria && (
@@ -207,6 +354,66 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
                 />
               </div>
             </div>
+            {timePeriod && (
+              <div className={css.QuestionCriteria__wrapper__CtrlContainer}>
+                {timePeriodDiscount.map((periodTimeDiscount, index) => {
+                  return (
+                    <div
+                      key={periodTimeDiscount.id}
+                      className={css.QuestionCriteria__Ctrl}
+                    >
+                      <TimeCtrl
+                        className={css.QuestionCriteria__Ctrl__inputCtrl}
+                        label={index == 0 ? `${t('Time')}` : ''}
+                        name={`question.config.timePeriodDiscount[${index}].timePeriod`}
+                        color={'var(--text-primary-color)'}
+                      />
+                      <HorizontalTextCtrl
+                        className={css.QuestionCriteria__Ctrl__inputCtrl}
+                        label={index == 0 ? t('Discount') : ''}
+                        name={`question.config.timePeriodDiscount[${index}].discount`}
+                        placeholder={t('Value')}
+                        type={'number'}
+                        adornment={t('NOK')}
+                        color={'var(--text-primary-color)'}
+                      />
+                      {index == 0 && (
+                        <Button
+                          className={css.QuestionCriteria__Ctrl__action}
+                          icon={Symbols.Plus}
+                          iconLocation={Location.Before}
+                          variant={Variant.Ghost}
+                          onClick={() =>
+                            appendTimePeriodDiscount({
+                              id: new UuidService().generateId(),
+                              timePeriod: null,
+                              discount: 0,
+                            })
+                          }
+                        >
+                          {t('Add row')}
+                        </Button>
+                      )}
+                      {index > 0 && (
+                        <ToolbarItem
+                          secondaryText={t('Remove')}
+                          icon={<ClearIcon />}
+                          handleClick={() => removeTimePeriodDiscount(index)}
+                          fontSize={'small'}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+                <div>
+                  <ArrayUniqueErrorMessage
+                    errors={formState.errors}
+                    path={'question.config.timePeriodDiscount'}
+                    length={fields.length}
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
