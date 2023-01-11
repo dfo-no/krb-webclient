@@ -1,11 +1,13 @@
 import Joi from 'joi';
 
+import { ErrorMessage } from './ErrorMessage';
+
 const MaxTextValidator = (joi: Joi.Root) => ({
   type: 'validateMaxText',
   messages: {
-    'number.base': 'Må være et gyldig tall',
-    'number.integer': 'Må være et positivt heltall',
-    'number.min': 'Må være et positivt heltall',
+    'number.base': ErrorMessage.VAL_NUMBER_BASE,
+    'number.integer': ErrorMessage.VAL_NUMBER_INT,
+    'number.min': ErrorMessage.VAL_NUMBER_INT,
   },
   base: joi.number().integer().min(0).required(),
 });
@@ -13,7 +15,7 @@ const MaxTextValidator = (joi: Joi.Root) => ({
 const AnswerTextValidator = (joi: Joi.Root) => ({
   type: 'validateAnswerText',
   messages: {
-    'string.max': 'Lengde på tekst må være mindre enn {{#limit}} tegn',
+    'string.max': ErrorMessage.VAL_STRING_MAX,
   },
   base: joi.string().allow('').required(),
   validate(value: string, helpers: Joi.CustomHelpers) {
