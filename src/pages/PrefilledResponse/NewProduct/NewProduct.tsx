@@ -50,11 +50,13 @@ export default function NewProduct({
     defaultValues,
   });
 
-  if (product) {
-    methods.setValue('originProduct', product);
-  } else {
-    handleClose();
-  }
+  useEffect(() => {
+    if (product) {
+      methods.setValue('originProduct', product);
+    } else {
+      handleClose();
+    }
+  }, [handleClose, methods, product]);
   useEffect(() => {
     if (product?.title) {
       methods.setValue('title', product.title);

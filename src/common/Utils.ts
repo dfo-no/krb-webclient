@@ -17,6 +17,12 @@ import { DiscountValuePair } from '../Nexus/entities/ISliderQuestion';
 import { TimeDiscountPair } from '../Nexus/entities/ITimeQuestion';
 import { DateDiscountPair } from '../Nexus/entities/IPeriodDateQuestion';
 
+type NestableToBeFlattened<T extends IBaseModel> = T & {
+  parent: string;
+  children?: Nestable<T>[];
+  level?: number;
+};
+
 class Utils {
   static ensure<T>(
     argument: T | undefined | null,
@@ -231,7 +237,7 @@ class Utils {
       if (current.children) {
         const children = Utils.flattenNestable(current.children);
         // eslint-disable-next-line no-param-reassign
-        delete current.children;
+        current.children = [];
         result.push(current);
         result.push(...children);
       } else {
@@ -252,7 +258,7 @@ class Utils {
   static nestable2Parentable<T extends IBaseModel>(
     item: Nestable<T>
   ): Parentable<T> {
-    const parentableItem = { ...item };
+    const parentableItem = { ...item } as NestableToBeFlattened<T>;
     delete parentableItem.level;
     delete parentableItem.children;
     return parentableItem as Parentable<T>;

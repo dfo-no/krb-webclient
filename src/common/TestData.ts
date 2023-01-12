@@ -121,6 +121,7 @@ export const nestableCarsTestData: Nestable<ICar>[] = [
         level: 2,
         sourceOriginal: null,
         sourceRel: null,
+        children: [],
       },
       {
         id: 'cc60be0f-44e9-4ea9-a755-476fbc6dd855',
@@ -155,6 +156,7 @@ export const nestableCarsTestData: Nestable<ICar>[] = [
                     level: 5,
                     sourceOriginal: null,
                     sourceRel: null,
+                    children: [],
                   },
                 ],
                 sourceOriginal: null,
@@ -174,6 +176,7 @@ export const nestableCarsTestData: Nestable<ICar>[] = [
     level: 1,
     sourceOriginal: null,
     sourceRel: null,
+    children: [],
   },
 ];
 
@@ -298,6 +301,7 @@ export const needHierarchyTestData: Parentable<INeed>[] = [
                   optionalCodes: [],
                   codelist: '7aa1c0e8-d8f0-45f5-9bfc-3584ef3ba052',
                   codes: [],
+                  discountSumMax: 0,
                   defaultDiscount: 1,
                   optionalCodeMinAmount: 0,
                   optionalCodeMaxAmount: 1,

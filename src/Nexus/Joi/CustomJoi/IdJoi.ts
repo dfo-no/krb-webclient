@@ -18,8 +18,7 @@ const OptionalIdValidator = (joi: Joi.Root) => ({
   base: joi
     .string()
     .guid({ version: ['uuidv4'] })
-    .allow(null)
-    .required(),
+    .allow(null),
 });
 
 const ParentIdValidator = (joi: Joi.Root) => ({
