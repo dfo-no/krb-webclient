@@ -6,12 +6,11 @@ import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../Nexus/Nexus';
 import useProjectMutations from '../../../store/api/ProjectMutations';
 import UuidService from '../../../Nexus/services/UuidService';
-import { addAlert } from '../../../store/reducers/alert-reducer';
 import { IBank } from '../../../Nexus/entities/IBank';
 import { IAlert } from '../../../models/IAlert';
 import { ModelType } from '../../../Nexus/enums';
-import { useAppDispatch } from '../../../store/hooks';
 import { useEditableState } from '../../../components/EditableContext/EditableContext';
+import { AlertsContainer } from '../../../components/Alert/AlertContext';
 
 interface IProps {
   children: ReactElement;
@@ -25,7 +24,7 @@ export default function DeleteProjectForm({
   handleClose,
 }: IProps): ReactElement {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
+  const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { deleteProject } = useProjectMutations();
   const { deleteMode } = useEditableState();
@@ -51,7 +50,7 @@ export default function DeleteProjectForm({
         style: 'success',
         text: 'Successfully deleted project',
       };
-      dispatch(addAlert({ alert }));
+      addAlert(alert);
     });
   };
 

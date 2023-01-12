@@ -8,21 +8,20 @@ import { v4 as uuidv4 } from 'uuid';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import Nexus from '../../../../Nexus/Nexus';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { IAlert } from '../../../../models/IAlert';
 import { IBank } from '../../../../Nexus/entities/IBank';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { ModelType } from '../../../../Nexus/enums';
 import { StandardContainer } from '../../../../components/StandardContainer/StandardContainer';
-import { useAppDispatch } from '../../../../store/hooks';
 import {
   useGetProjectQuery,
   usePutProjectMutation,
 } from '../../../../store/api/bankApi';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
+import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 function PropertiesPage(): React.ReactElement {
-  const dispatch = useAppDispatch();
+  const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
   const formStyles = useFormStyles();
@@ -42,7 +41,7 @@ function PropertiesPage(): React.ReactElement {
         style: 'success',
         text: 'Successfully updated project',
       };
-      dispatch(addAlert({ alert }));
+      addAlert(alert);
     });
   };
 

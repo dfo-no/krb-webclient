@@ -8,14 +8,13 @@ import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import Utils from '../../../../common/Utils';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 import { IAlert } from '../../../../models/IAlert';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { ModelType } from '../../../../Nexus/enums';
-import { useAppDispatch } from '../../../../store/hooks';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
+import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
   children: React.ReactElement;
@@ -29,7 +28,7 @@ export default function DeleteCodelistForm({
   handleClose,
 }: IProps): React.ReactElement {
   const { deleteCodelist } = useProjectMutations();
-  const dispatch = useAppDispatch();
+  const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
   const { deleteMode } = useEditableState();
@@ -65,7 +64,7 @@ export default function DeleteCodelistForm({
         style: 'success',
         text: 'Successfully deleted codelist',
       };
-      dispatch(addAlert({ alert }));
+      addAlert(alert);
       handleClose(put);
     });
   };

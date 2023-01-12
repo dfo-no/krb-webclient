@@ -7,7 +7,6 @@ import FormButtons from '../../../../components/Form/FormButtons';
 import GeneralErrorMessage from '../../../../Form/GeneralErrorMessage';
 import Nexus from '../../../../Nexus/Nexus';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import { IAlert } from '../../../../models/IAlert';
 import { IBank } from '../../../../Nexus/entities/IBank';
@@ -17,8 +16,8 @@ import {
   useAddBankMutation,
   usePutProjectMutation,
 } from '../../../../store/api/bankApi';
-import { useAppDispatch } from '../../../../store/hooks';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
+import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
   project: IBank;
@@ -29,7 +28,7 @@ export default function NewPublicationForm({
   project,
   handleClose,
 }: IProps): React.ReactElement {
-  const dispatch = useAppDispatch();
+  const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const [addBank] = useAddBankMutation();
   const [putProject] = usePutProjectMutation();
@@ -67,7 +66,7 @@ export default function NewPublicationForm({
             style: 'success',
             text: `successfully published version ${result.version}`,
           };
-          dispatch(addAlert({ alert }));
+          addAlert(alert);
           methods.reset();
           handleClose();
         });

@@ -7,14 +7,13 @@ import { IAlert } from '../../../../models/IAlert';
 import { Parentable } from '../../../../models/Parentable';
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
-import { useAppDispatch } from '../../../../store/hooks';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { INeed } from '../../../../Nexus/entities/INeed';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { useSelectState } from '../SelectContext';
 import { IVariant } from '../../../../Nexus/entities/IVariant';
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
+import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
   children: React.ReactElement;
@@ -35,7 +34,7 @@ function DeleteVariant({
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
 
-  const dispatch = useAppDispatch();
+  const { addAlert } = AlertsContainer.useContainer();
   const { deleteVariant } = useProjectMutations();
   const { deleteMode } = useSelectState();
 
@@ -54,7 +53,7 @@ function DeleteVariant({
         style: 'success',
         text: 'Successfully deleted variant',
       };
-      dispatch(addAlert({ alert }));
+      addAlert(alert);
       handleClose();
     });
   };

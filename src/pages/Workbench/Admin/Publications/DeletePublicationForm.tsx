@@ -5,13 +5,12 @@ import { v4 as uuidv4 } from 'uuid';
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { IPublication } from '../../../../Nexus/entities/IPublication';
 import { IAlert } from '../../../../models/IAlert';
 import { ModelType } from '../../../../Nexus/enums';
-import { useAppDispatch } from '../../../../store/hooks';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { useGetBankQuery } from '../../../../store/api/bankApi';
+import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
   children: ReactElement;
@@ -29,7 +28,7 @@ const DeletePublicationForm = ({
   const { data: publicationBank } = useGetBankQuery(publication.id, {
     skip: deleteMode !== publication.id,
   });
-  const dispatch = useAppDispatch();
+  const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
 
   const methods = useForm<IPublication>({
@@ -45,7 +44,7 @@ const DeletePublicationForm = ({
           style: 'success',
           text: `successfully deleted the published version ${publication.version}`,
         };
-        dispatch(addAlert({ alert }));
+        addAlert(alert);
         methods.reset();
         handleClose();
       })
@@ -55,7 +54,7 @@ const DeletePublicationForm = ({
           style: 'error',
           text: `failed to delete version ${publication.version}`,
         };
-        dispatch(addAlert({ alert }));
+        addAlert(alert);
         methods.reset();
         handleClose();
       });

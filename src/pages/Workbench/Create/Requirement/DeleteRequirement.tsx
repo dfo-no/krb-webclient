@@ -8,13 +8,12 @@ import { IAlert } from '../../../../models/IAlert';
 import { Parentable } from '../../../../models/Parentable';
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
-import { useAppDispatch } from '../../../../store/hooks';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { INeed } from '../../../../Nexus/entities/INeed';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { useSelectState } from '../SelectContext';
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
+import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
   children: React.ReactElement;
@@ -33,7 +32,7 @@ function DeleteRequirement({
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
 
-  const dispatch = useAppDispatch();
+  const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
   const { deleteRequirement } = useProjectMutations();
   const { deleteMode } = useSelectState();
@@ -58,7 +57,7 @@ function DeleteRequirement({
         style: 'success',
         text: 'Successfully deleted requirement',
       };
-      dispatch(addAlert({ alert }));
+      addAlert(alert);
       handleClose();
     });
   };

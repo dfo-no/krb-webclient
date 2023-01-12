@@ -7,15 +7,14 @@ import FormButtons from '../../../../components/Form/FormButtons';
 import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import { IAlert } from '../../../../models/IAlert';
 import { ICode } from '../../../../Nexus/entities/ICode';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 import { Parentable } from '../../../../models/Parentable';
-import { useAppDispatch } from '../../../../store/hooks';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { ModelType } from '../../../../Nexus/enums';
+import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
   codelist: ICodelist;
@@ -28,7 +27,7 @@ function EditCodeForm({
   code,
   handleClose,
 }: IProps): React.ReactElement {
-  const dispatch = useAppDispatch();
+  const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
   const formStyles = useFormStyles();
@@ -46,7 +45,7 @@ function EditCodeForm({
         style: 'success',
         text: 'Successfully edited code',
       };
-      dispatch(addAlert({ alert }));
+      addAlert(alert);
       handleClose(put);
     });
   }
