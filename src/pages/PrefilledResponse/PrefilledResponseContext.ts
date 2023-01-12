@@ -1,9 +1,7 @@
 import produce from 'immer';
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { createContainer } from 'unstated-next';
 
-import Utils from '../../common/Utils';
 import { HeaderContainer } from '../../components/Header/HeaderContext';
 import { IPrefilledResponse } from '../../Nexus/entities/IPrefilledResponse';
 import { IPrefilledResponseProduct } from '../../Nexus/entities/IPrefilledResponseProduct';
@@ -11,7 +9,6 @@ import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { ModelType } from '../../Nexus/enums';
 
 const usePrefilledResponseContext = () => {
-  const { t } = useTranslation();
   const { setTitle } = HeaderContainer.useContainer();
 
   const [prefilledResponse, setPrefilledResponse] =
@@ -40,35 +37,13 @@ const usePrefilledResponseContext = () => {
       requirementAnswers: [],
     });
 
-  //   const [selectedProduct, setSelectedProduct] =
-  //     useState<IPrefilledResponseProduct>({
-  //       id: '',
-  //       title: '',
-  //       description: '',
-  //       originProduct: {
-  //         id: '',
-  //         title: '',
-  //         description: '',
-  //         parent: '',
-  //         children: [],
-  //         type: ModelType.product,
-  //         sourceOriginal: null,
-  //         sourceRel: null,
-  //         deletedDate: null,
-  //         unit: '',
-  //       },
-  //       answeredVariants: [],
-  //       requirementAnswers: [],
-  //       relatedProducts: [],
-  //     });
-
   useEffect(() => {
     // const caseNumber = specificationFile.specification.caseNumber;
     setTitle(prefilledResponse.bank.title);
     return function cleanup() {
       setTitle('');
     };
-  }, [prefilledResponse.bank.title, setTitle, t]);
+  }, [prefilledResponse.bank.title, setTitle]);
 
   const setResponse = (payload: IPrefilledResponse) => {
     setPrefilledResponse(
@@ -78,6 +53,7 @@ const usePrefilledResponseContext = () => {
       })
     );
   };
+
   const addAnswer = (payload: IRequirementAnswer) => {
     setPrefilledResponse(
       produce(prefilledResponse, (draft) => {
@@ -93,18 +69,7 @@ const usePrefilledResponseContext = () => {
       })
     );
   };
-  const removeAnswer = (payload: string) => {
-    setPrefilledResponse(
-      produce(prefilledResponse, (draft) => {
-        const index = draft.requirementAnswers.findIndex(
-          (element) => element.id === payload
-        );
-        if (index !== -1) {
-          draft.requirementAnswers.splice(index, 1);
-        }
-      })
-    );
-  };
+
   const addProduct = (payload: IPrefilledResponseProduct) => {
     setPrefilledResponse(
       produce(prefilledResponse, (draft) => {
@@ -112,87 +77,38 @@ const usePrefilledResponseContext = () => {
       })
     );
   };
-  const removeProduct = (payload: string) => {
+
+  const addProductAnswer = (answer: IRequirementAnswer, productId: string) => {
     setPrefilledResponse(
       produce(prefilledResponse, (draft) => {
         const index = draft.products.findIndex(
-          (product) => product.id === payload
-        );
-        if (index !== -1) {
-          draft.products.splice(index, 1);
-        }
-      })
-    );
-  };
-  const addProductAnswer = (payload: {
-    answer: IRequirementAnswer;
-    productId: string;
-  }) => {
-    setPrefilledResponse(
-      produce(prefilledResponse, (draft) => {
-        const index = draft.products.findIndex(
-          (product) => product.id === payload.productId
+          (product) => product.id === productId
         );
 
         if (index !== -1) {
           const variantIndex = draft.products[
             index
           ].requirementAnswers.findIndex(
-            (answer) => answer.variantId === payload.answer.variantId
+            (currentAnswer) =>
+              currentAnswer.variantId === currentAnswer.variantId
           );
           if (variantIndex !== -1) {
             // variant exists already, remove it
             draft.products[index].requirementAnswers.splice(variantIndex, 1);
           }
-          draft.products[index].requirementAnswers.push(payload.answer);
+          draft.products[index].requirementAnswers.push(answer);
         }
       })
     );
   };
-  const removeProductAnswer = (payload: {
-    answerId: string;
-    productId: string;
-  }) => {
+
+  const editProduct = (
+    product: IPrefilledResponseProduct,
+    productIndex: number
+  ) => {
     setPrefilledResponse(
       produce(prefilledResponse, (draft) => {
-        const index = draft.products.findIndex(
-          (product) => product.id === payload.productId
-        );
-        if (index !== -1) {
-          const reqAnswerIndex = draft.products[
-            index
-          ].requirementAnswers.findIndex(
-            (element) => element.id === payload.answerId
-          );
-          if (reqAnswerIndex !== -1) {
-            draft.products[index].requirementAnswers.splice(reqAnswerIndex, 1);
-          }
-        }
-      })
-    );
-  };
-  const addProductVariant = (payload: {
-    requirement: string;
-    productId: string;
-  }) => {
-    setPrefilledResponse(
-      produce(prefilledResponse, (draft) => {
-        const index = Utils.ensure(
-          draft.products.findIndex(
-            (product) => product.id === payload.productId
-          )
-        );
-        draft.products[index].answeredVariants.push(payload.requirement);
-      })
-    );
-  };
-  const editProduct = (payload: {
-    product: IPrefilledResponseProduct;
-    productIndex: number;
-  }) => {
-    setPrefilledResponse(
-      produce(prefilledResponse, (draft) => {
-        draft.products[payload.productIndex] = payload.product;
+        draft.products[productIndex] = product;
       })
     );
   };
@@ -201,12 +117,8 @@ const usePrefilledResponseContext = () => {
     prefilledResponse,
     setResponse,
     addAnswer,
-    removeAnswer, // TODO: Remove or start using?
     addProduct,
-    removeProduct, // TODO: Remove or start using?
     addProductAnswer,
-    removeProductAnswer, // TODO: Remove or start using?
-    addProductVariant, // TODO: Remove or start using?
     editProduct,
   };
 };

@@ -41,10 +41,7 @@ export default function QuestionAnswer({
     if (productIndex === -1) {
       addAnswer(newAnswer);
     } else {
-      addProductAnswer({
-        answer: newAnswer,
-        productId: prefilledResponse.products[productIndex].id,
-      });
+      addProductAnswer(newAnswer, prefilledResponse.products[productIndex].id);
     }
     setActiveKey('');
   };

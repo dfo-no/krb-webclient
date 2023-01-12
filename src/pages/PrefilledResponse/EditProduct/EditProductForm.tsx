@@ -42,7 +42,7 @@ const EditProductForm = ({ handleClose, prefilledResponseProduct }: IProps) => {
   });
 
   const onSubmit = (put: IPrefilledResponseProduct): void => {
-    editProduct({ product: put, productIndex: productIndex });
+    editProduct(put, productIndex);
     handleClose();
   };
 
