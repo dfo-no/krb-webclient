@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { useAppSelector } from '../../store/hooks';
+import { AlertsContainer } from './AlertContext';
 import AlertElement from './AlertElement';
 
 export default function AlertList(): React.ReactElement {
-  const { list } = useAppSelector((state) => state.alert);
+  const { alerts } = AlertsContainer.useContainer();
   return (
     <>
-      {!!list.length &&
-        list.map((alert) => {
+      {!!alerts.length &&
+        alerts.map((alert) => {
           return <AlertElement alert={alert} key={alert.id} />;
         })}
     </>
