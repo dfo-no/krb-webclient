@@ -51,7 +51,7 @@ When(
   (text: string, fieldName: number) => {
     cy.get(`input[placeholder="${fieldName}"]`)
       .clear({ force: true })
-      .type(text);
+      .type(text, { force: true });
   }
 );
 
