@@ -7,15 +7,11 @@ import QuestionAnswerPeriodDate from '../../../components/QuestionAnswer/Questio
 import QuestionAnswerSlider from '../../../components/QuestionAnswer/QuestionAnswerSlider';
 import QuestionAnswerText from '../../../components/QuestionAnswer/QuestionAnswerText';
 import QuestionAnswerTime from '../../../components/QuestionAnswer/QuestionAnswerTime';
-import {
-  addAnswer,
-  addProductAnswer,
-} from '../../../store/reducers/prefilled-response-reducer';
+import { PrefilledResponseContainer } from '../PrefilledResponseContext';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { QuestionType } from '../../../Nexus/entities/QuestionType';
 import { QuestionVariant } from '../../../Nexus/enums';
 import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import Nexus from '../../../Nexus/Nexus';
 
@@ -28,11 +24,9 @@ export default function QuestionAnswer({
   requirementAnswer,
   existingAnswer,
 }: IProps): React.ReactElement {
-  const dispatch = useAppDispatch();
+  const { prefilledResponse, addAnswer, addProductAnswer } =
+    PrefilledResponseContainer.useContainer();
   const nexus = Nexus.getInstance();
-  const { prefilledResponse } = useAppSelector(
-    (state) => state.prefilledResponse
-  );
   const { productIndex } = useProductIndexState();
   const { setActiveKey } = useAccordionState();
 
@@ -45,14 +39,12 @@ export default function QuestionAnswer({
       questionId: requirementAnswer.question.id,
     };
     if (productIndex === -1) {
-      dispatch(addAnswer(newAnswer));
+      addAnswer(newAnswer);
     } else {
-      dispatch(
-        addProductAnswer({
-          answer: newAnswer,
-          productId: prefilledResponse.products[productIndex].id,
-        })
-      );
+      addProductAnswer({
+        answer: newAnswer,
+        productId: prefilledResponse.products[productIndex].id,
+      });
     }
     setActiveKey('');
   };

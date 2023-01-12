@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
 import DownloadToolbarItem from '../../PrefilledResponse/Download/DownloadToolbarItem';
-import { useAppSelector } from '../../../store/hooks';
+import { PrefilledResponseContainer } from '../PrefilledResponseContext';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import { IPrefilledResponseProduct } from '../../../Nexus/entities/IPrefilledResponseProduct';
@@ -18,9 +18,7 @@ import NewProductSelection from '../NewProduct/NewProductSelection';
 export default function PrefilledResponseOverview(): ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
-  const { prefilledResponse } = useAppSelector(
-    (state) => state.prefilledResponse
-  );
+  const { prefilledResponse } = PrefilledResponseContainer.useContainer();
   const { setProductIndex, setOpenProductSelection, openProductSelection } =
     useProductIndexState();
 

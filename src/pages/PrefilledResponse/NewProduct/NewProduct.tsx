@@ -7,12 +7,11 @@ import css from '../../Stylesheets/NewProduct.module.scss';
 import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
 import Nexus from '../../../Nexus/Nexus';
 import theme from '../../../theme';
-import { addProduct } from '../../../store/reducers/prefilled-response-reducer';
 import { IPrefilledResponseProduct } from '../../../Nexus/entities/IPrefilledResponseProduct';
 import { IProduct } from '../../../Nexus/entities/IProduct';
 import { ModelType } from '../../../Nexus/enums';
 import { Parentable } from '../../../models/Parentable';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { PrefilledResponseContainer } from '../PrefilledResponseContext';
 import { useFormStyles } from '../../../components/Form/FormStyles';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import {
@@ -33,11 +32,10 @@ export default function NewProduct({
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
-  const { prefilledResponse } = useAppSelector(
-    (state) => state.prefilledResponse
-  );
+  const { prefilledResponse, addProduct } =
+    PrefilledResponseContainer.useContainer();
   const formStyles = useFormStyles();
-  const dispatch = useAppDispatch();
+
   const { setProductIndex, setCreate } = useProductIndexState();
 
   const defaultValues: IPrefilledResponseProduct =
@@ -71,7 +69,7 @@ export default function NewProduct({
     const newProduct =
       nexus.prefilledResponseService.createPrefilledResponseProductWithId(post);
     const newId = prefilledResponse.products.length;
-    dispatch(addProduct(newProduct));
+    addProduct(newProduct);
     setProductIndex(newId);
     handleClose();
   };

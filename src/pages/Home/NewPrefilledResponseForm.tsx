@@ -15,8 +15,7 @@ import {
   ModalFieldsBox,
 } from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
-import { setResponse } from '../../store/reducers/prefilled-response-reducer';
-import { useAppDispatch } from '../../store/hooks';
+import { PrefilledResponseContainer } from '../PrefilledResponse/PrefilledResponseContext';
 import { PREFILLED_RESPONSE } from '../../common/PathConstants';
 import { updateObject } from './UpdateFormatsTools';
 
@@ -31,7 +30,8 @@ const NewPrefilledResponseForm = ({
 }: IProps) => {
   const { t } = useTranslation();
   const history = useHistory();
-  const dispatch = useAppDispatch();
+  const { setResponse } = PrefilledResponseContainer.useContainer();
+
   const nexus = Nexus.getInstance();
   const prefilledResponse = updateObject({ ...rawPrefilledResponse });
 
@@ -41,7 +41,7 @@ const NewPrefilledResponseForm = ({
   });
 
   const onSubmit = async (post: IPrefilledResponse) => {
-    dispatch(setResponse(post));
+    setResponse(post);
     history.push(`/${PREFILLED_RESPONSE}/${post.bank.id}`);
   };
 

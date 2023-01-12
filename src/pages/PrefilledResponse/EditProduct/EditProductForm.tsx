@@ -11,9 +11,8 @@ import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 import { ModelType } from '../../../Nexus/enums';
 import { FormFieldsBox } from '../../../components/Form/FormFieldsBox';
 import { IPrefilledResponseProduct } from '../../../Nexus/entities/IPrefilledResponseProduct';
-import { editProduct } from '../../../store/reducers/prefilled-response-reducer';
 import { DFORadio } from '../../../components/DFORadio/DFORadio';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { PrefilledResponseContainer } from '../PrefilledResponseContext';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import MultipleProductSelection from '../../../components/ProductSelection/MultipleProductSelection';
 import { Parentable } from '../../../models/Parentable';
@@ -27,11 +26,9 @@ interface IProps {
 const EditProductForm = ({ handleClose, prefilledResponseProduct }: IProps) => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
-  const { prefilledResponse } = useAppSelector(
-    (state) => state.prefilledResponse
-  );
   const { productIndex } = useProductIndexState();
-  const dispatch = useAppDispatch();
+  const { prefilledResponse, editProduct } =
+    PrefilledResponseContainer.useContainer();
   const [relatedProducts, setRelatedProducts] = useState(false);
   const options = [
     { value: true, label: t('common.Yes'), recommended: false },
@@ -45,7 +42,7 @@ const EditProductForm = ({ handleClose, prefilledResponseProduct }: IProps) => {
   });
 
   const onSubmit = (put: IPrefilledResponseProduct): void => {
-    dispatch(editProduct({ product: put, productIndex: productIndex }));
+    editProduct({ product: put, productIndex: productIndex });
     handleClose();
   };
 
