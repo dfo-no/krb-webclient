@@ -10,7 +10,7 @@ import RequirementService from '../../../../Nexus/services/RequirementService';
 import theme from '../../../../theme';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { INeed } from '../../../../Nexus/entities/INeed';
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
@@ -50,7 +50,7 @@ function NewRequirementForm({ need, handleClose }: IProps): React.ReactElement {
     const newRequirement =
       nexus.requirementService.createRequirementWithId(post);
     await addRequirement(newRequirement, need).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: t('Successfully created new requirement'),

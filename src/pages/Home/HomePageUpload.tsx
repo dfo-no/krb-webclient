@@ -13,7 +13,7 @@ import { IBank } from '../../Nexus/entities/IBank';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 import { IResponse } from '../../Nexus/entities/IResponse';
 import { IPrefilledResponse } from '../../Nexus/entities/IPrefilledResponse';
-import { IAlert } from '../../models/IAlert';
+import { Alert } from '../../models/Alert';
 import { httpPost } from '../../api/http';
 import { getDefaultSpecificationFile } from '../../Nexus/services/EvaluationSpecificationStoreService';
 import { SpecificationFile } from '../../Nexus/entities/SpecificationFile';
@@ -55,7 +55,7 @@ export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
     }
 
     if (disableUploadMessage !== '') {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'error',
         text: disableUploadMessage,
@@ -92,7 +92,7 @@ export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
         }
       })
       .catch(() => {
-        const alert: IAlert = {
+        const alert: Alert = {
           id: uuidv4(),
           style: 'error',
           text: t('HomePage.File_upload_error'),

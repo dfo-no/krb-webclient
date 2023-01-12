@@ -9,7 +9,7 @@ import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { ITag } from '../../../../Nexus/entities/ITag';
 import { ModelType } from '../../../../Nexus/enums';
@@ -42,7 +42,7 @@ export default function NewTagForm({
   async function onSubmit(post: Parentable<ITag>) {
     const newTag = nexus.tagService.generateTag(post);
     await addTag(newTag).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully created tag',

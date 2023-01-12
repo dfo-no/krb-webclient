@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router-dom';
 import { Box } from '@mui/material/';
 
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { Parentable } from '../../../../models/Parentable';
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
@@ -52,7 +52,7 @@ function DeleteRequirement({
 
   const onDelete = (): void => {
     deleteRequirement(requirement, need).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully deleted requirement',

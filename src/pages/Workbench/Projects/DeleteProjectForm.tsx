@@ -7,7 +7,7 @@ import Nexus from '../../../Nexus/Nexus';
 import useProjectMutations from '../../../store/api/ProjectMutations';
 import UuidService from '../../../Nexus/services/UuidService';
 import { IBank } from '../../../Nexus/entities/IBank';
-import { IAlert } from '../../../models/IAlert';
+import { Alert } from '../../../models/Alert';
 import { ModelType } from '../../../Nexus/enums';
 import { useEditableState } from '../../../components/EditableContext/EditableContext';
 import { AlertsContainer } from '../../../components/Alert/AlertContext';
@@ -45,7 +45,7 @@ export default function DeleteProjectForm({
 
   const onSubmit = (post: IBank): void => {
     deleteProject(post).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidService.generateId(),
         style: 'success',
         text: 'Successfully deleted project',

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 
 import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
-import { IAlert } from '../../../models/IAlert';
+import { Alert } from '../../../models/Alert';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import { useSelectState } from '../../Workbench/Create/SelectContext';
@@ -42,7 +42,7 @@ export default function DeleteSpecProduct({
 
   const onDelete = (): void => {
     deleteSpecificationProduct(product);
-    const alert: IAlert = {
+    const alert: Alert = {
       id: uuidv4(),
       style: 'success',
       text: 'Successfully deleted product',

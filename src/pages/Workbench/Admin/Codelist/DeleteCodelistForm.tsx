@@ -9,7 +9,7 @@ import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import Utils from '../../../../common/Utils';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { ModelType } from '../../../../Nexus/enums';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
@@ -59,7 +59,7 @@ export default function DeleteCodelistForm({
 
   const onSubmit = (put: ICodelist): void => {
     deleteCodelist(put).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully deleted codelist',

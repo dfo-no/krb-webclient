@@ -8,7 +8,7 @@ import Nexus from '../../../../Nexus/Nexus';
 import theme from '../../../../theme';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { INeed } from '../../../../Nexus/entities/INeed';
 import {
   ModalBox,
@@ -38,7 +38,7 @@ function EditNeedForm({ need, handleClose }: IProps): React.ReactElement {
 
   const onSubmit = async (put: Parentable<INeed>) => {
     await editNeed(put).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully edited need',

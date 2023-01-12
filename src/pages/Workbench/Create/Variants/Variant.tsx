@@ -23,7 +23,7 @@ import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VariantFormContent from './VariantFormContent';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { DFOChip } from '../../../../components/DFOChip/DFOChip';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { IVariant } from '../../../../Nexus/entities/IVariant';
 import { ModelType, VariantType } from '../../../../Nexus/enums';
@@ -65,7 +65,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
       project.needs[needIndex].requirements[requirementIndex],
       project.needs[needIndex]
     ).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'successfully updated variant',

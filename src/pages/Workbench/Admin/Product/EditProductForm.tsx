@@ -8,7 +8,7 @@ import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { IProduct } from '../../../../Nexus/entities/IProduct';
 import { ModelType } from '../../../../Nexus/enums';
 import { Parentable } from '../../../../models/Parentable';
@@ -37,7 +37,7 @@ export default function EditProductForm({
 
   async function onSubmit(put: Parentable<IProduct>) {
     await editProduct(put).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully edited product',

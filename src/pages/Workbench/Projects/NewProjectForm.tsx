@@ -7,7 +7,7 @@ import Nexus from '../../../Nexus/Nexus';
 import ProjectService from '../../../Nexus/services/ProjectService';
 import theme from '../../../theme';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
-import { IAlert } from '../../../models/IAlert';
+import { Alert } from '../../../models/Alert';
 import { IBank } from '../../../Nexus/entities/IBank';
 import {
   ModalBox,
@@ -38,7 +38,7 @@ const NewProjectForm = ({ handleClose }: IProps) => {
 
   const onSubmit = async (post: IBank) => {
     await postProject(post).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully created project',
