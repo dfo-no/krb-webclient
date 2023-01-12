@@ -1,12 +1,16 @@
-import React, { ReactElement } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
+import {
+  deleteProject,
+  findPublications,
+  ProjectForm,
+  PublicationForm,
+} from '../../../api/openapi-fetch';
 import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../Nexus/Nexus';
-import useProjectMutations from '../../../store/api/ProjectMutations';
 import UuidService from '../../../Nexus/services/UuidService';
-import { IBank } from '../../../Nexus/entities/IBank';
 import { Alert } from '../../../models/Alert';
 import { ModelType } from '../../../Nexus/enums';
 import { useEditableState } from '../../../components/EditableContext/EditableContext';
@@ -14,44 +18,54 @@ import { AlertsContainer } from '../../../components/Alert/AlertContext';
 
 interface IProps {
   children: ReactElement;
-  bank: IBank;
+  project: ProjectForm;
   handleClose: () => void;
 }
 
-export default function DeleteProjectForm({
+export function DeleteProjectForm({
   children,
-  bank,
+  project,
   handleClose,
 }: IProps): ReactElement {
   const { t } = useTranslation();
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
-  const { deleteProject } = useProjectMutations();
   const { deleteMode } = useEditableState();
   const uuidService = new UuidService();
+  const [publications, setPublications] = useState<PublicationForm[]>([]);
 
-  const methods = useForm<IBank>({
-    defaultValues: bank,
+  const methods = useForm<ProjectForm>({
+    defaultValues: project,
     resolver: nexus.resolverService.resolver(ModelType.bank),
   });
 
-  if (deleteMode !== bank.id) {
+  useEffect(() => {
+    if (deleteMode === project.ref) {
+      findPublications({ projectref: project.ref }).then((response) =>
+        setPublications(response.data)
+      );
+    }
+  }, [deleteMode, project.ref]);
+
+  if (deleteMode !== project.ref) {
     return children;
   }
 
-  const isPublished = bank.publications.length > 0;
+  const isPublished = publications.length > 0;
 
   const infoText = isPublished ? t('Project is published') : '';
 
-  const onSubmit = (post: IBank): void => {
-    deleteProject(post).then(() => {
-      const alert: Alert = {
-        id: uuidService.generateId(),
-        style: 'success',
-        text: 'Successfully deleted project',
-      };
-      addAlert(alert);
-    });
+  const onSubmit = (projectForm: ProjectForm): void => {
+    if (projectForm.ref) {
+      deleteProject({ projectRef: projectForm.ref }).then(() => {
+        const alert: Alert = {
+          id: uuidService.generateId(),
+          style: 'success',
+          text: 'Successfully deleted project',
+        };
+        addAlert(alert);
+      });
+    }
   };
 
   return (

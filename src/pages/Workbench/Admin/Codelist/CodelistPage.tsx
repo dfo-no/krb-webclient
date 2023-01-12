@@ -4,21 +4,21 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import CodelistPanel from './CodelistPanel';
-import CodePanel from './CodePanel';
-import DFOSearchBar from '../../../../components/DFOSearchBar/DFOSearchBar';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import SearchUtils from '../../../../common/SearchUtils';
+import { DFOSearchBar } from '../../../../components/DFOSearchBar/DFOSearchBar';
 import { EditableProvider } from '../../../../components/EditableContext/EditableContext';
-import { ICodelist } from '../../../../Nexus/entities/ICodelist';
-import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import {
   SearchContainer,
   SearchFieldContainer,
 } from '../../../../components/SearchContainer/SearchContainer';
 import { StandardContainer } from '../../../../components/StandardContainer/StandardContainer';
-import { useSelectState } from './SelectContext';
+import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
+import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
+import CodelistPanel from './CodelistPanel';
+import CodePanel from './CodePanel';
+import { useSelectState } from './SelectContext';
 
 const useStyles = makeStyles({
   tableContainer: {
