@@ -149,10 +149,16 @@ Then('Jeg ser en {string}-merkelapp', (text: string) => {
 When('Jeg velger {string} i feltet {string}', (date: string, label: string) => {
   if (label === 'Fra') {
     cy.wait(1000);
-    cy.get('[class*="MuiInputBase-input"]').first().type(date, { force: true });
+    cy.get('input[type="tel"]')
+      .first()
+      .clear({ force: true })
+      .type(date, { force: true });
   } else if (label === 'Til') {
     cy.wait(1000);
-    cy.get('[class*="MuiInputBase-input"]').eq(1).type(date, { force: true });
+    cy.get('input[type="tel"]')
+      .eq(1)
+      .clear({ force: true })
+      .type(date, { force: true });
   }
 });
 
