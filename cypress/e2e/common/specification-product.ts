@@ -1,3 +1,4 @@
+/* eslint-disable cypress/no-unnecessary-waiting */
 import { Then, When } from '@badeball/cypress-cucumber-preprocessor';
 import { chosenWeekday } from './helpers';
 
@@ -70,10 +71,6 @@ Then('Ser jeg {string} er valgt', (day: string) => {
 
 When('Jeg klikker på checkbox', () => {
   cy.get('input[type="checkbox"]').click();
-});
-
-When('Jeg klikker på tildelingskriterie checkbox', () => {
-  cy.get('input[type="checkbox"]').first().click();
 });
 
 When('Jeg velger kodelist {string}', (code: string) => {
@@ -165,4 +162,22 @@ When('Jeg velger {string} i feltet {string}', (date: string, label: string) => {
       .eq(0)
       .type(date, { force: true });
   }
+});
+
+When('Jeg klikker på {string} checkbox', (label: string) => {
+  cy.contains(label).parent().first().click();
+});
+
+When(
+  'Jeg skriver {int} i feltet {string} for laveste antall dager',
+  (value: string, fieldName: string) => {
+    cy.get(`input[placeholder="${fieldName}"]`)
+      .first()
+      .clear({ force: true })
+      .type(value);
+  }
+);
+
+Then('Ser jeg feilmelding {string}', (errorMessage: string) => {
+  cy.contains(errorMessage);
 });

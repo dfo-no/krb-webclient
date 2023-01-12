@@ -53,7 +53,7 @@ Feature: Spesifikasjonsprodukt
      And Jeg klikker på "Velg variant" til produktkrav "Kodeliste som krav (1)"
      And Jeg skriver 1 i feltet "Minimum"
      And Jeg skriver 4 i feltet "Maksimum"
-     And Jeg klikker på tildelingskriterie checkbox
+     And Jeg klikker på "tildelingskriterie" checkbox
      And Jeg velger kodelist "Hvit"
      And Jeg legge til "10" fradrag for kode "Hvit"
      And Jeg velger kodelist "Rød"
@@ -79,5 +79,15 @@ Feature: Spesifikasjonsprodukt
     And Jeg skriver 5 i feltet "Verdi"
     And Jeg klikker på "Lagre krav" knapp for å lagre
     Then Ser jeg "Varighet" har verdi "5"
+    When Jeg klikker på "Rediger kravet" knapp
+    And Jeg klikker på "tildelingskriterie" checkbox
+    And Jeg klikker på "Er det rom for variasjon i antall dager" checkbox
+    And Jeg skriver 1 i feltet "Verdi" for laveste antall dager
+    And Jeg klikker på "Lagre krav" knapp for å lagre
+    Then Ser jeg feilmelding "Kan ikke være mindre enn 1"
+    When Jeg skriver 1 i feltet "dager" for laveste antall dager
+    And Jeg klikker på "Lagre krav" knapp for å lagre
+    Then Ser jeg "Minimum" har verdi "1"
+    And Ser jeg "Maksimum" har verdi "5"
     And Ser jeg "Fra" har verdi "10. desember"
     And Ser jeg "Til" har verdi "19. desember"
