@@ -6,7 +6,7 @@ import css from './PrefilledResponse.module.scss';
 import TextUtils from '../../../common/TextUtils';
 import theme from '../../../theme';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
-import { useAppSelector } from '../../../store/hooks';
+import { PrefilledResponseContainer } from '../PrefilledResponseContext';
 
 interface IProps {
   requirementAnswer?: IRequirementAnswer;
@@ -16,9 +16,7 @@ export default function ChosenAnswer({
   requirementAnswer,
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
-  const { prefilledResponse } = useAppSelector(
-    (state) => state.prefilledResponse
-  );
+  const { prefilledResponse } = PrefilledResponseContainer.useContainer();
 
   if (!requirementAnswer) {
     return (

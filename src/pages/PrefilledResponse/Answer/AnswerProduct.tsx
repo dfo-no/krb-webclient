@@ -8,7 +8,7 @@ import { Button, Variant } from '@dfo-no/components.button';
 import ProductNeed from './ProductNeed';
 import Utils from '../../../common/Utils';
 import { AccordionProvider } from '../../../components/DFOAccordion/AccordionContext';
-import { useAppSelector } from '../../../store/hooks';
+import { PrefilledResponseContainer } from '../PrefilledResponseContext';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
 import Panel from '../../../components/UI/Panel/Panel';
@@ -20,9 +20,7 @@ import EditProductForm from '../EditProduct/EditProductForm';
 export default function AnswerProduct(): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
-  const { prefilledResponse } = useAppSelector(
-    (state) => state.prefilledResponse
-  );
+  const { prefilledResponse } = PrefilledResponseContainer.useContainer();
   const { productIndex } = useProductIndexState();
   const [editingProduct, setEditingProduct] = useState(false);
   const product = prefilledResponse.products[productIndex];

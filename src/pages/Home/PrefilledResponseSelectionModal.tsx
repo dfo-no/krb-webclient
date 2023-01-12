@@ -10,8 +10,7 @@ import {
   ModalButton,
   ModalButtonsBox,
 } from '../../components/ModalBox/ModalBox';
-import { setResponse } from '../../store/reducers/prefilled-response-reducer';
-import { useAppDispatch } from '../../store/hooks';
+import { PrefilledResponseContainer } from '../PrefilledResponse/PrefilledResponseContext';
 import { PREFILLED_RESPONSE } from '../../common/PathConstants';
 
 interface IProps {
@@ -27,10 +26,10 @@ export default function PrefilledResponseSelectionModal({
 }: IProps): React.ReactElement {
   const history = useHistory();
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
+  const { setResponse } = PrefilledResponseContainer.useContainer();
 
   const editPrefilledResponse = (): void => {
-    dispatch(setResponse(selectedPrefilledResponse));
+    setResponse(selectedPrefilledResponse);
     history.push(`/${PREFILLED_RESPONSE}/${selectedPrefilledResponse.bank.id}`);
   };
 

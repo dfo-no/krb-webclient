@@ -7,13 +7,11 @@ import { useProductIndexState } from '../../components/ProductIndexContext/Produ
 import PrefilledResponseOverview from './PrefilledResponseOverview/PrefilledResponseOverview';
 import { PRODUCTS, PREFILLED_RESPONSE } from '../../common/PathConstants';
 import { SelectProvider } from '../Workbench/Create/SelectContext';
-import { useAppSelector } from '../../store/hooks';
 import { HeaderContainer } from '../../components/Header/HeaderContext';
+import { PrefilledResponseContainer } from './PrefilledResponseContext';
 
 export default function PrefilledResponseEditor(): ReactElement {
-  const { prefilledResponse } = useAppSelector(
-    (state) => state.prefilledResponse
-  );
+  const { prefilledResponse } = PrefilledResponseContainer.useContainer();
   const { productIndex } = useProductIndexState();
   const { setTitle } = HeaderContainer.useContainer();
 

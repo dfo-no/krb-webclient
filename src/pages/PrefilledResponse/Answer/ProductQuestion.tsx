@@ -12,7 +12,7 @@ import { IRequirement } from '../../../Nexus/entities/IRequirement';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { IVariant } from '../../../Nexus/entities/IVariant';
 import { QuestionType } from '../../../Nexus/entities/QuestionType';
-import { useAppSelector } from '../../../store/hooks';
+import { PrefilledResponseContainer } from '../PrefilledResponseContext';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 
 interface IProps {
@@ -27,9 +27,7 @@ export default function ProductQuestion({
   question,
 }: IProps): ReactElement {
   const { t } = useTranslation();
-  const { prefilledResponse } = useAppSelector(
-    (state) => state.prefilledResponse
-  );
+  const { prefilledResponse } = PrefilledResponseContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { productIndex } = useProductIndexState();
   const [existingAnswer, setExistingAnswer] = useState<

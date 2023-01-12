@@ -6,7 +6,7 @@ import css from '../../Stylesheets/NewProductSelection.module.scss';
 import theme from '../../../theme';
 import { IProduct } from '../../../Nexus/entities/IProduct';
 import { Parentable } from '../../../models/Parentable';
-import { useAppSelector } from '../../../store/hooks';
+import { PrefilledResponseContainer } from '../PrefilledResponseContext';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import DFODialog from '../../../components/DFODialog/DFODialog';
 import { Levelable } from '../../../models/Levelable';
@@ -20,9 +20,7 @@ import {
 
 export default function NewProductSelection(): React.ReactElement {
   const { t } = useTranslation();
-  const { prefilledResponse } = useAppSelector(
-    (state) => state.prefilledResponse
-  );
+  const { prefilledResponse } = PrefilledResponseContainer.useContainer();
   const { setOpenProductSelection, setCreate, create } = useProductIndexState();
   const [product, setProduct] = useState<Parentable<IProduct> | null>(null);
 
