@@ -1,7 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Box, Button, List, Typography } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
-import { RateLimit } from 'async-sema';
 
 import css from './Projects.module.scss';
 import DFODialog from '../../../components/DFODialog/DFODialog';
@@ -20,15 +19,12 @@ import {
 } from '../../../components/SearchContainer/SearchContainer';
 import { PAGE_SIZE } from '../../../common/Constants';
 import { useGetProjectsQuery } from '../../../store/api/bankApi';
-import { createProject } from '../../../api/openapi-fetch';
 
 export default function Projects(): React.ReactElement {
   const { t } = useTranslation();
   const [projectList, setProjectList] = useState<IBank[]>();
   const [allProjects, setAllProjects] = useState<IBank[]>();
   const [isOpen, setOpen] = useState(false);
-
-  const lim = RateLimit(5, { uniformDistribution: true });
 
   const { data: projects, isLoading } = useGetProjectsQuery({
     pageSize: PAGE_SIZE,
@@ -43,19 +39,6 @@ export default function Projects(): React.ReactElement {
       setAllProjects(Object.values(projects));
     }
   }, [setProjectList, setAllProjects, projects]);
-
-  useEffect(() => {
-    if (allProjects) {
-      allProjects.forEach(async (project) => {
-        await lim();
-        createProject({
-          description: project.description,
-          ref: project.id,
-          title: project.title,
-        }).then((result) => console.log(result));
-      });
-    }
-  }, [allProjects, lim]);
 
   if (isLoading) {
     return <LoaderSpinner />;

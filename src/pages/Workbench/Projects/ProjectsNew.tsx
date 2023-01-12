@@ -1,7 +1,6 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Box, Button, List, Typography } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
-// import { RateLimit } from 'async-sema';
 
 import css from './Projects.module.scss';
 import DFODialog from '../../../components/DFODialog/DFODialog';
@@ -22,7 +21,6 @@ import { PAGE_SIZE } from '../../../common/Constants';
 import { findProjects, ProjectForm } from '../../../api/openapi-fetch';
 
 export function ProjectsNew(): React.ReactElement {
-  // const lim = RateLimit(15, { uniformDistribution: true });
   const { t } = useTranslation();
   const [projectList, setProjectList] = useState<ProjectForm[]>();
   const [loading, setLoading] = useState<boolean>(true);
@@ -49,25 +47,6 @@ export function ProjectsNew(): React.ReactElement {
   if (loading) {
     return <LoaderSpinner />;
   }
-
-  // useEffect(() => {
-  //   const x = async () => {
-  //     if (!allProjects) return;
-  //     console.log(`yo allprojects length: ${allProjects.length} `);
-  //     for (let i = 0; i < allProjects.length; i++) {
-  //       console.log(i);
-
-  //       const project = allProjects[i];
-  //       await lim();
-  //       console.log('hmmm:', i);
-  //       if (i < 5) continue;
-  //       if (project.ref) {
-  //         deleteProject({ projectRef: project.ref });
-  //       }
-  //     }
-  //   };
-  //   x();
-  // }, [allProjects, lim]);
 
   const searchFunction = (searchString: string, list: ProjectForm[]) => {
     return SearchUtils.searchTitleAndDescription(list, searchString);
