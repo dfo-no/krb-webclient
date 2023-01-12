@@ -12,7 +12,6 @@ import LoaderSpinner from '../../../../common/LoaderSpinner';
 import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VariantFormContent from './VariantFormContent';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { IAlert } from '../../../../models/IAlert';
 import { INeed } from '../../../../Nexus/entities/INeed';
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
@@ -20,8 +19,8 @@ import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { IVariant } from '../../../../Nexus/entities/IVariant';
 import { ModelType } from '../../../../Nexus/enums';
 import { Parentable } from '../../../../models/Parentable';
-import { useAppDispatch } from '../../../../store/hooks';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
+import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
   need: Parentable<INeed>;
@@ -34,7 +33,7 @@ function NewVariantForm({
   requirement,
   handleClose,
 }: IProps): React.ReactElement {
-  const dispatch = useAppDispatch();
+  const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
   const { addVariant } = useProjectMutations();
@@ -66,7 +65,7 @@ function NewVariantForm({
         style: 'success',
         text: 'Successfully created new variant',
       };
-      dispatch(addAlert({ alert }));
+      addAlert(alert);
       closeAndReset();
     });
   };

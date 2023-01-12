@@ -8,15 +8,14 @@ import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import Utils from '../../../../common/Utils';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { IAlert } from '../../../../models/IAlert';
 import { ITag } from '../../../../Nexus/entities/ITag';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { ModelType } from '../../../../Nexus/enums';
 import { Parentable } from '../../../../models/Parentable';
-import { useAppDispatch } from '../../../../store/hooks';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
+import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
   children: React.ReactElement;
@@ -31,7 +30,7 @@ export default function DeleteTagForm({
 }: IProps): React.ReactElement {
   const { deleteTag } = useProjectMutations();
   const nexus = Nexus.getInstance();
-  const dispatch = useAppDispatch();
+  const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
   const { deleteMode } = useEditableState();
 
@@ -64,7 +63,7 @@ export default function DeleteTagForm({
         style: 'success',
         text: 'Successfully deleted tag',
       };
-      dispatch(addAlert({ alert }));
+      addAlert(alert);
       handleClose();
     });
   };

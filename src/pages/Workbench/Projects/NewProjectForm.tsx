@@ -7,7 +7,6 @@ import Nexus from '../../../Nexus/Nexus';
 import ProjectService from '../../../Nexus/services/ProjectService';
 import theme from '../../../theme';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
-import { addAlert } from '../../../store/reducers/alert-reducer';
 import { IAlert } from '../../../models/IAlert';
 import { IBank } from '../../../Nexus/entities/IBank';
 import {
@@ -18,14 +17,14 @@ import {
 } from '../../../components/ModalBox/ModalBox';
 import { ModelType } from '../../../Nexus/enums';
 import { usePostProjectMutation } from '../../../store/api/bankApi';
-import { useAppDispatch } from '../../../store/hooks';
+import { AlertsContainer } from '../../../components/Alert/AlertContext';
 
 interface IProps {
   handleClose: () => void;
 }
 
 const NewProjectForm = ({ handleClose }: IProps) => {
-  const dispatch = useAppDispatch();
+  const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
 
@@ -44,7 +43,7 @@ const NewProjectForm = ({ handleClose }: IProps) => {
         style: 'success',
         text: 'Successfully created project',
       };
-      dispatch(addAlert({ alert }));
+      addAlert(alert);
       methods.reset();
       handleClose();
     });

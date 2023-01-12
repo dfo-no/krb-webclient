@@ -9,7 +9,6 @@ import Nexus from '../../../../Nexus/Nexus';
 import theme from '../../../../theme';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { IAlert } from '../../../../models/IAlert';
 import { INeed } from '../../../../Nexus/entities/INeed';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
@@ -21,7 +20,7 @@ import {
 } from '../../../../components/ModalBox/ModalBox';
 import { ModelType } from '../../../../Nexus/enums';
 import { Parentable } from '../../../../models/Parentable';
-import { useAppDispatch } from '../../../../store/hooks';
+import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
   handleClose: (newNeed: Parentable<INeed> | null) => void;
@@ -33,7 +32,7 @@ function NewNeedForm({ handleClose }: IProps): React.ReactElement {
   const nexus = Nexus.getInstance();
   const defaultValues: Parentable<INeed> =
     nexus.needService.generateDefaultNeedValues(projectId);
-  const dispatch = useAppDispatch();
+  const { addAlert } = AlertsContainer.useContainer();
   const { addNeed } = useProjectMutations();
 
   const { t } = useTranslation();
@@ -51,7 +50,7 @@ function NewNeedForm({ handleClose }: IProps): React.ReactElement {
         style: 'success',
         text: 'Successfully added new need',
       };
-      dispatch(addAlert({ alert }));
+      addAlert(alert);
       methods.reset();
       handleClose(newNeed);
     });
