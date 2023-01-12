@@ -238,7 +238,7 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
             <span className={css.DurationContainer__title}>
               {variationNumberDays
                 ? t('Enter the lowest and highest number of days')
-                : t('Duration')}
+                : t('Enter duration')}
             </span>
             <div className={css.QuestionDateAndTimePeriod__datetimeContainer}>
               {variationNumberDays && (

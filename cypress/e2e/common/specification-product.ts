@@ -148,3 +148,21 @@ Then('Ser jeg valgte krav er {int} av 7', (value: number) => {
 Then('Jeg ser en {string}-merkelapp', (text: string) => {
   cy.get('[class*="Badge"]').contains(text);
 });
+
+When('Jeg velger {string} i feltet {string}', (date: string, label: string) => {
+  if (label === 'Fra') {
+    cy.wait(1000);
+    cy.get('[class*="MuiInputBase-root"]')
+      .first()
+      .find('input')
+      .eq(0)
+      .type(date, { force: true });
+  } else if (label === 'Til') {
+    cy.wait(1000);
+    cy.get('[class*="MuiInputBase-root"]')
+      .eq(1)
+      .find('input')
+      .eq(0)
+      .type(date, { force: true });
+  }
+});
