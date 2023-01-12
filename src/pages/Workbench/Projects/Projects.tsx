@@ -1,61 +1,64 @@
-import React, { ReactElement, useEffect, useState } from 'react';
 import { Box, Button, List, Typography } from '@mui/material/';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import css from './Projects.module.scss';
-import DFODialog from '../../../components/DFODialog/DFODialog';
-import DFOSearchBar from '../../../components/DFOSearchBar/DFOSearchBar';
-import LoaderSpinner from '../../../common/LoaderSpinner';
 import mainIllustration from '../../../assets/images/main-illustration.svg';
-import NewProjectForm from './NewProjectForm';
-import ProjectItem from './ProjectItem';
+import LoaderSpinner from '../../../common/LoaderSpinner';
 import SearchUtils from '../../../common/SearchUtils';
+import DFODialog from '../../../components/DFODialog/DFODialog';
+import { DFOSearchBar } from '../../../components/DFOSearchBar/DFOSearchBar';
 import { EditableProvider } from '../../../components/EditableContext/EditableContext';
-import { IBank } from '../../../Nexus/entities/IBank';
+import NewProjectForm from './NewProjectForm';
+import { ProjectItem } from './ProjectItem';
+import css from './Projects.module.scss';
+// import { IBank } from '../../../Nexus/entities/IBank';
+import { findProjects, ProjectForm } from '../../../api/openapi-fetch';
 import {
   NewButtonContainer,
   SearchContainer,
   SearchFieldContainer,
 } from '../../../components/SearchContainer/SearchContainer';
-import { PAGE_SIZE } from '../../../common/Constants';
-import { useGetProjectsQuery } from '../../../store/api/bankApi';
 
-export default function Projects(): React.ReactElement {
+export function Projects(): React.ReactElement {
   const { t } = useTranslation();
-  const [projectList, setProjectList] = useState<IBank[]>();
-  const [allProjects, setAllProjects] = useState<IBank[]>();
+  const [projectList, setProjectList] = useState<ProjectForm[]>();
+  const [loading, setLoading] = useState<boolean>(true);
+  const [allProjects, setAllProjects] = useState<ProjectForm[]>();
   const [isOpen, setOpen] = useState(false);
 
-  const { data: projects, isLoading } = useGetProjectsQuery({
-    pageSize: PAGE_SIZE,
-    page: 1,
-    fieldName: 'title',
-    order: 'ASC',
-  });
+  // const { data: projects, isLoading } = useGetProjectsQuery({
+  //   pageSize: PAGE_SIZE,
+  //   page: 1,
+  //   fieldName: 'title',
+  //   order: 'ASC',
+  // });
 
   useEffect(() => {
-    if (projects) {
-      setProjectList(Object.values(projects));
-      setAllProjects(Object.values(projects));
-    }
-  }, [setProjectList, setAllProjects, projects]);
+    findProjects({}).then(async (projectsResponse) => {
+      setLoading(false);
+      if (projectsResponse) {
+        setProjectList(projectsResponse.data);
+        setAllProjects(projectsResponse.data);
+      }
+    });
+  }, [setProjectList, setAllProjects]);
 
-  if (isLoading) {
+  if (loading) {
     return <LoaderSpinner />;
   }
 
-  const searchFunction = (searchString: string, list: IBank[]) => {
-    return SearchUtils.searchBaseModel(list, searchString) as IBank[];
+  const searchFunction = (searchString: string, list: ProjectForm[]) => {
+    return SearchUtils.searchTitleAndDescription(list, searchString);
   };
 
-  const searchFieldCallback = (result: IBank[]) => {
+  const searchFieldCallback = (result: ProjectForm[]) => {
     setProjectList(result);
   };
 
-  const renderProjects = (list: IBank[]) => {
+  const renderProjects = (list: ProjectForm[]) => {
     return list.map((element) => {
       return (
-        <EditableProvider key={element.id}>
+        <EditableProvider key={element.ref}>
           <ProjectItem project={element} />
         </EditableProvider>
       );

@@ -3,7 +3,7 @@ import { IBaseModelWithTitleAndDesc } from '../models/IBaseModelWithTitleAndDesc
 import { Parentable } from '../models/Parentable';
 import Utils from './Utils';
 import { ICodelist } from '../Nexus/entities/ICodelist';
-import { TitleAndDescription } from '../components/DFOSearchBar/DFOSearchBarNew';
+import { TitleAndDescription } from '../components/DFOSearchBar/DFOSearchBar'; // TODO: This probably needs to go somewhere else
 
 interface SearchableParams {
   inSearch?: boolean;
