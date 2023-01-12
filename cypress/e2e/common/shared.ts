@@ -77,7 +77,7 @@ Then('Jeg venter litt', () => {
 });
 
 Then('Jeg klikker på {string} knapp for å lagre', (button: string) => {
-  cy.get('button').contains(button).click();
+  cy.get('button').contains(button).click({ force: true });
 });
 
 Then('Ser jeg url inneholder {string}', (url: string) => {

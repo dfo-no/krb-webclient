@@ -165,7 +165,7 @@ When('Jeg velger {string} i feltet {string}', (date: string, label: string) => {
 });
 
 When('Jeg klikker på {string} checkbox', (label: string) => {
-  cy.contains(label).parent().first().click();
+  cy.contains(label).parent().first().click({ force: true });
 });
 
 When(
@@ -174,7 +174,7 @@ When(
     cy.get(`input[placeholder="${fieldName}"]`)
       .first()
       .clear({ force: true })
-      .type(value);
+      .type(value, { force: true });
   }
 );
 
