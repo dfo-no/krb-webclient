@@ -7,7 +7,7 @@ import FormButtons from '../../../../components/Form/FormButtons';
 import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import { ModelType } from '../../../../Nexus/enums';
@@ -36,7 +36,7 @@ export default function EditCodelistForm({
 
   async function onSubmit(put: ICodelist) {
     await editCodelist(put).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully edited codelist',

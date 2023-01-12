@@ -2,7 +2,7 @@ import produce from 'immer';
 import { useState } from 'react';
 import { createContainer } from 'unstated-next';
 
-import { IAlert as Alert } from '../../models/IAlert';
+import { Alert as Alert } from '../../models/Alert';
 
 const useAlerts = () => {
   const [alerts, setAlerts] = useState<Alert[]>([]);

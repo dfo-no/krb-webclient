@@ -1,14 +1,14 @@
-import Alert from '@mui/material/Alert/Alert';
+import MUIAlert from '@mui/material/Alert/Alert';
 import Snackbar from '@mui/material/Snackbar/Snackbar';
 import React, { useEffect, useState } from 'react';
 
-import { IAlert } from '../../models/IAlert';
+import { Alert } from '../../models/Alert';
 import { AlertsContainer } from './AlertContext';
 
-interface IProps {
-  alert: IAlert;
+interface Props {
+  alert: Alert;
 }
-export default function AlertElement({ alert }: IProps): React.ReactElement {
+export default function AlertElement({ alert }: Props): React.ReactElement {
   const { removeAlert } = AlertsContainer.useContainer();
   const [open, setOpen] = useState(true);
 
@@ -31,9 +31,12 @@ export default function AlertElement({ alert }: IProps): React.ReactElement {
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       open={open}
     >
-      <Alert onClose={(e) => handleClose(e, alert.id)} severity={alert.style}>
+      <MUIAlert
+        onClose={(e) => handleClose(e, alert.id)}
+        severity={alert.style}
+      >
         {alert.text}
-      </Alert>
+      </MUIAlert>
     </Snackbar>
   );
 }

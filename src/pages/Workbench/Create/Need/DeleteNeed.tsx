@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import { Box } from '@mui/material/';
 
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { INeed } from '../../../../Nexus/entities/INeed';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import { Parentable } from '../../../../models/Parentable';
@@ -41,7 +41,7 @@ function DeleteNeed({
 
   const onDelete = (): void => {
     deleteNeed(need).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully deleted need',

@@ -6,7 +6,7 @@ import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import { IPublication } from '../../../../Nexus/entities/IPublication';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { ModelType } from '../../../../Nexus/enums';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { useGetBankQuery } from '../../../../store/api/bankApi';
@@ -39,7 +39,7 @@ const DeletePublicationForm = ({
   const onSubmit = async (): Promise<void> => {
     await deletePublication(publication, publicationBank)
       .then(() => {
-        const alert: IAlert = {
+        const alert: Alert = {
           id: uuidv4(),
           style: 'success',
           text: `successfully deleted the published version ${publication.version}`,
@@ -49,7 +49,7 @@ const DeletePublicationForm = ({
         handleClose();
       })
       .catch(() => {
-        const alert: IAlert = {
+        const alert: Alert = {
           id: uuidv4(),
           style: 'error',
           text: `failed to delete version ${publication.version}`,

@@ -10,7 +10,7 @@ import Nexus from '../../../../Nexus/Nexus';
 import theme from '../../../../theme';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { INeed } from '../../../../Nexus/entities/INeed';
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import {
@@ -57,7 +57,7 @@ function EditRequirementForm({
 
   const onSubmit = async (put: Parentable<IRequirement>) => {
     await editRequirement(put, need).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully edited requirement',

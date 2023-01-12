@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import Nexus from '../../../../Nexus/Nexus';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { IBank } from '../../../../Nexus/entities/IBank';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { ModelType } from '../../../../Nexus/enums';
@@ -36,7 +36,7 @@ function PropertiesPage(): React.ReactElement {
 
   const onSubmit = async (put: IBank) => {
     await putProject(put).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully updated project',

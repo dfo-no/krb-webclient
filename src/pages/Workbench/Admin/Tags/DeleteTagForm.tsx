@@ -8,7 +8,7 @@ import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import Utils from '../../../../common/Utils';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { ITag } from '../../../../Nexus/entities/ITag';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { ModelType } from '../../../../Nexus/enums';
@@ -58,7 +58,7 @@ export default function DeleteTagForm({
 
   const onSubmit = (put: Parentable<ITag>): void => {
     deleteTag(put).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully deleted tag',

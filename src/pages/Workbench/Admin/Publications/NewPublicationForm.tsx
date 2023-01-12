@@ -8,7 +8,7 @@ import GeneralErrorMessage from '../../../../Form/GeneralErrorMessage';
 import Nexus from '../../../../Nexus/Nexus';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { IBank } from '../../../../Nexus/entities/IBank';
 import { IPublication } from '../../../../Nexus/entities/IPublication';
 import { ModelType } from '../../../../Nexus/enums';
@@ -61,7 +61,7 @@ export default function NewPublicationForm({
         newPublications.push(publication);
 
         putProject({ ...project, publications: newPublications }).then(() => {
-          const alert: IAlert = {
+          const alert: Alert = {
             id: uuidv4(),
             style: 'success',
             text: `successfully published version ${result.version}`,

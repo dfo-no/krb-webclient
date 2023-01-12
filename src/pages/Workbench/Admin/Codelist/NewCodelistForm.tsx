@@ -10,7 +10,7 @@ import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { ModelType } from '../../../../Nexus/enums';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
@@ -41,7 +41,7 @@ export default function NewCodelistForm({
   async function onSubmit(post: ICodelist) {
     const newCodelist = nexus.codelistService.createCodelistWithId(post);
     await addCodelist(newCodelist).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully created codelist',

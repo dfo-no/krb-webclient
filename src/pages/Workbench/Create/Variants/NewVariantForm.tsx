@@ -12,7 +12,7 @@ import LoaderSpinner from '../../../../common/LoaderSpinner';
 import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VariantFormContent from './VariantFormContent';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { INeed } from '../../../../Nexus/entities/INeed';
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
@@ -60,7 +60,7 @@ function NewVariantForm({
   const onSubmit = async (post: IVariant) => {
     const newVariant = nexus.variantService.createVariantWithId(post);
     await addVariant(newVariant, requirement, need).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully created new variant',

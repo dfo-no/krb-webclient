@@ -9,7 +9,7 @@ import Nexus from '../../../../Nexus/Nexus';
 import theme from '../../../../theme';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { INeed } from '../../../../Nexus/entities/INeed';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import {
@@ -45,7 +45,7 @@ function NewNeedForm({ handleClose }: IProps): React.ReactElement {
   const onSubmit = async (post: Parentable<INeed>) => {
     const newNeed = nexus.needService.createNeedWithId(post);
     await addNeed(newNeed).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully added new need',

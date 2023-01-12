@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { ICode } from '../../../../Nexus/entities/ICode';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
@@ -52,7 +52,7 @@ export default function DeleteCodeForm({
 
   const onSubmit = (post: Parentable<ICode>): void => {
     deleteCode(post, codelist).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully deleted code',

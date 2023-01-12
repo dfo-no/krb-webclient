@@ -8,7 +8,7 @@ import Nexus from '../../../../Nexus/Nexus';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { ITag } from '../../../../Nexus/entities/ITag';
 import { ModelType } from '../../../../Nexus/enums';
 import { Parentable } from '../../../../models/Parentable';
@@ -37,7 +37,7 @@ export default function EditTagForm({
 
   async function onSubmit(put: Parentable<ITag>) {
     await editTag(put).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully edited tag',
