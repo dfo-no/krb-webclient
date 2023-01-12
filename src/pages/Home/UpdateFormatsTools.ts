@@ -24,6 +24,22 @@ export const updateObject = <T extends Record<string, unknown>>(
           input[translatedKey] = input[key];
           // eslint-disable-next-line no-param-reassign
           delete input[key];
+          if (translatedKey.includes('discountUnconfirmed')) {
+            // eslint-disable-next-line no-param-reassign
+            const translatedKeyNew = 'discount';
+            // eslint-disable-next-line no-param-reassign
+            input[translatedKeyNew] = input[translatedKey];
+            // eslint-disable-next-line no-param-reassign
+            delete input[translatedKey];
+          }
+          if (translatedKey.includes('discountNonPrefered')) {
+            // eslint-disable-next-line no-param-reassign
+            const translatedKeyNew = 'discount';
+            // eslint-disable-next-line no-param-reassign
+            input[translatedKeyNew] = input[translatedKey];
+            // eslint-disable-next-line no-param-reassign
+            delete input[translatedKey];
+          }
         } else if (key.includes('point')) {
           const keyParts = key.split('point');
           const translatedKey = keyParts[0] + 'discount' + keyParts[1];
@@ -60,18 +76,6 @@ export const updateObject = <T extends Record<string, unknown>>(
           delete input[key];
         } else if (key.includes('dateScores')) {
           const translatedKey = 'dateDiscounts';
-          // eslint-disable-next-line no-param-reassign
-          input[translatedKey] = input[key];
-          // eslint-disable-next-line no-param-reassign
-          delete input[key];
-        } else if (key.includes('discountNonPrefered')) {
-          const translatedKey = 'discount';
-          // eslint-disable-next-line no-param-reassign
-          input[translatedKey] = input[key];
-          // eslint-disable-next-line no-param-reassign
-          delete input[key];
-        } else if (key.includes('discountUnconfirmed')) {
-          const translatedKey = 'discount';
           // eslint-disable-next-line no-param-reassign
           input[translatedKey] = input[key];
           // eslint-disable-next-line no-param-reassign
