@@ -127,14 +127,14 @@ Then('Ser jeg fradrag for kode {string} er inaktiv', (code: string) => {
 
 Then(
   'Ser jeg valgt krav {string} inneholder {string} fradrag',
-  (requirement: string, yesPoint: string) => {
+  (requirement: string, discount: string) => {
     cy.get('[data-cy="product-requirement"]').contains(requirement);
     cy.get('[data-cy="chosen-configuration"]')
       .contains('Fradrag')
       .parent()
       .children()
       .eq(1)
-      .contains(yesPoint);
+      .contains(discount);
   }
 );
 

@@ -21,7 +21,7 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
   const { t } = useTranslation();
   const { control } = useFormContext<IRequirementAnswer>();
   const [awardCriteria, setAwardCriteria] = useState(false);
-  const awardCriteriaDiscount = useWatch({
+  const awardCriteriaCheckboxDiscount = useWatch({
     name: 'question.config.discount',
     control,
   });
@@ -57,7 +57,7 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
 
   const isAwardCriteria = () => {
     return (
-      awardCriteriaDiscount > 0 ||
+      awardCriteriaCheckboxDiscount > 0 ||
       awardCriteriaConfirmationDiscount > 0 ||
       awardCriteriaDateDiscount?.length ||
       awardCriteriaTimeDiscount?.length ||
