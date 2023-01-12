@@ -64,6 +64,18 @@ export const updateObject = <T extends Record<string, unknown>>(
           input[translatedKey] = input[key];
           // eslint-disable-next-line no-param-reassign
           delete input[key];
+        } else if (key.includes('discountNonPrefered')) {
+          const translatedKey = 'discount';
+          // eslint-disable-next-line no-param-reassign
+          input[translatedKey] = input[key];
+          // eslint-disable-next-line no-param-reassign
+          delete input[key];
+        } else if (key.includes('discountUnconfirmed')) {
+          const translatedKey = 'discount';
+          // eslint-disable-next-line no-param-reassign
+          input[translatedKey] = input[key];
+          // eslint-disable-next-line no-param-reassign
+          delete input[key];
         }
 
         const toCheck = input[key];

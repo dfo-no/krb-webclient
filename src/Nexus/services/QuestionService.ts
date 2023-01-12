@@ -16,7 +16,7 @@ export default class QuestionService {
           id: uuid,
           type: QuestionVariant.Q_CHECKBOX,
           config: {
-            discountNonPrefered: 0,
+            discount: 0,
             defaultDiscount: 1,
             preferedAlternative: true,
           },
@@ -52,7 +52,7 @@ export default class QuestionService {
           id: uuid,
           type: QuestionVariant.Q_CONFIRMATION,
           config: {
-            discountUnconfirmed: 0,
+            discount: 0,
             defaultDiscount: 1,
           },
           answer: {
@@ -169,16 +169,14 @@ export default class QuestionService {
       case QuestionVariant.Q_CHECKBOX:
         const preferred = question.config.preferedAlternative;
         const answer = question.answer.value;
-        return preferred === answer ? 100 : question.config.discountNonPrefered;
+        return preferred === answer ? 100 : question.config.discount;
       case QuestionVariant.Q_CODELIST:
         return Utils.findDiscountFromCodes(
           question.answer.codes,
           question.config
         );
       case QuestionVariant.Q_CONFIRMATION:
-        return question.answer.value
-          ? 100
-          : question.config.discountUnconfirmed;
+        return question.answer.value ? 100 : question.config.discount;
       case QuestionVariant.Q_PERIOD_DATE:
         return Utils.findDiscountFromDate(
           question.answer.fromDate,
