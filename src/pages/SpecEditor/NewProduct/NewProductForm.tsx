@@ -43,11 +43,14 @@ export default function NewProductForm({
     ),
     defaultValues,
   });
-  if (specProduct) {
-    methods.setValue('originProduct', specProduct);
-  } else {
-    handleClose();
-  }
+
+  useEffect(() => {
+    if (specProduct) {
+      methods.setValue('originProduct', specProduct);
+    } else {
+      handleClose();
+    }
+  }, [handleClose, methods, specProduct]);
 
   useEffect(() => {
     if (specProduct?.title) {

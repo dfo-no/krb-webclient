@@ -16,6 +16,7 @@ export const BaseProductSchema = BaseModelSchema.keys({
   title: CustomJoi.validateText(),
   description: CustomJoi.validateOptionalText(),
   parent: CustomJoi.validateParentId(),
+  children: CustomJoi.validateNotRequiredArray(),
   type: CustomJoi.validateType(ModelType.product),
   deletedDate: CustomJoi.validateOptionalDate(),
   unit: CustomJoi.validateOptionalTextNotRequired(),
