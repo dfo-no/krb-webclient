@@ -105,7 +105,12 @@ export default function EditProduct(): React.ReactElement {
                   </Toolbar>
                 </div>
               )}
-              <Button variant="cancel" onClick={toOverviewPage}>
+              <Button
+                variant="cancel"
+                onClick={toOverviewPage}
+                disabled={isEditing}
+                className={isEditing ? css.Actions__disabled : ''}
+              >
                 {t('common.Cancel')}
               </Button>
               <Button
