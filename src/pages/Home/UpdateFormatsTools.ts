@@ -24,15 +24,10 @@ export const updateObject = <T extends Record<string, unknown>>(
           input[translatedKey] = input[key];
           // eslint-disable-next-line no-param-reassign
           delete input[key];
-          if (translatedKey.includes('discountUnconfirmed')) {
-            // eslint-disable-next-line no-param-reassign
-            const translatedKeyNew = 'discount';
-            // eslint-disable-next-line no-param-reassign
-            input[translatedKeyNew] = input[translatedKey];
-            // eslint-disable-next-line no-param-reassign
-            delete input[translatedKey];
-          }
-          if (translatedKey.includes('discountNonPrefered')) {
+          if (
+            translatedKey.includes('discountUnconfirmed') ||
+            translatedKey.includes('discountNonPrefered')
+          ) {
             // eslint-disable-next-line no-param-reassign
             const translatedKeyNew = 'discount';
             // eslint-disable-next-line no-param-reassign
