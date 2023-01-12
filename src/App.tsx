@@ -32,6 +32,7 @@ import {
   SPECIFICATION,
   WORKBENCH,
 } from './common/PathConstants';
+import { AlertsContainer } from './components/Alert/AlertContext';
 
 const configuration: OidcConfiguration = {
   client_id: 'frontend', // Utils.ensure(process.env.REACT_APP_CLIENTID) //TODO: Oppdater i GitHub secrets. Kanskje fallback til frontend? Fiks feilmelding for den her...!
@@ -105,17 +106,19 @@ function App(): ReactElement {
       <OidcProvider configuration={configuration}>
         <Theme>
           <CssBaseline />
-          <AlertList />
-          <HeaderContainer.Provider>
-            <div className={styles.App}>
-              <Header />
-              <div className={styles.Content}>
-                <Breadcrumbs />
-                {renderContent()}
+          <AlertsContainer.Provider>
+            <AlertList />
+            <HeaderContainer.Provider>
+              <div className={styles.App}>
+                <Header />
+                <div className={styles.Content}>
+                  <Breadcrumbs />
+                  {renderContent()}
+                </div>
+                {isHomePage && <Footer />}
               </div>
-              {isHomePage && <Footer />}
-            </div>
-          </HeaderContainer.Provider>
+            </HeaderContainer.Provider>
+          </AlertsContainer.Provider>
         </Theme>
       </OidcProvider>
     </div>
