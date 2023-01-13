@@ -8,15 +8,14 @@ import FormButtons from '../../../../components/Form/FormButtons';
 import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { ITag } from '../../../../Nexus/entities/ITag';
 import { ModelType } from '../../../../Nexus/enums';
 import { Parentable } from '../../../../models/Parentable';
-import { useAppDispatch } from '../../../../store/hooks';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
+import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
   handleClose: () => void;
@@ -25,7 +24,7 @@ interface IProps {
 export default function NewTagForm({
   handleClose,
 }: IProps): React.ReactElement {
-  const dispatch = useAppDispatch();
+  const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
   const formStyles = useFormStyles();
@@ -43,12 +42,12 @@ export default function NewTagForm({
   async function onSubmit(post: Parentable<ITag>) {
     const newTag = nexus.tagService.generateTag(post);
     await addTag(newTag).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully created tag',
       };
-      dispatch(addAlert({ alert }));
+      addAlert(alert);
       methods.reset();
       handleClose();
     });

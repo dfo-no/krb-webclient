@@ -3,14 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import { Box } from '@mui/material/';
 
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { INeed } from '../../../../Nexus/entities/INeed';
-import { useAppDispatch } from '../../../../store/hooks';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import { Parentable } from '../../../../models/Parentable';
 import { useSelectState } from '../SelectContext';
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
+import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
   children: React.ReactElement;
@@ -24,7 +23,8 @@ function DeleteNeed({
   need,
   handleClose,
 }: IProps): React.ReactElement {
-  const dispatch = useAppDispatch();
+  const { addAlert } = AlertsContainer.useContainer();
+
   const { t } = useTranslation();
   const { deleteNeed } = useProjectMutations();
 
@@ -41,12 +41,12 @@ function DeleteNeed({
 
   const onDelete = (): void => {
     deleteNeed(need).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully deleted need',
       };
-      dispatch(addAlert({ alert }));
+      addAlert(alert);
       handleClose();
     });
   };

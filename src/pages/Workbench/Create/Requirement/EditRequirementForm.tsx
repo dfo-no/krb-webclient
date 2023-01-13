@@ -10,8 +10,7 @@ import Nexus from '../../../../Nexus/Nexus';
 import theme from '../../../../theme';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { INeed } from '../../../../Nexus/entities/INeed';
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import {
@@ -23,7 +22,7 @@ import {
 import { ModelType } from '../../../../Nexus/enums';
 import { Parentable } from '../../../../models/Parentable';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
-import { useAppDispatch } from '../../../../store/hooks';
+import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
   requirement: IRequirement;
@@ -42,7 +41,7 @@ function EditRequirementForm({
 }: IProps): React.ReactElement {
   const { projectId } = useParams<IRouteParams>();
   const { data: project } = useGetProjectQuery(projectId);
-  const dispatch = useAppDispatch();
+  const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
   const { editRequirement } = useProjectMutations();
@@ -58,12 +57,12 @@ function EditRequirementForm({
 
   const onSubmit = async (put: Parentable<IRequirement>) => {
     await editRequirement(put, need).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully edited requirement',
       };
-      dispatch(addAlert({ alert }));
+      addAlert(alert);
       handleClose();
     });
   };

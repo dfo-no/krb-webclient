@@ -1,28 +1,27 @@
-import Alert from '@mui/material/Alert/Alert';
+import MUIAlert from '@mui/material/Alert/Alert';
 import Snackbar from '@mui/material/Snackbar/Snackbar';
 import React, { useEffect, useState } from 'react';
 
-import { IAlert } from '../../models/IAlert';
-import { useAppDispatch } from '../../store/hooks';
-import { removeAlert } from '../../store/reducers/alert-reducer';
+import { Alert } from '../../models/Alert';
+import { AlertsContainer } from './AlertContext';
 
-interface IProps {
-  alert: IAlert;
+interface Props {
+  alert: Alert;
 }
-export default function AlertElement({ alert }: IProps): React.ReactElement {
-  const dispatch = useAppDispatch();
+export default function AlertElement({ alert }: Props): React.ReactElement {
+  const { removeAlert } = AlertsContainer.useContainer();
   const [open, setOpen] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      dispatch(removeAlert({ id: alert.id }));
+      removeAlert(alert.id);
     }, 2000);
     return () => clearTimeout(timer);
   });
 
   const handleClose = (event?: React.SyntheticEvent | Event, id?: string) => {
     if (id) {
-      dispatch(removeAlert({ id: id }));
+      removeAlert(id);
     }
     setOpen(false);
   };
@@ -32,9 +31,12 @@ export default function AlertElement({ alert }: IProps): React.ReactElement {
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       open={open}
     >
-      <Alert onClose={(e) => handleClose(e, alert.id)} severity={alert.style}>
+      <MUIAlert
+        onClose={(e) => handleClose(e, alert.id)}
+        severity={alert.style}
+      >
         {alert.text}
-      </Alert>
+      </MUIAlert>
     </Snackbar>
   );
 }

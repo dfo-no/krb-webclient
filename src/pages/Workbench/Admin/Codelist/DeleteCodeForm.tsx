@@ -6,16 +6,15 @@ import { v4 as uuidv4 } from 'uuid';
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { ICode } from '../../../../Nexus/entities/ICode';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { ModelType } from '../../../../Nexus/enums';
 import { Parentable } from '../../../../models/Parentable';
-import { useAppDispatch } from '../../../../store/hooks';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
+import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
   children: React.ReactElement;
@@ -31,7 +30,7 @@ export default function DeleteCodeForm({
   handleClose,
 }: IProps): React.ReactElement {
   const { deleteCode } = useProjectMutations();
-  const dispatch = useAppDispatch();
+  const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { deleteMode } = useEditableState();
 
@@ -53,12 +52,12 @@ export default function DeleteCodeForm({
 
   const onSubmit = (post: Parentable<ICode>): void => {
     deleteCode(post, codelist).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully deleted code',
       };
-      dispatch(addAlert({ alert }));
+      addAlert(alert);
       handleClose(post);
     });
   };

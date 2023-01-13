@@ -13,13 +13,12 @@ import { IBank } from '../../Nexus/entities/IBank';
 import { ISpecification } from '../../Nexus/entities/ISpecification';
 import { IResponse } from '../../Nexus/entities/IResponse';
 import { IPrefilledResponse } from '../../Nexus/entities/IPrefilledResponse';
-import { IAlert } from '../../models/IAlert';
-import { addAlert } from '../../store/reducers/alert-reducer';
+import { Alert } from '../../models/Alert';
 import { httpPost } from '../../api/http';
-import { useAppDispatch } from '../../store/hooks';
 import { getDefaultSpecificationFile } from '../../Nexus/services/EvaluationSpecificationStoreService';
 import { SpecificationFile } from '../../Nexus/entities/SpecificationFile';
 import { updateObject } from './UpdateFormatsTools';
+import { AlertsContainer } from '../../components/Alert/AlertContext';
 
 type Props = {
   selectedBank: IBank | null;
@@ -27,7 +26,7 @@ type Props = {
 };
 
 export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
-  const dispatch = useAppDispatch();
+  const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
 
   const [selectedSpecification, setSelectedSpecification] =
@@ -56,12 +55,12 @@ export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
     }
 
     if (disableUploadMessage !== '') {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'error',
         text: disableUploadMessage,
       };
-      dispatch(addAlert({ alert }));
+      addAlert(alert);
       return;
     }
 
@@ -93,12 +92,12 @@ export function HomePageUpload({ selectedBank, setSelectedBank }: Props) {
         }
       })
       .catch(() => {
-        const alert: IAlert = {
+        const alert: Alert = {
           id: uuidv4(),
           style: 'error',
           text: t('HomePage.File_upload_error'),
         };
-        dispatch(addAlert({ alert }));
+        addAlert(alert);
       });
   };
 

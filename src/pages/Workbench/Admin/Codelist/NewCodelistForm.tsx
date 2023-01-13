@@ -8,14 +8,13 @@ import FormButtons from '../../../../components/Form/FormButtons';
 import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { ModelType } from '../../../../Nexus/enums';
-import { useAppDispatch } from '../../../../store/hooks';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
+import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
   handleClose: (newCodelist: ICodelist | null) => void;
@@ -24,7 +23,7 @@ interface IProps {
 export default function NewCodelistForm({
   handleClose,
 }: IProps): React.ReactElement {
-  const dispatch = useAppDispatch();
+  const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
   const formStyles = useFormStyles();
@@ -42,12 +41,12 @@ export default function NewCodelistForm({
   async function onSubmit(post: ICodelist) {
     const newCodelist = nexus.codelistService.createCodelistWithId(post);
     await addCodelist(newCodelist).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully created codelist',
       };
-      dispatch(addAlert({ alert }));
+      addAlert(alert);
       methods.reset();
       handleClose(newCodelist);
     });

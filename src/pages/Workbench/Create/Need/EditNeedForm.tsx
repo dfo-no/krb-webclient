@@ -8,8 +8,7 @@ import Nexus from '../../../../Nexus/Nexus';
 import theme from '../../../../theme';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { INeed } from '../../../../Nexus/entities/INeed';
 import {
   ModalBox,
@@ -19,7 +18,7 @@ import {
 } from '../../../../components/ModalBox/ModalBox';
 import { ModelType } from '../../../../Nexus/enums';
 import { Parentable } from '../../../../models/Parentable';
-import { useAppDispatch } from '../../../../store/hooks';
+import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
   handleClose: (need: Parentable<INeed> | null) => void;
@@ -27,7 +26,7 @@ interface IProps {
 }
 
 function EditNeedForm({ need, handleClose }: IProps): React.ReactElement {
-  const dispatch = useAppDispatch();
+  const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
   const { editNeed } = useProjectMutations();
@@ -39,12 +38,12 @@ function EditNeedForm({ need, handleClose }: IProps): React.ReactElement {
 
   const onSubmit = async (put: Parentable<INeed>) => {
     await editNeed(put).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully edited need',
       };
-      dispatch(addAlert({ alert }));
+      addAlert(alert);
       handleClose(put);
     });
   };

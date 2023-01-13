@@ -21,18 +21,17 @@ import Nexus from '../../../../Nexus/Nexus';
 import theme from '../../../../theme';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VariantFormContent from './VariantFormContent';
-import { addAlert } from '../../../../store/reducers/alert-reducer';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { DFOChip } from '../../../../components/DFOChip/DFOChip';
-import { IAlert } from '../../../../models/IAlert';
+import { Alert } from '../../../../models/Alert';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { IVariant } from '../../../../Nexus/entities/IVariant';
 import { ModelType, VariantType } from '../../../../Nexus/enums';
-import { useAppDispatch } from '../../../../store/hooks';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { useSelectState } from '../SelectContext';
 import { useVariantState } from '../../VariantContext';
 import ErrorSummary from '../../../../Form/ErrorSummary';
+import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
   variant: IVariant;
@@ -41,7 +40,7 @@ interface IProps {
 
 const Variant = ({ variant, requirementIndex }: IProps) => {
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
+  const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
@@ -66,12 +65,12 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
       project.needs[needIndex].requirements[requirementIndex],
       project.needs[needIndex]
     ).then(() => {
-      const alert: IAlert = {
+      const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'successfully updated variant',
       };
-      dispatch(addAlert({ alert }));
+      addAlert(alert);
       methods.reset({ ...put });
       setOpenVariants((ov) => {
         const tmp = [...ov];
