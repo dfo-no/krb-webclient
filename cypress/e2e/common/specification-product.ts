@@ -178,6 +178,16 @@ When(
   }
 );
 
+When(
+    'Jeg skriver {string} i feltet {string} for varighet',
+    (value: string, fieldName: string) => {
+        cy.get(`input[placeholder="${fieldName}"]`)
+            .eq(2)
+            .clear({ force: true })
+            .type(value, { force: true });
+    }
+);
+
 Then('Ser jeg feilmelding {string}', (errorMessage: string) => {
   cy.contains(errorMessage);
 });

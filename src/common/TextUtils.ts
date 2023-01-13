@@ -273,16 +273,16 @@ class TextUtils {
     TextUtils.setChosenConfigs(chosenConfig, t('From'), from);
     TextUtils.setChosenConfigs(chosenConfig, t('To'), to);
     if (isPeriod) {
-      if (min !== 0) {
-        TextUtils.setChosenConfigs(chosenConfig, t('Minimum'), `${min}`);
-        TextUtils.setChosenConfigs(chosenConfig, t('Maximum'), `${max}`);
-      }
-      if (min == 0)
+      if (min == 0) {
         TextUtils.setChosenConfigs(
           chosenConfig,
           t('Duration'),
           `${duration} ${t('Days')}`
         );
+      } else {
+        TextUtils.setChosenConfigs(chosenConfig, t('Minimum'), `${min}`);
+        TextUtils.setChosenConfigs(chosenConfig, t('Maximum'), `${max}`);
+      }
     }
     return chosenConfig;
   };
@@ -297,13 +297,21 @@ class TextUtils {
     TextUtils.setChosenConfigs(chosenConfig, t('From'), from);
     TextUtils.setChosenConfigs(chosenConfig, t('To'), to);
     if (isPeriod)
-      TextUtils.setChosenConfigs(
-        chosenConfig,
-        t('Period'),
-        `${t('From')}: ${DateUtils.prettyFormatTime(minPeriodTime)}, ${t(
-          'To'
-        )}: ${DateUtils.prettyFormatTime(maxPeriodTime)}`
-      );
+      if (minPeriodTime) {
+        TextUtils.setChosenConfigs(
+          chosenConfig,
+          t('Duration'),
+          `${t('From')}: ${DateUtils.prettyFormatTime(minPeriodTime)}, ${t(
+            'To'
+          )}: ${DateUtils.prettyFormatTime(maxPeriodTime)}`
+        );
+      } else {
+        TextUtils.setChosenConfigs(
+          chosenConfig,
+          t('Duration'),
+          `${DateUtils.prettyFormatTime(maxPeriodTime)}`
+        );
+      }
     return chosenConfig;
   };
 
