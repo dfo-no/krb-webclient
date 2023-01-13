@@ -10,6 +10,7 @@ import {
 } from './IRequirementAnswer';
 
 export interface IPrefilledResponse {
+  id: string;
   bank: IBank;
   supplier: string;
   products: IPrefilledResponseProduct[];

@@ -19,13 +19,18 @@ export default function PrefilledResponseOverview(): ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
   const { prefilledResponse } = PrefilledResponseContainer.useContainer();
+  console.log(
+    'In PrefilledResponseOverview, prefilledResponse =',
+    prefilledResponse
+  );
+
   const { setProductIndex, setOpenProductSelection, openProductSelection } =
     useProductIndexState();
 
   const genericPressed = () => {
     setProductIndex(-1);
     history.push(
-      `/${PREFILLED_RESPONSE}/${prefilledResponse.bank.id}/${PRODUCTS}/general/`
+      `/${PREFILLED_RESPONSE}/${prefilledResponse.id}/${PRODUCTS}/general/`
     );
   };
 
@@ -36,7 +41,7 @@ export default function PrefilledResponseOverview(): ReactElement {
   const productPressed = (index: number, productId: string) => {
     setProductIndex(index);
     history.push(
-      `/${PREFILLED_RESPONSE}/${prefilledResponse.bank.id}/${PRODUCTS}/${productId}/`
+      `/${PREFILLED_RESPONSE}/${prefilledResponse.id}/${PRODUCTS}/${productId}/`
     );
   };
 
