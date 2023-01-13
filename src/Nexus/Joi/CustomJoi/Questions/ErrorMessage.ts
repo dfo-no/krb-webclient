@@ -9,6 +9,7 @@ export enum ErrorMessage {
   VAL_NUMBER_INT = 'Må være et positivt heltall',
   VAL_NUMBER_MIN = 'Kan ikke være mindre enn {{#limit}}',
   VAL_NUMBER_MAX = 'Kan ikke være større enn {{#limit}}',
+  VAL_NUMBER_CHECK = 'Varighet i antall dager må være innen den angitte datoperioden',
   VAL_NUMBER_SLIDER_MAX = 'Overskrider forksjell mellom maks og min ({{#limit}})',
   VAL_VALUE_UNIQUE = 'Verdi kan ikke være like',
   VAL_NUMBER_CODE_MIN = 'Må være minimum 1',

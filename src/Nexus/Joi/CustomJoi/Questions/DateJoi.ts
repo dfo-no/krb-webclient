@@ -10,7 +10,7 @@ const PeriodMinValidator = (joi: Joi.Root) => ({
     'number.integer': ErrorMessage.VAL_NUMBER_INT,
     'number.min': ErrorMessage.VAL_NUMBER_INT,
   },
-  base: joi.number().integer().min(0).required(),
+  base: joi.number().integer().min(1).required(),
 });
 
 const PeriodMaxValidator = (joi: Joi.Root) => ({
@@ -19,15 +19,31 @@ const PeriodMaxValidator = (joi: Joi.Root) => ({
     'number.base': ErrorMessage.VAL_NUMBER_BASE,
     'number.integer': ErrorMessage.VAL_NUMBER_INT,
     'number.min': ErrorMessage.VAL_NUMBER_MIN,
+    'number.check': ErrorMessage.VAL_NUMBER_CHECK,
   },
   base: joi.number().integer().required(),
   validate(value: number, helpers: Joi.CustomHelpers) {
     const periodMin = helpers.state.ancestors[0].periodMin;
+    const periodMax = helpers.state.ancestors[0].periodMax;
+    const fromBoundary = helpers.state.ancestors[0].fromBoundary;
+    const toBoundary = helpers.state.ancestors[0].toBoundary;
+    const datesDifference =
+      new Date(toBoundary).getTime() - new Date(fromBoundary).getTime();
+    const numberDatesDifference = datesDifference / (1000 * 3600 * 24);
+    const numberDurationDifference = parseInt(periodMax) - periodMin;
     if (periodMin > value) {
       return {
         value,
         errors: helpers.error('number.min', {
           limit: helpers.state.ancestors[0].periodMin,
+        }),
+      };
+    }
+    if (numberDurationDifference > numberDatesDifference) {
+      return {
+        value,
+        errors: helpers.error('number.check', {
+          limit: numberDatesDifference,
         }),
       };
     }

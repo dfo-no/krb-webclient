@@ -246,7 +246,7 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
                 <HorizontalTextCtrl
                   className={css.QuestionCriteria__Ctrl__inputCtrl}
                   name={`question.config.periodMin`}
-                  defaultValue={0}
+                  defaultValue={1}
                   placeholder={t('Duration')}
                   type={'number'}
                   adornment={t('Days')}
@@ -256,7 +256,7 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
               <HorizontalTextCtrl
                 className={css.QuestionCriteria__Ctrl__inputCtrl}
                 name={`question.config.periodMax`}
-                defaultValue={0}
+                defaultValue={2}
                 placeholder={t('Duration')}
                 type={'number'}
                 adornment={t('Days')}
