@@ -272,16 +272,18 @@ class TextUtils {
     const chosenConfig: ChosenConfig[] = [];
     TextUtils.setChosenConfigs(chosenConfig, t('From'), from);
     TextUtils.setChosenConfigs(chosenConfig, t('To'), to);
-    if (isPeriod && min !== 0)
-      TextUtils.setChosenConfigs(chosenConfig, t('Minimum'), `${min}`);
-    if (isPeriod && min !== 0)
-      TextUtils.setChosenConfigs(chosenConfig, t('Maximum'), `${max}`);
-    if (isPeriod && min == 0)
-      TextUtils.setChosenConfigs(
-        chosenConfig,
-        t('Duration'),
-        `${duration} ${t('Days')}`
-      );
+    if (isPeriod) {
+      if (min !== 0) {
+        TextUtils.setChosenConfigs(chosenConfig, t('Minimum'), `${min}`);
+        TextUtils.setChosenConfigs(chosenConfig, t('Maximum'), `${max}`);
+      }
+      if (min == 0)
+        TextUtils.setChosenConfigs(
+          chosenConfig,
+          t('Duration'),
+          `${duration} ${t('Days')}`
+        );
+    }
     return chosenConfig;
   };
 
