@@ -67,7 +67,7 @@ export default function AnswerProduct(): React.ReactElement {
   };
 
   const toOverviewPage = (): void => {
-    history.push(`/${PREFILLED_RESPONSE}/${prefilledResponse.bank.id}`);
+    history.push(`/${PREFILLED_RESPONSE}/${prefilledResponse.id}`);
   };
 
   return (
