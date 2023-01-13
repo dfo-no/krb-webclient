@@ -22,7 +22,6 @@ const usePrefilledResponseContext = () => {
   const nexus = Nexus.getInstance();
 
   const { setTitle } = HeaderContainer.useContainer();
-  console.log('hello, prefilledResponseId = ', prefilledResponseId);
 
   const [prefilledResponse, setPrefilledResponse] =
     useState<IPrefilledResponse>(
@@ -34,13 +33,8 @@ const usePrefilledResponseContext = () => {
       nexus.prefilledResponseService
         .getPrefilledResponse(prefilledResponseId)
         .then((foundPrefilledResponse) => {
-          console.log(foundPrefilledResponse);
-
           setPrefilledResponse(foundPrefilledResponse);
-          // const caseNumber = spec.caseNumber;
-          // setTitle(spec.title + (caseNumber ? ' - ' + caseNumber : ''));
         });
-      // const caseNumber = specificationFile.specification.caseNumber;
       setTitle(prefilledResponse.bank.title);
       return function cleanup() {
         setTitle('');

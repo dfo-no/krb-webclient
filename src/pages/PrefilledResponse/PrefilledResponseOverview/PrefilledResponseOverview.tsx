@@ -19,10 +19,6 @@ export default function PrefilledResponseOverview(): ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
   const { prefilledResponse } = PrefilledResponseContainer.useContainer();
-  console.log(
-    'In PrefilledResponseOverview, prefilledResponse =',
-    prefilledResponse
-  );
 
   const { setProductIndex, setOpenProductSelection, openProductSelection } =
     useProductIndexState();
