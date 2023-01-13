@@ -1,49 +1,57 @@
 import produce from 'immer';
 import { useEffect, useState } from 'react';
+import { useRouteMatch } from 'react-router-dom';
 import { createContainer } from 'unstated-next';
 
 import { HeaderContainer } from '../../components/Header/HeaderContext';
+import {
+  PrefilledResponsePath,
+  PrefilledResponseRouteParams,
+} from '../../models/PrefilledResponseRouteParams';
 import { IPrefilledResponse } from '../../Nexus/entities/IPrefilledResponse';
 import { IPrefilledResponseProduct } from '../../Nexus/entities/IPrefilledResponseProduct';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
-import { ModelType } from '../../Nexus/enums';
+import Nexus from '../../Nexus/Nexus';
+import { PrefilledResponseStoreService } from '../../Nexus/services/PrefilledResponseStore';
 
 const usePrefilledResponseContext = () => {
+  const routeMatch = useRouteMatch<PrefilledResponseRouteParams>(
+    PrefilledResponsePath
+  );
+  const prefilledResponseId = routeMatch?.params?.prefilledResponseId;
+  const nexus = Nexus.getInstance();
+
   const { setTitle } = HeaderContainer.useContainer();
+  console.log('hello, prefilledResponseId = ', prefilledResponseId);
 
   const [prefilledResponse, setPrefilledResponse] =
-    useState<IPrefilledResponse>({
-      bank: {
-        id: '',
-        title: '',
-        description: '',
-        needs: [],
-        tags: [],
-        products: [],
-        codelist: [],
-        version: 0,
-        type: ModelType.bank,
-        publications: [],
-        inheritedBanks: [],
-        publishedDate: null,
-        sourceOriginal: null,
-        sourceRel: null,
-        projectId: null,
-        deletedDate: null,
-      },
-      supplier: '',
-      products: [],
-      answeredVariants: [],
-      requirementAnswers: [],
-    });
+    useState<IPrefilledResponse>(
+      PrefilledResponseStoreService.defaultPrefilledResponse()
+    );
 
   useEffect(() => {
-    // const caseNumber = specificationFile.specification.caseNumber;
-    setTitle(prefilledResponse.bank.title);
-    return function cleanup() {
-      setTitle('');
-    };
-  }, [prefilledResponse.bank.title, setTitle]);
+    if (prefilledResponseId) {
+      nexus.prefilledResponseService
+        .getPrefilledResponse(prefilledResponseId)
+        .then((foundPrefilledResponse) => {
+          console.log(foundPrefilledResponse);
+
+          setPrefilledResponse(foundPrefilledResponse);
+          // const caseNumber = spec.caseNumber;
+          // setTitle(spec.title + (caseNumber ? ' - ' + caseNumber : ''));
+        });
+      // const caseNumber = specificationFile.specification.caseNumber;
+      setTitle(prefilledResponse.bank.title);
+      return function cleanup() {
+        setTitle('');
+      };
+    }
+  }, [
+    nexus.prefilledResponseService,
+    prefilledResponse.bank.title,
+    prefilledResponseId,
+    setTitle,
+  ]);
 
   const setResponse = (payload: IPrefilledResponse) => {
     setPrefilledResponse(

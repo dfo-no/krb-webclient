@@ -10,8 +10,8 @@ import {
   ModalButton,
   ModalButtonsBox,
 } from '../../components/ModalBox/ModalBox';
-import { PrefilledResponseContainer } from '../PrefilledResponse/PrefilledResponseContext';
 import { PREFILLED_RESPONSE } from '../../common/PathConstants';
+import Nexus from '../../Nexus/Nexus';
 
 interface IProps {
   selectedPrefilledResponse: IPrefilledResponse;
@@ -26,11 +26,17 @@ export default function PrefilledResponseSelectionModal({
 }: IProps): React.ReactElement {
   const history = useHistory();
   const { t } = useTranslation();
-  const { setResponse } = PrefilledResponseContainer.useContainer();
+  const nexus = Nexus.getInstance();
 
   const editPrefilledResponse = (): void => {
-    setResponse(selectedPrefilledResponse);
-    history.push(`/${PREFILLED_RESPONSE}/${selectedPrefilledResponse.bank.id}`);
+    const prefilledResponseWithId = nexus.prefilledResponseService.withId(
+      selectedPrefilledResponse
+    );
+    nexus.prefilledResponseService
+      .setPrefilledResponse(prefilledResponseWithId)
+      .then((prefilledResponse) => {
+        history.push(`/${PREFILLED_RESPONSE}/${prefilledResponse.id}`);
+      });
   };
 
   const cancel = (): void => {
