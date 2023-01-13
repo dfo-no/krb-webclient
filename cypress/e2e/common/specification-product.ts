@@ -149,20 +149,18 @@ Then('Jeg ser en {string}-merkelapp', (text: string) => {
 When('Jeg velger {string} i feltet {string}', (date: string, label: string) => {
   if (label === 'Fra') {
     cy.wait(1000);
-    cy.get('[class*="MuiFormControl-root"]')
+    cy.get('[class*="MuiInputBase-root"]')
+      .first()
+      .find('input')
       .eq(0)
-      .click({ force: true })
-      .get('[class*="MuiPickersPopper-root]')
-      .contains(date)
-      .click({ force: true });
+      .type(date, { force: true });
   } else if (label === 'Til') {
     cy.wait(1000);
-    cy.get('[class*="MuiFormControl-root"]')
+    cy.get('[class*="MuiInputBase-root"]')
       .eq(1)
-      .click({ force: true })
-      .get('[class*="MuiPickersPopper-root]')
-      .contains(date)
-      .click({ force: true });
+      .find('input')
+      .eq(0)
+      .type(date, { force: true });
   }
 });
 
