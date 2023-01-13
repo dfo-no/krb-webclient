@@ -264,6 +264,7 @@ class TextUtils {
     question: IPeriodDateQuestion
   ): ChosenConfig[] => {
     const from = DateUtils.prettyFormatDate(question.config.fromBoundary);
+    const duration = question.config.periodMax;
     const to = DateUtils.prettyFormatDate(question.config.toBoundary);
     const isPeriod = question.config.isPeriod;
     const min = question.config.periodMin;
@@ -271,10 +272,18 @@ class TextUtils {
     const chosenConfig: ChosenConfig[] = [];
     TextUtils.setChosenConfigs(chosenConfig, t('From'), from);
     TextUtils.setChosenConfigs(chosenConfig, t('To'), to);
-    if (isPeriod)
-      TextUtils.setChosenConfigs(chosenConfig, t('Minimum'), `${min}`);
-    if (isPeriod)
-      TextUtils.setChosenConfigs(chosenConfig, t('Maximum'), `${max}`);
+    if (isPeriod) {
+      if (min !== 0) {
+        TextUtils.setChosenConfigs(chosenConfig, t('Minimum'), `${min}`);
+        TextUtils.setChosenConfigs(chosenConfig, t('Maximum'), `${max}`);
+      }
+      if (min == 0)
+        TextUtils.setChosenConfigs(
+          chosenConfig,
+          t('Duration'),
+          `${duration} ${t('Days')}`
+        );
+    }
     return chosenConfig;
   };
 

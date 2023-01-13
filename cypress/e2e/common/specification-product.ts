@@ -1,3 +1,4 @@
+/* eslint-disable cypress/no-unnecessary-waiting */
 import { Then, When } from '@badeball/cypress-cucumber-preprocessor';
 import { chosenWeekday } from './helpers';
 
@@ -72,10 +73,6 @@ When('Jeg klikker på checkbox', () => {
   cy.get('input[type="checkbox"]').click();
 });
 
-When('Jeg klikker på tildelingskriterie checkbox', () => {
-  cy.get('input[type="checkbox"]').first().click();
-});
-
 When('Jeg velger kodelist {string}', (code: string) => {
   cy.contains(code).parent().children().eq(0).click();
 });
@@ -147,4 +144,40 @@ Then('Ser jeg valgte krav er {int} av 7', (value: number) => {
 
 Then('Jeg ser en {string}-merkelapp', (text: string) => {
   cy.get('[class*="Badge"]').contains(text);
+});
+
+When('Jeg velger {string} i feltet {string}', (date: string, label: string) => {
+  if (label === 'Fra') {
+    cy.wait(1000);
+    cy.get('[class*="MuiInputBase-root"]')
+      .first()
+      .find('input')
+      .eq(0)
+      .type(date, { force: true });
+  } else if (label === 'Til') {
+    cy.wait(1000);
+    cy.get('[class*="MuiInputBase-root"]')
+      .eq(1)
+      .find('input')
+      .eq(0)
+      .type(date, { force: true });
+  }
+});
+
+When('Jeg klikker på {string} checkbox', (label: string) => {
+  cy.contains(label).parent().first().click({ force: true });
+});
+
+When(
+  'Jeg skriver {int} i feltet {string} for laveste antall dager',
+  (value: string, fieldName: string) => {
+    cy.get(`input[placeholder="${fieldName}"]`)
+      .first()
+      .clear({ force: true })
+      .type(value, { force: true });
+  }
+);
+
+Then('Ser jeg feilmelding {string}', (errorMessage: string) => {
+  cy.contains(errorMessage);
 });

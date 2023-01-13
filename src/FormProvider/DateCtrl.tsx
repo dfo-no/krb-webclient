@@ -1,7 +1,7 @@
 import React from 'react';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Controller, useFormContext } from 'react-hook-form';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { get } from 'lodash';
 import { isDate, isValid } from 'date-fns';
 import { useTranslation } from 'react-i18next';
@@ -67,7 +67,7 @@ const DateCtrl = ({
                 {label}
               </span>
             )}
-            <DatePicker
+            <DesktopDatePicker
               {...field}
               mask={maskMap[i18n.language]}
               minDate={min}

@@ -215,6 +215,7 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
     setVariationNumberDays((prev) => !prev);
     if (daysDiscount.length) {
       removeDaysDiscount();
+      setValue('question.config.periodMin', 0);
     }
   };
 
@@ -238,7 +239,7 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
             <span className={css.DurationContainer__title}>
               {variationNumberDays
                 ? t('Enter the lowest and highest number of days')
-                : t('Duration')}
+                : t('Enter duration')}
             </span>
             <div className={css.QuestionDateAndTimePeriod__datetimeContainer}>
               {variationNumberDays && (
@@ -246,7 +247,7 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
                   className={css.QuestionCriteria__Ctrl__inputCtrl}
                   name={`question.config.periodMin`}
                   defaultValue={0}
-                  placeholder={t('Value')}
+                  placeholder={t('Duration')}
                   type={'number'}
                   adornment={t('Days')}
                   color={'var(--text-primary-color)'}
@@ -256,7 +257,7 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
                 className={css.QuestionCriteria__Ctrl__inputCtrl}
                 name={`question.config.periodMax`}
                 defaultValue={0}
-                placeholder={t('Value')}
+                placeholder={t('Duration')}
                 type={'number'}
                 adornment={t('Days')}
                 color={'var(--text-primary-color)'}
