@@ -6,26 +6,22 @@ import IdJoi from './CustomJoi/IdJoi';
 import GeneralJoi from './CustomJoi/GeneralJoi';
 import VariantJoi from './CustomJoi/VariantJoi';
 import SpecProductJoi from './CustomJoi/SpecProductJoi';
+import { ErrorMessage } from './CustomJoi/Questions/ErrorMessage';
 
 const i18nJoi = Joi.defaults((schema) =>
   schema.options({
     abortEarly: false,
     messages: {
-      'any.required':
-        'Noe har gått galt med skjemaet. Kan ikke finne {{#label}}',
-      'any.only': 'Noe har gått galt med skjemaet. {{#label}} er ugyldig',
-      'string.base': `Noe har gått galt med skjemaet. {{#label}} er ikke en tekststreng`,
-      'string.guid':
-        'Noe har gått galt med skjemaet. {{#label}} er ikke en gyldig guid',
-      'boolean.base':
-        'Noe har gått galt med skjemaet. {{#label}} er ikke en boolsk verdi',
-      'date.base': 'Noe har gått galt med skjemaet. {{#label}} er ikke en dato',
-      'date.format':
-        'Noe har gått galt med skjemaet. {{#label}} er på et ugyldig format',
-      'date.isoDate':
-        'Noe har gått galt med skjemaet. {{#label}} er ikke på ISO format',
-      'array.base':
-        'Noe har gått galt med skjemaet. {{#label}} er ikke en liste',
+      'any.required': ErrorMessage.ANY_REQUIRED,
+      'any.only': ErrorMessage.ANY_ONLY,
+      'string.base': ErrorMessage.STRING_BASE,
+      'string.guid': ErrorMessage.STRING_GUID,
+      'boolean.base': ErrorMessage.BOOLEAN_BASE,
+      'date.base': ErrorMessage.DATE_BASE,
+      'date.format': ErrorMessage.DATE_FORMAT,
+      'date.isoDate': ErrorMessage.DATE_ISO_DATE,
+      'array.base': ErrorMessage.ARRAY_BASE,
+      'array.check': ErrorMessage.VAL_ARRAY_CODE_DISCOUNT_CHECK,
     },
   })
 );
@@ -39,9 +35,8 @@ const VersionValidator = (joi: Joi.Root) => ({
   type: 'validateVersion',
   base: joi.number().min(0).required(),
   messages: {
-    'number.base':
-      'Noe har gått galt med skjemaet. Versjonsnummer er ikke et tall',
-    'number.min': 'Noe har gått galt med skjemaet. Versjonsnummer er ugyldig',
+    'number.base': ErrorMessage.VERSION_NUMBER_BASE,
+    'number.min': ErrorMessage.VERSION_NUMBER_MIN,
   },
 });
 
@@ -49,9 +44,9 @@ const OrganizationNumberValidator = (joi: Joi.Root) => ({
   type: 'validateOrgNr',
   base: joi.string().required(),
   messages: {
-    'string.empty': 'Kan ikke være tom',
-    'string.length': 'Består av 9 siffre',
-    'string.void': 'Ugyldig organisasjonsnummer',
+    'string.empty': ErrorMessage.STRING_EMPTY,
+    'string.length': ErrorMessage.ORG_STRING_LENGTH,
+    'string.void': ErrorMessage.ORG_STRING_VOID,
   },
   validate(value: string, helpers: Joi.CustomHelpers) {
     const weights = [3, 2, 7, 6, 5, 4, 3, 2];
