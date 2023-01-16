@@ -15,11 +15,10 @@ import {
   ModalFieldsBox,
 } from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
-import { PrefilledResponseContainer } from '../PrefilledResponse/PrefilledResponseContext';
 import { PREFILLED_RESPONSE } from '../../common/PathConstants';
 import { updateObject } from './UpdateFormatsTools';
 
-interface IProps {
+interface Props {
   handleClose: () => void;
   prefilledResponse: IPrefilledResponse;
 }
@@ -27,10 +26,9 @@ interface IProps {
 const NewPrefilledResponseForm = ({
   handleClose,
   prefilledResponse: rawPrefilledResponse,
-}: IProps) => {
+}: Props) => {
   const { t } = useTranslation();
   const history = useHistory();
-  const { setResponse } = PrefilledResponseContainer.useContainer();
 
   const nexus = Nexus.getInstance();
   const prefilledResponse = updateObject({ ...rawPrefilledResponse });
@@ -41,8 +39,12 @@ const NewPrefilledResponseForm = ({
   });
 
   const onSubmit = async (post: IPrefilledResponse) => {
-    setResponse(post);
-    history.push(`/${PREFILLED_RESPONSE}/${post.bank.id}`);
+    const prefilledResponseWithId = nexus.prefilledResponseService.withId(post);
+    nexus.prefilledResponseService
+      .setPrefilledResponse(prefilledResponseWithId)
+      .then((storedPrefilledResponse) => {
+        history.push(`/${PREFILLED_RESPONSE}/${storedPrefilledResponse.id}`);
+      });
   };
 
   return (
