@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 
 import css from '../../Stylesheets/NewProduct.module.scss';
 import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
@@ -13,7 +14,6 @@ import { ModelType } from '../../../Nexus/enums';
 import { Parentable } from '../../../models/Parentable';
 import { PrefilledResponseContainer } from '../PrefilledResponseContext';
 import { useFormStyles } from '../../../components/Form/FormStyles';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import {
   ModalBox,
   ModalButton,
@@ -21,6 +21,7 @@ import {
   ModalFieldsBox,
 } from '../../../components/ModalBox/ModalBox';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
+import { PREFILLED_RESPONSE, PRODUCTS } from '../../../common/PathConstants';
 
 interface IProps {
   product: Parentable<IProduct> | null;
@@ -32,11 +33,10 @@ export default function NewProduct({
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
-  const { prefilledResponse, addProduct } =
+  const { addProduct, setNewProductCreate, prefilledResponse } =
     PrefilledResponseContainer.useContainer();
   const formStyles = useFormStyles();
-
-  const { setProductIndex, setCreate } = useProductIndexState();
+  const history = useHistory();
 
   const defaultValues: IPrefilledResponseProduct =
     nexus.prefilledResponseService.generateDefaultPrefilledResponseProductValues();
@@ -62,16 +62,17 @@ export default function NewProduct({
   }, [methods, product?.title]);
 
   const changeProduct = (): void => {
-    setCreate(false);
+    setNewProductCreate(false);
   };
 
   const onSubmit = (post: IPrefilledResponseProduct): void => {
     const newProduct =
       nexus.prefilledResponseService.createPrefilledResponseProductWithId(post);
-    const newId = prefilledResponse.products.length;
     addProduct(newProduct);
-    setProductIndex(newId);
-    handleClose();
+    history.push(
+      `/${PREFILLED_RESPONSE}/${prefilledResponse.id}/${PRODUCTS}/${newProduct.id}/`
+    );
+    // handleClose();  //Do we need this?
   };
 
   return (

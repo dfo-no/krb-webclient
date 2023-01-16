@@ -13,7 +13,6 @@ import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { IVariant } from '../../../Nexus/entities/IVariant';
 import { QuestionType } from '../../../Nexus/entities/QuestionType';
 import { PrefilledResponseContainer } from '../PrefilledResponseContext';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 
 interface IProps {
   requirement: IRequirement;
@@ -27,9 +26,9 @@ export default function ProductQuestion({
   question,
 }: IProps): ReactElement {
   const { t } = useTranslation();
-  const { prefilledResponse } = PrefilledResponseContainer.useContainer();
+  const { prefilledResponse, product } =
+    PrefilledResponseContainer.useContainer();
   const nexus = Nexus.getInstance();
-  const { productIndex } = useProductIndexState();
   const [existingAnswer, setExistingAnswer] = useState<
     IRequirementAnswer | undefined
   >(undefined);
@@ -44,9 +43,7 @@ export default function ProductQuestion({
 
   useEffect(() => {
     const answer = (
-      productIndex >= 0
-        ? prefilledResponse.products[productIndex]
-        : prefilledResponse
+      product !== undefined ? product : prefilledResponse
     ).requirementAnswers.find((reqAns) => {
       return reqAns.question.id === question.id;
     });
@@ -56,7 +53,7 @@ export default function ProductQuestion({
     } else {
       setExistingAnswer(undefined);
     }
-  }, [nexus, question.id, productIndex, prefilledResponse]);
+  }, [nexus, question.id, prefilledResponse, product]);
 
   const header = (): ReactElement => {
     return (

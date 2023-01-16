@@ -12,7 +12,6 @@ import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { QuestionType } from '../../../Nexus/entities/QuestionType';
 import { QuestionVariant } from '../../../Nexus/enums';
 import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import Nexus from '../../../Nexus/Nexus';
 
 interface IProps {
@@ -24,10 +23,9 @@ export default function QuestionAnswer({
   requirementAnswer,
   existingAnswer,
 }: IProps): React.ReactElement {
-  const { prefilledResponse, addAnswer, addProductAnswer } =
+  const { prefilledResponse, addAnswer, addProductAnswer, product } =
     PrefilledResponseContainer.useContainer();
   const nexus = Nexus.getInstance();
-  const { productIndex } = useProductIndexState();
   const { setActiveKey } = useAccordionState();
 
   const onSubmit = (post: QuestionType): void => {
@@ -38,10 +36,10 @@ export default function QuestionAnswer({
       question: post,
       questionId: requirementAnswer.question.id,
     };
-    if (productIndex === -1) {
+    if (product === undefined) {
       addAnswer(newAnswer);
     } else {
-      addProductAnswer(newAnswer, prefilledResponse.products[productIndex].id);
+      addProductAnswer(newAnswer, product.id);
     }
     setActiveKey('');
   };

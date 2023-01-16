@@ -1,7 +1,7 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { RouteComponentProps, useHistory, useParams } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import { Button, Variant } from '@dfo-no/components.button';
 
@@ -9,24 +9,44 @@ import ProductNeed from './ProductNeed';
 import Utils from '../../../common/Utils';
 import { AccordionProvider } from '../../../components/DFOAccordion/AccordionContext';
 import { PrefilledResponseContainer } from '../PrefilledResponseContext';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
 import Panel from '../../../components/UI/Panel/Panel';
 import { PREFILLED_RESPONSE } from '../../../common/PathConstants';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import EditProductForm from '../EditProduct/EditProductForm';
+import { PrefilledResponseRouteParams } from '../../../models/PrefilledResponseRouteParams';
 
-export default function AnswerProduct(): React.ReactElement {
+type AnswerProductMatchParams = { productId: string };
+type Props = RouteComponentProps<AnswerProductMatchParams>;
+
+export default function AnswerProduct({ match }: Props): React.ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
-  const { prefilledResponse } = PrefilledResponseContainer.useContainer();
-  const { productIndex } = useProductIndexState();
+  const { prefilledResponse, product, setProduct } =
+    PrefilledResponseContainer.useContainer();
+  const { productId } = useParams<PrefilledResponseRouteParams>();
+  const paramsProductId = match.params.productId;
+  console.log('paramasProductIndex: ', paramsProductId);
+
+  // const productIndex = Utils.isNumeric(paramsProductIndex)
+  //   ? Number(paramsProductIndex)
+  //   : -1;
   const [editingProduct, setEditingProduct] = useState(false);
-  const product = prefilledResponse.products[productIndex];
-  const originProduct = prefilledResponse.products[productIndex]?.originProduct;
+  //   const product = prefilledResponse.products[productIndex];
+
+  useEffect(() => {
+    setProduct(
+      prefilledResponse.products.find((prod) => prod.id === productId)
+    );
+    return function cleanup() {
+      setProduct(undefined);
+    };
+  }, [prefilledResponse.products, productId, setProduct]);
+
+  const originProduct = product?.originProduct;
   const renderNeeds = (): ReactElement[] => {
-    if (productIndex === -1) {
+    if (!product) {
       return Utils.findVariantsUsedBySpecification(prefilledResponse.bank).map(
         (need) => {
           return <ProductNeed key={need.id} need={need} />;
@@ -34,9 +54,9 @@ export default function AnswerProduct(): React.ReactElement {
       );
     } else {
       return Utils.findVariantsUsedByProduct(
-        prefilledResponse.products[productIndex].originProduct,
+        product.originProduct,
         prefilledResponse.bank,
-        prefilledResponse.products[productIndex].relatedProducts
+        product.relatedProducts
       ).map((need) => {
         return <ProductNeed key={need.id} need={need} />;
       });
@@ -60,7 +80,7 @@ export default function AnswerProduct(): React.ReactElement {
       <Toolbar gapType={'md'}>
         <ToolbarItem
           primaryText={t('From product type')}
-          secondaryText={originProduct.title}
+          secondaryText={originProduct?.title} // TODO: I don't like this
         />
       </Toolbar>
     );

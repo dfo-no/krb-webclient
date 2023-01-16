@@ -39,11 +39,10 @@ export const chosenRequirements = (
 
 export default function SpecificationOverview(): React.ReactElement {
   const { t } = useTranslation();
-  const { openProductSelection, setOpenProductSelection } =
+  const { specification, openProductSelection, setOpenProductSelection } =
     useSpecificationState();
   const history = useHistory();
   const { setDeleteMode } = useSelectState();
-  const { specification } = useSpecificationState();
   const [editingSpecification, setEditingSpecification] = useState(false);
 
   const open = (): void => {
