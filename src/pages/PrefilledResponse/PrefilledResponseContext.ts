@@ -28,7 +28,16 @@ const usePrefilledResponseContext = () => {
       PrefilledResponseStoreService.defaultPrefilledResponse()
     );
 
+  const [product, setProduct] = useState<
+    IPrefilledResponseProduct | undefined
+  >();
+
+  const [openProductSelection, setOpenProductSelection] = useState(false);
+  const [newProductCreate, setNewProductCreate] = useState(false);
+
   useEffect(() => {
+    console.log('prefilledResponseId = ', prefilledResponseId);
+
     if (prefilledResponseId) {
       nexus.prefilledResponseService
         .getPrefilledResponse(prefilledResponseId)
@@ -84,7 +93,7 @@ const usePrefilledResponseContext = () => {
     setPrefilledResponse(
       produce(prefilledResponse, (draft) => {
         const index = draft.products.findIndex(
-          (product) => product.id === productId
+          (candidateProduct) => candidateProduct.id === productId
         );
 
         if (index !== -1) {
@@ -105,12 +114,15 @@ const usePrefilledResponseContext = () => {
   };
 
   const editProduct = (
-    product: IPrefilledResponseProduct,
-    productIndex: number
+    productToEdit: IPrefilledResponseProduct,
+    productId: string
   ) => {
     setPrefilledResponse(
       produce(prefilledResponse, (draft) => {
-        draft.products[productIndex] = product;
+        const productIndex = draft.products.findIndex(
+          (candidate) => candidate.id === productId
+        );
+        draft.products[productIndex] = productToEdit;
       })
     );
   };
@@ -122,6 +134,12 @@ const usePrefilledResponseContext = () => {
     addProduct,
     addProductAnswer,
     editProduct,
+    openProductSelection,
+    setOpenProductSelection,
+    newProductCreate,
+    setNewProductCreate,
+    product,
+    setProduct,
   };
 };
 

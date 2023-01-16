@@ -10,7 +10,6 @@ import Toolbar from '../../../components/UI/Toolbar/ToolBar';
 import DownloadToolbarItem from '../../PrefilledResponse/Download/DownloadToolbarItem';
 import { PrefilledResponseContainer } from '../PrefilledResponseContext';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import { IPrefilledResponseProduct } from '../../../Nexus/entities/IPrefilledResponseProduct';
 import { PRODUCTS, PREFILLED_RESPONSE } from '../../../common/PathConstants';
 import NewProductSelection from '../NewProduct/NewProductSelection';
@@ -18,13 +17,10 @@ import NewProductSelection from '../NewProduct/NewProductSelection';
 export default function PrefilledResponseOverview(): ReactElement {
   const { t } = useTranslation();
   const history = useHistory();
-  const { prefilledResponse } = PrefilledResponseContainer.useContainer();
-
-  const { setProductIndex, setOpenProductSelection, openProductSelection } =
-    useProductIndexState();
+  const { prefilledResponse, setOpenProductSelection, openProductSelection } =
+    PrefilledResponseContainer.useContainer();
 
   const genericPressed = () => {
-    setProductIndex(-1);
     history.push(
       `/${PREFILLED_RESPONSE}/${prefilledResponse.id}/${PRODUCTS}/general/`
     );
@@ -35,7 +31,6 @@ export default function PrefilledResponseOverview(): ReactElement {
   };
 
   const productPressed = (index: number, productId: string) => {
-    setProductIndex(index);
     history.push(
       `/${PREFILLED_RESPONSE}/${prefilledResponse.id}/${PRODUCTS}/${productId}/`
     );

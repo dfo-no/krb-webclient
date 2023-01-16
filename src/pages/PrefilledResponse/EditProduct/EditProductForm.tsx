@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +13,6 @@ import { FormFieldsBox } from '../../../components/Form/FormFieldsBox';
 import { IPrefilledResponseProduct } from '../../../Nexus/entities/IPrefilledResponseProduct';
 import { DFORadio } from '../../../components/DFORadio/DFORadio';
 import { PrefilledResponseContainer } from '../PrefilledResponseContext';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import MultipleProductSelection from '../../../components/ProductSelection/MultipleProductSelection';
 import { Parentable } from '../../../models/Parentable';
 import { IProduct } from '../../../Nexus/entities/IProduct';
@@ -26,8 +25,7 @@ interface IProps {
 const EditProductForm = ({ handleClose, prefilledResponseProduct }: IProps) => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
-  const { productIndex } = useProductIndexState();
-  const { prefilledResponse, editProduct } =
+  const { prefilledResponse, editProduct, product } =
     PrefilledResponseContainer.useContainer();
   const [relatedProducts, setRelatedProducts] = useState(false);
   const options = [
@@ -42,7 +40,13 @@ const EditProductForm = ({ handleClose, prefilledResponseProduct }: IProps) => {
   });
 
   const onSubmit = (put: IPrefilledResponseProduct): void => {
-    editProduct(put, productIndex);
+    if (product) {
+      editProduct(put, product.id);
+    } else {
+      console.log(
+        'not good ! Needs to be fixed. If I forget, please tell me in PR : )'
+      );
+    }
     handleClose();
   };
 
