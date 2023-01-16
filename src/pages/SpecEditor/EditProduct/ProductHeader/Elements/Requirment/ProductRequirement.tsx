@@ -83,6 +83,7 @@ export default function ProductRequirement({
     } else {
       methods.reset(defaultValues);
     }
+    setEditingRequirement(false);
   };
 
   const isSelected = (): boolean => {
@@ -133,6 +134,7 @@ export default function ProductRequirement({
       methods.reset({ ...answer, id: '' });
       setOriginal(answer);
     }
+    setEditingRequirement(true);
   };
 
   const deleteRequirement = (): void => {

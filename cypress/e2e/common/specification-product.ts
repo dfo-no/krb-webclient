@@ -181,3 +181,7 @@ When(
 Then('Ser jeg feilmelding {string}', (errorMessage: string) => {
   cy.contains(errorMessage);
 });
+
+Then('Ser jeg lagre produkt knapp {string} er ikke aktiv', (button: string) => {
+    cy.get('[class^="Panel_"]').find('button').contains(button).should('be.disabled');
+});
