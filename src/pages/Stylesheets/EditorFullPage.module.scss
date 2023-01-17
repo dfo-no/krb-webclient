@@ -162,6 +162,15 @@
       flex-direction: column;
       gap: var(--small-gap);
       padding: var(--small-gap) var(--xlarge-gap);
+
+      .ProductRequirements {
+        padding: var(--normal-gap);
+        background-color: var(--white-color);
+
+        .NeedTittle {
+          font-weight: var(--font-weight-bold);
+        }
+      }
     }
 
     .Needs {

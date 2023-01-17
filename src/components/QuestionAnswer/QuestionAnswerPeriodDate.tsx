@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
-import { Button, Type, Variant } from '@dfo-no/components.button';
 
 import css from './QuestionAnswer.module.scss';
 import DateCtrl from '../../FormProvider/DateCtrl';
@@ -21,7 +19,6 @@ const QuestionAnswerPeriodDate = ({
   existingAnswer,
   onSubmit,
 }: IProps): React.ReactElement => {
-  const { t } = useTranslation();
   const nexus = Nexus.getInstance();
 
   const methods = useForm<IPeriodDateQuestion>({
@@ -53,12 +50,6 @@ const QuestionAnswerPeriodDate = ({
             maxDate={item.config.toBoundary ?? undefined}
             name={'answer.fromDate'}
           />
-          <div className={css.Buttons}>
-            <Button type={Type.Submit}>{t('Save')}</Button>
-            <Button variant={Variant.Inverted} onClick={() => methods.reset()}>
-              {t('Reset')}
-            </Button>
-          </div>
         </form>
       </FormProvider>
     </div>

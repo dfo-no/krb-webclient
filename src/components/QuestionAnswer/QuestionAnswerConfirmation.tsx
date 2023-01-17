@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Button, Type, Variant } from '@dfo-no/components.button';
 
 import CheckboxCtrl from '../../FormProvider/CheckboxCtrl';
 import css from './QuestionAnswer.module.scss';
@@ -46,10 +45,7 @@ const QuestionAnswerConfirmation = ({
   }, [existingAnswer, methods]);
 
   useEffect(() => {
-    methods.setValue(
-      'answer.discount',
-      useAnswerWatch ? 100 : item.config.discount
-    );
+    methods.setValue('answer.discount', item.config.discount);
   }, [item.config, useAnswerWatch, methods]);
 
   return (
@@ -61,12 +57,6 @@ const QuestionAnswerConfirmation = ({
           noValidate
         >
           <CheckboxCtrl name={'answer.value'} label={t('Confirm')} />
-          <div className={css.Buttons}>
-            <Button type={Type.Submit}>{t('Save')}</Button>
-            <Button variant={Variant.Inverted} onClick={() => methods.reset()}>
-              {t('Reset')}
-            </Button>
-          </div>
         </form>
       </FormProvider>
     </div>

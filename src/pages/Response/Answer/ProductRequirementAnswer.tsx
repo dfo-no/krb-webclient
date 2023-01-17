@@ -1,18 +1,12 @@
 import React, { ReactElement, useEffect, useState } from 'react';
-import { Box } from '@mui/material';
-import { t } from 'i18next';
-import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 
-import ChosenAnswer from './ChosenAnswer';
 import css from './ProductRequirementAnswer.module.scss';
 import ProductQuestionAnswer from './ProductQuestionAnswer';
-import ProductVariant from './ProductVariant';
-import TextUtils from '../../../common/TextUtils';
-import { DFOAccordion } from '../../../components/DFOAccordion/DFOAccordion';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
-import { VariantType } from '../../../Nexus/enums';
-import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
+import { QuestionVariant, VariantType } from '../../../Nexus/enums';
 import { useResponseState } from '../ResponseContext';
+import Badge, { BadgeType } from '../../../components/UI/Badge/Badge';
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;
@@ -24,17 +18,60 @@ export default function ProductRequirementAnswer({
   productIndex,
 }: IProps): ReactElement {
   const { response } = useResponseState();
+  const { t } = useTranslation();
+
+  const isAwardCriteria = (id: string) => {
+    if (requirementAnswer.id === id) {
+      switch (requirementAnswer.question.type) {
+        case QuestionVariant.Q_CHECKBOX:
+          return requirementAnswer.question.config.discount > 0;
+        case QuestionVariant.Q_CONFIRMATION:
+          return requirementAnswer.question.config.discount > 0;
+        case QuestionVariant.Q_CODELIST:
+          return requirementAnswer.question.config.codes.length > 0;
+        case QuestionVariant.Q_SLIDER:
+          return requirementAnswer.question.config.discountsValue.length > 0;
+        case QuestionVariant.Q_PERIOD_DATE:
+          return (
+            requirementAnswer.question.config.dateDiscounts.length > 0 ||
+            requirementAnswer.question.config.numberDayDiscounts.length > 0
+          );
+        case QuestionVariant.Q_TIME:
+          return (
+            requirementAnswer.question.config.timeDiscounts.length > 0 ||
+            requirementAnswer.question.config.timePeriodDiscount.length > 0
+          );
+        case QuestionVariant.Q_TEXT:
+          return requirementAnswer.question.config.discountValues.length > 0;
+      }
+    }
+  };
 
   const [existingAnswer, setExistingAnswer] = useState<
     IRequirementAnswer | undefined
   >(undefined);
-  const { setActiveKey } = useAccordionState();
   const requirementVariant = requirementAnswer.requirement.variants.find(
     (variant) => variant.id === requirementAnswer.variantId
   );
   const isInfo =
     requirementVariant && requirementVariant.type === VariantType.info;
-  const isAnswered = !!(existingAnswer || isInfo);
+
+  const renderBadge = (id: string) => {
+    if (isInfo) {
+      return (
+        <Badge type={BadgeType.Information} displayText={t('Information')} />
+      );
+    } else if (isAwardCriteria(id)) {
+      return <Badge type={BadgeType.Award} displayText={t('Award criteria')} />;
+    } else if (!isInfo) {
+      return (
+        <Badge
+          type={BadgeType.Requirement}
+          displayText={t('Mandatory requirement')}
+        />
+      );
+    }
+  };
 
   useEffect(() => {
     const answer = (
@@ -43,59 +80,22 @@ export default function ProductRequirementAnswer({
       return reqAns.id === requirementAnswer.id;
     });
     if (answer) setExistingAnswer(answer);
-    else setActiveKey(requirementAnswer.id);
-  }, [requirementAnswer.id, productIndex, response, setActiveKey]);
-
-  const header = (): ReactElement => {
-    return (
-      <Box className={css.header}>
-        <span className={css.title}>{requirementAnswer.requirement.title}</span>
-        {isAnswered && (
-          <ChosenAnswer
-            requirementAnswer={requirementAnswer}
-            existingAnswer={existingAnswer}
-          />
-        )}
-      </Box>
-    );
-  };
-
-  const body = (): ReactElement => {
-    return (
-      <Box className={css.body}>
-        {requirementVariant && <ProductVariant variant={requirementVariant} />}
-        <span className={css.title}>{t('Requirement answer')}</span>
-        {isInfo ? (
-          <span className={css.label}>
-            {TextUtils.getAnswerText(
-              requirementAnswer,
-              response.specification.bank
-            )}
-          </span>
-        ) : (
-          <ProductQuestionAnswer
-            requirementAnswer={requirementAnswer}
-            existingAnswer={existingAnswer}
-            productIndex={productIndex}
-          />
-        )}
-      </Box>
-    );
-  };
+  }, [requirementAnswer.id, productIndex, response]);
 
   return (
-    <Box
-      className={classNames(
-        css.ProductRequirementAnswer,
-        isAnswered ? css.answered : undefined
+    <div key={requirementAnswer.id} className={css.ProductRequirementAnswer}>
+      <div className={css.title}>
+        <span>{requirementAnswer.requirement.title}</span>
+        {renderBadge(requirementAnswer.id)}
+      </div>
+      <span>{requirementVariant?.description}</span>
+      {!isInfo && (
+        <ProductQuestionAnswer
+          requirementAnswer={requirementAnswer}
+          existingAnswer={existingAnswer}
+          productIndex={productIndex}
+        />
       )}
-    >
-      <DFOAccordion
-        eventKey={requirementAnswer.id}
-        header={header()}
-        body={body()}
-        className={css.Accordion}
-      />
-    </Box>
+    </div>
   );
 }

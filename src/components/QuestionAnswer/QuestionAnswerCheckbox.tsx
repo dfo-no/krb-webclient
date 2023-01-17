@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
-import { Button, Type, Variant } from '@dfo-no/components.button';
 
 import css from './QuestionAnswer.module.scss';
 import Nexus from '../../Nexus/Nexus';
@@ -21,7 +19,6 @@ const QuestionAnswerCheckbox = ({
   existingAnswer,
   onSubmit,
 }: IProps): React.ReactElement => {
-  const { t } = useTranslation();
   const nexus = Nexus.getInstance();
 
   const methods = useForm<ICheckboxQuestion>({
@@ -50,12 +47,6 @@ const QuestionAnswerCheckbox = ({
             name={'answer.value'}
             recommendedAlternative={item.config.preferedAlternative}
           />
-          <div className={css.Buttons}>
-            <Button type={Type.Submit}>{t('Save')}</Button>
-            <Button variant={Variant.Inverted} onClick={() => methods.reset()}>
-              {t('Reset')}
-            </Button>
-          </div>
         </form>
       </FormProvider>
     </div>
