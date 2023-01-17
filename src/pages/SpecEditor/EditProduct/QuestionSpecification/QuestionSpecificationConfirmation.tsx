@@ -12,22 +12,20 @@ const QuestionSpecificationConfirmation = (): ReactElement => {
   const { t } = useTranslation();
   const [awardCriteria, setAwardCriteria] = useState(false);
   const { control, setValue } = useFormContext<IRequirementAnswer>();
-  const useDiscountNonPrefered = useWatch({
-    name: 'question.config.discountUnconfirmed',
+  const useDiscount = useWatch({
+    name: 'question.config.discount',
     control,
   });
 
   useEffect(() => {
-    if (useDiscountNonPrefered > 0) {
+    if (useDiscount > 0) {
       setAwardCriteria(true);
     }
-  }, [useDiscountNonPrefered]);
+  }, [useDiscount]);
 
   const onCheckboxClick = (): void => {
     if (awardCriteria) {
-      setValue('question.config.discountUnconfirmed', 0);
-    } else {
-      setValue('question.config.discountUnconfirmed', 70);
+      setValue('question.config.discount', 0);
     }
     setAwardCriteria((prev) => !prev);
   };
@@ -46,7 +44,7 @@ const QuestionSpecificationConfirmation = (): ReactElement => {
       {awardCriteria && (
         <VerticalTextCtrl
           className={css.QuestionFlex__textCtrl}
-          name={'question.config.discountUnconfirmed'}
+          name={'question.config.discount'}
           label={t('Discount')}
           placeholder={''}
           type={'number'}
