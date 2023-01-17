@@ -42,8 +42,6 @@ export const ResponseContext =
   createContext<ResponseContextType>(initialContext);
 
 export const ResponseProvider = ({ children, match }: Props) => {
-  // const routeMatch =
-  //   useRouteMatch<IRouteSpecificationParams>(SpecificationPath);
   const responseId = match.params.responseId;
 
   const { setTitle } = HeaderContainer.useContainer();

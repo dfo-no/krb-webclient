@@ -36,8 +36,6 @@ const usePrefilledResponseContext = () => {
   const [newProductCreate, setNewProductCreate] = useState(false);
 
   useEffect(() => {
-    console.log('prefilledResponseId = ', prefilledResponseId);
-
     if (prefilledResponseId) {
       nexus.prefilledResponseService
         .getPrefilledResponse(prefilledResponseId)

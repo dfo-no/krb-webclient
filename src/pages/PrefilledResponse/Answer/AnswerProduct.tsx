@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { RouteComponentProps, useHistory, useParams } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import EditIcon from '@mui/icons-material/Edit';
 import { Button, Variant } from '@dfo-no/components.button';
 
@@ -17,34 +17,28 @@ import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import EditProductForm from '../EditProduct/EditProductForm';
 import { PrefilledResponseRouteParams } from '../../../models/PrefilledResponseRouteParams';
 
-type AnswerProductMatchParams = { productId: string };
-type Props = RouteComponentProps<AnswerProductMatchParams>;
+type Props = RouteComponentProps<PrefilledResponseRouteParams>;
 
-export default function AnswerProduct({ match }: Props): React.ReactElement {
+export default function AnswerProduct({
+  match,
+  history,
+}: Props): React.ReactElement {
   const { t } = useTranslation();
-  const history = useHistory();
   const { prefilledResponse, product, setProduct } =
     PrefilledResponseContainer.useContainer();
-  const { productId } = useParams<PrefilledResponseRouteParams>();
-  const paramsProductId = match.params.productId;
-  console.log('paramasProductIndex: ', paramsProductId);
 
-  // const productIndex = Utils.isNumeric(paramsProductIndex)
-  //   ? Number(paramsProductIndex)
-  //   : -1;
+  const paramsProductId = match.params.productId;
   const [editingProduct, setEditingProduct] = useState(false);
-  //   const product = prefilledResponse.products[productIndex];
 
   useEffect(() => {
     setProduct(
-      prefilledResponse.products.find((prod) => prod.id === productId)
+      prefilledResponse.products.find((prod) => prod.id === paramsProductId)
     );
     return function cleanup() {
       setProduct(undefined);
     };
-  }, [prefilledResponse.products, productId, setProduct]);
+  }, [prefilledResponse.products, paramsProductId, setProduct]);
 
-  const originProduct = product?.originProduct;
   const renderNeeds = (): ReactElement[] => {
     if (!product) {
       return Utils.findVariantsUsedBySpecification(prefilledResponse.bank).map(
@@ -75,12 +69,14 @@ export default function AnswerProduct({ match }: Props): React.ReactElement {
     );
   };
 
-  const renderProductInfoToolbar = (): ReactElement => {
+  const renderProductInfoToolbar = (
+    originProductTitle: string
+  ): ReactElement => {
     return (
       <Toolbar gapType={'md'}>
         <ToolbarItem
           primaryText={t('From product type')}
-          secondaryText={originProduct?.title} // TODO: I don't like this
+          secondaryText={originProductTitle}
         />
       </Toolbar>
     );
@@ -100,13 +96,13 @@ export default function AnswerProduct({ match }: Props): React.ReactElement {
           <>
             <Typography variant="lgBold">{product?.title}</Typography>
             {renderProductActionsToolbar()}
-            {renderProductInfoToolbar()}
+            {renderProductInfoToolbar(product.originProduct.title)}
             <Typography variant="md">{product?.description}</Typography>
           </>
         )}
         {product && editingProduct && (
           <EditProductForm
-            prefilledResponseProduct={product}
+            product={product}
             handleClose={() => setEditingProduct(false)}
           />
         )}

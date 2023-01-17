@@ -31,6 +31,7 @@ export default function NewProductSelection(): React.ReactElement {
     setNewProductCreate(true);
     setProduct(Utils.levelable2Parentable(item));
   };
+
   const cancel = (): void => {
     setOpenProductSelection(false);
     setNewProductCreate(false);
