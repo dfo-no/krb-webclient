@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Toolbar from '../../../../components/UI/Toolbar/ToolBar';
 import ToolbarItem from '../../../../components/UI/Toolbar/ToolbarItem';
 
-interface IProps {
+interface Props {
   orgName: string;
   caseNumber?: string;
   currencyUnit: string;
@@ -14,7 +14,7 @@ export default function SupplierInfoToolbar({
   orgName,
   caseNumber,
   currencyUnit,
-}: IProps): ReactElement {
+}: Props): ReactElement {
   const { t } = useTranslation();
   return (
     <Toolbar gapType={'md'}>
