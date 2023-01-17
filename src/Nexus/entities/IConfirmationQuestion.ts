@@ -18,13 +18,13 @@ export interface IConfirmationAnswer extends IAnswerBase {
 }
 
 export interface IConfirmationConfig extends IConfigBase {
-  discountUnconfirmed: number;
+  discount: number;
 }
 
 export const ConfirmationQuestionWorkbenchSchema = QuestionBaseSchema.keys({
   type: CustomJoi.validateType(QuestionVariant.Q_CONFIRMATION),
   config: ConfigBaseSchema.keys({
-    discountUnconfirmed: CustomJoi.validateScore(),
+    discount: CustomJoi.validateDiscount(),
   }),
 });
 
@@ -32,6 +32,6 @@ export const ConfirmationQuestionAnswerSchema =
   ConfirmationQuestionWorkbenchSchema.keys({
     answer: CustomJoi.object().keys({
       value: CustomJoi.validateBoolean(),
-      discount: CustomJoi.validateScore(),
+      discount: CustomJoi.validateDiscount(),
     }),
   });

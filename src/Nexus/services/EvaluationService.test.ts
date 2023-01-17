@@ -77,7 +77,7 @@ describe('EvaluationService', () => {
       type: QuestionVariant.Q_CHECKBOX,
       config: {
         defaultDiscount: 1,
-        discountNonPrefered: 20,
+        discount: 20,
         preferedAlternative: true,
       },
       answer: {

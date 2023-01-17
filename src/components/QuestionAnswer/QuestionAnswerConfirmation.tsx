@@ -48,7 +48,7 @@ const QuestionAnswerConfirmation = ({
   useEffect(() => {
     methods.setValue(
       'answer.discount',
-      useAnswerWatch ? 100 : item.config.discountUnconfirmed
+      useAnswerWatch ? 100 : item.config.discount
     );
   }, [item.config, useAnswerWatch, methods]);
 
