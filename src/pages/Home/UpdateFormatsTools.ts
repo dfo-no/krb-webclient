@@ -77,7 +77,10 @@ export const updateObject = <T extends Record<string, unknown>>(
           delete input[key];
         } else if (key === 'periodMin') {
           // eslint-disable-next-line no-param-reassign
-          input.periodMin = 1;
+          if (input.periodMin == 0) {
+            // eslint-disable-next-line no-param-reassign
+            input.periodMin = 1;
+          }
         }
 
         const toCheck = input[key];
