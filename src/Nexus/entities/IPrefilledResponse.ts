@@ -19,6 +19,7 @@ export interface IPrefilledResponse {
 }
 
 export const BasePrefilledResponseSchema = CustomJoi.object().keys({
+  id: CustomJoi.validateOptionalId(),
   bank: BaseBankSchema,
   supplier: CustomJoi.validateText(),
   products: CustomJoi.validateArray(PrefilledResponseProductSchema),
