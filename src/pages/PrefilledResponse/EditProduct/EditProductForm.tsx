@@ -19,13 +19,13 @@ import { IProduct } from '../../../Nexus/entities/IProduct';
 
 interface IProps {
   handleClose: () => void;
-  prefilledResponseProduct: IPrefilledResponseProduct;
+  product: IPrefilledResponseProduct;
 }
 
-const EditProductForm = ({ handleClose, prefilledResponseProduct }: IProps) => {
+export const EditProductForm = ({ handleClose, product }: IProps) => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
-  const { prefilledResponse, editProduct, product } =
+  const { prefilledResponse, editProduct } =
     PrefilledResponseContainer.useContainer();
   const [relatedProducts, setRelatedProducts] = useState(false);
   const options = [
@@ -36,17 +36,11 @@ const EditProductForm = ({ handleClose, prefilledResponseProduct }: IProps) => {
     resolver: nexus.resolverService.resolver(
       ModelType.prefilledResponseProduct
     ),
-    defaultValues: prefilledResponseProduct,
+    defaultValues: product,
   });
 
   const onSubmit = (put: IPrefilledResponseProduct): void => {
-    if (product) {
-      editProduct(put, product.id);
-    } else {
-      console.log(
-        'not good ! Needs to be fixed. If I forget, please tell me in PR : )'
-      );
-    }
+    editProduct(put, product.id);
     handleClose();
   };
 
