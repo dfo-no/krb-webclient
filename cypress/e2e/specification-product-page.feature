@@ -25,7 +25,7 @@ Feature: Spesifikasjonsprodukt
       And Jeg besvare kravet "Helt ny bil" som har type ja-nei med "Nei"
       And Jeg klikker på "Lagre krav" knapp for å lagre
       Then Ser jeg valgte krav er 1 av 7
-      And Ser jeg valgt krav "Fabrikk-ny" inneholder "0 Fradrag" for ja og "100 Fradrag" for nei
+      And Ser jeg valgt krav "Fabrikk-ny" inneholder "0" fradrag
       When Jeg klikker på "Fjern kravet" knapp
       Then Ser jeg valgte krav er 0 av 7
 
@@ -35,6 +35,7 @@ Feature: Spesifikasjonsprodukt
       And Jeg klikker på "Velg variant" til produktkrav "Bekreftelse som krav"
       Then Jeg ser en "Absolutt krav"-merkelapp
       When Jeg klikker på checkbox
+      And Jeg legge til "100" fradrag
       Then Jeg ser en "Tildelingskriterie"-merkelapp
       And Jeg klikker på "Avbryt" knappen
       When Jeg klikker på "Velg variant" til produktkrav "Bekreftelse som informasjon"
