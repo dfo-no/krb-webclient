@@ -8,7 +8,7 @@ const MaxCodeValidator = (joi: Joi.Root) => ({
   messages: {
     'number.base': ErrorMessage.VAL_NUMBER_BASE,
     'number.integer': ErrorMessage.VAL_NUMBER_INT,
-    'number.min': ErrorMessage.VAL_NUMBER_CODE_MIN,
+    'number.min': ErrorMessage.VAL_NUMBER_MIN_1,
   },
   base: joi.number().integer().min(1).required(),
 });

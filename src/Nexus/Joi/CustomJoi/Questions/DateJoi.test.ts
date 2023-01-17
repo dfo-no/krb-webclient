@@ -19,7 +19,7 @@ describe('DateJoi', () => {
       periodMin: 10,
     });
     expect(reportError1?.error?.details[0].message).toEqual(
-      'Må være et positivt heltall'
+      'Må være minimum 1'
     );
     expect(reportError2?.error?.details[0].message).toEqual(
       'Må være et positivt heltall'

@@ -88,6 +88,7 @@ Feature: Spesifikasjonsprodukt
     And Jeg klikker på "Lagre krav" knapp for å lagre
     Then Ser jeg feilmelding "Kan ikke være mindre enn 2"
     When Jeg skriver 2 i feltet "dager" for laveste antall dager
+    And Jeg skriver 3 i feltet "dager" sekvens 1
     And Jeg klikker på "Lagre krav" knapp for å lagre
     Then Ser jeg "Minimum" har verdi "2"
     And Ser jeg "Maksimum" har verdi "5"

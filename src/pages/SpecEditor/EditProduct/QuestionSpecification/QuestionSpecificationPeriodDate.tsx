@@ -215,7 +215,6 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
     setVariationNumberDays((prev) => !prev);
     if (daysDiscount.length) {
       removeDaysDiscount();
-      setValue('question.config.periodMin', 0);
     }
   };
 

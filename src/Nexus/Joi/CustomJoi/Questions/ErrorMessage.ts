@@ -12,7 +12,7 @@ export enum ErrorMessage {
   VAL_NUMBER_CHECK = 'Varighet i antall dager må være innen den angitte datoperioden',
   VAL_NUMBER_SLIDER_MAX = 'Overskrider forksjell mellom maks og min ({{#limit}})',
   VAL_VALUE_UNIQUE = 'Verdi kan ikke være like',
-  VAL_NUMBER_CODE_MIN = 'Må være minimum 1',
+  VAL_NUMBER_MIN_1 = 'Må være minimum 1',
   VAL_NUMBER_CODE_DISCOUNT_MIN = 'Må være minimum 0',
   VAL_ARRAY_CODE_DISCOUNT_CHECK = 'Fradrag(er) til sammen kan ikke være mer enn fradragssum',
   VAL_NUMBER_CODE_UNIQUE = 'Noe har gått galt med skjemaet. 2 like koder er funnet i skjemaet',
