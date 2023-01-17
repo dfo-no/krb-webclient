@@ -12,8 +12,7 @@ type NestableElementType =
   | React.ReactElement
   | string
   | number
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  | {}
+  | Record<string, unknown>
   | Iterable<React.ReactNode>
   | React.ReactPortal
   | boolean
