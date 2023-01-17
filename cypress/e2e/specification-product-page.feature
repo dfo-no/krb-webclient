@@ -19,15 +19,23 @@ Feature: Spesifikasjonsprodukt
     Then Ser jeg "Lagre produkt" knappen er inaktiv
     And Jeg klikker på "Lagre" knapp for å lagre
 
-    Scenario: Jeg kan velge og fjerne krav på produkt
-      Given Jeg åpner produkt-spesifikasjon side
-      When Jeg klikker på "Velg krav" knapp
-      And Jeg besvare kravet "Helt ny bil" som har type ja-nei med "Nei"
-      And Jeg klikker på "Lagre krav" knapp for å lagre
-      Then Ser jeg valgte krav er 1 av 7
-      And Ser jeg valgt krav "Fabrikk-ny" inneholder "0" fradrag
-      When Jeg klikker på "Fjern kravet" knapp
-      Then Ser jeg valgte krav er 0 av 7
+  Scenario: Jeg kan velge, redigere og fjerne krav på produkt
+    Given Jeg åpner produkt-spesifikasjon side
+    When Jeg klikker på "Velg krav" knapp
+    And Jeg besvare kravet "Helt ny bil" som har type ja-nei med "Nei"
+    And Jeg klikker på "Lagre krav" knapp for å lagre
+    Then Ser jeg valgte krav er 1 av 7
+    And Ser jeg valgt krav "Fabrikk-ny"
+    When Jeg klikker på "Rediger kravet" knapp
+    Then Ser jeg lagre produkt knapp "Avbryt" er ikke aktiv
+    And Ser jeg lagre produkt knapp "Lagre produkt" er ikke aktiv
+    And Jeg klikker på "Lagre krav" knappen
+    When Jeg klikker på "Rediger kravet" knapp
+    Then Ser jeg lagre produkt knapp "Avbryt" er ikke aktiv
+    And Ser jeg lagre produkt knapp "Lagre produkt" er ikke aktiv
+    And Jeg klikker på "Lagre krav" knapp for å lagre
+    When Jeg klikker på "Fjern kravet" knapp
+    Then Ser jeg valgte krav er 0 av 7
 
     Scenario: Skal vise riktig merkelapp
       Given Jeg åpner spesifikasjon "specification_all_answer_typer.pdf"

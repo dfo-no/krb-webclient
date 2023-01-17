@@ -123,15 +123,9 @@ Then('Ser jeg fradrag for kode {string} er inaktiv', (code: string) => {
 });
 
 Then(
-  'Ser jeg valgt krav {string} inneholder {string} fradrag',
-  (requirement: string, discount: string) => {
+  'Ser jeg valgt krav {string}',
+  (requirement: string) => {
     cy.get('[data-cy="product-requirement"]').contains(requirement);
-    cy.get('[data-cy="chosen-configuration"]')
-      .contains('Fradrag')
-      .parent()
-      .children()
-      .eq(1)
-      .contains(discount);
   }
 );
 
@@ -194,4 +188,8 @@ When(
 
 Then('Ser jeg feilmelding {string}', (errorMessage: string) => {
   cy.contains(errorMessage);
+});
+
+Then('Ser jeg lagre produkt knapp {string} er ikke aktiv', (button: string) => {
+    cy.get('[class^="Panel_"]').find('button').contains(button).should('be.disabled');
 });
