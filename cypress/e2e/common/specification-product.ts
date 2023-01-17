@@ -92,6 +92,16 @@ When(
 );
 
 When(
+    'Jeg legge til {string} fradrag',
+    (discount: string) => {
+        cy.get(
+            `input[name="question.config.discount"]`)
+            .clear()
+            .type(discount);
+    }
+);
+
+When(
   'Jeg klikker på obligatorisk checkbox for kode {string}',
   (code: string) => {
     cy.contains(code)
@@ -113,21 +123,15 @@ Then('Ser jeg fradrag for kode {string} er inaktiv', (code: string) => {
 });
 
 Then(
-  'Ser jeg valgt krav {string} inneholder {string} for ja og {string} for nei',
-  (requirement: string, yesPoint: string, noPoint: string) => {
+  'Ser jeg valgt krav {string} inneholder {string} fradrag',
+  (requirement: string, discount: string) => {
     cy.get('[data-cy="product-requirement"]').contains(requirement);
     cy.get('[data-cy="chosen-configuration"]')
-      .contains('Ja')
+      .contains('Fradrag')
       .parent()
       .children()
       .eq(1)
-      .contains(yesPoint);
-    cy.get('[data-cy="chosen-configuration"]')
-      .contains('Nei')
-      .parent()
-      .children()
-      .eq(1)
-      .contains(noPoint);
+      .contains(discount);
   }
 );
 
@@ -176,6 +180,16 @@ When(
       .clear({ force: true })
       .type(value, { force: true });
   }
+);
+
+When(
+    'Jeg skriver {string} i feltet {string} for varighet',
+    (value: string, fieldName: string) => {
+        cy.get(`input[placeholder="${fieldName}"]`)
+            .eq(2)
+            .clear({ force: true })
+            .type(value, { force: true });
+    }
 );
 
 Then('Ser jeg feilmelding {string}', (errorMessage: string) => {

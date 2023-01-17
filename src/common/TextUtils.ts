@@ -155,37 +155,18 @@ class TextUtils {
   private static getCheckboxConfig = (
     question: ICheckboxQuestion
   ): ChosenConfig[] => {
-    const preferedAlternative = question.config.preferedAlternative;
-    const discountNonPrefered = question.config.discountNonPrefered;
+    const discount = question.config.discount;
     const chosenConfig: ChosenConfig[] = [];
-    TextUtils.setChosenConfigs(
-      chosenConfig,
-      `${preferedAlternative ? t('common.Yes') : t('common.No')}`,
-      `100 ${t('Discount')}`
-    );
-    TextUtils.setChosenConfigs(
-      chosenConfig,
-      `${preferedAlternative ? t('common.No') : t('common.Yes')}`,
-      `${discountNonPrefered} ${t('Discount')}`
-    );
+    TextUtils.setChosenConfigs(chosenConfig, t('Discount'), `${discount}`);
     return chosenConfig;
   };
 
   private static getConfirmationConfig = (
     question: IConfirmationQuestion
   ): ChosenConfig[] => {
-    const discountUnconfirmed = question.config.discountUnconfirmed;
+    const discount = question.config.discount;
     const chosenConfig: ChosenConfig[] = [];
-    TextUtils.setChosenConfigs(
-      chosenConfig,
-      t('Discount for confirmed'),
-      '100'
-    );
-    TextUtils.setChosenConfigs(
-      chosenConfig,
-      t('Discount'),
-      `${discountUnconfirmed}`
-    );
+    TextUtils.setChosenConfigs(chosenConfig, t('Discount'), `${discount}`);
     return chosenConfig;
   };
 
@@ -273,16 +254,16 @@ class TextUtils {
     TextUtils.setChosenConfigs(chosenConfig, t('From'), from);
     TextUtils.setChosenConfigs(chosenConfig, t('To'), to);
     if (isPeriod) {
-      if (min !== 0) {
-        TextUtils.setChosenConfigs(chosenConfig, t('Minimum'), `${min}`);
-        TextUtils.setChosenConfigs(chosenConfig, t('Maximum'), `${max}`);
-      }
-      if (min == 0)
+      if (min == 0) {
         TextUtils.setChosenConfigs(
           chosenConfig,
           t('Duration'),
           `${duration} ${t('Days')}`
         );
+      } else {
+        TextUtils.setChosenConfigs(chosenConfig, t('Minimum'), `${min}`);
+        TextUtils.setChosenConfigs(chosenConfig, t('Maximum'), `${max}`);
+      }
     }
     return chosenConfig;
   };
@@ -297,13 +278,21 @@ class TextUtils {
     TextUtils.setChosenConfigs(chosenConfig, t('From'), from);
     TextUtils.setChosenConfigs(chosenConfig, t('To'), to);
     if (isPeriod)
-      TextUtils.setChosenConfigs(
-        chosenConfig,
-        t('Period'),
-        `${t('From')}: ${DateUtils.prettyFormatTime(minPeriodTime)}, ${t(
-          'To'
-        )}: ${DateUtils.prettyFormatTime(maxPeriodTime)}`
-      );
+      if (minPeriodTime) {
+        TextUtils.setChosenConfigs(
+          chosenConfig,
+          t('Duration'),
+          `${t('From')}: ${DateUtils.prettyFormatTime(minPeriodTime)}, ${t(
+            'To'
+          )}: ${DateUtils.prettyFormatTime(maxPeriodTime)}`
+        );
+      } else {
+        TextUtils.setChosenConfigs(
+          chosenConfig,
+          t('Duration'),
+          `${DateUtils.prettyFormatTime(maxPeriodTime)}`
+        );
+      }
     return chosenConfig;
   };
 

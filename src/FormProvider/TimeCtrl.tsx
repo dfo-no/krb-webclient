@@ -3,7 +3,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Controller, useFormContext } from 'react-hook-form';
 import { get } from 'lodash';
 import { isDate, isValid } from 'date-fns';
-import { TimePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { DesktopTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 
@@ -66,7 +66,7 @@ const TimeCtrl = ({
                 {label}
               </span>
             )}
-            <TimePicker
+            <DesktopTimePicker
               {...field}
               mask={maskMap[i18n.language]}
               minTime={min}

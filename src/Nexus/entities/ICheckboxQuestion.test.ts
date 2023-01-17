@@ -14,7 +14,7 @@ describe('CheckboxQuestionSchema should validate', () => {
         value: false,
       },
       config: {
-        discountNonPrefered: 0,
+        discount: 0,
         defaultDiscount: 1,
         preferedAlternative: true,
       },
@@ -35,7 +35,7 @@ describe('CheckboxQuestionSchema should validate', () => {
         discount: 5,
       },
       config: {
-        discountNonPrefered: 0,
+        discount: 0,
         defaultDiscount: 1,
         preferedAlternative: true,
       },

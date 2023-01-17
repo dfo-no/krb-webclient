@@ -43,6 +43,7 @@ Feature: Spesifikasjonsprodukt
       And Jeg klikker på "Velg variant" til produktkrav "Bekreftelse som krav"
       Then Jeg ser en "Absolutt krav"-merkelapp
       When Jeg klikker på checkbox
+      And Jeg legge til "100" fradrag
       Then Jeg ser en "Tildelingskriterie"-merkelapp
       And Jeg klikker på "Avbryt" knappen
       When Jeg klikker på "Velg variant" til produktkrav "Bekreftelse som informasjon"
@@ -100,3 +101,24 @@ Feature: Spesifikasjonsprodukt
     And Ser jeg "Maksimum" har verdi "5"
     And Ser jeg "Fra" har verdi "10. desember"
     And Ser jeg "Til" har verdi "19. desember"
+
+  Scenario: Jeg kan velger tidspunkt og angi varighet for krav som har svartype tidsrom
+    Given Jeg åpner spesifikasjon "specification_all_answer_typer.pdf"
+    When Jeg redigerer produkt "Tidspunkt"
+    And Jeg klikker på "Velg variant" til produktkrav "Tidspunkt med periode som krav"
+    And Jeg velger "08:00" i feltet "Fra"
+    And Jeg velger "16:00" i feltet "Til"
+    And Jeg skriver "11:00" i feltet "hh:mm" for varighet
+    And Jeg klikker på "Lagre krav" knapp for å lagre
+    Then Ser jeg "Varighet" har verdi "11:00"
+    And Ser jeg "Fra" har verdi "08:00"
+    And Ser jeg "Til" har verdi "16:00"
+    When Jeg klikker på "Rediger kravet" knapp
+    And Jeg klikker på "tildelingskriterie" checkbox
+    And Jeg klikker på "Er det rom for variasjon i varighet?" checkbox
+    And Jeg skriver "12:00" i feltet "hh:mm" for varighet
+    And Jeg klikker på "Lagre krav" knapp for å lagre
+    Then Ser jeg feilmelding "Tidspunkt kan ikke være før 12:00"
+    When Jeg skriver "10:00" i feltet "hh:mm" for varighet
+    And Jeg klikker på "Lagre krav" knapp for å lagre
+    Then Ser jeg "Varighet" har verdi "Fra: 10:00, Til: 11:00"
