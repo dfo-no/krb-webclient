@@ -93,7 +93,7 @@ Feature: Spesifikasjonsprodukt
     And Ser jeg "Fra" har verdi "10. desember"
     And Ser jeg "Til" har verdi "19. desember"
 
-  Scenario: Jeg kan velger tidspunkt og angi varighet for krav som har svartype tidspukt
+  Scenario: Jeg kan velger tidspunkt og angi varighet for krav som har svartype tidsrom
     Given Jeg åpner spesifikasjon "specification_all_answer_typer.pdf"
     When Jeg redigerer produkt "Tidspunkt"
     And Jeg klikker på "Velg variant" til produktkrav "Tidspunkt med periode som krav"
