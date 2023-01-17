@@ -8,13 +8,13 @@ import theme from '../../../theme';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { PrefilledResponseContainer } from '../PrefilledResponseContext';
 
-interface IProps {
+interface Props {
   requirementAnswer?: IRequirementAnswer;
 }
 
 export default function ChosenAnswer({
   requirementAnswer,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { t } = useTranslation();
   const { prefilledResponse } = PrefilledResponseContainer.useContainer();
 
