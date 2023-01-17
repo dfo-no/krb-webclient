@@ -14,7 +14,7 @@ import { IVariant } from '../../../Nexus/entities/IVariant';
 import { QuestionType } from '../../../Nexus/entities/QuestionType';
 import { PrefilledResponseContainer } from '../PrefilledResponseContext';
 
-interface IProps {
+interface Props {
   requirement: IRequirement;
   variant: IVariant;
   question: QuestionType;
@@ -24,7 +24,7 @@ export default function ProductQuestion({
   requirement,
   variant,
   question,
-}: IProps): ReactElement {
+}: Props): ReactElement {
   const { t } = useTranslation();
   const { prefilledResponse, product } =
     PrefilledResponseContainer.useContainer();

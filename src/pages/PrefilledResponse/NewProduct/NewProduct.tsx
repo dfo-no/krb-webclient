@@ -23,14 +23,14 @@ import {
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 import { PREFILLED_RESPONSE, PRODUCTS } from '../../../common/PathConstants';
 
-interface IProps {
+interface Props {
   product: Parentable<IProduct> | null;
   handleClose: () => void;
 }
 export default function NewProduct({
   product,
   handleClose,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
   const { addProduct, setNewProductCreate, prefilledResponse } =

@@ -13,7 +13,7 @@ import {
 import { PREFILLED_RESPONSE } from '../../common/PathConstants';
 import Nexus from '../../Nexus/Nexus';
 
-interface IProps {
+interface Props {
   selectedPrefilledResponse: IPrefilledResponse;
   setSelectedPrefilledResponse: Dispatch<
     SetStateAction<IPrefilledResponse | null>
@@ -23,7 +23,7 @@ interface IProps {
 export default function PrefilledResponseSelectionModal({
   selectedPrefilledResponse,
   setSelectedPrefilledResponse,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const history = useHistory();
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();

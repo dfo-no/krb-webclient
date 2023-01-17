@@ -14,7 +14,7 @@ import { QuestionVariant } from '../../../Nexus/enums';
 import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
 import Nexus from '../../../Nexus/Nexus';
 
-interface IProps {
+interface Props {
   requirementAnswer: IRequirementAnswer;
   existingAnswer?: IRequirementAnswer;
 }
@@ -22,7 +22,7 @@ interface IProps {
 export default function QuestionAnswer({
   requirementAnswer,
   existingAnswer,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { prefilledResponse, addAnswer, addProductAnswer, product } =
     PrefilledResponseContainer.useContainer();
   const nexus = Nexus.getInstance();

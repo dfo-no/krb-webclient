@@ -351,7 +351,7 @@ describe('EvaluationService', () => {
                 ...questionDate,
                 answer: {
                   ...questionDate.answer,
-                  discount: 50, // 0.5 * 0.7 = 0.35
+                  discount: 50,
                 },
               },
             },
@@ -361,7 +361,7 @@ describe('EvaluationService', () => {
                 ...questionCheckbox,
                 answer: {
                   ...questionCheckbox.answer,
-                  discount: 100, // 1 * 0.5 = 0.5
+                  discount: 100,
                 },
               },
             },
@@ -380,7 +380,7 @@ describe('EvaluationService', () => {
                 ...questionCheckbox,
                 answer: {
                   ...questionCheckbox.answer,
-                  discount: 10, // 0.1 * 0.7 = 0.07
+                  discount: 10,
                 },
               },
             },
@@ -394,7 +394,7 @@ describe('EvaluationService', () => {
             ...questionSlider,
             answer: {
               ...questionSlider.answer,
-              discount: 20, // 0.2 * 0.9 = 0.18
+              discount: 20,
             },
           },
         },
@@ -404,7 +404,7 @@ describe('EvaluationService', () => {
             ...questionDate,
             answer: {
               ...questionDate.answer,
-              discount: 100, // 1 * 0.7 = 0.7
+              discount: 100,
             },
           },
         },
@@ -414,7 +414,7 @@ describe('EvaluationService', () => {
             ...questionCheckbox,
             answer: {
               ...questionCheckbox.answer,
-              discount: 40, // 0.4 * 0.5 = 0.2
+              discount: 40,
             },
           },
         },
@@ -422,7 +422,7 @@ describe('EvaluationService', () => {
     };
     const nexus = Nexus.getInstance();
     const result = nexus.evaluationService.evaluateAll([response]);
-    // TODO: Oppdaterer med mer realistiske dataSum: product1: (0.35 + 0.5) * 0.7 , product2: 0.07 * 0.5, general: 0.18 + 0.7 + 0.2 = 1,71
+
     expect(result[0].discount).toBe(320);
   });
 });
