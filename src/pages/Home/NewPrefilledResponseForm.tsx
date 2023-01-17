@@ -32,16 +32,17 @@ const NewPrefilledResponseForm = ({
 
   const nexus = Nexus.getInstance();
   const prefilledResponse = updateObject({ ...rawPrefilledResponse });
+  const prefilledResponseWithId =
+    nexus.prefilledResponseService.withId(prefilledResponse);
 
   const methods = useForm<IPrefilledResponse>({
     resolver: nexus.resolverService.resolver(ModelType.prefilledResponse),
-    defaultValues: prefilledResponse,
+    defaultValues: prefilledResponseWithId,
   });
 
   const onSubmit = async (post: IPrefilledResponse) => {
-    const prefilledResponseWithId = nexus.prefilledResponseService.withId(post);
     nexus.prefilledResponseService
-      .setPrefilledResponse(prefilledResponseWithId)
+      .setPrefilledResponse(post)
       .then((storedPrefilledResponse) => {
         history.push(`/${PREFILLED_RESPONSE}/${storedPrefilledResponse.id}`);
       });
