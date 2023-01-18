@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import CheckboxCtrl from '../../FormProvider/CheckboxCtrl';
@@ -30,11 +30,6 @@ const QuestionAnswerConfirmation = ({
     defaultValues: item,
   });
 
-  const useAnswerWatch = useWatch({
-    name: 'answer.value',
-    control: methods.control,
-  });
-
   useEffect(() => {
     if (
       existingAnswer &&
@@ -44,10 +39,6 @@ const QuestionAnswerConfirmation = ({
     }
   }, [existingAnswer, methods]);
 
-  useEffect(() => {
-    methods.setValue('answer.discount', item.config.discount);
-  }, [item.config, useAnswerWatch, methods]);
-
   return (
     <div className={css.QuestionAnswer}>
       <FormProvider {...methods}>
@@ -55,6 +46,8 @@ const QuestionAnswerConfirmation = ({
           onSubmit={methods.handleSubmit(onSubmit)}
           autoComplete="off"
           noValidate
+          onChange={methods.handleSubmit(onSubmit)}
+          onMouseMoveCapture={methods.handleSubmit(onSubmit)}
         >
           <CheckboxCtrl name={'answer.value'} label={t('Confirm')} />
         </form>

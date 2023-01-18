@@ -42,6 +42,8 @@ const QuestionAnswerTime = ({
           onSubmit={methods.handleSubmit(onSubmit)}
           autoComplete="off"
           noValidate
+          onChange={methods.handleSubmit(onSubmit)}
+          onMouseMoveCapture={methods.handleSubmit(onSubmit)}
         >
           <TimeCtrl
             minTime={item.config.fromBoundary ?? undefined}

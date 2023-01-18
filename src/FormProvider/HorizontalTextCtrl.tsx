@@ -20,6 +20,7 @@ interface IProps {
   color?: string;
   defaultValue?: string | number;
   isDisabled?: boolean;
+  id?: string;
 }
 
 const HorizontalTextCtrl = ({
@@ -35,6 +36,7 @@ const HorizontalTextCtrl = ({
   color,
   defaultValue,
   isDisabled,
+  id,
 }: IProps): React.ReactElement => {
   const {
     formState: { errors },
@@ -53,6 +55,7 @@ const HorizontalTextCtrl = ({
           <div className={css.HorizontalTextCtrl}>
             {label && <span aria-label={'label'}>{label}</span>}
             <DFOInput
+              id={id}
               {...field}
               _color={color}
               placeholder={placeholder}

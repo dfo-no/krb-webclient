@@ -44,6 +44,8 @@ const QuestionAnswerPeriodDate = ({
           onSubmit={methods.handleSubmit(onSubmit)}
           autoComplete="off"
           noValidate
+          onChange={methods.handleSubmit(onSubmit)}
+          onMouseMoveCapture={methods.handleSubmit(onSubmit)}
         >
           <DateCtrl
             minDate={item.config.fromBoundary ?? undefined}

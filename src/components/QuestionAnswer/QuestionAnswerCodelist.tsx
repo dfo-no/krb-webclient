@@ -55,6 +55,8 @@ const QuestionAnswerCodelist = ({
           onSubmit={methods.handleSubmit(onSubmit)}
           autoComplete="off"
           noValidate
+          onChange={methods.handleSubmit(onSubmit)}
+          onMouseMoveCapture={methods.handleSubmit(onSubmit)}
         >
           <Typography variant={'sm'}>{getInfoText()}</Typography>
           {codesList && (

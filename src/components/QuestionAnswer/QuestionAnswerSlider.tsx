@@ -1,19 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { FormControlLabel, Typography } from '@mui/material';
+import React, { useEffect } from 'react';
 import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import RadioGroup from '@mui/material/RadioGroup/RadioGroup';
 
 import css from './QuestionAnswer.module.scss';
 import HorizontalTextCtrl from '../../FormProvider/HorizontalTextCtrl';
 import Nexus from '../../Nexus/Nexus';
-import SliderCtrl from '../../FormProvider/SliderCtrl';
-import theme from '../../theme';
-import { DFORadio } from '../DFORadio/DFORadio';
 import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { QuestionVariant } from '../../Nexus/enums';
-import { IMark } from '../../Nexus/entities/IMark';
 
 interface IProps {
   item: ISliderQuestion;
@@ -29,25 +23,15 @@ const QuestionAnswerSlider = ({
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
 
-  const [sliderView, setSliderView] = useState(true);
-  const options = [
-    { value: 'Slider', label: t('Slider'), recommended: false },
-    { value: 'Input', label: t('Input'), recommended: false },
-  ];
-
   const methods = useForm<ISliderQuestion>({
     resolver: nexus.resolverService.answerResolver(QuestionVariant.Q_SLIDER),
     defaultValues: item,
   });
 
-  const useAnswerWatch = useWatch({
+  const useAnswerValue = useWatch({
     name: 'answer.value',
     control: methods.control,
   });
-
-  const [sliderMark, setSliderMark] = useState<IMark[]>([
-    { value: +useAnswerWatch, label: `${useAnswerWatch} ${item.config.unit}` },
-  ]);
 
   useEffect(() => {
     if (
@@ -59,58 +43,31 @@ const QuestionAnswerSlider = ({
   }, [existingAnswer, methods]);
 
   useEffect(() => {
-    setSliderMark([
-      {
-        value: +useAnswerWatch,
-        label: `${useAnswerWatch} ${item.config.unit}`,
-      },
-    ]);
-  }, [item.config, useAnswerWatch]);
+    if (useAnswerValue !== null) {
+      setTimeout(() => {
+        const answerValueInput = document.getElementById('answerValue');
+        if (answerValueInput) {
+          answerValueInput?.focus();
+        }
+      }, 1000);
+    }
+  }, [useAnswerValue]);
 
   return (
     <div className={css.QuestionAnswer}>
       <FormProvider {...methods}>
         <form
-          onSubmit={methods.handleSubmit(onSubmit)}
           autoComplete="off"
           noValidate
+          onBlur={methods.handleSubmit(onSubmit)}
+          onChange={methods.handleSubmit(onSubmit)}
         >
-          {sliderView ? (
-            <SliderCtrl
-              name={'answer.value'}
-              min={item.config.min}
-              max={item.config.max}
-              step={item.config.step}
-              showValue={false}
-              marks={sliderMark}
-            />
-          ) : (
-            <HorizontalTextCtrl
-              name={'answer.value'}
-              placeholder={t('Value')}
-              type={'number'}
-            />
-          )}
-          <RadioGroup
-            row={true}
-            value={options[sliderView ? 0 : 1].value}
-            onClick={() => setSliderView(!sliderView)}
-          >
-            {options.map((option) => {
-              return (
-                <FormControlLabel
-                  key={option.value}
-                  value={option.value}
-                  control={<DFORadio />}
-                  label={
-                    <Typography variant={'sm'} color={theme.palette.black.main}>
-                      {option.label}
-                    </Typography>
-                  }
-                />
-              );
-            })}
-          </RadioGroup>
+          <HorizontalTextCtrl
+            id={'answerValue'}
+            name={'answer.value'}
+            placeholder={t('Value')}
+            type={'number'}
+          />
         </form>
       </FormProvider>
     </div>
