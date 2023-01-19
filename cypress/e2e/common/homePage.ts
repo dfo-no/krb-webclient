@@ -21,3 +21,9 @@ When('Laste opp forberedt besvarelse', () => {
     './cypress/filesForUploadTesting/prefilledesponse-Kriterieveiviseren TestProsjekt.pdf'
   );
 });
+
+When('Laste opp besvarelse', () => {
+  uploadFile(
+    './cypress/filesForUploadTesting/2022-11-30-citronen-response-5.pdf'
+  );
+});
