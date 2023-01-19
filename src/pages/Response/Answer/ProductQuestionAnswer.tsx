@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
 import QuestionAnswerCheckbox from '../../../components/QuestionAnswer/QuestionAnswerCheckbox';
 import QuestionAnswerCodelist from '../../../components/QuestionAnswer/QuestionAnswerCodelist';
 import QuestionAnswerConfirmation from '../../../components/QuestionAnswer/QuestionAnswerConfirmation';
@@ -28,7 +27,6 @@ export default function ProductQuestionAnswer({
   const { response, addProductAnswer, addRequirementAnswer } =
     useResponseState();
   const nexus = Nexus.getInstance();
-  const { setActiveKey } = useAccordionState();
 
   const onSubmit = (post: QuestionType): void => {
     const question = {
@@ -50,7 +48,6 @@ export default function ProductQuestionAnswer({
         productId: response.products[productIndex].id,
       });
     }
-    setActiveKey('');
   };
 
   switch (requirementAnswer.question.type) {

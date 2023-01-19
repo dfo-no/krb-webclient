@@ -3,13 +3,9 @@ import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import ProductHeader from './ProductHeader';
-import ProductNeed from './ProductNeed';
 import ProductRequirementAnswer from './ProductRequirementAnswer';
-import { AccordionProvider } from '../../../components/DFOAccordion/AccordionContext';
 import { INeed } from '../../../Nexus/entities/INeed';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
-import EditResponseProduct from '../EditResponseProduct/EditResponseProduct';
 import { RESPONSE } from '../../../common/PathConstants';
 import Panel from '../../../components/UI/Panel/Panel';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
@@ -45,7 +41,7 @@ export default function AnswerProduct({ match }: Props): React.ReactElement {
       existingNeeds.add(requirementNeed);
       return (
         <div key={requirementAnswer.id}>
-          <ProductNeed need={requirementNeed} />
+          <span className={css.NeedTittle}>{requirementNeed.title}</span>
           <ProductRequirementAnswer
             requirementAnswer={requirementAnswer}
             productIndex={productIndex}
@@ -68,8 +64,8 @@ export default function AnswerProduct({ match }: Props): React.ReactElement {
       productIndex === -1
         ? response.specification
         : response.specification.products[productIndex];
-    return specOrProduct.requirements.map((requirementId) => {
-      const requirementAnswer = specOrProduct.requirementAnswers.find(
+    return specOrProduct?.requirements?.map((requirementId) => {
+      const requirementAnswer = specOrProduct?.requirementAnswers?.find(
         (reqAns) => reqAns.requirement.id === requirementId
       );
       if (requirementAnswer) {
@@ -79,13 +75,9 @@ export default function AnswerProduct({ match }: Props): React.ReactElement {
   };
 
   return (
-    <div>
-      <div className={css.overview__content}>
-        <ProductHeader productIndex={productIndex} />
-        {productIndex > -1 && (
-          <EditResponseProduct productIndex={productIndex} />
-        )}
-        <AccordionProvider>{renderRequirements()}</AccordionProvider>
+    <div className={css.ProductOverview}>
+      <div className={css.ProductOverview__content}>
+        <div className={css.ProductRequirements}>{renderRequirements()}</div>
       </div>
       <Panel
         panelColor={'white'}

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import { Button, Type, Variant } from '@dfo-no/components.button';
 
 import CodeSelection from '../CodeSelection/CodeSelection';
@@ -28,6 +29,11 @@ const QuestionAnswerCodelist = ({
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
+  const location = useLocation();
+
+  const isPrefilledResponse = location.pathname.includes(
+    'prefilledresponse'
+  ) as boolean;
 
   const methods = useForm<ICodelistQuestion>({
     resolver: nexus.resolverService.answerResolver(QuestionVariant.Q_CODELIST),
@@ -56,6 +62,9 @@ const QuestionAnswerCodelist = ({
           onSubmit={methods.handleSubmit(onSubmit)}
           autoComplete="off"
           noValidate
+          onChange={
+            isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
+          }
         >
           <Typography variant={'sm'}>{getInfoText()}</Typography>
           {codesList && (
@@ -65,12 +74,17 @@ const QuestionAnswerCodelist = ({
               codeSelection={item.config.codes}
             />
           )}
-          <div className={css.Buttons}>
-            <Button type={Type.Submit}>{t('Save')}</Button>
-            <Button variant={Variant.Inverted} onClick={() => methods.reset()}>
-              {t('Reset')}
-            </Button>
-          </div>
+          {isPrefilledResponse && (
+            <div className={css.Buttons}>
+              <Button type={Type.Submit}>{t('Save')}</Button>
+              <Button
+                variant={Variant.Inverted}
+                onClick={() => methods.reset()}
+              >
+                {t('Reset')}
+              </Button>
+            </div>
+          )}
         </form>
       </FormProvider>
     </div>

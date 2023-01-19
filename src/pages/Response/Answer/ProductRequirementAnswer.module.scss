@@ -1,41 +1,13 @@
 .ProductRequirementAnswer {
   display: flex;
   flex-direction: column;
-  border: 0.1rem solid var(--border-color-secondary);
-  margin: var(--normal-gap) 0;
-
-  [aria-expanded='false'] {
-    background-color: var(--white-color);
-    padding: var(--small-gap);
-  }
-
-  &.answered {
-    border: 0.2rem solid var(--tertiary-color);
-  }
+  padding: var(--normal-gap) 0;
+  gap: var(--tiny-gap);
+  font-size: var(--small-fontsize);
 
   .title {
-    font-size: var(--small-fontsize);
-    font-weight: bold;
-  }
-
-  .header {
-    width: 100%;
-    margin-right: var(--normal-gap);
-
-    .divider {
-      margin-top: var(--small-gap);
-    }
-  }
-
-  .Accordion {
-    background-color: var(--light-gray-color);
-  }
-
-  .body {
-    margin-top: var(--small-gap);
-
-    .label {
-      margin-bottom: var(--small-gap);
-    }
+    display: flex;
+    justify-content: space-between;
+    font-weight: var(--font-weight-bold);
   }
 }

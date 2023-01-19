@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import { Button, Type, Variant } from '@dfo-no/components.button';
 
 import CheckboxCtrl from '../../FormProvider/CheckboxCtrl';
@@ -23,17 +24,17 @@ const QuestionAnswerConfirmation = ({
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
+  const location = useLocation();
+
+  const isPrefilledResponse = location.pathname.includes(
+    'prefilledresponse'
+  ) as boolean;
 
   const methods = useForm<IConfirmationQuestion>({
     resolver: nexus.resolverService.answerResolver(
       QuestionVariant.Q_CONFIRMATION
     ),
     defaultValues: item,
-  });
-
-  const useAnswerWatch = useWatch({
-    name: 'answer.value',
-    control: methods.control,
   });
 
   useEffect(() => {
@@ -45,13 +46,6 @@ const QuestionAnswerConfirmation = ({
     }
   }, [existingAnswer, methods]);
 
-  useEffect(() => {
-    methods.setValue(
-      'answer.discount',
-      useAnswerWatch ? 100 : item.config.discount
-    );
-  }, [item.config, useAnswerWatch, methods]);
-
   return (
     <div className={css.QuestionAnswer}>
       <FormProvider {...methods}>
@@ -59,14 +53,22 @@ const QuestionAnswerConfirmation = ({
           onSubmit={methods.handleSubmit(onSubmit)}
           autoComplete="off"
           noValidate
+          onChange={
+            isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
+          }
         >
           <CheckboxCtrl name={'answer.value'} label={t('Confirm')} />
-          <div className={css.Buttons}>
-            <Button type={Type.Submit}>{t('Save')}</Button>
-            <Button variant={Variant.Inverted} onClick={() => methods.reset()}>
-              {t('Reset')}
-            </Button>
-          </div>
+          {isPrefilledResponse && (
+            <div className={css.Buttons}>
+              <Button type={Type.Submit}>{t('Save')}</Button>
+              <Button
+                variant={Variant.Inverted}
+                onClick={() => methods.reset()}
+              >
+                {t('Reset')}
+              </Button>
+            </div>
+          )}
         </form>
       </FormProvider>
     </div>
