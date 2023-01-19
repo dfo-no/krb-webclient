@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
+import { Button, Type, Variant } from '@dfo-no/components.button';
+import { useTranslation } from 'react-i18next';
 
 import css from './QuestionAnswer.module.scss';
 import Nexus from '../../Nexus/Nexus';
@@ -20,6 +23,12 @@ const QuestionAnswerTime = ({
   onSubmit,
 }: IProps): React.ReactElement => {
   const nexus = Nexus.getInstance();
+  const location = useLocation();
+  const { t } = useTranslation();
+
+  const isPrefilledResponse = location.pathname.includes(
+    'prefilledresponse'
+  ) as boolean;
 
   const methods = useForm<ITimeQuestion>({
     resolver: nexus.resolverService.answerResolver(QuestionVariant.Q_TIME),
@@ -42,14 +51,26 @@ const QuestionAnswerTime = ({
           onSubmit={methods.handleSubmit(onSubmit)}
           autoComplete="off"
           noValidate
-          onChange={methods.handleSubmit(onSubmit)}
-          onMouseMoveCapture={methods.handleSubmit(onSubmit)}
+          onChange={
+            isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
+          }
         >
           <TimeCtrl
             minTime={item.config.fromBoundary ?? undefined}
             maxTime={item.config.toBoundary ?? undefined}
             name={'answer.fromTime'}
           />
+          {isPrefilledResponse && (
+            <div className={css.Buttons}>
+              <Button type={Type.Submit}>{t('Save')}</Button>
+              <Button
+                variant={Variant.Inverted}
+                onClick={() => methods.reset()}
+              >
+                {t('Reset')}
+              </Button>
+            </div>
+          )}
         </form>
       </FormProvider>
     </div>

@@ -46,11 +46,12 @@ Then('Ser jeg svaret {string} på siden', (answer: string) => {
 When(
   'Jeg velger {int} på verdi til kravet {string}',
   (value: number, need: string) => {
-    cy.contains(need).parent().contains('Input').click();
     cy.contains(need)
       .parent()
       .get('input[type=number]')
-      .type(`{selectAll}${value}`);
+      .eq(0)
+      .clear()
+      .type(`${value}`);
   }
 );
 

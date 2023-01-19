@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
-import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
+import { Button, Type, Variant } from '@dfo-no/components.button';
 
 import css from './QuestionAnswer.module.scss';
 import HorizontalTextCtrl from '../../FormProvider/HorizontalTextCtrl';
@@ -22,15 +24,15 @@ const QuestionAnswerSlider = ({
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
+  const location = useLocation();
+
+  const isPrefilledResponse = location.pathname.includes(
+    'prefilledresponse'
+  ) as boolean;
 
   const methods = useForm<ISliderQuestion>({
     resolver: nexus.resolverService.answerResolver(QuestionVariant.Q_SLIDER),
     defaultValues: item,
-  });
-
-  const useAnswerValue = useWatch({
-    name: 'answer.value',
-    control: methods.control,
   });
 
   useEffect(() => {
@@ -42,25 +44,19 @@ const QuestionAnswerSlider = ({
     }
   }, [existingAnswer, methods]);
 
-  useEffect(() => {
-    if (useAnswerValue !== null) {
-      setTimeout(() => {
-        const answerValueInput = document.getElementById('answerValue');
-        if (answerValueInput) {
-          answerValueInput?.focus();
-        }
-      }, 1000);
-    }
-  }, [useAnswerValue]);
-
   return (
     <div className={css.QuestionAnswer}>
       <FormProvider {...methods}>
         <form
+          onSubmit={methods.handleSubmit(onSubmit)}
           autoComplete="off"
           noValidate
-          onBlur={methods.handleSubmit(onSubmit)}
-          onChange={methods.handleSubmit(onSubmit)}
+          onChange={
+            isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
+          }
+          onMouseMoveCapture={
+            isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
+          }
         >
           <HorizontalTextCtrl
             id={'answerValue'}
@@ -68,6 +64,17 @@ const QuestionAnswerSlider = ({
             placeholder={t('Value')}
             type={'number'}
           />
+          {isPrefilledResponse && (
+            <div className={css.Buttons}>
+              <Button type={Type.Submit}>{t('Save')}</Button>
+              <Button
+                variant={Variant.Inverted}
+                onClick={() => methods.reset()}
+              >
+                {t('Reset')}
+              </Button>
+            </div>
+          )}
         </form>
       </FormProvider>
     </div>

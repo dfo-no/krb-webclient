@@ -3,7 +3,6 @@ import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-import ProductHeader from './ProductHeader';
 import ProductRequirementAnswer from './ProductRequirementAnswer';
 import { INeed } from '../../../Nexus/entities/INeed';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
@@ -78,7 +77,6 @@ export default function AnswerProduct({ match }: Props): React.ReactElement {
   return (
     <div className={css.ProductOverview}>
       <div className={css.ProductOverview__content}>
-        <ProductHeader productIndex={productIndex} />
         <div className={css.ProductRequirements}>{renderRequirements()}</div>
       </div>
       <Panel
