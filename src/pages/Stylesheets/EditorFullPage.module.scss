@@ -151,6 +151,16 @@
     }
   }
 
+  .RequirementAnswered {
+    &__yes {
+      color: var(--tertiary-color);
+    }
+
+    &__no {
+      color: var(--error-color);
+    }
+  }
+
   .ProductOverview {
     display: flex;
     flex-direction: column;
