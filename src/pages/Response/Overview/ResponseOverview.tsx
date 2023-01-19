@@ -115,11 +115,19 @@ function ResponseOverview(): React.ReactElement {
             fontSize={'small'}
           />
           {isMandatoryRequirements(index) && (
-            <ToolbarItem
-              primaryText={t('Mandatory requirements')}
-              secondaryText={mandatoryRequirements(index)}
-              fontSize={'small'}
-            />
+            <span
+              className={
+                !isAllRequirementsAnswered(index)
+                  ? css.RequirementAnswered__no
+                  : ''
+              }
+            >
+              <ToolbarItem
+                primaryText={t('Mandatory requirements')}
+                secondaryText={mandatoryRequirements(index)}
+                fontSize={'small'}
+              />
+            </span>
           )}
           {isAwardedRequirements(index) && (
             <ToolbarItem
