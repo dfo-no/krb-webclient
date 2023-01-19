@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -11,27 +11,22 @@ import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
 import { ModelType } from '../../../Nexus/enums';
 import { FormFieldsBox } from '../../../components/Form/FormFieldsBox';
 import { IPrefilledResponseProduct } from '../../../Nexus/entities/IPrefilledResponseProduct';
-import { editProduct } from '../../../store/reducers/prefilled-response-reducer';
 import { DFORadio } from '../../../components/DFORadio/DFORadio';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import { PrefilledResponseContainer } from '../PrefilledResponseContext';
 import MultipleProductSelection from '../../../components/ProductSelection/MultipleProductSelection';
 import { Parentable } from '../../../models/Parentable';
 import { IProduct } from '../../../Nexus/entities/IProduct';
 
 interface IProps {
   handleClose: () => void;
-  prefilledResponseProduct: IPrefilledResponseProduct;
+  product: IPrefilledResponseProduct;
 }
 
-const EditProductForm = ({ handleClose, prefilledResponseProduct }: IProps) => {
+export const EditProductForm = ({ handleClose, product }: IProps) => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
-  const { prefilledResponse } = useAppSelector(
-    (state) => state.prefilledResponse
-  );
-  const { productIndex } = useProductIndexState();
-  const dispatch = useAppDispatch();
+  const { prefilledResponse, editProduct } =
+    PrefilledResponseContainer.useContainer();
   const [relatedProducts, setRelatedProducts] = useState(false);
   const options = [
     { value: true, label: t('common.Yes'), recommended: false },
@@ -41,11 +36,11 @@ const EditProductForm = ({ handleClose, prefilledResponseProduct }: IProps) => {
     resolver: nexus.resolverService.resolver(
       ModelType.prefilledResponseProduct
     ),
-    defaultValues: prefilledResponseProduct,
+    defaultValues: product,
   });
 
   const onSubmit = (put: IPrefilledResponseProduct): void => {
-    dispatch(editProduct({ product: put, productIndex: productIndex }));
+    editProduct(put, product.id);
     handleClose();
   };
 

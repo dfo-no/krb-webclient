@@ -6,8 +6,7 @@ import css from '../../Stylesheets/NewProductSelection.module.scss';
 import theme from '../../../theme';
 import { IProduct } from '../../../Nexus/entities/IProduct';
 import { Parentable } from '../../../models/Parentable';
-import { useAppSelector } from '../../../store/hooks';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
+import { PrefilledResponseContainer } from '../PrefilledResponseContext';
 import DFODialog from '../../../components/DFODialog/DFODialog';
 import { Levelable } from '../../../models/Levelable';
 import Utils from '../../../common/Utils';
@@ -20,19 +19,22 @@ import {
 
 export default function NewProductSelection(): React.ReactElement {
   const { t } = useTranslation();
-  const { prefilledResponse } = useAppSelector(
-    (state) => state.prefilledResponse
-  );
-  const { setOpenProductSelection, setCreate, create } = useProductIndexState();
+  const {
+    prefilledResponse,
+    setOpenProductSelection,
+    setNewProductCreate,
+    newProductCreate,
+  } = PrefilledResponseContainer.useContainer();
   const [product, setProduct] = useState<Parentable<IProduct> | null>(null);
 
   const onClick = (item: Levelable<IProduct>) => {
-    setCreate(true);
+    setNewProductCreate(true);
     setProduct(Utils.levelable2Parentable(item));
   };
+
   const cancel = (): void => {
     setOpenProductSelection(false);
-    setCreate(false);
+    setNewProductCreate(false);
   };
 
   const nonDeletedProducts: Parentable<IProduct>[] =
@@ -84,7 +86,7 @@ export default function NewProductSelection(): React.ReactElement {
     );
   };
   const getDialog = (): ReactElement => {
-    if (create) {
+    if (newProductCreate) {
       return <NewProduct product={product} handleClose={cancel} />;
     }
     return modalBox();

@@ -10,6 +10,7 @@ import {
 } from './IRequirementAnswer';
 
 export interface IPrefilledResponse {
+  id: string;
   bank: IBank;
   supplier: string;
   products: IPrefilledResponseProduct[];
@@ -18,6 +19,7 @@ export interface IPrefilledResponse {
 }
 
 export const BasePrefilledResponseSchema = CustomJoi.object().keys({
+  id: CustomJoi.validateOptionalId(),
   bank: BaseBankSchema,
   supplier: CustomJoi.validateText(),
   products: CustomJoi.validateArray(PrefilledResponseProductSchema),

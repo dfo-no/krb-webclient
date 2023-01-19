@@ -20,7 +20,6 @@ export default class StoreService {
     StoreService.bank = bank;
   }
 
-  // eslint-disable-next-line class-methods-use-this
   public getBank(): IBank {
     return StoreService.bank;
   }

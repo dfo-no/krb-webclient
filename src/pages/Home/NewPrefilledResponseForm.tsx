@@ -15,12 +15,10 @@ import {
   ModalFieldsBox,
 } from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
-import { setResponse } from '../../store/reducers/prefilled-response-reducer';
-import { useAppDispatch } from '../../store/hooks';
 import { PREFILLED_RESPONSE } from '../../common/PathConstants';
 import { updateObject } from './UpdateFormatsTools';
 
-interface IProps {
+interface Props {
   handleClose: () => void;
   prefilledResponse: IPrefilledResponse;
 }
@@ -28,21 +26,26 @@ interface IProps {
 const NewPrefilledResponseForm = ({
   handleClose,
   prefilledResponse: rawPrefilledResponse,
-}: IProps) => {
+}: Props) => {
   const { t } = useTranslation();
   const history = useHistory();
-  const dispatch = useAppDispatch();
+
   const nexus = Nexus.getInstance();
   const prefilledResponse = updateObject({ ...rawPrefilledResponse });
+  const prefilledResponseWithId =
+    nexus.prefilledResponseService.withId(prefilledResponse);
 
   const methods = useForm<IPrefilledResponse>({
     resolver: nexus.resolverService.resolver(ModelType.prefilledResponse),
-    defaultValues: prefilledResponse,
+    defaultValues: prefilledResponseWithId,
   });
 
   const onSubmit = async (post: IPrefilledResponse) => {
-    dispatch(setResponse(post));
-    history.push(`/${PREFILLED_RESPONSE}/${post.bank.id}`);
+    nexus.prefilledResponseService
+      .setPrefilledResponse(post)
+      .then((storedPrefilledResponse) => {
+        history.push(`/${PREFILLED_RESPONSE}/${storedPrefilledResponse.id}`);
+      });
   };
 
   return (

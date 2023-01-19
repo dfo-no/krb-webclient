@@ -29,3 +29,9 @@ Feature: Hjemmesiden
     When Laste opp forberedt besvarelse
     Then Ser jeg "Rediger forberedt besvarelse" på siden
     And Ser jeg "Lag Besvarelse" knappen er inaktiv
+
+  Scenario: Jeg kan lasteopp besvarelse
+    Given Jeg åpner startsiden
+    When Laste opp besvarelse
+    Then Ser jeg "Rediger besvarelse" på siden
+    And Ser jeg "Lag forberedt besvarelse" knappen er inaktiv

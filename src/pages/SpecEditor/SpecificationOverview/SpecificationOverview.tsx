@@ -19,6 +19,7 @@ import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import EditSpecificationForm from '../EditSpecificationForm';
 import Utils from '../../../common/Utils';
 import { ISpecification } from '../../../Nexus/entities/ISpecification';
+import SupplierInfoToolbar from './element/SupplierInfoToolbar';
 
 export const chosenRequirements = (
   specification: ISpecification,
@@ -39,11 +40,10 @@ export const chosenRequirements = (
 
 export default function SpecificationOverview(): React.ReactElement {
   const { t } = useTranslation();
-  const { openProductSelection, setOpenProductSelection } =
+  const { specification, openProductSelection, setOpenProductSelection } =
     useSpecificationState();
   const history = useHistory();
   const { setDeleteMode } = useSelectState();
-  const { specification } = useSpecificationState();
   const [editingSpecification, setEditingSpecification] = useState(false);
 
   const open = (): void => {
@@ -84,27 +84,6 @@ export default function SpecificationOverview(): React.ReactElement {
           handleClick={() => setEditingSpecification(true)}
         />
         <DownloadToolbarItem />
-      </Toolbar>
-    );
-  };
-
-  const renderSpecificationInfoToolbar = (): ReactElement => {
-    return (
-      <Toolbar gapType={'md'}>
-        <ToolbarItem
-          primaryText={t('Organization')}
-          secondaryText={specification.organization}
-        />
-        {specification.caseNumber && (
-          <ToolbarItem
-            primaryText={t('Case number')}
-            secondaryText={specification.caseNumber}
-          />
-        )}
-        <ToolbarItem
-          primaryText={t('CURRENCY_UNIT')}
-          secondaryText={t(`CURRENCY_UNIT_${specification.currencyUnit}`)}
-        />
       </Toolbar>
     );
   };
@@ -191,7 +170,13 @@ export default function SpecificationOverview(): React.ReactElement {
           <Typography variant={'lgBold'}>{specification.title}</Typography>
         )}
         {!editingSpecification && renderSpecificationActionsToolbar()}
-        {!editingSpecification && renderSpecificationInfoToolbar()}
+        {!editingSpecification && (
+          <SupplierInfoToolbar
+            orgName={specification.organization}
+            currencyUnit={specification.currencyUnit}
+            caseNumber={specification?.caseNumber}
+          />
+        )}
         {editingSpecification && (
           <EditSpecificationForm
             specification={specification}

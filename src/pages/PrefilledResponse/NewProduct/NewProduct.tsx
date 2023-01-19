@@ -2,19 +2,18 @@ import React, { useEffect } from 'react';
 import { Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 
 import css from '../../Stylesheets/NewProduct.module.scss';
 import GeneralErrorMessage from '../../../Form/GeneralErrorMessage';
 import Nexus from '../../../Nexus/Nexus';
 import theme from '../../../theme';
-import { addProduct } from '../../../store/reducers/prefilled-response-reducer';
 import { IPrefilledResponseProduct } from '../../../Nexus/entities/IPrefilledResponseProduct';
 import { IProduct } from '../../../Nexus/entities/IProduct';
 import { ModelType } from '../../../Nexus/enums';
 import { Parentable } from '../../../models/Parentable';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { PrefilledResponseContainer } from '../PrefilledResponseContext';
 import { useFormStyles } from '../../../components/Form/FormStyles';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import {
   ModalBox,
   ModalButton,
@@ -22,23 +21,22 @@ import {
   ModalFieldsBox,
 } from '../../../components/ModalBox/ModalBox';
 import VerticalTextCtrl from '../../../FormProvider/VerticalTextCtrl';
+import { PREFILLED_RESPONSE, PRODUCTS } from '../../../common/PathConstants';
 
-interface IProps {
+interface Props {
   product: Parentable<IProduct> | null;
   handleClose: () => void;
 }
 export default function NewProduct({
   product,
   handleClose,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
-  const { prefilledResponse } = useAppSelector(
-    (state) => state.prefilledResponse
-  );
+  const { addProduct, setNewProductCreate, prefilledResponse } =
+    PrefilledResponseContainer.useContainer();
   const formStyles = useFormStyles();
-  const dispatch = useAppDispatch();
-  const { setProductIndex, setCreate } = useProductIndexState();
+  const history = useHistory();
 
   const defaultValues: IPrefilledResponseProduct =
     nexus.prefilledResponseService.generateDefaultPrefilledResponseProductValues();
@@ -64,16 +62,17 @@ export default function NewProduct({
   }, [methods, product?.title]);
 
   const changeProduct = (): void => {
-    setCreate(false);
+    setNewProductCreate(false);
   };
 
   const onSubmit = (post: IPrefilledResponseProduct): void => {
     const newProduct =
       nexus.prefilledResponseService.createPrefilledResponseProductWithId(post);
-    const newId = prefilledResponse.products.length;
-    dispatch(addProduct(newProduct));
-    setProductIndex(newId);
-    handleClose();
+    addProduct(newProduct);
+    history.push(
+      `/${PREFILLED_RESPONSE}/${prefilledResponse.id}/${PRODUCTS}/${newProduct.id}/`
+    );
+    // handleClose();  //Do we need this?
   };
 
   return (

@@ -31,9 +31,7 @@ export default function ErrorSummary<T extends FieldValues>({
   }
 
   const errorMessages: string[] = [];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function traverse(o: unknown) {
-    // eslint-disable-next-line no-restricted-syntax
     if (Utils.isRecord(o)) {
       for (const i in o) {
         const property = o[i];

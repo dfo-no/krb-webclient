@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import css from './Breadcrumbs.module.scss';
 import { IBreadcrumb } from '../../models/IBreadcrumb';
 import { HeaderContainer } from '../Header/HeaderContext';
-import { useAppSelector } from '../../store/hooks';
 import { IBank } from '../../Nexus/entities/IBank';
 import { useGetProjectQuery } from '../../store/api/bankApi';
 import ProjectActionsToolbar from '../../pages/Workbench/Projects/ProjectActionsToolbar';
@@ -21,9 +20,6 @@ import {
 const Breadcrumbs = (): ReactElement => {
   const { t } = useTranslation();
   const { title } = HeaderContainer.useContainer();
-  const { prefilledResponse } = useAppSelector(
-    (state) => state.prefilledResponse
-  );
 
   const baseUrl = useRouteMatch<{ projectId: string }>(
     `/${WORKBENCH}/:projectId`
@@ -76,7 +72,7 @@ const Breadcrumbs = (): ReactElement => {
       return title || t('Evaluation');
     }
     if (isPrefilledResponse) {
-      return prefilledResponse.bank.title || t('Prefilled response');
+      return title || t('Prefilled response');
     }
     return t('app_title');
   };

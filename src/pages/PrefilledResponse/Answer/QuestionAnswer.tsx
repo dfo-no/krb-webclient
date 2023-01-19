@@ -7,19 +7,14 @@ import QuestionAnswerPeriodDate from '../../../components/QuestionAnswer/Questio
 import QuestionAnswerSlider from '../../../components/QuestionAnswer/QuestionAnswerSlider';
 import QuestionAnswerText from '../../../components/QuestionAnswer/QuestionAnswerText';
 import QuestionAnswerTime from '../../../components/QuestionAnswer/QuestionAnswerTime';
-import {
-  addAnswer,
-  addProductAnswer,
-} from '../../../store/reducers/prefilled-response-reducer';
+import { PrefilledResponseContainer } from '../PrefilledResponseContext';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { QuestionType } from '../../../Nexus/entities/QuestionType';
 import { QuestionVariant } from '../../../Nexus/enums';
 import { useAccordionState } from '../../../components/DFOAccordion/AccordionContext';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
 import Nexus from '../../../Nexus/Nexus';
 
-interface IProps {
+interface Props {
   requirementAnswer: IRequirementAnswer;
   existingAnswer?: IRequirementAnswer;
 }
@@ -27,13 +22,10 @@ interface IProps {
 export default function QuestionAnswer({
   requirementAnswer,
   existingAnswer,
-}: IProps): React.ReactElement {
-  const dispatch = useAppDispatch();
+}: Props): React.ReactElement {
+  const { prefilledResponse, addAnswer, addProductAnswer, product } =
+    PrefilledResponseContainer.useContainer();
   const nexus = Nexus.getInstance();
-  const { prefilledResponse } = useAppSelector(
-    (state) => state.prefilledResponse
-  );
-  const { productIndex } = useProductIndexState();
   const { setActiveKey } = useAccordionState();
 
   const onSubmit = (post: QuestionType): void => {
@@ -44,15 +36,10 @@ export default function QuestionAnswer({
       question: post,
       questionId: requirementAnswer.question.id,
     };
-    if (productIndex === -1) {
-      dispatch(addAnswer(newAnswer));
+    if (product === undefined) {
+      addAnswer(newAnswer);
     } else {
-      dispatch(
-        addProductAnswer({
-          answer: newAnswer,
-          productId: prefilledResponse.products[productIndex].id,
-        })
-      );
+      addProductAnswer(newAnswer, product.id);
     }
     setActiveKey('');
   };

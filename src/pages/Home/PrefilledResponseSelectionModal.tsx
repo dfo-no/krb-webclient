@@ -10,11 +10,10 @@ import {
   ModalButton,
   ModalButtonsBox,
 } from '../../components/ModalBox/ModalBox';
-import { setResponse } from '../../store/reducers/prefilled-response-reducer';
-import { useAppDispatch } from '../../store/hooks';
 import { PREFILLED_RESPONSE } from '../../common/PathConstants';
+import Nexus from '../../Nexus/Nexus';
 
-interface IProps {
+interface Props {
   selectedPrefilledResponse: IPrefilledResponse;
   setSelectedPrefilledResponse: Dispatch<
     SetStateAction<IPrefilledResponse | null>
@@ -24,14 +23,20 @@ interface IProps {
 export default function PrefilledResponseSelectionModal({
   selectedPrefilledResponse,
   setSelectedPrefilledResponse,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const history = useHistory();
   const { t } = useTranslation();
-  const dispatch = useAppDispatch();
+  const nexus = Nexus.getInstance();
 
   const editPrefilledResponse = (): void => {
-    dispatch(setResponse(selectedPrefilledResponse));
-    history.push(`/${PREFILLED_RESPONSE}/${selectedPrefilledResponse.bank.id}`);
+    const prefilledResponseWithId = nexus.prefilledResponseService.withId(
+      selectedPrefilledResponse
+    );
+    nexus.prefilledResponseService
+      .setPrefilledResponse(prefilledResponseWithId)
+      .then((prefilledResponse) => {
+        history.push(`/${PREFILLED_RESPONSE}/${prefilledResponse.id}`);
+      });
   };
 
   const cancel = (): void => {
