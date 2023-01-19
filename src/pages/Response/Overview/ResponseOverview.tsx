@@ -13,6 +13,7 @@ import { PRODUCTS, RESPONSE } from '../../../common/PathConstants';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
 import { useResponseState } from '../ResponseContext';
+import SupplierInfoToolbar from '../../SpecEditor/SpecificationOverview/element/SupplierInfoToolbar';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 
 function ResponseOverview(): React.ReactElement {
@@ -180,6 +181,11 @@ function ResponseOverview(): React.ReactElement {
         <Toolbar hasPadding={true}>
           <DownloadToolbarItem />
         </Toolbar>
+        <SupplierInfoToolbar
+          orgName={response.specification.organization}
+          currencyUnit={response.specification.currencyUnit}
+          caseNumber={response.specification?.caseNumber}
+        />
         <Typography variant={'mdBold'}>{t('Products')}</Typography>
         <ul aria-label="general-products">
           <li className={css.Active} key={'generic'}>
