@@ -72,7 +72,6 @@ export default function NewProduct({
     history.push(
       `/${PREFILLED_RESPONSE}/${prefilledResponse.id}/${PRODUCTS}/${newProduct.id}/`
     );
-    // handleClose();  //Do we need this?
   };
 
   return (

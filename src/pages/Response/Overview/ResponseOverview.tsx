@@ -48,7 +48,7 @@ function ResponseOverview(): React.ReactElement {
   const absoluteRequirements = (index: number) => {
     if (response.products[index].originProduct.requirementAnswers.length > 0) {
       let totalAbsoluteRequirements = 0;
-      response.products[index].originProduct.requirementAnswers.map(
+      response.products[index].originProduct.requirementAnswers.forEach(
         (element) => {
           if (!isAwardedRequirement(element)) totalAbsoluteRequirements++;
         }
@@ -60,7 +60,7 @@ function ResponseOverview(): React.ReactElement {
   const absoluteRequirementAnswered = (index: number) => {
     if (response.products[index].requirementAnswers.length > 0) {
       let absoluteReqAnswered = 0;
-      response.products[index].requirementAnswers.map((element) => {
+      response.products[index].requirementAnswers.forEach((element) => {
         if (!isAwardedRequirement(element)) absoluteReqAnswered++;
       });
       return absoluteReqAnswered;
@@ -72,7 +72,7 @@ function ResponseOverview(): React.ReactElement {
   const totalEvaluatedDiscount = (index: number) => {
     let discount = 0;
     if (response.products[index].requirementAnswers.length > 0) {
-      response.products[index].requirementAnswers.map((element) => {
+      response.products[index].requirementAnswers.forEach((element) => {
         if (element.question.answer.discount) {
           discount += element.question.answer.discount;
         }
