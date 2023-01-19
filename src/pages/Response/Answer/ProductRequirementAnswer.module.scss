@@ -3,11 +3,11 @@
   flex-direction: column;
   padding: var(--normal-gap) 0;
   gap: var(--tiny-gap);
+  font-size: var(--small-fontsize);
 
   .title {
     display: flex;
     justify-content: space-between;
-    font-size: var(--small-fontsize);
     font-weight: var(--font-weight-bold);
   }
 }
