@@ -47,7 +47,7 @@ export default function EditProductVariant({ variant }: IProps): ReactElement {
   });
 
   const awardCriteriaSliderDiscount = useWatch({
-    name: 'question.config.discountValues',
+    name: 'question.config.discountsValue',
     control,
   });
 
