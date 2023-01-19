@@ -28,7 +28,7 @@ function ResponseOverview(): React.ReactElement {
     history.push(`/${RESPONSE}/${response.id}/${PRODUCTS}/${index}`);
   };
 
-  const isAwardedRequirements = (requirement: IRequirementAnswer) => {
+  const isAwardedRequirement = (requirement: IRequirementAnswer) => {
     return (
       ('discount' in requirement.question.config &&
         requirement.question.config.discount > 0) ||
@@ -49,7 +49,7 @@ function ResponseOverview(): React.ReactElement {
       let totalAbsoluteRequirements = 0;
       response.products[index].originProduct.requirementAnswers.map(
         (element) => {
-          if (!isAwardedRequirements(element)) totalAbsoluteRequirements++;
+          if (!isAwardedRequirement(element)) totalAbsoluteRequirements++;
         }
       );
       return totalAbsoluteRequirements;
@@ -60,7 +60,7 @@ function ResponseOverview(): React.ReactElement {
     if (response.products[index].requirementAnswers.length > 0) {
       let absoluteReqAnswered = 0;
       response.products[index].requirementAnswers.map((element) => {
-        if (!isAwardedRequirements(element)) absoluteReqAnswered++;
+        if (!isAwardedRequirement(element)) absoluteReqAnswered++;
       });
       return absoluteReqAnswered;
     } else {
@@ -79,10 +79,21 @@ function ResponseOverview(): React.ReactElement {
     }
     return `${discount} ${t('NOK')}`;
   };
+
   const mandatoryRequirements = (index: number) => {
     return `${absoluteRequirementAnswered(index)}/${absoluteRequirements(
       index
     )}`;
+  };
+
+  const isMandatoryRequirements = (index: number) => {
+    return absoluteRequirements(index) != 0;
+  };
+
+  const isAwardedRequirements = (index: number) => {
+    const totalRequirements =
+      response.products[index].originProduct.requirementAnswers.length;
+    return absoluteRequirements(index) !== totalRequirements;
   };
 
   const isAllRequirementsAnswered = (index: number) => {
@@ -103,16 +114,20 @@ function ResponseOverview(): React.ReactElement {
             secondaryText={product.originProduct.title}
             fontSize={'small'}
           />
-          <ToolbarItem
-            primaryText={t('Mandatory requirements')}
-            secondaryText={mandatoryRequirements(index)}
-            fontSize={'small'}
-          />
-          <ToolbarItem
-            primaryText={t('Total evaluated discount')}
-            secondaryText={totalEvaluatedDiscount(index)}
-            fontSize={'small'}
-          />
+          {isMandatoryRequirements(index) && (
+            <ToolbarItem
+              primaryText={t('Mandatory requirements')}
+              secondaryText={mandatoryRequirements(index)}
+              fontSize={'small'}
+            />
+          )}
+          {isAwardedRequirements(index) && (
+            <ToolbarItem
+              primaryText={t('Total evaluated discount')}
+              secondaryText={totalEvaluatedDiscount(index)}
+              fontSize={'small'}
+            />
+          )}
         </Toolbar>
       );
     };
