@@ -12,6 +12,7 @@ import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 import { ICodelistQuestion } from '../../../../Nexus/entities/ICodelistQuestion';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { useSpecificationState } from '../../SpecificationContext';
+import MaximumDiscountsErrorMessage from '../../../../Form/MaximumDiscountsErrorMessage';
 
 interface IProps {
   item: ICodelistQuestion;
@@ -24,7 +25,7 @@ const QuestionSpecificationCodelist = ({
 }: IProps) => {
   const { t } = useTranslation();
   const [codesAwardCriteria, setCodesAwardCriteria] = useState(false);
-  const { control, setValue } = useFormContext<IRequirementAnswer>();
+  const { control, setValue, formState } = useFormContext<IRequirementAnswer>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'question.config.codes',
@@ -133,6 +134,10 @@ const QuestionSpecificationCodelist = ({
         type={'number'}
         color={'var(--text-primary-color)'}
         adornment={t('NOK')}
+      />
+      <MaximumDiscountsErrorMessage
+        errors={formState.errors}
+        path={'question.config.codes'}
       />
       <ul>
         {codelist.codes.map((code) => {

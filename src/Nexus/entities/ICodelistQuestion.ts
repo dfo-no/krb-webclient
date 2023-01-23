@@ -33,6 +33,12 @@ export interface ICodelistAnswer extends IAnswerBase {
   codes: string[];
 }
 
+const codesSchema = CustomJoi.object().keys({
+  code: CustomJoi.validateId(),
+  mandatory: CustomJoi.validateBoolean(),
+  discount: CustomJoi.validateCodeDiscount(),
+});
+
 export const CodelistQuestionWorkbenchSchema = QuestionBaseSchema.keys({
   type: CustomJoi.validateType(QuestionVariant.Q_CODELIST),
   config: ConfigBaseSchema.keys({
@@ -48,6 +54,15 @@ export const CodelistQuestionWorkbenchSchema = QuestionBaseSchema.keys({
 
 export const CodelistQuestionAnswerSchema =
   CodelistQuestionWorkbenchSchema.keys({
+    config: ConfigBaseSchema.keys({
+      codelist: CustomJoi.validateId(),
+      mandatoryCodes: CustomJoi.any(),
+      optionalCodes: CustomJoi.any(),
+      optionalCodeMinAmount: CustomJoi.validateMinCodes(),
+      optionalCodeMaxAmount: CustomJoi.validateMaxCodes(),
+      codes: CustomJoi.validateQuestionCodes(codesSchema),
+      discountSumMax: CustomJoi.validateHighestDiscount(),
+    }),
     answer: CustomJoi.object().keys({
       codes: CustomJoi.validateIdArray(),
       discount: CustomJoi.validateDiscount(),

@@ -15,12 +15,14 @@ import { ScrollableContainer } from '../../../components/ScrollableContainer/Scr
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import { useSelectState } from './SelectContext';
 import { VariantProvider } from '../VariantContext';
+import { HeaderContainer } from '../../../components/Header/HeaderContext';
 
 export default function Create(): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project, isLoading } = useGetProjectQuery(projectId);
   const { needIndex, setNeedIndex, setNeedId, setDeleteMode } =
     useSelectState();
+  const { setTitle } = HeaderContainer.useContainer();
 
   useEffect(() => {
     if (project && !needIndex) {
@@ -33,6 +35,13 @@ export default function Create(): React.ReactElement {
       }
     }
   });
+
+  useEffect(() => {
+    if (project) setTitle(project.title);
+    return function cleanup() {
+      setTitle('');
+    };
+  }, [project, setTitle]);
 
   if (isLoading) {
     return <LoaderSpinner />;
