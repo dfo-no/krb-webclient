@@ -85,17 +85,19 @@ Feature: Spesifikasjonsprodukt
     And Jeg klikker på "Velg variant" til produktkrav "Dato med periode som krav"
     And Jeg velger "10-12-2022" i feltet "Fra"
     And Jeg velger "19-12-2022" i feltet "Til"
-    And Jeg skriver 5 i feltet "Varighet"
+    And Jeg skriver 1 i feltet "Varighet"
     And Jeg klikker på "Lagre krav" knapp for å lagre
-    Then Ser jeg "Varighet" har verdi "5"
+    Then Ser jeg "Varighet" har verdi "1"
     When Jeg klikker på "Rediger kravet" knapp
     And Jeg klikker på "tildelingskriterie" checkbox
     And Jeg klikker på "Er det rom for variasjon i antall dager" checkbox
     And Jeg skriver 2 i feltet "Varighet" for laveste antall dager
+    And Jeg skriver 5 i feltet "Varighet" for høyeste antall dager
     And Jeg skriver 1 i feltet "dager" for laveste antall dager
     And Jeg klikker på "Lagre krav" knapp for å lagre
     Then Ser jeg feilmelding "Kan ikke være mindre enn 2"
     When Jeg skriver 2 i feltet "dager" for laveste antall dager
+    And Jeg skriver 3 i feltet "dager" sekvens 1
     And Jeg klikker på "Lagre krav" knapp for å lagre
     Then Ser jeg "Minimum" har verdi "2"
     And Ser jeg "Maksimum" har verdi "5"

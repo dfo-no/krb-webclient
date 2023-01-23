@@ -254,16 +254,16 @@ class TextUtils {
     TextUtils.setChosenConfigs(chosenConfig, t('From'), from);
     TextUtils.setChosenConfigs(chosenConfig, t('To'), to);
     if (isPeriod) {
-      if (min == 0) {
+      if (min !== max) {
+        TextUtils.setChosenConfigs(chosenConfig, t('Minimum'), `${min}`);
+        TextUtils.setChosenConfigs(chosenConfig, t('Maximum'), `${max}`);
+      }
+      if (min == max)
         TextUtils.setChosenConfigs(
           chosenConfig,
           t('Duration'),
           `${duration} ${t('Days')}`
         );
-      } else {
-        TextUtils.setChosenConfigs(chosenConfig, t('Minimum'), `${min}`);
-        TextUtils.setChosenConfigs(chosenConfig, t('Maximum'), `${max}`);
-      }
     }
     return chosenConfig;
   };

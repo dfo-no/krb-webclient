@@ -19,7 +19,7 @@ describe('DateJoi', () => {
       periodMin: 10,
     });
     expect(reportError1?.error?.details[0].message).toEqual(
-      'Må være et positivt heltall'
+      'Må være minimum 1'
     );
     expect(reportError2?.error?.details[0].message).toEqual(
       'Må være et positivt heltall'
@@ -57,6 +57,8 @@ describe('DateJoi', () => {
   test('Joi validatePeriodMin() and validatePeriodMax() ensure minimum and maximum validation and should work together', () => {
     const schema = CustomJoi.object().keys({
       config: {
+        fromBoundary: CustomJoi.validateFromBoundaryDate(),
+        toBoundary: CustomJoi.validateToBoundaryDate(),
         periodMin: CustomJoi.validatePeriodMin(),
         periodMax: CustomJoi.validatePeriodMax(),
       },
@@ -67,6 +69,8 @@ describe('DateJoi', () => {
 
     const reportError1 = schema.validate({
       config: {
+        fromBoundary: '2022-02-10T12:00:00.000Z',
+        toBoundary: '2022-02-18T12:00:00.000Z',
         periodMin: null,
         periodMax: 1,
       },
@@ -76,8 +80,10 @@ describe('DateJoi', () => {
     });
     const reportError2 = schema.validate({
       config: {
+        fromBoundary: '2022-02-10T12:00:00.000Z',
+        toBoundary: '2022-02-18T12:00:00.000Z',
         periodMin: 1,
-        periodMax: null,
+        periodMax: 10,
       },
       answer: {
         minDays: 1,
@@ -85,6 +91,8 @@ describe('DateJoi', () => {
     });
     const reportError3 = schema.validate({
       config: {
+        fromBoundary: '2022-02-10T12:00:00.000Z',
+        toBoundary: '2022-02-18T12:00:00.000Z',
         periodMin: 2,
         periodMax: 1,
       },
@@ -94,6 +102,8 @@ describe('DateJoi', () => {
     });
     const reportSuccess1 = schema.validate({
       config: {
+        fromBoundary: '2022-02-10T12:00:00.000Z',
+        toBoundary: '2022-02-18T12:00:00.000Z',
         periodMin: 1,
         periodMax: 2,
       },
@@ -103,7 +113,9 @@ describe('DateJoi', () => {
     });
 
     expect(reportError1?.error?.details[0].message).toEqual('Må være et tall');
-    expect(reportError2?.error?.details[0].message).toEqual('Må være et tall');
+    expect(reportError2?.error?.details[0].message).toEqual(
+      'Varighet i antall dager må være innen den angitte datoperioden'
+    );
     expect(reportError3?.error?.details[0].message).toEqual(
       'Kan ikke være mindre enn 2'
     );

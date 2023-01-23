@@ -19,7 +19,7 @@ describe('IPeriodDateQuestion should validate', () => {
       config: {
         defaultDiscount: 1,
         isPeriod: false,
-        periodMax: 2,
+        periodMax: 1,
         periodMin: 1,
         weekdays: [],
         fromBoundary: '2021-11-24T23:00:00.000Z',
@@ -49,7 +49,7 @@ describe('IPeriodDateQuestion should validate', () => {
       config: {
         defaultDiscount: 1,
         isPeriod: false,
-        periodMax: 2,
+        periodMax: 1,
         periodMin: 1,
         weekdays: [],
         fromBoundary: '2021-11-24T23:00:00.000Z',
@@ -79,7 +79,7 @@ describe('IPeriodDateQuestion should validate', () => {
       config: {
         defaultDiscount: 1,
         isPeriod: false,
-        periodMax: 2,
+        periodMax: 1,
         periodMin: 1,
         weekdays: [],
         fromBoundary: '2021-11-24T23:00:00.000Z',
@@ -109,7 +109,7 @@ describe('IPeriodDateQuestion should validate', () => {
       config: {
         defaultDiscount: 1,
         isPeriod: true,
-        periodMax: 2,
+        periodMax: 1,
         periodMin: 1,
         weekdays: [],
         fromBoundary: '2021-11-24T23:00:00.000Z',
