@@ -7,6 +7,8 @@ import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { QuestionVariant, VariantType } from '../../../Nexus/enums';
 import { useResponseState } from '../ResponseContext';
 import Badge, { BadgeType } from '../../../components/UI/Badge/Badge';
+import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
+import { currencyService } from '../../../Nexus/services/CurrencyService';
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;
@@ -28,21 +30,21 @@ export default function ProductRequirementAnswer({
         case QuestionVariant.Q_CONFIRMATION:
           return requirementAnswer.question.config.discount > 0;
         case QuestionVariant.Q_CODELIST:
-          return requirementAnswer.question.config.codes.length > 0;
+          return requirementAnswer.question.config.codes?.length > 0;
         case QuestionVariant.Q_SLIDER:
-          return requirementAnswer.question.config.discountsValue.length > 0;
+          return requirementAnswer.question.config.discountsValue?.length > 0;
         case QuestionVariant.Q_PERIOD_DATE:
           return (
-            requirementAnswer.question.config.dateDiscounts.length > 0 ||
-            requirementAnswer.question.config.numberDayDiscounts.length > 0
+            requirementAnswer.question.config.dateDiscounts?.length > 0 ||
+            requirementAnswer.question.config.numberDayDiscounts?.length > 0
           );
         case QuestionVariant.Q_TIME:
           return (
-            requirementAnswer.question.config.timeDiscounts.length > 0 ||
-            requirementAnswer.question.config.timePeriodDiscount.length > 0
+            requirementAnswer.question.config.timeDiscounts?.length > 0 ||
+            requirementAnswer.question.config.timePeriodDiscount?.length > 0
           );
         case QuestionVariant.Q_TEXT:
-          return requirementAnswer.question.config.discountValues.length > 0;
+          return requirementAnswer.question.config.discountValues?.length > 0;
       }
     }
   };
@@ -73,6 +75,39 @@ export default function ProductRequirementAnswer({
     }
   };
 
+  const reqAnswer = (
+    productIndex >= 0 ? response.products[productIndex] : response
+  ).requirementAnswers.find((reqAns) => {
+    return reqAns.id === requirementAnswer.id;
+  });
+
+  const evaluatedDiscount = () => {
+    return reqAnswer?.question.answer.discount;
+  };
+
+  const isTextQuestionType =
+    requirementAnswer.question.type === QuestionVariant.Q_TEXT;
+
+  const renderTextDiscount = (id: string) => {
+    return (
+      <div className={css.ProductRequirementAnswer__textDiscountTable}>
+        <span>{t('Deduction')}</span>
+        {requirementAnswer?.id === id &&
+          requirementAnswer?.question.type === QuestionVariant.Q_TEXT &&
+          requirementAnswer?.question.config.discountValues?.map((d) => {
+            return (
+              <span key={d.id}>
+                {currencyService(
+                  response.specification.currencyUnit,
+                  d.discount
+                )}
+              </span>
+            );
+          })}
+      </div>
+    );
+  };
+
   useEffect(() => {
     const answer = (
       productIndex >= 0 ? response.products[productIndex] : response
@@ -95,6 +130,30 @@ export default function ProductRequirementAnswer({
           existingAnswer={existingAnswer}
           productIndex={productIndex}
         />
+      )}
+      {isAwardCriteria(requirementAnswer.id) && (
+        <>
+          {isTextQuestionType ? (
+            <>
+              <span className={css.discountLevelsTilte}>
+                {t('Discount levels')}
+              </span>
+              {renderTextDiscount(requirementAnswer.id)}
+              {reqAnswer?.question.type === QuestionVariant.Q_TEXT &&
+                reqAnswer?.question.config.discountValues?.length}
+            </>
+          ) : (
+            <ToolbarItem
+              primaryText={t('Evaluated discount')}
+              secondaryText={currencyService(
+                response.specification.currencyUnit,
+                evaluatedDiscount() ?? 0
+              )}
+              fontSize={'small'}
+              dataCy={'evaluated-discount'}
+            />
+          )}
+        </>
       )}
     </div>
   );

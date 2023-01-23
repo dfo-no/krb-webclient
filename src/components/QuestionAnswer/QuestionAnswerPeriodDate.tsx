@@ -56,6 +56,9 @@ const QuestionAnswerPeriodDate = ({
           onChange={
             isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
           }
+          onBlur={
+            isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
+          }
         >
           <DateCtrl
             minDate={item.config.fromBoundary ?? undefined}

@@ -54,6 +54,9 @@ const QuestionAnswerText = ({
           onChange={
             isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
           }
+          onBlur={
+            isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
+          }
         >
           <TextAreaCtrl
             name={'answer.text'}
