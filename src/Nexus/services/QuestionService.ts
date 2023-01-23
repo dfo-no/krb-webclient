@@ -89,7 +89,7 @@ export default class QuestionService {
             fromBoundary: null,
             toBoundary: null,
             isPeriod: false,
-            periodMin: 0,
+            periodMin: 1,
             periodMax: 1,
             weekdays: weekdaysData,
             defaultDiscount: 1,

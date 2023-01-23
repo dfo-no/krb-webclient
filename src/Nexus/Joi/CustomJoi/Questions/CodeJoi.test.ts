@@ -51,10 +51,18 @@ describe('CodeJoi', () => {
 
   test('Joi validateCodes() should show error message if not a positive integer over 1', () => {
     const schema = CustomJoi.object().keys({
-      codes: CustomJoi.validateQuestionCodes(),
+      discountSumMax: CustomJoi.validateHighestDiscount(),
+      codes: CustomJoi.validateQuestionCodes(
+        CustomJoi.object().keys({
+          code: CustomJoi.validateId(),
+          mandatory: CustomJoi.validateBoolean(),
+          discount: CustomJoi.validateCodeDiscount(),
+        })
+      ),
     });
 
     const reportError1 = schema.validate({
+      discountSumMax: 1000,
       codes: [
         {
           code: uuidv4(),
@@ -64,25 +72,35 @@ describe('CodeJoi', () => {
       ],
     });
     const reportError2 = schema.validate({
+      discountSumMax: 1000,
       codes: [
         {
           code: uuidv4(),
           mandatory: false,
-          discount: 120,
+          discount: 1000,
+        },
+        {
+          code: uuidv4(),
+          mandatory: false,
+          discount: 1000,
         },
       ],
     });
     const reportSuccess = schema.validate({
+      discountSumMax: 1000,
       codes: [
         {
           code: uuidv4(),
           mandatory: false,
-          discount: 12,
+          discount: 500,
         },
       ],
     });
     expect(reportError1?.error?.details[0].message).toEqual(
       'Må være minimum 0'
+    );
+    expect(reportError2?.error?.details[0].message).toEqual(
+      'Fradrag(er) til sammen kan ikke være mer enn fradragssum'
     );
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });

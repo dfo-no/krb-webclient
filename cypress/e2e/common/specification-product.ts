@@ -186,6 +186,26 @@ When(
     }
 );
 
+When(
+  'Jeg skriver {int} i feltet {string} for høyeste antall dager',
+  (value: string, fieldName: string) => {
+    cy.get(`input[placeholder="${fieldName}"]`)
+      .eq(1)
+      .clear({ force: true })
+      .type(value, { force: true });
+  }
+);
+
+When(
+  'Jeg skriver {int} i feltet {string} sekvens {int}',
+  (value: string, fieldName: string, fieldNumber: number) => {
+    cy.get(`input[placeholder="${fieldName}"]`)
+      .eq(fieldNumber)
+      .clear({ force: true })
+      .type(value, { force: true });
+  }
+);
+
 Then('Ser jeg feilmelding {string}', (errorMessage: string) => {
   cy.contains(errorMessage);
 });
