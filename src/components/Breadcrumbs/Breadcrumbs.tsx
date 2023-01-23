@@ -1,13 +1,10 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import { ReactElement } from 'react';
 import { Link, useLocation, useRouteMatch } from 'react-router-dom';
-import { skipToken } from '@reduxjs/toolkit/dist/query/react';
 import { useTranslation } from 'react-i18next';
 
 import css from './Breadcrumbs.module.scss';
 import { IBreadcrumb } from '../../models/IBreadcrumb';
 import { HeaderContainer } from '../Header/HeaderContext';
-import { IBank } from '../../Nexus/entities/IBank';
-import { useGetProjectQuery } from '../../store/api/bankApi';
 import ProjectActionsToolbar from '../../pages/Workbench/Projects/ProjectActionsToolbar';
 import {
   EVALUATION,
@@ -25,7 +22,6 @@ const Breadcrumbs = (): ReactElement => {
     `/${WORKBENCH}/:projectId`
   );
   const location = useLocation();
-  const [project, setProject] = useState<IBank>();
 
   const breadcrumbs: IBreadcrumb[] = [
     {
@@ -38,11 +34,9 @@ const Breadcrumbs = (): ReactElement => {
     return index === breadcrumbs.length - 1;
   };
 
-  const { data: fetchedProject } = useGetProjectQuery(
-    baseUrl?.params?.projectId ?? skipToken
-  );
-
   const isWorkbench = location.pathname.startsWith(`/${WORKBENCH}`);
+  const isProject = isWorkbench && !!baseUrl?.params?.projectId;
+
   const isSpecification = location.pathname.startsWith(`/${SPECIFICATION}`);
   const isResponse = location.pathname.startsWith(`/${RESPONSE}`);
   const isEvaluation = location.pathname.startsWith(`/${EVALUATION}`);
@@ -50,17 +44,9 @@ const Breadcrumbs = (): ReactElement => {
     `/${PREFILLED_RESPONSE}`
   );
 
-  useEffect(() => {
-    setProject(fetchedProject);
-  }, [fetchedProject]);
-
-  useEffect(() => {
-    setProject(baseUrl?.params.projectId ? fetchedProject : undefined);
-  }, [baseUrl, fetchedProject]);
-
   const getTitle = (): string => {
-    if (project) {
-      return project.title || t('Project');
+    if (isProject) {
+      return title || t('Project');
     }
     if (isSpecification) {
       return title || t('Requirement specification');
@@ -100,7 +86,7 @@ const Breadcrumbs = (): ReactElement => {
 
   if (isWorkbench) {
     breadcrumbs.push({
-      label: t('Workbench'),
+      label: t('common.Workbench'),
       url: `/${WORKBENCH}`,
     });
   }
@@ -112,10 +98,10 @@ const Breadcrumbs = (): ReactElement => {
     });
   }
 
-  if (project) {
+  if (isProject) {
     breadcrumbs.push({
       label: `${t('Project')}/ ${getTitle()}`,
-      url: project.id,
+      url: baseUrl?.params?.projectId,
     });
   }
 
@@ -135,7 +121,7 @@ const Breadcrumbs = (): ReactElement => {
           </span>
         ))}
       </div>
-      {project && <ProjectActionsToolbar />}
+      {isProject && <ProjectActionsToolbar />}
     </div>
   );
 };

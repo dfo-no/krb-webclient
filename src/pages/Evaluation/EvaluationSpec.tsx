@@ -6,7 +6,6 @@ import css from './Evaluation.module.scss';
 import DateUtils from '../../common/DateUtils';
 import FileUpload from '../../components/FileUpload/FileUpload';
 import { httpPost } from '../../api/http';
-import { useAppDispatch } from '../../store/hooks';
 import { useEvaluationState } from './EvaluationContext';
 import {
   getDefaultSpecificationFile,
@@ -17,11 +16,10 @@ import {
 const EvaluationSpec = (): ReactElement => {
   const { t } = useTranslation();
   const [uploadError, setUploadError] = useState('');
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
     setUploadError('');
-  }, [dispatch]);
+  }, []);
 
   const { setEvaluations, setSpecificationUpload, specificationUpload } =
     useEvaluationState();
