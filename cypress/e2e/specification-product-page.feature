@@ -63,19 +63,24 @@ Feature: Spesifikasjonsprodukt
      And Jeg skriver 1 i feltet "Minimum"
      And Jeg skriver 4 i feltet "Maksimum"
      And Jeg klikker på "tildelingskriterie" checkbox
+     And Jeg skriver 100 i feltet "Fradragssum"
      And Jeg velger kodelist "Hvit"
-     And Jeg legge til "10" fradrag for kode "Hvit"
+     And Jeg legge til "200" fradrag for kode "Hvit"
      And Jeg velger kodelist "Rød"
      And Jeg legge til "100" fradrag for kode "Rød"
      And Jeg klikker på obligatorisk checkbox for kode "Rød"
      Then Ser jeg fradrag for kode "Rød" er inaktiv
      When Jeg klikker på "Lagre krav" knapp for å lagre
-     Then Ser jeg "Koder" har verdi "Hvit, Rød"
+     And Ser jeg feilmelding "Fradrag(er) til sammen kan ikke være mer enn fradragssum"
+     When Jeg skriver 200 i feltet "Fradragssum"
+     Then Jeg klikker på "Lagre krav" knapp for å lagre
+     And Ser jeg "Koder" har verdi "Hvit, Rød"
 
   Scenario: Jeg kan angi høyeste mulige fradragssum for krav som har svartype kodeliste
     Given Jeg åpner spesifikasjon "specification_all_answer_typer.pdf"
     When Jeg redigerer produkt "Kodeliste"
     And Jeg klikker på "Velg variant" til produktkrav "Kodeliste som krav (1)"
+    And Jeg klikker på "tildelingskriterie" checkbox
     And Jeg skriver 1000 i feltet "Fradragssum"
     Then Ser jeg "Fradragssum" har verdi 1000
 
