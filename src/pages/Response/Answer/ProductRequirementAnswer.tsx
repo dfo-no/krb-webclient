@@ -75,14 +75,8 @@ export default function ProductRequirementAnswer({
     }
   };
 
-  const reqAnswer = (
-    productIndex >= 0 ? response.products[productIndex] : response
-  ).requirementAnswers.find((reqAns) => {
-    return reqAns.id === requirementAnswer.id;
-  });
-
   const evaluatedDiscount = () => {
-    return reqAnswer?.question.answer.discount;
+    return existingAnswer?.question.answer.discount;
   };
 
   const isTextQuestionType =
@@ -139,8 +133,6 @@ export default function ProductRequirementAnswer({
                 {t('Discount levels')}
               </span>
               {renderTextDiscount(requirementAnswer.id)}
-              {reqAnswer?.question.type === QuestionVariant.Q_TEXT &&
-                reqAnswer?.question.config.discountValues?.length}
             </>
           ) : (
             <ToolbarItem

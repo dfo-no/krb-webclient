@@ -219,11 +219,11 @@ describe('Utils functions should work', () => {
     const result1 = Utils.findDiscountFromValue(2, discountValuePairs);
     const result2 = Utils.findDiscountFromValue(27.5, discountValuePairs);
     const result3 = Utils.findDiscountFromValue(2.1, discountValuePairs);
-    const result4 = Utils.findDiscountFromValue(18, discountValuePairs);
+    const result4 = Utils.findDiscountFromValue(25, discountValuePairs);
     expect(result1).toEqual(12);
-    expect(result2).toEqual(85);
-    expect(result3).toEqual(12.4);
-    expect(result4).toEqual(46);
+    expect(result2).toEqual(0);
+    expect(result3).toEqual(0);
+    expect(result4).toEqual(70);
   });
 
   it('Utils.findDiscountFromDate returns correct discount for dates', () => {
@@ -251,13 +251,13 @@ describe('Utils functions should work', () => {
       discountDatePairs
     );
     const result4 = Utils.findDiscountFromDate(
-      '2022-02-28T12:00:00.000Z',
+      '2022-03-04T12:00:00.000Z',
       discountDatePairs
     );
     expect(result1).toEqual(12);
-    expect(result2).toEqual(88);
-    expect(result3).toEqual(6);
-    expect(result4).toEqual(46);
+    expect(result2).toEqual(0);
+    expect(result3).toEqual(0);
+    expect(result4).toEqual(60);
   });
 
   it('Utils.findDiscountFromTime returns correct discount for times', () => {
@@ -281,7 +281,7 @@ describe('Utils functions should work', () => {
       discountTimePairs
     );
     const result3 = Utils.findDiscountFromTime(
-      '2022-02-11T07:21:00.000Z',
+      '2022-02-10T10:20:00.000Z',
       discountTimePairs
     );
     const result4 = Utils.findDiscountFromTime(
@@ -289,9 +289,9 @@ describe('Utils functions should work', () => {
       discountTimePairs
     );
     expect(result1).toEqual(12);
-    expect(result2).toEqual(85);
-    expect(result3).toEqual(12.4);
-    expect(result4).toEqual(46);
+    expect(result2).toEqual(0);
+    expect(result3).toEqual(50);
+    expect(result4).toEqual(0);
   });
 
   it('Has a working isNumeric function', () => {

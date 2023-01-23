@@ -175,14 +175,20 @@ export default class QuestionService {
   calculateDiscount = (question: QuestionType): number => {
     switch (question.type) {
       case QuestionVariant.Q_CHECKBOX:
-        return question.config.discount;
+        if (question.answer.value === question.config.preferedAlternative) {
+          return question.config.discount;
+        }
+        return 0;
       case QuestionVariant.Q_CODELIST:
         return Utils.findDiscountFromCodes(
           question.answer.codes,
           question.config
         );
       case QuestionVariant.Q_CONFIRMATION:
-        return question.config.discount;
+        if (question.answer.value) {
+          return question.config.discount;
+        }
+        return 0;
       case QuestionVariant.Q_PERIOD_DATE:
         return Utils.findDiscountFromDate(
           question.answer.fromDate,
@@ -193,8 +199,6 @@ export default class QuestionService {
           question.answer.value,
           question.config.discountsValue
         );
-      case QuestionVariant.Q_TEXT:
-        return question.answer.text.length > 0 ? 100 : 0;
       case QuestionVariant.Q_TIME:
         return Utils.findDiscountFromTime(
           question.answer.fromTime,

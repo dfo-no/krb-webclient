@@ -18,7 +18,7 @@ Feature: Hjemmesiden
 
   Scenario: Jeg kan lasteopp kravspesifikasjon
     Given Jeg åpner startsiden
-    When Laste opp kravspesifikasjon
+    When Laste opp kravspesifikasjon "specification-1.pdf"
     Then Ser jeg "Rediger spesifikasjon" på siden
     And Ser jeg "Lag Besvarelse" på siden
     And Ser jeg "Lag forberedt besvarelse" på siden
