@@ -12,7 +12,11 @@ import DeleteSpecProduct from '../EditProduct/DeleteSpecProduct';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
 import { useSelectState } from '../../Workbench/Create/SelectContext';
 import { useSpecificationState } from '../SpecificationContext';
-import { PRODUCTS, SPECIFICATION } from '../../../common/PathConstants';
+import {
+  GENERAL,
+  PRODUCTS,
+  SPECIFICATION,
+} from '../../../common/PathConstants';
 import NewProductSelection from '../NewProduct/NewProductSelection';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
@@ -70,7 +74,7 @@ export default function SpecificationOverview(): React.ReactElement {
   const genericPressed = (): void => {
     if (!editingSpecification) {
       history.push(
-        `/${SPECIFICATION}/${specification.id}/${PRODUCTS}/general/`
+        `/${SPECIFICATION}/${specification.id}/${PRODUCTS}/${GENERAL}/`
       );
     }
   };

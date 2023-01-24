@@ -6,13 +6,13 @@ import { useTranslation } from 'react-i18next';
 import ProductRequirementAnswer from './ProductRequirementAnswer';
 import { INeed } from '../../../Nexus/entities/INeed';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
-import { RESPONSE } from '../../../common/PathConstants';
+import { GENERAL, RESPONSE } from '../../../common/PathConstants';
 import Panel from '../../../components/UI/Panel/Panel';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
 import { useResponseState } from '../ResponseContext';
 import Utils from '../../../common/Utils';
 
-type AnswerProductMatchParams = { productIndex: string };
+type AnswerProductMatchParams = { productId: string };
 
 type Props = RouteComponentProps<AnswerProductMatchParams>;
 
@@ -22,10 +22,7 @@ export default function AnswerProduct({ match }: Props): React.ReactElement {
   const { response } = useResponseState();
   const existingNeeds = new Set<INeed>();
 
-  const paramsProductIndex = match.params.productIndex;
-  const productIndex = Utils.isNumeric(paramsProductIndex)
-    ? Number(paramsProductIndex)
-    : -1;
+  const productId = match.params.productId;
 
   const toOverviewPage = (): void => {
     history.push(`/${RESPONSE}/${response.id}`);
@@ -44,7 +41,7 @@ export default function AnswerProduct({ match }: Props): React.ReactElement {
           <span className={css.NeedTittle}>{requirementNeed.title}</span>
           <ProductRequirementAnswer
             requirementAnswer={requirementAnswer}
-            productIndex={productIndex}
+            productId={productId}
           />
         </div>
       );
@@ -53,7 +50,7 @@ export default function AnswerProduct({ match }: Props): React.ReactElement {
         <ProductRequirementAnswer
           key={requirementAnswer.id}
           requirementAnswer={requirementAnswer}
-          productIndex={productIndex}
+          productId={productId}
         />
       );
     }
@@ -61,9 +58,14 @@ export default function AnswerProduct({ match }: Props): React.ReactElement {
 
   const renderRequirements = (): (ReactElement | undefined)[] => {
     const specOrProduct =
-      productIndex === -1
+      productId === GENERAL
         ? response.specification
-        : response.specification.products[productIndex];
+        : Utils.ensure(
+            response.specification.products.find(
+              (product) => product.id === productId
+            ),
+            `Something went wrong, the product with productId ${productId} was not in the list.`
+          );
     return specOrProduct?.requirements?.map((requirementId) => {
       const requirementAnswer = specOrProduct?.requirementAnswers?.find(
         (reqAns) => reqAns.requirement.id === requirementId

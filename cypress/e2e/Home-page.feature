@@ -16,7 +16,7 @@ Feature: Hjemmesiden
     And Jeg kan velge navn ved å klikke på "Velg" knappen
     Then Jeg klikker på "Opprett kravspesifikasjon" knappen
 
-  Scenario: Jeg kan lasteopp kravspesifikasjon
+  Scenario: Jeg kan laste opp kravspesifikasjon
     Given Jeg åpner startsiden
     When Laste opp kravspesifikasjon "specification-1.pdf"
     Then Ser jeg "Rediger spesifikasjon" på siden
@@ -24,13 +24,13 @@ Feature: Hjemmesiden
     And Ser jeg "Lag forberedt besvarelse" på siden
     And Ser jeg "Gjennomfør evaluering" på siden
 
-  Scenario: Jeg kan lasteopp forberedt besvarelse
+  Scenario: Jeg kan laste opp forberedt besvarelse
     Given Jeg åpner startsiden
     When Laste opp forberedt besvarelse
     Then Ser jeg "Rediger forberedt besvarelse" på siden
     And Ser jeg "Lag Besvarelse" knappen er inaktiv
 
-  Scenario: Jeg kan lasteopp besvarelse
+  Scenario: Jeg kan laste opp besvarelse
     Given Jeg åpner startsiden
     When Laste opp besvarelse
     Then Ser jeg "Rediger besvarelse" på siden

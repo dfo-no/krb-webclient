@@ -9,13 +9,14 @@ import WarningAmberOutlinedIcon from '@mui/icons-material/WarningAmberOutlined';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
 import DownloadToolbarItem from '../Download/DownloadToolbarItem';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
-import { PRODUCTS, RESPONSE } from '../../../common/PathConstants';
+import { GENERAL, PRODUCTS, RESPONSE } from '../../../common/PathConstants';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
 import { useResponseState } from '../ResponseContext';
 import SupplierInfoToolbar from '../../SpecEditor/SpecificationOverview/element/SupplierInfoToolbar';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { currencyService } from '../../../Nexus/services/CurrencyService';
+import { IResponseProduct } from '../../../Nexus/entities/IResponseProduct';
 
 function ResponseOverview(): React.ReactElement {
   const { t } = useTranslation();
@@ -23,15 +24,17 @@ function ResponseOverview(): React.ReactElement {
   const { response } = useResponseState();
 
   const genericPressed = () => {
-    history.push(`/${RESPONSE}/${response.id}/${PRODUCTS}/general`);
+    history.push(`/${RESPONSE}/${response.id}/${PRODUCTS}/${GENERAL}`);
   };
 
-  const productPressed = (index: number) => {
-    history.push(`/${RESPONSE}/${response.id}/${PRODUCTS}/${index}`);
+  const productPressed = (product: ISpecificationProduct) => {
+    history.push(`/${RESPONSE}/${response.id}/${PRODUCTS}/${product.id}`);
   };
+
+  const specification = response.specification;
 
   const isGeneralRequirements = () => {
-    return response.specification.requirements.length > 0;
+    return specification.requirements.length > 0;
   };
 
   const isAwardedRequirement = (
@@ -98,11 +101,11 @@ function ResponseOverview(): React.ReactElement {
     return currencyService(response.specification.currencyUnit, discount);
   };
 
-  const mandatoryRequirements = (index: number) => {
+  const mandatoryRequirements = (responseProduct: IResponseProduct) => {
     return `${absoluteRequirementAnswered(
-      response.products[index].requirementAnswers
+      responseProduct.requirementAnswers
     )}/${absoluteRequirements(
-      response.products[index].originProduct.requirementAnswers
+      responseProduct.originProduct.requirementAnswers
     )}`;
   };
 
@@ -126,16 +129,17 @@ function ResponseOverview(): React.ReactElement {
     return isAwarded;
   };
 
-  const isAllRequirementsAnswered = (index: number) => {
+  const isAllRequirementsAnswered = (responseProduct: IResponseProduct) => {
     return (
-      absoluteRequirements(
-        response.products[index].originProduct.requirementAnswers
-      ) ===
-      absoluteRequirementAnswered(response.products[index].requirementAnswers)
+      absoluteRequirements(responseProduct.originProduct.requirementAnswers) ===
+      absoluteRequirementAnswered(responseProduct.requirementAnswers)
     );
   };
 
-  const renderProducts = (product: ISpecificationProduct, index: number) => {
+  const renderProducts = (
+    product: ISpecificationProduct,
+    responseProduct: IResponseProduct
+  ) => {
     const renderProductInfo = () => {
       return (
         <Toolbar>
@@ -150,29 +154,27 @@ function ResponseOverview(): React.ReactElement {
             fontSize={'small'}
           />
           {isMandatoryRequirements(
-            response.products[index].originProduct.requirementAnswers
+            responseProduct.originProduct.requirementAnswers
           ) && (
             <span
               className={
-                !isAllRequirementsAnswered(index)
+                !isAllRequirementsAnswered(responseProduct)
                   ? css.RequirementAnswered__no
                   : ''
               }
             >
               <ToolbarItem
                 primaryText={t('Mandatory requirements')}
-                secondaryText={mandatoryRequirements(index)}
+                secondaryText={mandatoryRequirements(responseProduct)}
                 fontSize={'small'}
               />
             </span>
           )}
-          {isAwardedRequirements(
-            response.products[index].requirementAnswers
-          ) && (
+          {isAwardedRequirements(responseProduct.requirementAnswers) && (
             <ToolbarItem
               primaryText={t('Total evaluated discount')}
               secondaryText={totalEvaluatedDiscount(
-                response.products[index].requirementAnswers
+                responseProduct.requirementAnswers
               )}
               fontSize={'small'}
             />
@@ -186,10 +188,9 @@ function ResponseOverview(): React.ReactElement {
         <div className={css.CardContent}>
           <div className={css.CardTitle}>
             <Typography variant="mdBold">{product.title}</Typography>
-            {absoluteRequirementAnswered(
-              response.products[index].requirementAnswers
-            ) > 0 &&
-              (isAllRequirementsAnswered(index) ? (
+            {absoluteRequirementAnswered(responseProduct.requirementAnswers) >
+              0 &&
+              (isAllRequirementsAnswered(responseProduct) ? (
                 <CheckBoxOutlinedIcon
                   className={css.RequirementAnswered__yes}
                 />
@@ -206,7 +207,7 @@ function ResponseOverview(): React.ReactElement {
               <ToolbarItem
                 secondaryText={t('Edit the product')}
                 icon={<EditIcon />}
-                handleClick={() => productPressed(index)}
+                handleClick={() => productPressed(product)}
                 fontSize={'small'}
               />
             </Toolbar>
@@ -291,9 +292,9 @@ function ResponseOverview(): React.ReactElement {
   };
 
   const generalRequirements = (): React.ReactElement => {
-    const requirementAnswer = response.specification?.requirements?.map(
+    const requirementAnswer = specification?.requirements?.map(
       (requirementId) => {
-        return response.specification?.requirementAnswers?.find(
+        return specification?.requirementAnswers?.find(
           (reqAns) => reqAns?.requirement?.id === requirementId
         );
       }
@@ -309,19 +310,18 @@ function ResponseOverview(): React.ReactElement {
           <DownloadToolbarItem />
         </Toolbar>
         <SupplierInfoToolbar
-          orgName={response.specification.organization}
-          currencyUnit={response.specification.currencyUnit}
-          caseNumber={response.specification?.caseNumber}
+          orgName={specification.organization}
+          currencyUnit={specification.currencyUnit}
+          caseNumber={specification?.caseNumber}
         />
         {isGeneralRequirements() && generalRequirements()}
-        {response.specification.products.length > 0 && (
+        {specification.products.length > 0 && (
           <ul>
-            {response.specification.products.map((element, index) => {
-              if (
-                response.products[index].originProduct.requirementAnswers
-                  .length > 0
-              )
-                return renderProducts(element, index);
+            {specification.products.map((element, index) => {
+              const responseProduct = response.products[index];
+
+              if (responseProduct.originProduct.requirementAnswers.length > 0)
+                return renderProducts(element, responseProduct);
             })}
           </ul>
         )}

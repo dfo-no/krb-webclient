@@ -11,7 +11,11 @@ import DownloadToolbarItem from '../../PrefilledResponse/Download/DownloadToolba
 import { PrefilledResponseContainer } from '../PrefilledResponseContext';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import { IPrefilledResponseProduct } from '../../../Nexus/entities/IPrefilledResponseProduct';
-import { PRODUCTS, PREFILLED_RESPONSE } from '../../../common/PathConstants';
+import {
+  PRODUCTS,
+  PREFILLED_RESPONSE,
+  GENERAL,
+} from '../../../common/PathConstants';
 import NewProductSelection from '../NewProduct/NewProductSelection';
 
 export default function PrefilledResponseOverview(): ReactElement {
@@ -22,7 +26,7 @@ export default function PrefilledResponseOverview(): ReactElement {
 
   const genericPressed = () => {
     history.push(
-      `/${PREFILLED_RESPONSE}/${prefilledResponse.id}/${PRODUCTS}/general/`
+      `/${PREFILLED_RESPONSE}/${prefilledResponse.id}/${PRODUCTS}/${GENERAL}/`
     );
   };
 
