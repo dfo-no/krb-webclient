@@ -11,7 +11,6 @@ import { EditableProvider } from '../../../components/EditableContext/EditableCo
 import NewProjectForm from './NewProjectForm';
 import { ProjectItem } from './ProjectItem';
 import css from './Projects.module.scss';
-// import { IBank } from '../../../Nexus/entities/IBank';
 import { findProjects, ProjectForm } from '../../../api/openapi-fetch';
 import {
   NewButtonContainer,
@@ -23,25 +22,16 @@ export function Projects(): React.ReactElement {
   const { t } = useTranslation();
   const [projectList, setProjectList] = useState<ProjectForm[]>();
   const [loading, setLoading] = useState<boolean>(true);
-  const [allProjects, setAllProjects] = useState<ProjectForm[]>();
   const [isOpen, setOpen] = useState(false);
-
-  // const { data: projects, isLoading } = useGetProjectsQuery({
-  //   pageSize: PAGE_SIZE,
-  //   page: 1,
-  //   fieldName: 'title',
-  //   order: 'ASC',
-  // });
 
   useEffect(() => {
     findProjects({}).then(async (projectsResponse) => {
       setLoading(false);
       if (projectsResponse) {
         setProjectList(projectsResponse.data);
-        setAllProjects(projectsResponse.data);
       }
     });
-  }, [setProjectList, setAllProjects]);
+  }, [setProjectList]);
 
   if (loading) {
     return <LoaderSpinner />;
@@ -83,7 +73,7 @@ export function Projects(): React.ReactElement {
     );
   };
 
-  if (!allProjects?.length) {
+  if (!projectList?.length) {
     return (
       <Box className={css.Projects}>
         <Box className={css.TitleContainer}>
@@ -111,7 +101,7 @@ export function Projects(): React.ReactElement {
         <SearchContainer className={css.SearchContainer}>
           <SearchFieldContainer>
             <DFOSearchBar
-              list={allProjects}
+              list={projectList}
               placeholder={t('common.Search for banks')}
               callback={searchFieldCallback}
               searchFunction={searchFunction}

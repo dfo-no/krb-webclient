@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
+import { useFindCodelists } from '../../../../api/openapi-fetch';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import SearchUtils from '../../../../common/SearchUtils';
 import { DFOSearchBar } from '../../../../components/DFOSearchBar/DFOSearchBar';
@@ -15,7 +16,6 @@ import {
 import { StandardContainer } from '../../../../components/StandardContainer/StandardContainer';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
-import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import CodelistPanel from './CodelistPanel';
 import CodePanel from './CodePanel';
 import { useSelectState } from './SelectContext';
@@ -48,19 +48,19 @@ export default function CodeListPage(): React.ReactElement {
   const { t } = useTranslation();
 
   const { projectId } = useParams<IRouteProjectParams>();
-  const { data: project, isLoading } = useGetProjectQuery(projectId);
+  const { isLoading, codelists: loadedCodelists } = useFindCodelists(projectId);
 
   useEffect(() => {
-    if (project && project.codelist) {
-      setCodelists(project.codelist);
+    if (loadedCodelists) {
+      setCodelists(codelists);
     }
-  }, [setCodelists, project]);
+  }, [setCodelists, codelist, codelists, loadedCodelists]);
 
   if (isLoading) {
     return <LoaderSpinner />;
   }
 
-  if (!project) {
+  if (!loadedCodelists) {
     return <></>;
   }
 
@@ -84,7 +84,7 @@ export default function CodeListPage(): React.ReactElement {
       <SearchContainer>
         <SearchFieldContainer>
           <DFOSearchBar
-            list={project.codelist}
+            list={codelists}
             placeholder={t('Search for codelist')}
             callback={searchFieldCallback}
             searchFunction={codelistSearch}

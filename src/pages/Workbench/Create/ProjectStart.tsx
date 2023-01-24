@@ -6,10 +6,10 @@ import css from '../../Stylesheets/NoProducts.module.scss';
 import mainIllustration from '../../../assets/images/main-illustration.svg';
 import NewNeed from './Need/NewNeed';
 import theme from '../../../theme';
-import { IBank } from '../../../Nexus/entities/IBank';
+import { ProjectForm } from '../../../api/openapi-fetch';
 
 interface Props {
-  project: IBank;
+  project: ProjectForm;
 }
 
 export default function ProjectStart({ project }: Props): React.ReactElement {

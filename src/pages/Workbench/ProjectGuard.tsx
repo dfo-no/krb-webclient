@@ -8,8 +8,8 @@ import Preview from './Preview/Preview';
 import ProjectNotFound from '../../components/ProjectNotFound/ProjectNotFound';
 import { PreviewProvider } from './Preview/PreviewContext';
 import { SelectProvider } from './Create/SelectContext';
-import { useGetProjectQuery } from '../../store/api/bankApi';
 import { WORKBENCH } from '../../common/PathConstants';
+import { useFindOneProject } from '../../api/openapi-fetch';
 
 interface RouteParams {
   projectId: string;
@@ -17,16 +17,18 @@ interface RouteParams {
 
 // TODO: What about this name?
 export default function ProjectGuard(): React.ReactElement {
-  const { projectId } = useParams<RouteParams>();
-  const { data: project, isLoading } = useGetProjectQuery(projectId);
+  // const { projectId: projectRef } = useParams<RouteParams>();
+  // console.log(projectRef);
+  // const { project, isLoading } = useFindOneProject(projectRef);
+  // console.log(project, isLoading);
 
-  if (isLoading) {
-    return <LoaderSpinner />;
-  }
+  // if (isLoading) {
+  //   return <LoaderSpinner />;
+  // }
 
-  if (!project) {
-    return <ProjectNotFound />;
-  }
+  // if (!project) {
+  //   return <ProjectNotFound />;
+  // }
 
   return (
     <div>
