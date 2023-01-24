@@ -29,3 +29,46 @@ Then(
 Then('Ser jeg evaluert fradrag har verdi {string}', (value: string) => {
   cy.contains('Evaluert fradrag').parent().contains(value);
 });
+
+Then(
+    'Ser jeg {string} krav',
+    (title: string) => {
+      cy.get('[class^="EditorFullPage"]').contains(title);
+    }
+);
+
+Then(
+    'Ser jeg {string} har {string}',
+    (primary: string, secondary: string) => {
+      cy.get('[class^="Toolbar_"]').contains(primary);
+      cy.get('[class^="Toolbar_"]').contains(secondary);
+    }
+);
+
+Then(
+    'Ser jeg status av {string} produkt {string}',
+    (title: string, icon: string) => {
+        cy.get('[class^="EditorFullPage"]')
+            .contains(title)
+            .get(`[data-testid="${icon}"]`).should("be.visible");
+    }
+);
+
+
+Then('Jeg besvare {string} kravet med {int}', (title: string, value: string) => {
+    cy.get('[class^="ProductRequirementAnswer_"]')
+        .contains(title)
+        .parent()
+        .parent()
+        .find('input')
+        .clear()
+        .type(value);
+});
+Then('Jeg besvare {string} kravet med bekreftet', (title: string) => {
+    cy.get('[class^="ProductRequirementAnswer_"]')
+        .contains(title)
+        .parent()
+        .parent()
+        .find('input')
+        .click()
+});

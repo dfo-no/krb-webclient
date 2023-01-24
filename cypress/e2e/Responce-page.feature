@@ -24,3 +24,36 @@ Feature: Besvarelse
   Scenario: Jeg kan laste ned besvarelse
     Given Jeg åpner besvarelse "2022-11-30-citronen-response-5.pdf"
     Then Klikker jeg på "Last ned besvarelse" knapp for å laste ned besvarelse
+
+      Scenario: Jeg kan rediger generelle krav
+    Given Jeg lager besvarelse fra spesifikasjon "specification-el-bil-til-kommunedrift.pdf"
+        Then Ser jeg "Generelle krav" krav
+        Then Ser jeg "Absolutte krav" har "0/1"
+        When Jeg klikker på "Rediger generelle krav" knapp
+        Then Jeg besvare "Leveringstid" kravet med 10
+        And Jeg besvare "Avstand til godkjent verksted" kravet med 1
+        When Jeg klikker på "Lagre" knapp for å lagre
+        Then Ser jeg "Absolutte krav" har "1/1"
+        And Ser jeg "Totalt evaluert fradrag" har "5,000.00 NOK"
+        And Ser jeg status av "Generelle krav" produkt "CheckBoxOutlinedIcon"
+
+  Scenario: Jeg kan rediger besvaerlse-produkt
+    Given Jeg lager besvarelse fra spesifikasjon "specification-el-bil-til-kommunedrift.pdf"
+    Then Ser jeg "El-bil" krav
+    Then Ser jeg "Antall" har "1 Stk"
+    Then Ser jeg "Absolutte krav" har "0/4"
+    When Jeg redigerer produkt "El-bil"
+    And Jeg besvare kravet med "Ja"
+    When Jeg klikker på "Lagre" knapp for å lagre
+    Then Ser jeg "Absolutte krav" har "1/4"
+    And Ser jeg status av "El-bil" produkt "WarningAmberOutlinedIcon"
+    When Jeg redigerer produkt "El-bil"
+    Then Jeg besvare "Seter foran" kravet med 2
+    And Jeg besvare "Seter bak" kravet med 3
+    And Jeg besvare "Volum" kravet med bekreftet
+    And Jeg besvare "Sentrallås" kravet med bekreftet
+    When Jeg klikker på "Lagre" knapp for å lagre
+    Then Ser jeg "Absolutte krav" har "4/4"
+    And Ser jeg "Totalt evaluert fradrag" har "2,000.00 NOK"
+    And Ser jeg status av "Generelle krav" produkt "CheckBoxOutlinedIcon"
+
