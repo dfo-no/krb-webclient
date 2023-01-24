@@ -18,7 +18,6 @@ import {
 import { ModelType } from '../../../Nexus/enums';
 import { usePostProjectMutation } from '../../../store/api/bankApi';
 import { AlertsContainer } from '../../../components/Alert/AlertContext';
-import { findProjects } from '../../../api/openapi-fetch';
 
 interface Props {
   handleClose: () => void;
