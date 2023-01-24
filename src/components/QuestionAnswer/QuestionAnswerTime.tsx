@@ -54,6 +54,9 @@ const QuestionAnswerTime = ({
           onChange={
             isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
           }
+          onBlur={
+            isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
+          }
         >
           <TimeCtrl
             minTime={item.config.fromBoundary ?? undefined}

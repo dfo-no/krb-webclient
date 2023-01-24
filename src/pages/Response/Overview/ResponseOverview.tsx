@@ -15,6 +15,7 @@ import Toolbar from '../../../components/UI/Toolbar/ToolBar';
 import { useResponseState } from '../ResponseContext';
 import SupplierInfoToolbar from '../../SpecEditor/SpecificationOverview/element/SupplierInfoToolbar';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
+import { currencyService } from '../../../Nexus/services/CurrencyService';
 
 function ResponseOverview(): React.ReactElement {
   const { t } = useTranslation();
@@ -94,7 +95,7 @@ function ResponseOverview(): React.ReactElement {
         }
       });
     }
-    return `${discount} ${t('NOK')}`;
+    return currencyService(response.specification.currencyUnit, discount);
   };
 
   const mandatoryRequirements = (index: number) => {

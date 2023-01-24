@@ -109,42 +109,16 @@ class Utils {
     codes: string[],
     config: ICodelistConfig
   ): number {
-    const mandatorySelected = codes.reduce((sum, code) => {
-      const foundCode = config.codes.find(
-        (selection) => selection.code === code
-      );
-      return foundCode && foundCode.mandatory ? sum + 1 : sum;
-    }, 0);
-    if (mandatorySelected < config.optionalCodeMinAmount) {
-      return 0;
-    }
+    let discount = 0;
+    config.codes.forEach((element) => {
+      if (codes.includes(element.code)) {
+        discount += element.discount;
+        return discount;
+      }
+      return discount;
+    });
 
-    const topMandatory = config.codes
-      .filter((selection) => selection.mandatory)
-      .sort((a, b) => b.discount - a.discount)
-      .slice(0, config.optionalCodeMinAmount);
-    const topRest = config.codes
-      .filter(
-        (selection) =>
-          !topMandatory.some(
-            (mandatorySelection) => selection.code === mandatorySelection.code
-          )
-      )
-      .sort((a, b) => b.discount - a.discount)
-      .slice(0, config.optionalCodeMaxAmount - config.optionalCodeMinAmount);
-    const maxDiscount = [...topMandatory, ...topRest].reduce(
-      (sum, selection) => sum + selection.discount,
-      0
-    );
-
-    const discount = codes.reduce((sum, code) => {
-      const foundCode = config.codes.find(
-        (selection) => selection.code === code
-      );
-      return foundCode ? sum + foundCode.discount : sum;
-    }, 0);
-
-    return maxDiscount > 0 ? Math.min(discount / maxDiscount, 1) * 100 : 100;
+    return discount;
   }
 
   private static dateToValue(dateStr: string): number {
@@ -207,27 +181,16 @@ class Utils {
     value: number,
     pairs: DiscountValuePair[]
   ): number {
-    const exact = pairs.find((svp) => svp.value === value);
-    if (exact) {
-      return exact.discount;
-    }
-    const sortedHigher = pairs
-      .filter((svp) => svp.value > value)
-      .sort((a, b) => a.value - b.value);
-    const sortedLower = pairs
-      .filter((svp) => svp.value < value)
-      .sort((a, b) => b.value - a.value);
+    let discount = 0;
+    pairs.forEach((element) => {
+      if (element.value === value) {
+        discount += element.discount;
+        return discount;
+      }
+      return discount;
+    });
 
-    if (sortedHigher.length > 0 && sortedLower.length > 0) {
-      const higher = sortedHigher[0];
-      const lower = sortedLower[0];
-      return (
-        lower.discount +
-        ((higher.discount - lower.discount) / (higher.value - lower.value)) *
-          (value - lower.value)
-      );
-    }
-    return 0;
+    return discount;
   }
 
   private static flattenNestable<T extends IBaseModel>(

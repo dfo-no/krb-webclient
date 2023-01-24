@@ -4,7 +4,7 @@ Feature: Spesifikasjon
 
   Scenario: Jeg kan se overskriften på en spesifikasjon
     Given Jeg åpner startsiden
-    When Laste opp kravspesifikasjon
+    When Laste opp kravspesifikasjon "specification-1.pdf"
     And Velg rediger spesifikasjon
     Then Ser jeg tittel er "Test kravspesifikasjon", organisasjon er "Itland Data", saksnummer er "123456/AA" og myntenhet er "Norske kroner (NOK)"
     And Ser jeg 2 produkt-er

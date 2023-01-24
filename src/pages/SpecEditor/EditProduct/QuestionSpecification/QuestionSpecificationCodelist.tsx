@@ -124,21 +124,25 @@ const QuestionSpecificationCodelist = ({
           {t('Is the requirement an award criteria')}
         </Typography>
       </div>
-      <HorizontalTextCtrl
-        className={css.MaxDiscountAmount}
-        label={t('Highest discount amount')}
-        name={`question.config.discountSumMax`}
-        hintText={t('Highest discount amount hint text')}
-        placeholder={t('Discount sum')}
-        defaultValue={0}
-        type={'number'}
-        color={'var(--text-primary-color)'}
-        adornment={t('NOK')}
-      />
-      <MaximumDiscountsErrorMessage
-        errors={formState.errors}
-        path={'question.config.codes'}
-      />
+      {codesAwardCriteria && (
+        <>
+          <HorizontalTextCtrl
+            className={css.MaxDiscountAmount}
+            label={t('Highest discount amount')}
+            name={`question.config.discountSumMax`}
+            hintText={t('Highest discount amount hint text')}
+            placeholder={t('Discount sum')}
+            defaultValue={0}
+            type={'number'}
+            color={'var(--text-primary-color)'}
+            adornment={t('NOK')}
+          />
+          <MaximumDiscountsErrorMessage
+            errors={formState.errors}
+            path={'question.config.codes'}
+          />
+        </>
+      )}
       <ul>
         {codelist.codes.map((code) => {
           return (

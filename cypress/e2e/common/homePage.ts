@@ -12,8 +12,8 @@ Then('Ser jeg minimum {int} banker i siden', (value: number) => {
     .should('be.at.least', value);
 });
 
-When('Laste opp kravspesifikasjon', () => {
-  uploadFile('./cypress/filesForUploadTesting/specification-1.pdf');
+When('Laste opp kravspesifikasjon {string}', (specificationName: string) => {
+  uploadFile(`./cypress/filesForUploadTesting/${specificationName}`);
 });
 
 When('Laste opp forberedt besvarelse', () => {
