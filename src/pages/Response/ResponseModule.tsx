@@ -22,7 +22,7 @@ export default function ResponseModule({
               <ResponseOverview />
             </Route>
             <Route
-              path={`${props.match.path}/${PRODUCTS}/:productIndex`}
+              path={`${props.match.path}/${PRODUCTS}/:productId`}
               component={AnswerProduct}
             />
           </Switch>

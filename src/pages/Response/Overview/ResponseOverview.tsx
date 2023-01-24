@@ -9,7 +9,7 @@ import WarningAmberOutlinedIcon from '@mui/icons-material/WarningAmberOutlined';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
 import DownloadToolbarItem from '../Download/DownloadToolbarItem';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
-import { PRODUCTS, RESPONSE } from '../../../common/PathConstants';
+import { GENERAL, PRODUCTS, RESPONSE } from '../../../common/PathConstants';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
 import { useResponseState } from '../ResponseContext';
@@ -24,11 +24,11 @@ function ResponseOverview(): React.ReactElement {
   const { response } = useResponseState();
 
   const genericPressed = () => {
-    history.push(`/${RESPONSE}/${response.id}/${PRODUCTS}/general`);
+    history.push(`/${RESPONSE}/${response.id}/${PRODUCTS}/${GENERAL}`);
   };
 
-  const productPressed = (index: number) => {
-    history.push(`/${RESPONSE}/${response.id}/${PRODUCTS}/${index}`);
+  const productPressed = (product: IResponseProduct) => {
+    history.push(`/${RESPONSE}/${response.id}/${PRODUCTS}/${product.id}`);
   };
 
   const specification = response.specification;
@@ -138,8 +138,7 @@ function ResponseOverview(): React.ReactElement {
 
   const renderProducts = (
     product: ISpecificationProduct,
-    responseProduct: IResponseProduct,
-    index: number
+    responseProduct: IResponseProduct
   ) => {
     const renderProductInfo = () => {
       return (
@@ -208,7 +207,7 @@ function ResponseOverview(): React.ReactElement {
               <ToolbarItem
                 secondaryText={t('Edit the product')}
                 icon={<EditIcon />}
-                handleClick={() => productPressed(index)}
+                handleClick={() => productPressed(responseProduct)}
                 fontSize={'small'}
               />
             </Toolbar>
@@ -322,7 +321,7 @@ function ResponseOverview(): React.ReactElement {
               const responseProduct = response.products[index];
 
               if (responseProduct.originProduct.requirementAnswers.length > 0)
-                return renderProducts(element, responseProduct, index);
+                return renderProducts(element, responseProduct);
             })}
           </ul>
         )}

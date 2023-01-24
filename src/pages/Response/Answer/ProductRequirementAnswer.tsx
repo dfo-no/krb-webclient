@@ -9,15 +9,17 @@ import { useResponseState } from '../ResponseContext';
 import Badge, { BadgeType } from '../../../components/UI/Badge/Badge';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import { currencyService } from '../../../Nexus/services/CurrencyService';
+import { GENERAL } from '../../../common/PathConstants';
+import Utils from '../../../common/Utils';
 
 interface IProps {
   requirementAnswer: IRequirementAnswer;
-  productIndex: number;
+  productId: string;
 }
 
 export default function ProductRequirementAnswer({
   requirementAnswer,
-  productIndex,
+  productId,
 }: IProps): ReactElement {
   const { response } = useResponseState();
   const { t } = useTranslation();
@@ -104,12 +106,17 @@ export default function ProductRequirementAnswer({
 
   useEffect(() => {
     const answer = (
-      productIndex >= 0 ? response.products[productIndex] : response
+      productId !== GENERAL
+        ? Utils.ensure(
+            response.products.find((product) => product.id === productId),
+            `Something went wrong, the product with productId ${productId} was not in the list.`
+          )
+        : response
     ).requirementAnswers.find((reqAns) => {
       return reqAns.id === requirementAnswer.id;
     });
     if (answer) setExistingAnswer(answer);
-  }, [requirementAnswer.id, productIndex, response]);
+  }, [requirementAnswer.id, productId, response]);
 
   return (
     <div key={requirementAnswer.id} className={css.ProductRequirementAnswer}>
@@ -122,7 +129,7 @@ export default function ProductRequirementAnswer({
         <ProductQuestionAnswer
           requirementAnswer={requirementAnswer}
           existingAnswer={existingAnswer}
-          productIndex={productIndex}
+          productId={productId}
         />
       )}
       {isAwardCriteria(requirementAnswer.id) && (

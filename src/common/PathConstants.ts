@@ -7,3 +7,4 @@ export const WORKBENCH = 'workbench';
 
 // Other path constants
 export const PRODUCTS = 'products';
+export const GENERAL = 'general';
