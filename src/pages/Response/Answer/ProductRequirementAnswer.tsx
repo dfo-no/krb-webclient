@@ -108,7 +108,9 @@ export default function ProductRequirementAnswer({
     const answer = (
       productId !== GENERAL
         ? Utils.ensure(
-            response.products.find((product) => product.id === productId),
+            response.products.find(
+              (product) => product.originProduct.id === productId
+            ),
             `Something went wrong, the product with productId ${productId} was not in the list.`
           )
         : response

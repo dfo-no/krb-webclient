@@ -27,7 +27,7 @@ function ResponseOverview(): React.ReactElement {
     history.push(`/${RESPONSE}/${response.id}/${PRODUCTS}/${GENERAL}`);
   };
 
-  const productPressed = (product: IResponseProduct) => {
+  const productPressed = (product: ISpecificationProduct) => {
     history.push(`/${RESPONSE}/${response.id}/${PRODUCTS}/${product.id}`);
   };
 
@@ -207,7 +207,7 @@ function ResponseOverview(): React.ReactElement {
               <ToolbarItem
                 secondaryText={t('Edit the product')}
                 icon={<EditIcon />}
-                handleClick={() => productPressed(responseProduct)}
+                handleClick={() => productPressed(product)}
                 fontSize={'small'}
               />
             </Toolbar>
