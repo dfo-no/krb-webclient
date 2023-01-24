@@ -60,11 +60,24 @@ const QuestionAnswerPeriodDate = ({
             isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
           }
         >
-          <DateCtrl
-            minDate={item.config.fromBoundary ?? undefined}
-            maxDate={item.config.toBoundary ?? undefined}
-            name={'answer.fromDate'}
-          />
+          <div className={css.InputCtrlContainer}>
+            <DateCtrl
+              className={css.InputCtrl}
+              minDate={item.config.fromBoundary ?? undefined}
+              maxDate={item.config.toBoundary ?? undefined}
+              name={'answer.fromDate'}
+              color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+            />
+            {item.config.isPeriod && (
+              <DateCtrl
+                className={css.InputCtrl}
+                minDate={item.config.fromBoundary ?? undefined}
+                maxDate={item.config.toBoundary ?? undefined}
+                name={'answer.toDate'}
+                color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+              />
+            )}
+          </div>
           {isPrefilledResponse && (
             <div className={css.Buttons}>
               <Button type={Type.Submit}>{t('Save')}</Button>

@@ -56,9 +56,11 @@ const QuestionAnswerText = ({
           }
         >
           <TextAreaCtrl
+            className={css.TextAreaCtrl}
             name={'answer.text'}
             placeholder={t('Answer')}
-            rows={10}
+            rows={3}
+            color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
           />
           {isPrefilledResponse && (
             <div className={css.Buttons}>

@@ -17,4 +17,17 @@
       margin-left: var(--small-gap);
     }
   }
+
+  .InputCtrl {
+    max-width: 15rem;
+  }
+
+  .TextAreaCtrl {
+    max-width: 25.5rem;
+  }
+
+  .InputCtrlContainer {
+    display: flex;
+    gap: var(--small-gap);
+  }
 }

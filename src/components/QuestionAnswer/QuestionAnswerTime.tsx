@@ -58,11 +58,24 @@ const QuestionAnswerTime = ({
             isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
           }
         >
-          <TimeCtrl
-            minTime={item.config.fromBoundary ?? undefined}
-            maxTime={item.config.toBoundary ?? undefined}
-            name={'answer.fromTime'}
-          />
+          <div className={css.InputCtrlContainer}>
+            <TimeCtrl
+              className={css.InputCtrl}
+              minTime={item.config.fromBoundary ?? undefined}
+              maxTime={item.config.toBoundary ?? undefined}
+              name={'answer.fromTime'}
+              color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+            />
+            {item.config.isPeriod && (
+              <TimeCtrl
+                className={css.InputCtrl}
+                minTime={item.config.fromBoundary ?? undefined}
+                maxTime={item.config.toBoundary ?? undefined}
+                name={'answer.toTime'}
+                color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+              />
+            )}
+          </div>
           {isPrefilledResponse && (
             <div className={css.Buttons}>
               <Button type={Type.Submit}>{t('Save')}</Button>

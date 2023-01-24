@@ -59,10 +59,13 @@ const QuestionAnswerSlider = ({
           }
         >
           <HorizontalTextCtrl
+            className={css.InputCtrl}
             id={'answerValue'}
             name={'answer.value'}
             placeholder={t('Value')}
             type={'number'}
+            adornment={item.config.unit}
+            color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
           />
           {isPrefilledResponse && (
             <div className={css.Buttons}>

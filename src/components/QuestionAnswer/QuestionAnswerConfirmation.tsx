@@ -57,7 +57,11 @@ const QuestionAnswerConfirmation = ({
             isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
           }
         >
-          <CheckboxCtrl name={'answer.value'} label={t('Confirm')} />
+          <CheckboxCtrl
+            name={'answer.value'}
+            label={t('Confirm')}
+            color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+          />
           {isPrefilledResponse && (
             <div className={css.Buttons}>
               <Button type={Type.Submit}>{t('Save')}</Button>

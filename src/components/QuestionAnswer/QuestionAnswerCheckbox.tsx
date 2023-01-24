@@ -58,6 +58,7 @@ const QuestionAnswerCheckbox = ({
           <YesNoSelection
             name={'answer.value'}
             recommendedAlternative={item.config.preferedAlternative}
+            color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
           />
           {isPrefilledResponse && (
             <div className={css.Buttons}>
