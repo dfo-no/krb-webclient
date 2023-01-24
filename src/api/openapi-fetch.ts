@@ -37,12 +37,12 @@ export const useFindOneProject = (projectRef: string) => {
   const [isLoading, setLoading] = useState(false);
   const [project, setProject] = useState<ProjectForm>();
 
-  const findOneProject = fetcher
-    .path('/api/v1/projects/{projectRef}')
-    .method('get')
-    .create();
-
   useEffect(() => {
+    const findOneProject = fetcher
+      .path('/api/v1/projects/{projectRef}')
+      .method('get')
+      .create();
+
     setLoading(true);
     findOneProject({ projectRef }).then(async (projectsResponse) => {
       setLoading(false);
@@ -50,7 +50,7 @@ export const useFindOneProject = (projectRef: string) => {
         setProject(projectsResponse.data);
       }
     });
-  }, [findOneProject, projectRef, setProject]);
+  }, [projectRef]);
 
   return { isLoading, project };
 };
@@ -64,12 +64,12 @@ export const useFindCodelists = (projectRef: string) => {
   const [isLoading, setLoading] = useState(false);
   const [codelists, setCodelists] = useState<Codelist[]>();
 
-  const findCodelists = fetcher
-    .path('/api/v1/projects/{projectRef}/codelists')
-    .method('get')
-    .create();
-
   useEffect(() => {
+    const findCodelists = fetcher
+      .path('/api/v1/projects/{projectRef}/codelists')
+      .method('get')
+      .create();
+
     setLoading(true);
     findCodelists({ projectRef }).then(async (projectsResponse) => {
       setLoading(false);
@@ -77,7 +77,7 @@ export const useFindCodelists = (projectRef: string) => {
         setCodelists(projectsResponse.data);
       }
     });
-  }, [findCodelists, projectRef, setCodelists]);
+  }, [projectRef]);
 
   return { isLoading, codelists };
 };
@@ -86,12 +86,12 @@ export const useFindNeeds = (projectRef: string) => {
   const [isLoading, setLoading] = useState(false);
   const [needs, setNeeds] = useState<Need[]>();
 
-  const findCodelists = fetcher
-    .path('/api/v1/projects/{projectRef}/needs')
-    .method('get')
-    .create();
-
   useEffect(() => {
+    const findCodelists = fetcher
+      .path('/api/v1/projects/{projectRef}/needs')
+      .method('get')
+      .create();
+
     setLoading(true);
     findCodelists({ projectRef }).then(async (projectsResponse) => {
       setLoading(false);
@@ -99,7 +99,7 @@ export const useFindNeeds = (projectRef: string) => {
         setNeeds(projectsResponse.data);
       }
     });
-  }, [findCodelists, projectRef]);
+  }, [projectRef]);
 
   return { isLoading, needs };
 };
@@ -108,12 +108,12 @@ export const useFindRequirementsForProject = (projectRef: string) => {
   const [isLoading, setLoading] = useState(false);
   const [requirements, setRequirements] = useState<Requirement[]>();
 
-  const findCodelists = fetcher
-    .path('/api/v1/projects/{projectRef}/requirements')
-    .method('get')
-    .create();
-
   useEffect(() => {
+    const findCodelists = fetcher
+      .path('/api/v1/projects/{projectRef}/requirements')
+      .method('get')
+      .create();
+
     setLoading(true);
     findCodelists({ projectRef: projectRef }).then(async (projectsResponse) => {
       setLoading(false);
@@ -121,7 +121,7 @@ export const useFindRequirementsForProject = (projectRef: string) => {
         setRequirements(projectsResponse.data);
       }
     });
-  }, [findCodelists, projectRef]);
+  }, [projectRef]);
 
   return { isLoading, requirements };
 };

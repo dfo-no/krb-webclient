@@ -10,7 +10,6 @@ import theme from '../../../../theme';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { Alert } from '../../../../models/Alert';
-import { INeed } from '../../../../Nexus/entities/INeed';
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import {
@@ -20,11 +19,11 @@ import {
   ModalFieldsBox,
 } from '../../../../components/ModalBox/ModalBox';
 import { ModelType } from '../../../../Nexus/enums';
-import { Parentable } from '../../../../models/Parentable';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
+import { Need } from '../../../../api/openapi-fetch';
 
 interface Props {
-  need: Parentable<INeed>;
+  need: Need;
   handleClose: (id: string) => void;
 }
 
@@ -37,7 +36,7 @@ function NewRequirementForm({ need, handleClose }: Props): React.ReactElement {
 
   const defaultValues: IRequirement = RequirementService.defaultRequirement(
     projectId,
-    need.id
+    need.ref
   );
 
   const methods = useForm<IRequirement>({
@@ -48,16 +47,17 @@ function NewRequirementForm({ need, handleClose }: Props): React.ReactElement {
   const onSubmit = async (post: IRequirement) => {
     const newRequirement =
       nexus.requirementService.createRequirementWithId(post);
-    await addRequirement(newRequirement, need).then(() => {
-      const alert: Alert = {
-        id: uuidv4(),
-        style: 'success',
-        text: t('Successfully created new requirement'),
-      };
-      addAlert(alert);
-      handleClose(newRequirement.id);
-      methods.reset();
-    });
+    // TODO: Uncomment
+    // await addRequirement(newRequirement, need).then(() => {
+    //   const alert: Alert = {
+    //     id: uuidv4(),
+    //     style: 'success',
+    //     text: t('Successfully created new requirement'),
+    //   };
+    //   addAlert(alert);
+    //   handleClose(newRequirement.id);
+    //   methods.reset();
+    // });
   };
 
   return (

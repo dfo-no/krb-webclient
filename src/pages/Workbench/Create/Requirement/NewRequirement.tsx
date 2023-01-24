@@ -5,12 +5,11 @@ import { useState } from 'react';
 
 import Dialog from '../../../../components/DFODialog/DFODialog';
 import NewRequirementForm from './NewRequirementForm';
-import { INeed } from '../../../../Nexus/entities/INeed';
-import { Parentable } from '../../../../models/Parentable';
 import { useSelectState } from '../SelectContext';
+import { Need } from '../../../../api/openapi-fetch';
 
 interface Props {
-  need: Parentable<INeed>;
+  need: Need;
 }
 
 const NewRequirement = ({ need }: Props) => {

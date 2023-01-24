@@ -12,42 +12,50 @@ import ProjectStart from './ProjectStart';
 import Requirement from './Requirement/Requirement';
 import { IRouteProjectParams } from '../../../models/IRouteProjectParams';
 import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
-import { useGetProjectQuery } from '../../../store/api/bankApi';
 import { useSelectState } from './SelectContext';
 import { VariantProvider } from '../VariantContext';
 import { HeaderContainer } from '../../../components/Header/HeaderContext';
+import {
+  useFindNeeds,
+  useFindOneProject,
+  useFindRequirementsForProject,
+} from '../../../api/openapi-fetch';
 
 export default function Create(): React.ReactElement {
-  const { projectId } = useParams<IRouteProjectParams>();
-  const { data: project, isLoading } = useGetProjectQuery(projectId);
+  const { projectId: projectRef } = useParams<IRouteProjectParams>();
+  const { needs, isLoading: needsIsLoading } = useFindNeeds(projectRef);
+  const { project, isLoading: projectIsLoading } =
+    useFindOneProject(projectRef);
+
+  const { requirements: allRequirements } =
+    useFindRequirementsForProject(projectRef);
+
   const { needIndex, setNeedIndex, setNeedId, setDeleteMode } =
     useSelectState();
   const { setTitle } = HeaderContainer.useContainer();
 
   useEffect(() => {
     if (project && !needIndex) {
-      if (project.needs.length >= 1) {
-        const index = project.needs.findIndex(
-          (n) => n.id === project.needs[0].id
-        );
+      if (needs && needs.length >= 1) {
+        const index = needs.findIndex((n) => n.ref === needs[0].ref);
         setNeedIndex(index);
-        setNeedId(project.needs[index].id);
+        setNeedId(needs[index].ref);
       }
     }
   });
 
   useEffect(() => {
-    if (project) setTitle(project.title);
+    if (project) setTitle(project?.title || '');
     return function cleanup() {
       setTitle('');
     };
   }, [project, setTitle]);
 
-  if (isLoading) {
+  if (projectIsLoading || needsIsLoading) {
     return <LoaderSpinner />;
   }
 
-  if (!project) {
+  if (!needs || !project) {
     return <></>;
   }
 
@@ -62,21 +70,26 @@ export default function Create(): React.ReactElement {
     );
   };
 
-  if (needIndex === null || !project.needs[needIndex]) {
+  if (needIndex === null || !needs[needIndex]) {
     return renderCreatePageWithContent(
-      <>{project.needs.length === 0 && <ProjectStart project={project} />}</>
+      <>{needs.length === 0 && <ProjectStart project={project} />}</>
     );
   }
+  const currentNeed = needs[needIndex];
+
+  const currentRequirements = allRequirements?.filter(
+    (requirement) => requirement.needRef === currentNeed.ref
+  );
 
   const needDeleted = (): void => {
     setDeleteMode('');
-    if (project.needs.length === 1) {
+    if (needs.length === 1) {
       setNeedIndex(null);
-      setNeedId(null);
+      setNeedId(undefined);
     }
-    if (needIndex === project.needs.length - 1) {
+    if (needIndex === needs.length - 1) {
       setNeedIndex(needIndex - 1);
-      setNeedId(project.needs[needIndex - 1].id);
+      setNeedId(needs[needIndex - 1].ref);
     }
   };
 
@@ -85,12 +98,12 @@ export default function Create(): React.ReactElement {
       <Box className={css.Need}>
         <NeedHeader />
         <Box className={css.Requirements}>
-          <NewRequirement need={project.needs[needIndex]} />
+          <NewRequirement need={needs[needIndex]} />
           <ScrollableContainer className={css.List}>
-            {project.needs[needIndex] &&
-              project.needs[needIndex].requirements.map((req, index) => {
+            {currentRequirements &&
+              currentRequirements.map((req, index) => {
                 return (
-                  <VariantProvider key={req.id}>
+                  <VariantProvider key={req.ref}>
                     <Requirement requirementIndex={index} />
                   </VariantProvider>
                 );
@@ -102,7 +115,11 @@ export default function Create(): React.ReactElement {
   };
 
   return renderCreatePageWithContent(
-    <DeleteNeed need={project.needs[needIndex]} handleClose={needDeleted}>
+    <DeleteNeed
+      need={currentNeed}
+      canBeDeleted={!!currentRequirements && currentRequirements.length > 0}
+      handleClose={needDeleted}
+    >
       {renderNeedCard()}
     </DeleteNeed>
   );
