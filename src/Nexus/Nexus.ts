@@ -15,7 +15,7 @@ import ResponseService from './services/ResponseService';
 import ResponseStoreService from './services/ResponseStoreService';
 import SpecificationService from './services/SpecificationService';
 import StoreService from './services/StoreService';
-import TagService from './services/TagService';
+// import TagService from './services/TagService';
 import VariantService from './services/VariantService';
 import { IBank } from './entities/IBank';
 
@@ -35,7 +35,7 @@ export default class Nexus {
 
   public variantService = new VariantService(this.store);
 
-  public tagService = new TagService(this.store);
+  // public tagService = new TagService(this.store);
 
   public productService = new ProductService(this.store);
 

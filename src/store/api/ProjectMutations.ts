@@ -12,7 +12,6 @@ import { IProduct } from '../../Nexus/entities/IProduct';
 import { IPublication } from '../../Nexus/entities/IPublication';
 import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { IRouteProjectParams } from '../../models/IRouteProjectParams';
-import { ITag } from '../../Nexus/entities/ITag';
 import { IVariant } from '../../Nexus/entities/IVariant';
 import { Parentable } from '../../models/Parentable';
 import { useGetProjectQuery, usePutProjectMutation } from './bankApi';
@@ -102,38 +101,6 @@ function useProjectMutations() {
   ): Promise<BankOrError> {
     if (project) {
       return putProject({ ...project, products: products });
-    }
-    throw Error('Cant save changes to Project');
-  }
-
-  // TAGS
-  async function addTag(tag: Parentable<ITag>): Promise<BankOrError> {
-    if (project) {
-      const editedTags = Utils.addElementToList(tag, project.tags);
-      return putProject({ ...project, tags: editedTags });
-    }
-    throw Error('Cant save changes to Project');
-  }
-
-  async function editTag(tag: Parentable<ITag>): Promise<BankOrError> {
-    if (project) {
-      const editedTags = Utils.replaceElementInList(tag, project.tags);
-      return putProject({ ...project, tags: editedTags });
-    }
-    throw Error('Cant save changes to Project');
-  }
-
-  async function deleteTag(tag: Parentable<ITag>): Promise<BankOrError> {
-    if (project) {
-      const editedTags = Utils.removeElementFromList(tag, project.tags);
-      return putProject({ ...project, tags: editedTags });
-    }
-    throw Error('Cant save changes to Project');
-  }
-
-  async function editTags(tags: Parentable<ITag>[]): Promise<BankOrError> {
-    if (project) {
-      return putProject({ ...project, tags: tags });
     }
     throw Error('Cant save changes to Project');
   }
@@ -353,10 +320,6 @@ function useProjectMutations() {
     editProduct,
     deleteProduct,
     editProducts,
-    addTag,
-    editTag,
-    deleteTag,
-    editTags,
     addCodelist,
     editCodelist,
     deleteCodelist,
