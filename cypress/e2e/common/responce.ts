@@ -15,7 +15,7 @@ Given('Jeg lager besvarelse fra spesifikasjon {string}', (pdfName: string) => {
   cy.get('button').contains('Lag Besvarelse').click();
 });
 
-When('Jeg besvare kravet med {string}', (answer: string) => {
+When('Jeg besvarer kravet med {string}', (answer: string) => {
   cy.get('label').contains(answer).click();
 });
 
@@ -46,16 +46,24 @@ Then(
 );
 
 Then(
-    'Ser jeg status av {string} produkt {string}',
-    (title: string, icon: string) => {
-        cy.get('[class^="EditorFullPage"]')
-            .contains(title)
-            .get(`[data-testid="${icon}"]`).should("be.visible");
+    'Ser jeg absolutte krav av {string} produkt er {string}',
+    (title: string, status: string) => {
+        if (status === 'svart') {
+            cy.get('[class^="EditorFullPage"]')
+                .contains(title)
+                .parent()
+                .find(`[data-testid="CheckBoxOutlinedIcon"]`).should("be.visible");
+        } else if (status === 'ikke svart') {
+            cy.get('[class^="EditorFullPage"]')
+                .contains(title)
+                .parent()
+                .find(`[data-testid="WarningAmberOutlinedIcon"]`).should("be.visible");
+        }
     }
 );
 
 
-Then('Jeg besvare {string} kravet med {int}', (title: string, value: string) => {
+Then('Jeg besvarer {string} kravet med {int}', (title: string, value: string) => {
     cy.get('[class^="ProductRequirementAnswer_"]')
         .contains(title)
         .parent()
@@ -64,7 +72,7 @@ Then('Jeg besvare {string} kravet med {int}', (title: string, value: string) => 
         .clear()
         .type(value);
 });
-Then('Jeg besvare {string} kravet med bekreftet', (title: string) => {
+Then('Jeg besvarer {string} kravet med bekreftet', (title: string) => {
     cy.get('[class^="ProductRequirementAnswer_"]')
         .contains(title)
         .parent()
