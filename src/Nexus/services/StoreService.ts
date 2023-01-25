@@ -10,7 +10,6 @@ import { ICodelist } from '../entities/ICodelist';
 import { INeed } from '../entities/INeed';
 import { IProduct } from '../entities/IProduct';
 import { IRequirement } from '../entities/IRequirement';
-import { ITag } from '../entities/ITag';
 import { IVariant } from '../entities/IVariant';
 
 export default class StoreService {
@@ -69,30 +68,6 @@ export default class StoreService {
     );
     StoreService.bank = produce(StoreService.bank, (draft) => {
       draft.products.splice(index, 1);
-    });
-  }
-
-  public addTag(item: Parentable<ITag>): void {
-    StoreService.bank = produce(StoreService.bank, (draft) => {
-      draft.tags.push(item);
-    });
-  }
-
-  public editTag(item: Parentable<ITag>): void {
-    const index = StoreService.bank.tags.findIndex(
-      (tag: Parentable<ITag>) => tag.id === item.id
-    );
-    StoreService.bank = produce(StoreService.bank, (draft) => {
-      draft.tags[index] = item;
-    });
-  }
-
-  public deleteTag(item: Parentable<ITag>): void {
-    const index = StoreService.bank.tags.findIndex(
-      (tag: Parentable<ITag>) => tag.id === item.id
-    );
-    StoreService.bank = produce(StoreService.bank, (draft) => {
-      draft.tags.splice(index, 1);
     });
   }
 

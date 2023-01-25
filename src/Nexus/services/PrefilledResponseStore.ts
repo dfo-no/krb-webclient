@@ -10,7 +10,6 @@ const initialState: IPrefilledResponse = {
     title: '',
     description: '',
     needs: [],
-    tags: [],
     products: [],
     codelist: [],
     version: 0,

@@ -366,7 +366,6 @@ export const projectTestData: IBank = {
   codelist: [],
   products: [],
   version: 0,
-  tags: [],
   publishedDate: null,
   deletedDate: null,
   projectId: null,

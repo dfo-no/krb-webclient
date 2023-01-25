@@ -2,7 +2,6 @@ import CustomJoi from '../Joi/CustomJoi';
 import { BaseNeedSchema, INeed } from './INeed';
 import { BaseProductSchema, IProduct } from './IProduct';
 import { BasePublicationSchema, IPublication } from './IPublication';
-import { BaseTagSchema, ITag } from './ITag';
 import { CodelistSchema, ICodelist } from './ICodelist';
 import { BaseModelSchema, IBaseModel } from './IBaseModel';
 import { IInheritedBank } from './IInheritedBank';
@@ -15,7 +14,6 @@ export const BaseBankSchema = BaseModelSchema.keys({
   needs: CustomJoi.validateUniqueArray(BaseNeedSchema),
   products: CustomJoi.validateUniqueArray(BaseProductSchema),
   codelist: CustomJoi.validateUniqueArray(CodelistSchema),
-  tags: CustomJoi.validateUniqueArray(BaseTagSchema),
   version: CustomJoi.validateVersion(),
   type: CustomJoi.validateType(ModelType.bank),
   publications: CustomJoi.validateUniqueArray(BasePublicationSchema),
@@ -33,7 +31,6 @@ export interface IBank extends IBaseModel {
   codelist: ICodelist[];
   products: Parentable<IProduct>[];
   version: number;
-  tags: Parentable<ITag>[];
   publications: IPublication[];
   publishedDate: string | null;
   projectId: string | null;

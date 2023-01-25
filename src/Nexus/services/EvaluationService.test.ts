@@ -285,7 +285,6 @@ describe('EvaluationService', () => {
         codelist: [],
         products: [product1, product2],
         publications: [],
-        tags: [],
         version: 3,
         publishedDate: '2021-11-28T15:57:40.850Z',
         type: ModelType.bank,

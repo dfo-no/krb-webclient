@@ -15,7 +15,6 @@ import { BaseResponseSchema } from './IResponse';
 import { ResponseProductSchema } from './IResponseProduct';
 import { BaseSpecificationSchema } from './ISpecification';
 import { SpecificationProductSchema } from './ISpecificationProduct';
-import { BaseTagSchema } from './ITag';
 import { VariantSchema } from './IVariant';
 import { ModelType } from '../enums';
 
@@ -35,6 +34,5 @@ export const ModelSchemaMap = new Map<ModelType, ObjectSchema>([
   [ModelType.responseProduct, ResponseProductSchema],
   [ModelType.specification, BaseSpecificationSchema],
   [ModelType.specificationProduct, SpecificationProductSchema],
-  [ModelType.tag, BaseTagSchema],
   [ModelType.variant, VariantSchema],
 ]);

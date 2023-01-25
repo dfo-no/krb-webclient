@@ -20,7 +20,6 @@ export default class LocalStorageAdapter extends Adapter {
       codelist: [],
       products: [],
       publications: [],
-      tags: [],
       version: 0,
       publishedDate: null,
       type: ModelType.bank,
