@@ -10,6 +10,7 @@ import Nexus from '../../Nexus/Nexus';
 import { IPeriodDateQuestion } from '../../Nexus/entities/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { QuestionVariant } from '../../Nexus/enums';
+import FlexRowBox from '../FlexBox/FlexRowBox';
 
 interface IProps {
   item: IPeriodDateQuestion;
@@ -60,9 +61,8 @@ const QuestionAnswerPeriodDate = ({
             isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
           }
         >
-          <div className={css.InputCtrlContainer}>
+          <FlexRowBox>
             <DateCtrl
-              className={css.InputCtrl}
               minDate={item.config.fromBoundary ?? undefined}
               maxDate={item.config.toBoundary ?? undefined}
               name={'answer.fromDate'}
@@ -70,14 +70,31 @@ const QuestionAnswerPeriodDate = ({
             />
             {item.config.isPeriod && (
               <DateCtrl
-                className={css.InputCtrl}
                 minDate={item.config.fromBoundary ?? undefined}
                 maxDate={item.config.toBoundary ?? undefined}
                 name={'answer.toDate'}
                 color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
               />
             )}
-          </div>
+          </FlexRowBox>
+          {/* <div className={css.InputCtrlContainer}>*/}
+          {/*  <DateCtrl*/}
+          {/*    className={css.InputCtrl}*/}
+          {/*    minDate={item.config.fromBoundary ?? undefined}*/}
+          {/*    maxDate={item.config.toBoundary ?? undefined}*/}
+          {/*    name={'answer.fromDate'}*/}
+          {/*    color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}*/}
+          {/*  />*/}
+          {/*  {item.config.isPeriod && (*/}
+          {/*    <DateCtrl*/}
+          {/*      className={css.InputCtrl}*/}
+          {/*      minDate={item.config.fromBoundary ?? undefined}*/}
+          {/*      maxDate={item.config.toBoundary ?? undefined}*/}
+          {/*      name={'answer.toDate'}*/}
+          {/*      color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}*/}
+          {/*    />*/}
+          {/*  )}*/}
+          {/* </div>*/}
           {isPrefilledResponse && (
             <div className={css.Buttons}>
               <Button type={Type.Submit}>{t('Save')}</Button>

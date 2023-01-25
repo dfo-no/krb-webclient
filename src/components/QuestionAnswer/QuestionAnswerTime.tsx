@@ -10,6 +10,7 @@ import TimeCtrl from '../../FormProvider/TimeCtrl';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { ITimeQuestion } from '../../Nexus/entities/ITimeQuestion';
 import { QuestionVariant } from '../../Nexus/enums';
+import FlexRowBox from '../FlexBox/FlexRowBox';
 
 interface IProps {
   item: ITimeQuestion;
@@ -58,9 +59,8 @@ const QuestionAnswerTime = ({
             isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
           }
         >
-          <div className={css.InputCtrlContainer}>
+          <FlexRowBox>
             <TimeCtrl
-              className={css.InputCtrl}
               minTime={item.config.fromBoundary ?? undefined}
               maxTime={item.config.toBoundary ?? undefined}
               name={'answer.fromTime'}
@@ -68,14 +68,13 @@ const QuestionAnswerTime = ({
             />
             {item.config.isPeriod && (
               <TimeCtrl
-                className={css.InputCtrl}
                 minTime={item.config.fromBoundary ?? undefined}
                 maxTime={item.config.toBoundary ?? undefined}
                 name={'answer.toTime'}
                 color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
               />
             )}
-          </div>
+          </FlexRowBox>
           {isPrefilledResponse && (
             <div className={css.Buttons}>
               <Button type={Type.Submit}>{t('Save')}</Button>

@@ -1,0 +1,8 @@
+.FlexRowBox {
+  display: flex;
+  gap: var(--small-gap);
+
+  > * {
+    max-width: 15rem;
+  }
+}
