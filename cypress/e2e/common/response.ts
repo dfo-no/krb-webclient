@@ -73,6 +73,7 @@ Then(
       .parent()
       .find('input')
       .clear({ force: true })
+      .clear({ force: true })
       .type(value);
   }
 );
