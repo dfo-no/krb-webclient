@@ -28,28 +28,33 @@ Feature: Besvarelse
   Scenario: Jeg kan rediger generelle krav
     Given Jeg lager besvarelse fra spesifikasjon "specification-el-bil-til-kommunedrift.pdf"
     Then Ser jeg "Generelle krav" krav
-    Then Ser jeg "Absolutte krav" har "0/1"
+    Then Ser jeg "Absolutte krav" for produkt "Generelle krav" har "0/1"
     When Jeg klikker på accordian knapp av produkt "Generelle krav"
     Then Jeg besvarer "Leveringstid" kravet med 10
     And Jeg besvarer "Avstand til godkjent verksted" kravet med 1
-    Then Ser jeg "Absolutte krav" har "1/1"
-    And Ser jeg "Totalt evaluert fradrag" har "5,000.00 NOK"
+    Then Ser jeg "Absolutte krav" for produkt "Generelle krav" har "1/1"
+    And Ser jeg "Totalt evaluert fradrag" for produkt "Generelle krav" har "5,000.00 NOK"
     And Ser jeg absolutte krav av "Generelle krav" produkt er "svart"
 
   Scenario: Jeg kan rediger besvarlse-produkt
     Given Jeg lager besvarelse fra spesifikasjon "specification-el-bil-til-kommunedrift.pdf"
     Then Ser jeg "El-bil" krav
-    And Ser jeg "Antall" har "1 Stk"
-    And Ser jeg "Absolutte krav" har "0/4"
-    And Ser jeg "Totalt evaluert fradrag" har "0.00 NOK"
+    And Ser jeg "Antall" for produkt "El-bil" har "1 Stk"
+    And Ser jeg "Absolutte krav" for produkt "El-bil" har "0/4"
+    And Ser jeg "Totalt evaluert fradrag" for produkt "El-bil" har "0.00 NOK"
     When Jeg klikker på accordian knapp av produkt "El-bil"
     And Jeg besvarer kravet med "Ja"
-    Then Ser jeg "Absolutte krav" har "1/4"
+    Then Ser jeg "Absolutte krav" for produkt "El-bil" har "1/4"
     And Ser jeg absolutte krav av "El-bil" produkt er "ikke svart"
     Then Jeg besvarer "Seter foran" kravet med 2
     And Jeg besvarer "Seter bak" kravet med 3
     And Jeg besvarer "Volum" kravet med bekreftet
     And Jeg besvarer "Sentrallås" kravet med bekreftet
-    Then Ser jeg "Absolutte krav" har "4/4"
-    And Ser jeg "Totalt evaluert fradrag" har "2,000.00 NOK"
+    Then Ser jeg "Absolutte krav" for produkt "El-bil" har "4/4"
+    And Ser jeg "Totalt evaluert fradrag" for produkt "El-bil" har "2,000.00 NOK"
     And Ser jeg absolutte krav av "El-bil" produkt er "svart"
+
+  Scenario: Jeg kan ikke rediger krav av type informasjon
+    Given Jeg lager besvarelse fra spesifikasjon "specification_all_answer_typer.pdf"
+    When Jeg klikker på accordian knapp av produkt "Verdi"
+    Then Ser jeg kravet "Verdi" er ikke aktiv

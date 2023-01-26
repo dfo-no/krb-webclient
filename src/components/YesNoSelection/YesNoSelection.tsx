@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { t } from 'i18next';
 
+import css from './YesNoSelection.module.scss';
 import RadioCtrl from '../../FormProvider/RadioCtrl';
 
 interface IProps {
@@ -8,6 +9,7 @@ interface IProps {
   label?: string;
   color?: string;
   recommendedAlternative?: boolean;
+  isDisabled?: boolean;
 }
 
 const YesNoSelection = ({
@@ -15,6 +17,7 @@ const YesNoSelection = ({
   label,
   color,
   recommendedAlternative,
+  isDisabled,
 }: IProps): ReactElement => {
   const isRecommended = (alternative: boolean): boolean => {
     return (
@@ -27,6 +30,8 @@ const YesNoSelection = ({
       name={name}
       label={label}
       color={color}
+      isDisabled={isDisabled}
+      className={color && isDisabled ? css.YesNoSelection : ''}
       options={[
         {
           value: 'true',

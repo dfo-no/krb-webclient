@@ -19,12 +19,14 @@ interface IProps {
   requirementAnswer: IRequirementAnswer;
   existingAnswer?: IRequirementAnswer;
   productId: string;
+  isInfo?: boolean;
 }
 
 export default function ProductQuestionAnswer({
   requirementAnswer,
   existingAnswer,
   productId,
+  isInfo,
 }: IProps): React.ReactElement {
   const { response, addProductAnswer, addRequirementAnswer } =
     useResponseState();
@@ -64,6 +66,7 @@ export default function ProductQuestionAnswer({
           item={requirementAnswer.question}
           existingAnswer={existingAnswer}
           onSubmit={onSubmit}
+          isInfo={isInfo}
         />
       );
     case QuestionVariant.Q_CODELIST:
@@ -74,15 +77,22 @@ export default function ProductQuestionAnswer({
       const codesId = requirementAnswer.question.config.codes.map(
         (c) => c.code
       );
+
+      const codesIdInfo = requirementAnswer.question.answer.codes?.map(
+        (code) => code
+      );
+
       const codesList = codelist?.codes.filter(function (cl) {
-        return codesId.indexOf(cl.id) > -1;
+        return (codesId.length ? codesId : codesIdInfo)?.indexOf(cl.id) > -1;
       });
+
       return (
         <QuestionAnswerCodelist
           item={requirementAnswer.question}
           existingAnswer={existingAnswer}
           onSubmit={onSubmit}
           codesList={codesList}
+          isInfo={isInfo}
         />
       );
     case QuestionVariant.Q_CONFIRMATION:
@@ -91,6 +101,7 @@ export default function ProductQuestionAnswer({
           item={requirementAnswer.question}
           existingAnswer={existingAnswer}
           onSubmit={onSubmit}
+          isInfo={isInfo}
         />
       );
     case QuestionVariant.Q_PERIOD_DATE:
@@ -99,6 +110,7 @@ export default function ProductQuestionAnswer({
           item={requirementAnswer.question}
           existingAnswer={existingAnswer}
           onSubmit={onSubmit}
+          isInfo={isInfo}
         />
       );
     case QuestionVariant.Q_SLIDER:
@@ -107,6 +119,7 @@ export default function ProductQuestionAnswer({
           item={requirementAnswer.question}
           existingAnswer={existingAnswer}
           onSubmit={onSubmit}
+          isInfo={isInfo}
         />
       );
     case QuestionVariant.Q_TEXT:
@@ -115,6 +128,7 @@ export default function ProductQuestionAnswer({
           item={requirementAnswer.question}
           existingAnswer={existingAnswer}
           onSubmit={onSubmit}
+          isInfo={isInfo}
         />
       );
     case QuestionVariant.Q_TIME:
@@ -123,6 +137,7 @@ export default function ProductQuestionAnswer({
           item={requirementAnswer.question}
           existingAnswer={existingAnswer}
           onSubmit={onSubmit}
+          isInfo={isInfo}
         />
       );
     case QuestionVariant.Q_FILEUPLOAD:

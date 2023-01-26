@@ -15,12 +15,14 @@ interface IProps {
   item: IConfirmationQuestion;
   existingAnswer?: IRequirementAnswer;
   onSubmit: (post: IConfirmationQuestion) => void;
+  isInfo?: boolean;
 }
 
 const QuestionAnswerConfirmation = ({
   item,
   existingAnswer,
   onSubmit,
+  isInfo,
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
@@ -47,31 +49,39 @@ const QuestionAnswerConfirmation = ({
   }, [existingAnswer, methods]);
 
   return (
-    <div className={css.QuestionAnswer}>
-      <FormProvider {...methods}>
-        <form
-          onSubmit={methods.handleSubmit(onSubmit)}
-          autoComplete="off"
-          noValidate
-          onChange={
-            isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
-          }
-        >
-          <CheckboxCtrl name={'answer.value'} label={t('Confirm')} />
-          {isPrefilledResponse && (
-            <div className={css.Buttons}>
-              <Button type={Type.Submit}>{t('Save')}</Button>
-              <Button
-                variant={Variant.Inverted}
-                onClick={() => methods.reset()}
-              >
-                {t('Reset')}
-              </Button>
-            </div>
-          )}
-        </form>
-      </FormProvider>
-    </div>
+    <>
+      {!isInfo && (
+        <div className={css.QuestionAnswer}>
+          <FormProvider {...methods}>
+            <form
+              onSubmit={methods.handleSubmit(onSubmit)}
+              autoComplete="off"
+              noValidate
+              onChange={
+                isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
+              }
+            >
+              <CheckboxCtrl
+                name={'answer.value'}
+                label={t('Confirm')}
+                color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+              />
+              {isPrefilledResponse && (
+                <div className={css.Buttons}>
+                  <Button type={Type.Submit}>{t('Save')}</Button>
+                  <Button
+                    variant={Variant.Inverted}
+                    onClick={() => methods.reset()}
+                  >
+                    {t('Reset')}
+                  </Button>
+                </div>
+              )}
+            </form>
+          </FormProvider>
+        </div>
+      )}
+    </>
   );
 };
 

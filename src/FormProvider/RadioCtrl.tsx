@@ -17,6 +17,7 @@ interface IProps {
   options: IOption[];
   label?: string;
   color?: string;
+  isDisabled?: boolean;
 }
 
 const RadioCtrl = ({
@@ -25,6 +26,7 @@ const RadioCtrl = ({
   options,
   label,
   color,
+  isDisabled,
 }: IProps): ReactElement => {
   const {
     formState: { errors },
@@ -36,6 +38,7 @@ const RadioCtrl = ({
         <FormControlLabel
           key={option.value}
           value={option.value}
+          disabled={isDisabled}
           control={<DFORadio radioColor={color} />}
           label={
             <Typography variant={'sm'} color={theme.palette.black.main}>

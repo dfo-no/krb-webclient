@@ -18,6 +18,7 @@ interface IProps {
   maxTime?: string;
   color?: string;
   className?: string;
+  isDisabled?: boolean;
 }
 
 const TimeCtrl = ({
@@ -27,6 +28,7 @@ const TimeCtrl = ({
   maxTime,
   color,
   className,
+  isDisabled,
 }: IProps): React.ReactElement => {
   const {
     formState: { errors },
@@ -60,6 +62,7 @@ const TimeCtrl = ({
         render={({ field }) => (
           <div
             className={classnames(css.FormProvider__DateAndTimeCtrl, className)}
+            data-disabled={isDisabled}
           >
             {label && (
               <span className={css.FormProvider__DateAndTimeCtrl__label}>
@@ -72,6 +75,7 @@ const TimeCtrl = ({
               minTime={min}
               maxTime={max}
               onChange={(e) => field.onChange(getDate(e))}
+              disabled={isDisabled}
               renderInput={(params) => (
                 <DFOPickerField
                   sx={{ backgroundColor: 'var(--white-color)' }}

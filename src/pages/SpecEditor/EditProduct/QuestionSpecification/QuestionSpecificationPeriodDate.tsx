@@ -78,13 +78,13 @@ const QuestionSpecificationPeriodDate = ({ item }: IProps): ReactElement => {
   });
 
   useEffect(() => {
-    if (useFromBoundary) {
+    if (useFromBoundary || useToBoundary) {
       setValue('question.answer.fromDate', useFromBoundary);
       if (item.config.isPeriod) {
-        setValue('question.answer.toDate', useFromBoundary);
+        setValue('question.answer.toDate', useToBoundary);
       }
     }
-  }, [useFromBoundary, setValue, item.config.isPeriod]);
+  }, [useFromBoundary, useToBoundary, setValue, item.config.isPeriod]);
 
   useEffect(() => {
     if (usePeriodMin) {

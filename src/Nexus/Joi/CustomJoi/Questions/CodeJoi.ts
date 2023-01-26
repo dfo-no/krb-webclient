@@ -49,7 +49,7 @@ const QuestionCodesValidator = (joi: Joi.Root) => ({
           ?.map((code: ICodeSelection) => code.discount)
           .reduce(function (a: number, b: number) {
             return +a + +b;
-          });
+          }, []);
 
         if (discounts > discountSumMax) {
           return helpers.error('array.check');

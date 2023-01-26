@@ -10,17 +10,20 @@ import Nexus from '../../Nexus/Nexus';
 import { IPeriodDateQuestion } from '../../Nexus/entities/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { QuestionVariant } from '../../Nexus/enums';
+import FlexRowBox from '../FlexBox/FlexRowBox';
 
 interface IProps {
   item: IPeriodDateQuestion;
   existingAnswer?: IRequirementAnswer;
   onSubmit: (post: IPeriodDateQuestion) => void;
+  isInfo?: boolean;
 }
 
 const QuestionAnswerPeriodDate = ({
   item,
   existingAnswer,
   onSubmit,
+  isInfo,
 }: IProps): React.ReactElement => {
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
@@ -60,11 +63,24 @@ const QuestionAnswerPeriodDate = ({
             isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
           }
         >
-          <DateCtrl
-            minDate={item.config.fromBoundary ?? undefined}
-            maxDate={item.config.toBoundary ?? undefined}
-            name={'answer.fromDate'}
-          />
+          <FlexRowBox>
+            <DateCtrl
+              minDate={item.config.fromBoundary ?? undefined}
+              maxDate={item.config.toBoundary ?? undefined}
+              name={'answer.fromDate'}
+              color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+              isDisabled={isInfo}
+            />
+            {item.config.isPeriod && (
+              <DateCtrl
+                minDate={item.config.fromBoundary ?? undefined}
+                maxDate={item.config.toBoundary ?? undefined}
+                name={'answer.toDate'}
+                color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+                isDisabled={isInfo}
+              />
+            )}
+          </FlexRowBox>
           {isPrefilledResponse && (
             <div className={css.Buttons}>
               <Button type={Type.Submit}>{t('Save')}</Button>

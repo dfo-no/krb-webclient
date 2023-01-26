@@ -78,13 +78,13 @@ const QuestionSpecificationTime = ({ item }: IProps): ReactElement => {
   });
 
   useEffect(() => {
-    if (useFromBoundary) {
+    if (useFromBoundary || useToBoundary) {
       setValue('question.answer.fromTime', useFromBoundary);
       if (item.config.isPeriod) {
-        setValue('question.answer.toTime', useFromBoundary);
+        setValue('question.answer.toTime', useToBoundary);
       }
     }
-  }, [useFromBoundary, setValue, item.config.isPeriod]);
+  }, [useFromBoundary, useToBoundary, setValue, item.config.isPeriod]);
 
   useEffect(() => {
     if (useTimePeriodMin) {

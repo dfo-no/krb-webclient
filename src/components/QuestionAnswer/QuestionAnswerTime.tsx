@@ -10,17 +10,20 @@ import TimeCtrl from '../../FormProvider/TimeCtrl';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { ITimeQuestion } from '../../Nexus/entities/ITimeQuestion';
 import { QuestionVariant } from '../../Nexus/enums';
+import FlexRowBox from '../FlexBox/FlexRowBox';
 
 interface IProps {
   item: ITimeQuestion;
   existingAnswer?: IRequirementAnswer;
   onSubmit: (post: ITimeQuestion) => void;
+  isInfo?: boolean;
 }
 
 const QuestionAnswerTime = ({
   item,
   existingAnswer,
   onSubmit,
+  isInfo,
 }: IProps): React.ReactElement => {
   const nexus = Nexus.getInstance();
   const location = useLocation();
@@ -58,11 +61,24 @@ const QuestionAnswerTime = ({
             isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
           }
         >
-          <TimeCtrl
-            minTime={item.config.fromBoundary ?? undefined}
-            maxTime={item.config.toBoundary ?? undefined}
-            name={'answer.fromTime'}
-          />
+          <FlexRowBox>
+            <TimeCtrl
+              minTime={item.config.fromBoundary ?? undefined}
+              maxTime={item.config.toBoundary ?? undefined}
+              name={'answer.fromTime'}
+              color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+              isDisabled={isInfo}
+            />
+            {item.config.isPeriod && (
+              <TimeCtrl
+                minTime={item.config.fromBoundary ?? undefined}
+                maxTime={item.config.toBoundary ?? undefined}
+                name={'answer.toTime'}
+                color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+                isDisabled={isInfo}
+              />
+            )}
+          </FlexRowBox>
           {isPrefilledResponse && (
             <div className={css.Buttons}>
               <Button type={Type.Submit}>{t('Save')}</Button>

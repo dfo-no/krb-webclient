@@ -19,6 +19,7 @@ interface IProps {
   existingAnswer?: IRequirementAnswer;
   onSubmit: (post: ICodelistQuestion) => void;
   codesList?: Parentable<ICode>[];
+  isInfo?: boolean;
 }
 
 const QuestionAnswerCodelist = ({
@@ -26,6 +27,7 @@ const QuestionAnswerCodelist = ({
   existingAnswer,
   onSubmit,
   codesList,
+  isInfo,
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
@@ -72,6 +74,7 @@ const QuestionAnswerCodelist = ({
               name={'answer.codes'}
               codesList={codesList}
               codeSelection={item.config.codes}
+              isDisabled={isInfo}
             />
           )}
           {isPrefilledResponse && (

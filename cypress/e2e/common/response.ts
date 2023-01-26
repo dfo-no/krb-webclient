@@ -30,61 +30,70 @@ Then('Ser jeg evaluert fradrag har verdi {string}', (value: string) => {
   cy.contains('Evaluert fradrag').parent().contains(value);
 });
 
+Then('Ser jeg {string} krav', (title: string) => {
+  cy.get('[class^="EditorFullPage"]').contains(title);
+});
+
 Then(
-    'Ser jeg {string} krav',
-    (title: string) => {
-      cy.get('[class^="EditorFullPage"]').contains(title);
-    }
+  'Ser jeg {string} for produkt {string} har {string}',
+  (primary: string, product: string, secondary: string) => {
+    cy.contains(product)
+      .parentsUntil('li')
+      .contains(primary)
+      .parent()
+      .contains(secondary);
+  }
 );
 
 Then(
-    'Ser jeg {string} har {string}',
-    (primary: string, secondary: string) => {
-      cy.get('[class^="Toolbar_"]').contains(primary);
-      cy.get('[class^="Toolbar_"]').contains(secondary);
-    }
-);
-
-Then(
-    'Ser jeg absolutte krav av {string} produkt er {string}',
-    (title: string, status: string) => {
-        if (status === 'svart') {
-            cy.get('[class^="EditorFullPage"]')
-                .contains(title)
-                .parent()
-                .find(`[data-testid="CheckBoxOutlinedIcon"]`).should("be.visible");
-        } else if (status === 'ikke svart') {
-            cy.get('[class^="EditorFullPage"]')
-                .contains(title)
-                .parent()
-                .find(`[data-testid="WarningAmberOutlinedIcon"]`).should("be.visible");
-        }
-    }
-);
-
-
-Then('Jeg besvarer {string} kravet med {int}', (title: string, value: string) => {
-    cy.get('[class^="ProductRequirementAnswer_"]')
+  'Ser jeg absolutte krav av {string} produkt er {string}',
+  (title: string, status: string) => {
+    if (status === 'svart') {
+      cy.get('[class^="EditorFullPage"]')
         .contains(title)
         .parent()
+        .find(`[data-testid="CheckBoxOutlinedIcon"]`)
+        .should('be.visible');
+    } else if (status === 'ikke svart') {
+      cy.get('[class^="EditorFullPage"]')
+        .contains(title)
         .parent()
-        .find('input')
-        .clear()
-        .type(value);
-});
+        .find(`[data-testid="WarningAmberOutlinedIcon"]`)
+        .should('be.visible');
+    }
+  }
+);
+
+Then(
+  'Jeg besvarer {string} kravet med {int}',
+  (title: string, value: string) => {
+    cy.get('[class^="ProductRequirementAnswer_"]')
+      .contains(title)
+      .parent()
+      .parent()
+      .find('input')
+      .clear({ force: true })
+      .clear({ force: true })
+      .type(value);
+  }
+);
 Then('Jeg besvarer {string} kravet med bekreftet', (title: string) => {
-    cy.get('[class^="ProductRequirementAnswer_"]')
-        .contains(title)
-        .parent()
-        .parent()
-        .find('input')
-        .click()
+  cy.get('[class^="ProductRequirementAnswer_"]')
+    .contains(title)
+    .parent()
+    .parent()
+    .find('input')
+    .click();
 });
 
+When('Jeg klikker på accordian knapp av produkt {string}', (title: string) => {
+  cy.contains(title)
+    .parent()
+    .parent()
+    .find(`[data-testid="ExpandMoreIcon"]`)
+    .click();
+});
 
-When(
-    'Jeg klikker på accordian knapp av produkt {string}',
-    ( title: string) => {
-        cy.contains(title).parent().parent().find(`[data-testid="ExpandMoreIcon"]`).click();
-    }
-);
+Then('Ser jeg kravet {string} er ikke aktiv', (fieldName: string) => {
+  cy.get(`input[placeholder="${fieldName}"]`).should('be.disabled');
+});

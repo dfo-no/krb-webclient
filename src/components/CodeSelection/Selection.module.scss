@@ -3,15 +3,19 @@
   flex-direction: column;
   font-size: var(--small-fontsize);
   box-sizing: border-box;
+  padding-top: 1rem;
 
   .SelectionItems {
     display: flex;
     gap: var(--large-gap);
-    border-bottom: 0.1rem solid var(--gray-color);
     align-items: center;
     box-sizing: border-box;
     width: 100%;
     padding: 0.3rem;
+
+    &[data-pre-response='true'] {
+      border-bottom: 0.1rem solid var(--gray-color);
+    }
 
     > * {
       flex: 0 auto;
@@ -25,11 +29,22 @@
       display: flex;
       gap: var(--tiny-gap);
       align-items: center;
-      width: 10%;
 
-      &[data-manatory='true'] {
-        font-weight: bold;
+      &[data-disabled='true'] {
+        path {
+          fill: var(--secondary-gray-color);
+        }
+      }
+
+      span {
+        &[data-mandatory='true'] {
+          font-weight: var(--font-weight-semibold);
+        }
       }
     }
+  }
+
+  label {
+    font-weight: var(--font-weight-semibold);
   }
 }
