@@ -80,3 +80,11 @@ Then('Jeg besvarer {string} kravet med bekreftet', (title: string) => {
         .find('input')
         .click()
 });
+
+
+When(
+    'Jeg klikker på accordian knapp av produkt {string}',
+    ( title: string) => {
+        cy.contains(title).parent().parent().find(`[data-testid="ExpandMoreIcon"]`).click();
+    }
+);

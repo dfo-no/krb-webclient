@@ -22,8 +22,11 @@ const useStyles = makeStyles({
   expandIcon: {
     '& .MuiSvgIcon-root': {
       color: theme.palette.gray700.main,
-      fontSize: '4rem',
+      fontSize: '3rem',
     },
+  },
+  detailRoot: {
+    padding: 0,
   },
 });
 
@@ -60,7 +63,9 @@ export const DFOAccordion = ({
       >
         {header}
       </AccordionSummary>
-      <AccordionDetails>{body}</AccordionDetails>
+      <AccordionDetails classes={{ root: classes.detailRoot }}>
+        {body}
+      </AccordionDetails>
     </Accordion>
   );
 };
