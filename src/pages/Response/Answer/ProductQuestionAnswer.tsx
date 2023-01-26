@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { GENERAL } from '../../../common/PathConstants';
+import Utils from '../../../common/Utils';
 import QuestionAnswerCheckbox from '../../../components/QuestionAnswer/QuestionAnswerCheckbox';
 import QuestionAnswerCodelist from '../../../components/QuestionAnswer/QuestionAnswerCodelist';
 import QuestionAnswerConfirmation from '../../../components/QuestionAnswer/QuestionAnswerConfirmation';
@@ -16,14 +18,14 @@ import { useResponseState } from '../ResponseContext';
 interface IProps {
   requirementAnswer: IRequirementAnswer;
   existingAnswer?: IRequirementAnswer;
-  productIndex: number;
+  productId: string;
   isInfo?: boolean;
 }
 
 export default function ProductQuestionAnswer({
   requirementAnswer,
   existingAnswer,
-  productIndex,
+  productId,
   isInfo,
 }: IProps): React.ReactElement {
   const { response, addProductAnswer, addRequirementAnswer } =
@@ -42,12 +44,17 @@ export default function ProductQuestionAnswer({
       ...requirementAnswer,
       question,
     };
-    if (productIndex === -1) {
+    if (productId === GENERAL) {
       addRequirementAnswer(newAnswer);
     } else {
       addProductAnswer({
         answer: newAnswer,
-        productId: response.products[productIndex].id,
+        productId: Utils.ensure(
+          response.products.find(
+            (product) => product.originProduct.id === productId
+          ),
+          `Something went wrong, the product with productId ${productId} was not in the list.`
+        ).id,
       });
     }
   };

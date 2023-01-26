@@ -7,7 +7,7 @@ import ResponseOverview from './Overview/ResponseOverview';
 import { PRODUCTS } from '../../common/PathConstants';
 import { ResponseProvider } from './ResponseContext';
 
-export type MatchParams = { responseId: string };
+export type MatchParams = { responseId: string; productId: string };
 type Props = RouteComponentProps<MatchParams>;
 
 export default function ResponseModule({
@@ -22,7 +22,7 @@ export default function ResponseModule({
               <ResponseOverview />
             </Route>
             <Route
-              path={`${props.match.path}/${PRODUCTS}/:productIndex`}
+              path={`${props.match.path}/${PRODUCTS}/:productId`}
               component={AnswerProduct}
             />
           </Switch>

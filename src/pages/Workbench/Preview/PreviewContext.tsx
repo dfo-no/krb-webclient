@@ -1,52 +1,18 @@
-import {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useState,
-} from 'react';
+import { useState } from 'react';
+import { createContainer } from 'unstated-next';
 
-import { IProduct } from '../../../Nexus/entities/IProduct';
 import { Parentable } from '../../../models/Parentable';
+import { IProduct } from '../../../Nexus/entities/IProduct';
 
-interface IPreviewContext {
-  selected: Parentable<IProduct> | null;
-  setSelected: Dispatch<SetStateAction<Parentable<IProduct> | null>>;
-}
-
-const initialContext: IPreviewContext = {
-  selected: null,
-  setSelected: function (): void {
-    throw new Error('Function not implemented.');
-  },
-};
-
-export const PreviewContext = createContext<IPreviewContext>(initialContext);
-
-interface IProps {
-  children: React.ReactNode;
-}
-
-export const PreviewProvider = ({ children }: IProps) => {
+const usePreviewContext = () => {
   const [selected, setSelected] = useState<Parentable<IProduct> | null>(null);
 
-  return (
-    <PreviewContext.Provider
-      value={{
-        selected,
-        setSelected,
-      }}
-    >
-      {children}
-    </PreviewContext.Provider>
-  );
+  return {
+    selected,
+    setSelected,
+  };
 };
 
-export const usePreviewState = (): IPreviewContext => {
-  const context = useContext(PreviewContext);
-
-  if (context === undefined) {
-    throw new Error('usePreviewState must be used within a PreviewProvider');
-  }
-  return context;
-};
+export const PreviewContextContainer = createContainer(usePreviewContext);
+export const usePreviewState = PreviewContextContainer.useContainer;
+export const PreviewProvider = PreviewContextContainer.Provider;
