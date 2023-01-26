@@ -7,14 +7,13 @@ import { v4 as uuidv4 } from 'uuid';
 import FormButtons from '../../../../components/Form/FormButtons';
 import Nexus from '../../../../Nexus/Nexus';
 import ProductService from '../../../../Nexus/services/ProductService';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { useProjectMutationState } from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import { Alert } from '../../../../models/Alert';
-import { IProduct } from '../../../../Nexus/entities/IProduct';
+import { Product } from '../../../../api/openapi-fetch';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { ModelType } from '../../../../Nexus/enums';
-import { Parentable } from '../../../../models/Parentable';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
@@ -30,17 +29,16 @@ export default function NewProductForm({
   const nexus = Nexus.getInstance();
   const formStyles = useFormStyles();
   const { projectId } = useParams<IRouteProjectParams>();
-  const { addProduct } = useProjectMutations();
+  const { addProduct } = useProjectMutationState();
 
-  const defaultValues: Parentable<IProduct> =
-    ProductService.defaultProduct(projectId);
+  const defaultValues: Product = ProductService.defaultProduct(projectId);
 
-  const methods = useForm<Parentable<IProduct>>({
+  const methods = useForm<Product>({
     resolver: nexus.resolverService.postResolver(ModelType.product),
     defaultValues,
   });
 
-  async function onSubmit(post: Parentable<IProduct>) {
+  async function onSubmit(post: Product) {
     const newProduct = nexus.productService.createProductWithId(post);
     await addProduct(newProduct).then(() => {
       const alert: Alert = {

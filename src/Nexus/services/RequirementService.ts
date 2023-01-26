@@ -1,8 +1,8 @@
 import StoreService from './StoreService';
 import UuidService from './UuidService';
-import { IRequirement } from '../entities/IRequirement';
 import { IVariant } from '../entities/IVariant';
 import { ModelType } from '../enums';
+import { Requirement } from '../../api/openapi-fetch';
 
 export default class RequirementService {
   UuidService = new UuidService();
@@ -15,14 +15,14 @@ export default class RequirementService {
 
   public static defaultRequirement = (
     projectId?: string,
-    needId?: string
-  ): IRequirement => {
+    needRef?: string
+  ): Requirement => {
     return {
-      id: '',
+      ref: '',
       title: '',
       description: '',
-      needId: needId ?? '',
-      type: ModelType.requirement,
+      needRef: needRef ?? '',
+      // type: ModelType.requirement,
       variants: [],
       tags: [],
       sourceOriginal: projectId ?? null,
@@ -30,21 +30,21 @@ export default class RequirementService {
     };
   };
 
-  createRequirementWithId = (item: IRequirement): IRequirement => {
+  createRequirementWithId = (item: Requirement): Requirement => {
     const requirement = { ...item };
-    requirement.id = this.UuidService.generateId();
+    requirement.ref = this.UuidService.generateId();
     return requirement;
   };
 
-  async add(item: IRequirement): Promise<void> {
+  async add(item: Requirement): Promise<void> {
     return this.storeService.addRequirement(item.needId, item);
   }
 
-  async edit(item: IRequirement): Promise<void> {
+  async edit(item: Requirement): Promise<void> {
     return this.storeService.editRequirement(item.needId, item);
   }
 
-  async delete(item: IRequirement): Promise<void> {
+  async delete(item: Requirement): Promise<void> {
     return this.storeService.deleteRequirement(item.needId, item);
   }
 

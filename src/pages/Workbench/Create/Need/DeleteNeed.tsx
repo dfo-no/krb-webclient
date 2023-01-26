@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Box } from '@mui/material/';
 
 import { Alert } from '../../../../models/Alert';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { useProjectMutationState } from '../../../../store/api/ProjectMutations';
 import { useSelectState } from '../SelectContext';
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
@@ -27,7 +27,7 @@ export function DeleteNeed({
   const { addAlert } = AlertsContainer.useContainer();
 
   const { t } = useTranslation();
-  const { deleteNeed } = useProjectMutations();
+  const { deleteNeed } = useProjectMutationState();
 
   const { deleteMode } = useSelectState();
 

@@ -1,4 +1,4 @@
-import { IVariant } from '../entities/IVariant';
+import { RequirementVariant } from '../../api/openapi-fetch';
 import StoreService from './StoreService';
 import UuidService from './UuidService';
 import { VariantType } from '../enums';
@@ -12,9 +12,9 @@ export default class VariantService {
     this.storeService = store;
   }
 
-  generateDefaultVariantValues = (): IVariant => {
+  generateDefaultVariantValues = (): RequirementVariant => {
     return {
-      id: '',
+      ref: '',
       requirementText: '',
       instruction: '',
       useProduct: false,
@@ -27,9 +27,9 @@ export default class VariantService {
     };
   };
 
-  createVariantWithId = (item: IVariant): IVariant => {
+  createVariantWithId = (item: RequirementVariant): RequirementVariant => {
     const variant = { ...item };
-    variant.id = this.UuidService.generateId();
+    variant.ref = this.UuidService.generateId();
     return variant;
   };
 }

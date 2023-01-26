@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../../Nexus/Nexus';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { useProjectMutationState } from '../../../../store/api/ProjectMutations';
 import Utils from '../../../../common/Utils';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 import { Alert } from '../../../../models/Alert';
@@ -27,7 +27,7 @@ export default function DeleteCodelistForm({
   codelist,
   handleClose,
 }: IProps): React.ReactElement {
-  const { deleteCodelist } = useProjectMutations();
+  const { deleteCodelist } = useProjectMutationState();
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();

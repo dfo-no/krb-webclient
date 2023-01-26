@@ -4,14 +4,13 @@ import React, { useState } from 'react';
 import Dialog from '../../../../components/DFODialog/DFODialog';
 import EditRequirementForm from './EditRequirementForm';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
-import { INeed } from '../../../../Nexus/entities/INeed';
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
-import { Parentable } from '../../../../models/Parentable';
 import { useSelectState } from '../SelectContext';
+import { Need } from '../../../../api/openapi-fetch';
 
 interface IProps {
   requirement: IRequirement;
-  need: Parentable<INeed>;
+  need: Need;
 }
 
 const EditRequirement = ({ requirement, need }: IProps) => {

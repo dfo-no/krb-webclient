@@ -13,12 +13,12 @@ import QuestionsList from './QuestionsList';
 import RadioCtrl from '../../../../FormProvider/RadioCtrl';
 import TextAreaCtrl from '../../../../FormProvider/TextAreaCtrl';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import { IVariant } from '../../../../Nexus/entities/IVariant';
+import { RequirementVariant } from '../../../../api/openapi-fetch';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { VariantType } from '../../../../Nexus/enums';
 
 interface IProps {
-  control: Control<IVariant>;
+  control: Control<RequirementVariant>;
 }
 
 const VariantFormContent = ({ control }: IProps) => {

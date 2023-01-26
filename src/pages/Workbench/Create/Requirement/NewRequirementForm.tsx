@@ -8,7 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Nexus from '../../../../Nexus/Nexus';
 import RequirementService from '../../../../Nexus/services/RequirementService';
 import theme from '../../../../theme';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { useProjectMutationState } from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { Alert } from '../../../../models/Alert';
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
@@ -25,7 +25,7 @@ import { Need } from '../../../../api/openapi-fetch';
 
 interface Props {
   need: Need;
-  handleClose: (id: string) => void;
+  handleClose: (ref?: string) => void;
 }
 
 function NewRequirementForm({ need, handleClose }: Props): React.ReactElement {
@@ -33,7 +33,7 @@ function NewRequirementForm({ need, handleClose }: Props): React.ReactElement {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
   const { projectId } = useParams<IRouteProjectParams>();
-  const { addRequirement } = useProjectMutations();
+  const { addRequirement } = useProjectMutationState();
 
   const defaultValues: IRequirement = RequirementService.defaultRequirement(
     projectId,
@@ -49,16 +49,16 @@ function NewRequirementForm({ need, handleClose }: Props): React.ReactElement {
     const newRequirement =
       nexus.requirementService.createRequirementWithId(post);
     // TODO: Uncomment
-    // await addRequirement(newRequirement, need).then(() => {
-    //   const alert: Alert = {
-    //     id: uuidv4(),
-    //     style: 'success',
-    //     text: t('Successfully created new requirement'),
-    //   };
-    //   addAlert(alert);
-    //   handleClose(newRequirement.id);
-    //   methods.reset();
-    // });
+    await addRequirement(newRequirement, need).then(() => {
+      const alert: Alert = {
+        id: uuidv4(),
+        style: 'success',
+        text: t('Successfully created new requirement'),
+      };
+      addAlert(alert);
+      handleClose(newRequirement.ref);
+      methods.reset();
+    });
   };
 
   return (

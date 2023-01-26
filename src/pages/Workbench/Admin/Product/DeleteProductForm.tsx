@@ -6,20 +6,19 @@ import { v4 as uuidv4 } from 'uuid';
 
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../../Nexus/Nexus';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { useProjectMutationState } from '../../../../store/api/ProjectMutations';
 import Utils from '../../../../common/Utils';
 import { Alert } from '../../../../models/Alert';
-import { IProduct } from '../../../../Nexus/entities/IProduct';
+import { Product } from '../../../../api/openapi-fetch';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { ModelType } from '../../../../Nexus/enums';
-import { Parentable } from '../../../../models/Parentable';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
   children: React.ReactElement;
-  product: Parentable<IProduct>;
+  product: Product;
   handleClose: () => void;
 }
 
@@ -28,13 +27,13 @@ export default function DeleteProductForm({
   product,
   handleClose,
 }: IProps): React.ReactElement {
-  const { deleteProduct } = useProjectMutations();
+  const { deleteProduct } = useProjectMutationState();
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
   const { deleteMode } = useEditableState();
 
-  const methods = useForm<Parentable<IProduct>>({
+  const methods = useForm<Product>({
     defaultValues: product,
     resolver: nexus.resolverService.resolver(ModelType.product),
   });
@@ -48,7 +47,7 @@ export default function DeleteProductForm({
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
 
-  if (deleteMode !== product.id) {
+  if (deleteMode !== product.ref) {
     return children;
   }
 
@@ -70,7 +69,7 @@ export default function DeleteProductForm({
     infoText = `${t('Cant delete this product')} ${t('Product has children')}`;
   }
 
-  const onSubmit = (put: Parentable<IProduct>): void => {
+  const onSubmit = (put: Product): void => {
     deleteProduct(put).then(() => {
       const alert: Alert = {
         id: uuidv4(),

@@ -17,7 +17,7 @@ import SpecificationService from './services/SpecificationService';
 import StoreService from './services/StoreService';
 // import TagService from './services/TagService';
 import VariantService from './services/VariantService';
-import { IBank } from './entities/IBank';
+import { ProjectForm } from '../api/openapi-fetch';
 
 export default class Nexus {
   private static instance: Nexus;
@@ -79,7 +79,7 @@ export default class Nexus {
   }
 
   // find out how to handle potential load of specification as well as bank
-  async load(): Promise<IBank> {
+  async load(): Promise<ProjectForm> {
     return this.adapter.load();
   }
 

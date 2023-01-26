@@ -5,7 +5,6 @@ import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 
 import { IBaseModelWithTitleAndDesc } from '../../models/IBaseModelWithTitleAndDesc';
 import { Nestable as NestableModel } from '../../models/Nestable';
-import { Parentable } from '../../models/Parentable';
 import Utils from '../../common/Utils';
 
 type NestableElementType =
@@ -21,10 +20,10 @@ type NestableElementType =
 
 interface IProps<T extends IBaseModelWithTitleAndDesc> {
   className?: string;
-  inputlist: Parentable<T>[];
-  dispatchfunc: (newItems: Parentable<T>[]) => void;
+  inputlist: T[];
+  dispatchfunc: (newItems: T[]) => void;
   renderItem: (
-    item: Parentable<T>,
+    item: T,
     handler: NestableElementType,
     collapseIcon?: NestableElementType
   ) => React.ReactElement;
@@ -82,11 +81,11 @@ const NestableHierarcy = <T extends IBaseModelWithTitleAndDesc>({
   }) => {
     // Nestable til Parentable
     const itemList = flatten(items);
-    const returnList: Parentable<T>[] = [];
+    const returnList: T[] = [];
     itemList.forEach((elem) => {
       const clone = { ...elem };
       delete clone.level;
-      returnList.push(clone as Parentable<T>);
+      returnList.push(clone as T);
     });
 
     dispatchfunc(returnList);

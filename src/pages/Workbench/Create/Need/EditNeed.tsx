@@ -4,12 +4,11 @@ import React, { useState } from 'react';
 import Dialog from '../../../../components/DFODialog/DFODialog';
 import EditNeedForm from './EditNeedForm';
 import { DFOCardHeaderIconButton } from '../../../../components/DFOCard/DFOCardHeaderIconButton';
-import { INeed } from '../../../../Nexus/entities/INeed';
-import { Parentable } from '../../../../models/Parentable';
+import { Need } from '../../../../api/openapi-fetch';
 import { useSelectState } from '../SelectContext';
 
 interface IProps {
-  need: Parentable<INeed>;
+  need: Need;
 }
 
 const EditNeed = ({ need }: IProps) => {

@@ -19,7 +19,7 @@ import GeneralErrorMessage from '../../../../Form/GeneralErrorMessage';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import Nexus from '../../../../Nexus/Nexus';
 import theme from '../../../../theme';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { useProjectMutationState } from '../../../../store/api/ProjectMutations';
 import VariantFormContent from './VariantFormContent';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { DFOChip } from '../../../../components/DFOChip/DFOChip';
@@ -45,7 +45,7 @@ const Variant = ({ variant, requirementIndex }: IProps) => {
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
 
-  const { editVariant } = useProjectMutations();
+  const { editVariant } = useProjectMutationState();
   const { openVariants, setOpenVariants } = useVariantState();
   const { needIndex, setDeleteMode } = useSelectState();
 

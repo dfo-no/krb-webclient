@@ -5,19 +5,18 @@ import { v4 as uuidv4 } from 'uuid';
 
 import FormButtons from '../../../../components/Form/FormButtons';
 import Nexus from '../../../../Nexus/Nexus';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { useProjectMutationState } from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import { Alert } from '../../../../models/Alert';
-import { IProduct } from '../../../../Nexus/entities/IProduct';
+import { Product } from '../../../../api/openapi-fetch';
 import { ModelType } from '../../../../Nexus/enums';
-import { Parentable } from '../../../../models/Parentable';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface Props {
-  product: Parentable<IProduct>;
-  handleClose: (newProduct: Parentable<IProduct> | null) => void;
+  product: Product;
+  handleClose: (newProduct: Product | null) => void;
 }
 
 export default function EditProductForm({
@@ -28,14 +27,14 @@ export default function EditProductForm({
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
   const formStyles = useFormStyles();
-  const { editProduct } = useProjectMutations();
+  const { editProduct } = useProjectMutationState();
 
-  const methods = useForm<Parentable<IProduct>>({
+  const methods = useForm<Product>({
     defaultValues: product,
     resolver: nexus.resolverService.resolver(ModelType.product),
   });
 
-  async function onSubmit(put: Parentable<IProduct>) {
+  async function onSubmit(put: Product) {
     await editProduct(put).then(() => {
       const alert: Alert = {
         id: uuidv4(),

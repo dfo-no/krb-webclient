@@ -8,14 +8,14 @@ import { ModelType, QuestionVariant } from '../enums';
  */
 
 export interface IBaseModel {
-  id: string;
+  ref: string;
   type: ModelType | QuestionVariant;
   sourceRel: string | null;
   sourceOriginal: string | null;
 }
 
 export const BaseModelSchema = CustomJoi.object().keys({
-  id: CustomJoi.validateId(),
+  ref: CustomJoi.validateId(),
   type: CustomJoi.validateTypes(ModelType),
   sourceRel: CustomJoi.validateOptionalId(),
   sourceOriginal: CustomJoi.validateOptionalId(),

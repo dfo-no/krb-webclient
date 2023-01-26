@@ -10,21 +10,22 @@ import { v4 as uuidv4 } from 'uuid';
 import GeneralErrorMessage from '../../../../Form/GeneralErrorMessage';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import Nexus from '../../../../Nexus/Nexus';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { useProjectMutationState } from '../../../../store/api/ProjectMutations';
 import VariantFormContent from './VariantFormContent';
 import { Alert } from '../../../../models/Alert';
-import { INeed } from '../../../../Nexus/entities/INeed';
-import { IRequirement } from '../../../../Nexus/entities/IRequirement';
+import {
+  Need,
+  Requirement,
+  RequirementVariant,
+} from '../../../../api/openapi-fetch';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import { IVariant } from '../../../../Nexus/entities/IVariant';
 import { ModelType } from '../../../../Nexus/enums';
-import { Parentable } from '../../../../models/Parentable';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
-  need: Parentable<INeed>;
-  requirement: IRequirement;
+  need: Need;
+  requirement: Requirement;
   handleClose: () => void;
 }
 
@@ -36,14 +37,14 @@ function NewVariantForm({
   const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
-  const { addVariant } = useProjectMutations();
+  const { addVariant } = useProjectMutationState();
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
 
-  const defaultValues: IVariant =
+  const defaultValues: RequirementVariant =
     nexus.variantService.generateDefaultVariantValues();
 
-  const methods = useForm<IVariant>({
+  const methods = useForm<RequirementVariant>({
     resolver: nexus.resolverService.postResolver(ModelType.variant),
     defaultValues,
   });
@@ -57,7 +58,7 @@ function NewVariantForm({
     methods.reset();
   };
 
-  const onSubmit = async (post: IVariant) => {
+  const onSubmit = async (post: RequirementVariant) => {
     const newVariant = nexus.variantService.createVariantWithId(post);
     await addVariant(newVariant, requirement, need).then(() => {
       const alert: Alert = {

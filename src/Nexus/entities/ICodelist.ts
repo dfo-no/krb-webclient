@@ -1,14 +1,14 @@
 import CustomJoi from '../Joi/CustomJoi';
-import { BaseCodeSchema, ICode } from './ICode';
+import { BaseCodeSchema } from './ICode';
+import { Code } from '../../api/openapi-fetch';
 import { BaseModelSchema, IBaseModel } from './IBaseModel';
 import { ModelType } from '../enums';
-import { Parentable } from '../../models/Parentable';
 
 export interface ICodelist extends IBaseModel {
   id: string;
   title: string;
   description: string;
-  codes: Parentable<ICode>[];
+  codes: Code[];
 }
 
 export const CodelistSchema = BaseModelSchema.keys({

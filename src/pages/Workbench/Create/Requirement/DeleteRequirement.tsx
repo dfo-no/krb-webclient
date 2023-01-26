@@ -5,11 +5,9 @@ import { useParams } from 'react-router-dom';
 import { Box } from '@mui/material/';
 
 import { Alert } from '../../../../models/Alert';
-import { Parentable } from '../../../../models/Parentable';
-import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
-import { INeed } from '../../../../Nexus/entities/INeed';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { useProjectMutationState } from '../../../../store/api/ProjectMutations';
+import { Need, Requirement } from '../../../../api/openapi-fetch';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { useSelectState } from '../SelectContext';
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
@@ -17,8 +15,8 @@ import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
   children: React.ReactElement;
-  requirement: IRequirement;
-  need: Parentable<INeed>;
+  requirement: Requirement;
+  need: Need;
   handleClose: () => void;
 }
 
@@ -34,7 +32,7 @@ function DeleteRequirement({
 
   const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
-  const { deleteRequirement } = useProjectMutations();
+  const { deleteRequirement } = useProjectMutationState();
   const { deleteMode } = useSelectState();
   const hasChildren = requirement.variants.length > 0;
 

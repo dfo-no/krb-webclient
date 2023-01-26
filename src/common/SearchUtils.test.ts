@@ -128,7 +128,7 @@ describe('SearchUtils functions should work', () => {
         description: '',
         codes: [
           {
-            id: '9ff1ec02-d83b-11ec-9d64-0242ac120002',
+            ref: '9ff1ec02-d83b-11ec-9d64-0242ac120002',
             title: 'A',
             description: 'description_match',
             parent: 'aa28e225-7a76-4c57-bb22-ec87b3131762',
@@ -169,12 +169,12 @@ describe('SearchUtils functions should work', () => {
         sourceRel: null,
       },
       {
-        id: '1a21a3c0-9096-11ec-b909-0242ac120002',
+        ref: '1a21a3c0-9096-11ec-b909-0242ac120002',
         title: 'E',
         description: '',
         codes: [
           {
-            id: '972d15d8-d83b-11ec-9d64-0242ac120002',
+            ref: '972d15d8-d83b-11ec-9d64-0242ac120002',
             title: 'code_match',
             description: '',
             parent: '1a21a3c0-9096-11ec-b909-0242ac120002',

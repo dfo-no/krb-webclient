@@ -5,9 +5,8 @@ import { useParams } from 'react-router-dom';
 
 import Dialog from '../../../../components/DFODialog/DFODialog';
 import NewNeedForm from './NewNeedForm';
-import { INeed } from '../../../../Nexus/entities/INeed';
+import { Need } from '../../../../api/openapi-fetch';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import { Parentable } from '../../../../models/Parentable';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { useSelectState } from '../SelectContext';
 
@@ -25,11 +24,11 @@ const NewNeed = ({ buttonText }: IProps) => {
     return <></>;
   }
 
-  const onClose = (newNeed: Parentable<INeed> | null) => {
+  const onClose = (newNeed: Need | null) => {
     setOpen(false);
     if (newNeed) {
       setNeedIndex(project.needs.length);
-      setNeedId(newNeed.id);
+      setNeedId(newNeed.ref);
     }
   };
 

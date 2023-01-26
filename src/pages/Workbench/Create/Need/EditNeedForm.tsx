@@ -6,10 +6,10 @@ import { v4 as uuidv4 } from 'uuid';
 
 import Nexus from '../../../../Nexus/Nexus';
 import theme from '../../../../theme';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { useProjectMutationState } from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { Alert } from '../../../../models/Alert';
-import { INeed } from '../../../../Nexus/entities/INeed';
+import { Need } from '../../../../api/openapi-fetch';
 import {
   ModalBox,
   ModalButton,
@@ -17,26 +17,25 @@ import {
   ModalFieldsBox,
 } from '../../../../components/ModalBox/ModalBox';
 import { ModelType } from '../../../../Nexus/enums';
-import { Parentable } from '../../../../models/Parentable';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
-  handleClose: (need: Parentable<INeed> | null) => void;
-  need: Parentable<INeed>;
+  handleClose: (need: Need | null) => void;
+  need: Need;
 }
 
 function EditNeedForm({ need, handleClose }: IProps): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
-  const { editNeed } = useProjectMutations();
+  const { editNeed } = useProjectMutationState();
 
-  const methods = useForm<Parentable<INeed>>({
+  const methods = useForm<Need>({
     defaultValues: need,
     resolver: nexus.resolverService.resolver(ModelType.need),
   });
 
-  const onSubmit = async (put: Parentable<INeed>) => {
+  const onSubmit = async (put: Need) => {
     await editNeed(put).then(() => {
       const alert: Alert = {
         id: uuidv4(),

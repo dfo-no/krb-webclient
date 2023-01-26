@@ -5,13 +5,12 @@ import { v4 as uuidv4 } from 'uuid';
 
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../../Nexus/Nexus';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { useProjectMutationState } from '../../../../store/api/ProjectMutations';
 import { Alert } from '../../../../models/Alert';
-import { ICode } from '../../../../Nexus/entities/ICode';
+import { Code } from '../../../../api/openapi-fetch';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { ModelType } from '../../../../Nexus/enums';
-import { Parentable } from '../../../../models/Parentable';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
@@ -19,8 +18,8 @@ import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 interface IProps {
   children: React.ReactElement;
   codelist: ICodelist;
-  code: Parentable<ICode>;
-  handleClose: (code: Parentable<ICode> | null) => void;
+  code: Code;
+  handleClose: (code: Code | null) => void;
 }
 
 export default function DeleteCodeForm({
@@ -29,12 +28,12 @@ export default function DeleteCodeForm({
   code,
   handleClose,
 }: IProps): React.ReactElement {
-  const { deleteCode } = useProjectMutations();
+  const { deleteCode } = useProjectMutationState();
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { deleteMode } = useEditableState();
 
-  const methods = useForm<Parentable<ICode>>({
+  const methods = useForm<Code>({
     defaultValues: code,
     resolver: nexus.resolverService.resolver(ModelType.code),
   });
@@ -42,7 +41,7 @@ export default function DeleteCodeForm({
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
 
-  if (deleteMode !== code.id) {
+  if (deleteMode !== code.ref) {
     return children;
   }
 
@@ -50,7 +49,7 @@ export default function DeleteCodeForm({
     return <></>;
   }
 
-  const onSubmit = (post: Parentable<ICode>): void => {
+  const onSubmit = (post: Code): void => {
     deleteCode(post, codelist).then(() => {
       const alert: Alert = {
         id: uuidv4(),

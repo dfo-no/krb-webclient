@@ -6,9 +6,9 @@ import css from '../../pages/Stylesheets/NewProduct.module.scss';
 import theme from '../../theme';
 import Utils from '../../common/Utils';
 import { IBank } from '../../Nexus/entities/IBank';
-import { INeed } from '../../Nexus/entities/INeed';
 import { IProduct } from '../../Nexus/entities/IProduct';
 import { Parentable } from '../../models/Parentable';
+import { Need } from '../../api/openapi-fetch';
 
 interface IProps {
   product: Parentable<IProduct>;
@@ -29,9 +29,9 @@ export default function NeedList({
 
   const needs = Utils.findVariantsUsedByProduct(product, bank, relatedProducts);
 
-  const renderNeed = (need: Parentable<INeed>) => {
+  const renderNeed = (need: Need) => {
     return (
-      <li key={need.id} className={css.Need}>
+      <li key={need.ref} className={css.Need}>
         <Typography variant="lgBold" className={css.Title}>
           {need.title}
         </Typography>
@@ -48,7 +48,7 @@ export default function NeedList({
   const renderList = () => {
     return (
       <ul>
-        {needs.map((need: Parentable<INeed>) => {
+        {needs.map((need: Need) => {
           return renderNeed(need);
         })}
       </ul>

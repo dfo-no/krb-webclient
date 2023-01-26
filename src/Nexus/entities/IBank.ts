@@ -1,5 +1,6 @@
 import CustomJoi from '../Joi/CustomJoi';
-import { BaseNeedSchema, INeed } from './INeed';
+import { BaseNeedSchema } from './INeed';
+import { Need } from '../../api/openapi-fetch';
 import { BaseProductSchema, IProduct } from './IProduct';
 import { BasePublicationSchema, IPublication } from './IPublication';
 import { CodelistSchema, ICodelist } from './ICodelist';
@@ -27,7 +28,7 @@ export interface IBank extends IBaseModel {
   id: string;
   title: string;
   description: string;
-  needs: Parentable<INeed>[];
+  needs: Need[];
   codelist: ICodelist[];
   products: Parentable<IProduct>[];
   version: number;

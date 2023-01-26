@@ -1,8 +1,7 @@
 import StoreService from './StoreService';
 import UuidService from './UuidService';
-import { IProduct } from '../entities/IProduct';
+import { Product } from '../../api/openapi-fetch';
 import { ModelType } from '../enums';
-import { Parentable } from '../../models/Parentable';
 
 export default class ProductService {
   UuidService = new UuidService();
@@ -13,9 +12,9 @@ export default class ProductService {
     this.storeService = store;
   }
 
-  public static defaultProduct = (projectId?: string): Parentable<IProduct> => {
+  public static defaultProduct = (projectId?: string): Product => {
     return {
-      id: '',
+      ref: '',
       title: '',
       description: '',
       type: ModelType.product,
@@ -27,21 +26,21 @@ export default class ProductService {
     };
   };
 
-  createProductWithId = (item: Parentable<IProduct>): Parentable<IProduct> => {
-    const tag = { ...item };
-    tag.id = this.UuidService.generateId();
-    return tag;
+  createProductWithId = (item: Product): Product => {
+    const product = { ...item };
+    product.ref = this.UuidService.generateId();
+    return product;
   };
 
-  async add(item: IProduct): Promise<void> {
+  async add(item: Product): Promise<void> {
     return this.storeService.addProduct(item);
   }
 
-  async edit(item: IProduct): Promise<void> {
+  async edit(item: Product): Promise<void> {
     return this.storeService.editProduct(item);
   }
 
-  async delete(item: IProduct): Promise<void> {
+  async delete(item: Product): Promise<void> {
     return this.storeService.deleteProduct(item);
   }
 }

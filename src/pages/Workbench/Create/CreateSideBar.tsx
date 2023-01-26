@@ -11,10 +11,9 @@ import 'react-nestable/dist/styles/index.css';
 import css from './Create.module.scss';
 import NestableHierarcy from '../../../components/NestableHierarchy/NestableHierarcy';
 import NewNeed from './Need/NewNeed';
-import useProjectMutations from '../../../store/api/ProjectMutations';
-import { INeed } from '../../../Nexus/entities/INeed';
+import { useProjectMutationState } from '../../../store/api/ProjectMutations';
 import { IRouteProjectParams } from '../../../models/IRouteProjectParams';
-import { Parentable } from '../../../models/Parentable';
+import { Need } from '../../../api/openapi-fetch';
 import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import { useSelectState } from './SelectContext';
@@ -23,9 +22,9 @@ const CreateSideBar = (): React.ReactElement => {
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
   const { needId, setNeedId, setNeedIndex } = useSelectState();
-  const { editNeeds } = useProjectMutations();
+  const { editNeeds } = useProjectMutationState();
   const { t } = useTranslation();
-  const [needs, setNeeds] = useState<Parentable<INeed>[]>([]);
+  const [needs, setNeeds] = useState<Need[]>([]);
 
   useEffect(() => {
     if (project && project.needs) {
@@ -41,7 +40,7 @@ const CreateSideBar = (): React.ReactElement => {
     return needs.length !== 0;
   };
 
-  const updateNeedsArrangement = (newNeedList: Parentable<INeed>[]) => {
+  const updateNeedsArrangement = (newNeedList: Need[]) => {
     if (needId) {
       const newIndex = newNeedList.findIndex((need) => need.id === needId);
       setNeedIndex(newIndex);
@@ -50,18 +49,18 @@ const CreateSideBar = (): React.ReactElement => {
     editNeeds(newNeedList);
   };
 
-  const selectNeed = (item: Parentable<INeed>) => {
+  const selectNeed = (item: Need) => {
     const index = project.needs.findIndex((n) => n.id === item.id);
     setNeedIndex(index);
     setNeedId(project.needs[index].id);
   };
 
-  const itemClicked = (item: Parentable<INeed>) => {
+  const itemClicked = (item: Need) => {
     selectNeed(item);
   };
 
   const renderItem = (
-    item: Parentable<INeed>,
+    item: Need,
     handler: React.ReactNode,
     collapseIcon: React.ReactNode
   ) => {

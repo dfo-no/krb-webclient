@@ -5,21 +5,19 @@ import { v4 as uuidv4 } from 'uuid';
 
 import FormButtons from '../../../../components/Form/FormButtons';
 import Nexus from '../../../../Nexus/Nexus';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { useProjectMutationState } from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import { Alert } from '../../../../models/Alert';
-import { ICode } from '../../../../Nexus/entities/ICode';
-import { ICodelist } from '../../../../Nexus/entities/ICodelist';
-import { Parentable } from '../../../../models/Parentable';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { ModelType } from '../../../../Nexus/enums';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
+import { Code, Codelist } from '../../../../api/openapi-fetch';
 
 interface IProps {
-  codelist: ICodelist;
-  code: Parentable<ICode>;
-  handleClose: (newCode: Parentable<ICode> | null) => void;
+  codelist: Codelist;
+  code: Code;
+  handleClose: (newCode: Code | null) => void;
 }
 
 function EditCodeForm({
@@ -31,14 +29,14 @@ function EditCodeForm({
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
   const formStyles = useFormStyles();
-  const { editCode } = useProjectMutations();
+  const { editCode } = useProjectMutationState();
 
-  const methods = useForm<Parentable<ICode>>({
+  const methods = useForm<Code>({
     defaultValues: code,
     resolver: nexus.resolverService.resolver(ModelType.code),
   });
 
-  async function onSubmit(put: Parentable<ICode>) {
+  async function onSubmit(put: Code) {
     await editCode(put, codelist).then(() => {
       const alert: Alert = {
         id: uuidv4(),

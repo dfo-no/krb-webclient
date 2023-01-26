@@ -16,16 +16,18 @@ import { useSelectState } from './SelectContext';
 import { VariantProvider } from '../VariantContext';
 import { HeaderContainer } from '../../../components/Header/HeaderContext';
 import {
-  useFindNeeds,
-  useFindOneProject,
+  useNeeds,
+  // useFindOneProject,
+  useProject,
   useFindRequirementsForProject,
 } from '../../../api/openapi-fetch';
 
 export default function Create(): React.ReactElement {
   const { projectId: projectRef } = useParams<IRouteProjectParams>();
-  const { needs, isLoading: needsIsLoading } = useFindNeeds(projectRef);
-  const { project, isLoading: projectIsLoading } =
-    useFindOneProject(projectRef);
+  const { needs, isLoading: needsIsLoading } = useNeeds(projectRef);
+  // const { project, isLoading: projectIsLoading } =
+  //   useFindOneProject(projectRef);
+  const { project, isLoading: projectIsLoading } = useProject(projectRef);
 
   const { requirements: allRequirements } =
     useFindRequirementsForProject(projectRef);

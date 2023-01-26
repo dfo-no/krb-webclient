@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 
 import FormButtons from '../../../../components/Form/FormButtons';
 import Nexus from '../../../../Nexus/Nexus';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { useProjectMutationState } from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
@@ -28,7 +28,7 @@ export default function NewCodelistForm({
   const nexus = Nexus.getInstance();
   const formStyles = useFormStyles();
   const { projectId } = useParams<IRouteProjectParams>();
-  const { addCodelist } = useProjectMutations();
+  const { addCodelist } = useProjectMutationState();
 
   const defaultValues: ICodelist =
     nexus.codelistService.generateDefaultCodelistValues(projectId);

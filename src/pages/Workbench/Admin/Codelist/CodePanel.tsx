@@ -10,18 +10,17 @@ import EditCodeForm from './EditCodeForm';
 import NestableHierarcy from '../../../../components/NestableHierarchy/NestableHierarcy';
 import NewCodeForm from './NewCodeForm';
 import theme from '../../../../theme';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { useProjectMutationState } from '../../../../store/api/ProjectMutations';
 import Utils from '../../../../common/Utils';
 import { FormContainerBox } from '../../../../components/Form/FormContainerBox';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
-import { ICode } from '../../../../Nexus/entities/ICode';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import { Parentable } from '../../../../models/Parentable';
 import { ScrollableContainer } from '../../../../components/ScrollableContainer/ScrollableContainer';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { usePanelStyles } from './CodelistStyles';
 import { useSelectState } from './SelectContext';
+import { Code } from '../../../../api/openapi-fetch';
 
 const CodePanel = (): React.ReactElement => {
   const classes = usePanelStyles();
@@ -34,11 +33,11 @@ const CodePanel = (): React.ReactElement => {
     deleteMode,
     setDeleteMode,
   } = useEditableState();
-  const [codes, setCodes] = useState<Parentable<ICode>[]>([]);
+  const [codes, setCodes] = useState<Code[]>([]);
 
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
-  const { editCodes } = useProjectMutations();
+  const { editCodes } = useProjectMutationState();
 
   useEffect(() => {
     if (codelist) {
@@ -53,7 +52,7 @@ const CodePanel = (): React.ReactElement => {
     return <></>;
   }
 
-  const updateCodesArrangement = (newCodes: Parentable<ICode>[]) => {
+  const updateCodesArrangement = (newCodes: Code[]) => {
     setCodes(newCodes);
     editCodes(newCodes, codelist);
   };
@@ -61,11 +60,11 @@ const CodePanel = (): React.ReactElement => {
   const isEditing = () => {
     return editMode !== '' && deleteMode !== '';
   };
-  const isEditingItem = (item: Parentable<ICode>) => {
-    return item && item.id === editMode;
+  const isEditingItem = (item: Code) => {
+    return item && item.ref === editMode;
   };
 
-  const handleCloseEdit = (newCode: Parentable<ICode> | null) => {
+  const handleCloseEdit = (newCode: Code | null) => {
     if (newCode) {
       const newCodes = Utils.replaceElementInList(newCode, codelist.codes);
       setCodelist({ ...codelist, codes: newCodes });
@@ -73,7 +72,7 @@ const CodePanel = (): React.ReactElement => {
     setEditMode('');
   };
 
-  const handleCloseCreate = (newCode: Parentable<ICode> | null) => {
+  const handleCloseCreate = (newCode: Code | null) => {
     if (newCode) {
       const newCodes = Utils.addElementToList(newCode, codelist.codes);
       setCodelist({ ...codelist, codes: newCodes });
@@ -81,7 +80,7 @@ const CodePanel = (): React.ReactElement => {
     setCreating(false);
   };
 
-  const handleCloseDelete = (deletedCode: Parentable<ICode> | null) => {
+  const handleCloseDelete = (deletedCode: Code | null) => {
     if (deletedCode) {
       const newCodes = Utils.removeElementFromList(deletedCode, codelist.codes);
       setCodelist({ ...codelist, codes: newCodes });
@@ -89,10 +88,7 @@ const CodePanel = (): React.ReactElement => {
     setDeleteMode('');
   };
 
-  const renderCodeItem = (
-    item: Parentable<ICode>,
-    handler: React.ReactNode
-  ) => {
+  const renderCodeItem = (item: Code, handler: React.ReactNode) => {
     return (
       <Box className={classes.listItem}>
         {!isEditing() && <Box className={classes.handlerIcon}>{handler}</Box>}
@@ -101,13 +97,13 @@ const CodePanel = (): React.ReactElement => {
             <Typography variant="smBold">{item.title}</Typography>
             <FormIconButton
               sx={{ marginLeft: 'auto' }}
-              onClick={() => setEditMode(item.id)}
+              onClick={() => setEditMode(item.ref)}
             >
               <EditOutlinedIcon />
             </FormIconButton>
             <FormIconButton
               hoverColor={theme.palette.errorRed.main}
-              onClick={() => setDeleteMode(item.id)}
+              onClick={() => setDeleteMode(item.ref)}
             >
               <DeleteIcon />
             </FormIconButton>
@@ -120,7 +116,7 @@ const CodePanel = (): React.ReactElement => {
     );
   };
 
-  const renderItem = (item: Parentable<ICode>, handler: React.ReactNode) => {
+  const renderItem = (item: Code, handler: React.ReactNode) => {
     if (isEditingItem(item)) {
       return (
         <FormContainerBox sx={{ marginBottom: 1 }}>

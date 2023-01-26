@@ -1,11 +1,8 @@
 import { IBank } from '../Nexus/entities/IBank';
 import { IBaseModel } from '../Nexus/entities/IBaseModel';
-import { ICodelist } from '../Nexus/entities/ICodelist';
 import { ICodelistConfig } from '../Nexus/entities/ICodelistQuestion';
-import { INeed } from '../Nexus/entities/INeed';
-import { IProduct } from '../Nexus/entities/IProduct';
+import { Need, Requirement, Product, Codelist } from '../api/openapi-fetch';
 import { IResponse } from '../Nexus/entities/IResponse';
-import { IRequirement } from '../Nexus/entities/IRequirement';
 import { ISpecification } from '../Nexus/entities/ISpecification';
 import { IVariant } from '../Nexus/entities/IVariant';
 import { Levelable } from '../models/Levelable';
@@ -66,12 +63,12 @@ class Utils {
     throw new Error("Didn't expect to get here");
   }
 
-  static replaceElementInList<T extends { id: string }>(
+  static replaceElementInList<T extends { ref?: string }>(
     element: T,
     list: T[]
   ): T[] {
     const newList = [...list];
-    const index = newList.findIndex((elem) => elem.id === element.id);
+    const index = newList.findIndex((elem) => elem.ref === element.ref);
     if (index !== -1) {
       newList.splice(index, 1, element);
     }
@@ -84,7 +81,7 @@ class Utils {
     return list.filter((elem) => !elem.deletedDate);
   }
 
-  static addElementToList<T extends { id: string }>(
+  static addElementToList<T extends { ref?: string }>(
     element: T,
     list: T[]
   ): T[] {
@@ -93,12 +90,12 @@ class Utils {
     return newList;
   }
 
-  static removeElementFromList<T extends { id: string }>(
+  static removeElementFromList<T extends { ref?: string }>(
     element: T,
     list: T[]
   ): T[] {
     const newList = [...list];
-    const index = newList.findIndex((elem) => elem.id === element.id);
+    const index = newList.findIndex((elem) => elem.ref === element.ref);
     if (index !== -1) {
       newList.splice(index, 1);
     }
@@ -260,7 +257,7 @@ class Utils {
         levelNode.level = level;
         levelNode.children = Utils.parentable2Nestable(
           items,
-          levelNode.id,
+          levelNode.ref,
           level + 1
         );
         out.push(levelNode);
@@ -273,10 +270,10 @@ class Utils {
     item: Parentable<T>,
     list: Parentable<T>[]
   ): boolean {
-    return list.some((listItem) => listItem.parent === item.id);
+    return list.some((listItem) => listItem.parent === item.ref);
   }
 
-  static checkIfProductHasChildren<T extends Parentable<IProduct>>(
+  static checkIfProductHasChildren<T extends Parentable<Product>>(
     item: Parentable<T>,
     list: Parentable<T>[]
   ): boolean {
@@ -286,12 +283,12 @@ class Utils {
   }
 
   static productUsedInVariants(
-    selectedProduct: IProduct,
+    selectedProduct: Product,
     selectedProject: IBank
   ): boolean {
     let returnValue = false;
-    selectedProject.needs.forEach((need: Parentable<INeed>) => {
-      need.requirements.forEach((requirement: IRequirement) => {
+    selectedProject.needs.forEach((need: Need) => {
+      need.requirements.forEach((requirement: Requirement) => {
         requirement.variants.forEach((variant: IVariant) => {
           if (
             variant.useProduct &&
@@ -307,12 +304,12 @@ class Utils {
   }
 
   static codelistUsedInVariants(
-    selectedCodelist: ICodelist,
+    selectedCodelist: Codelist,
     selectedProject: IBank
   ): boolean {
     let returnValue = false;
-    selectedProject.needs.forEach((need: Parentable<INeed>) => {
-      need.requirements.forEach((requirement: IRequirement) => {
+    selectedProject.needs.forEach((need: Need) => {
+      need.requirements.forEach((requirement: Requirement) => {
         requirement.variants.forEach((variant: IVariant) => {
           variant.questions.forEach((question: QuestionType) => {
             if (question.type === QuestionVariant.Q_CODELIST) {
@@ -329,15 +326,15 @@ class Utils {
   }
 
   static findVariantsUsedByProduct(
-    selectedProduct: IProduct,
+    selectedProduct: Product,
     selectedProject: IBank,
     extraProducts?: string[]
-  ): Parentable<INeed>[] {
-    const associatedNeeds: Parentable<INeed>[] = [];
+  ): Need[] {
+    const associatedNeeds: Need[] = [];
 
-    selectedProject.needs.forEach((need: Parentable<INeed>) => {
-      const associatedRequirements: IRequirement[] = [];
-      need.requirements.forEach((requirement: IRequirement) => {
+    selectedProject.needs.forEach((need: Need) => {
+      const associatedRequirements: Requirement[] = [];
+      need.requirements.forEach((requirement: Requirement) => {
         const associatedVariants: IVariant[] = [];
         requirement.variants.forEach((variant: IVariant) => {
           if (
@@ -369,14 +366,12 @@ class Utils {
     return associatedNeeds;
   }
 
-  static findVariantsUsedBySpecification(
-    selectedProject: IBank
-  ): Parentable<INeed>[] {
-    const associatedNeeds: Parentable<INeed>[] = [];
+  static findVariantsUsedBySpecification(selectedProject: IBank): Need[] {
+    const associatedNeeds: Need[] = [];
 
-    selectedProject.needs.forEach((need: Parentable<INeed>) => {
-      const associatedRequirements: IRequirement[] = [];
-      need.requirements.forEach((requirement: IRequirement) => {
+    selectedProject.needs.forEach((need: Need) => {
+      const associatedRequirements: Requirement[] = [];
+      need.requirements.forEach((requirement: Requirement) => {
         const associatedVariants: IVariant[] = [];
         requirement.variants.forEach((variant: IVariant) => {
           if (variant.useSpesification) {
@@ -406,7 +401,7 @@ class Utils {
     parentList: T[],
     allElements: T[]
   ): T[] {
-    const parentIndex = allElements.findIndex((e) => e.id === element.parent);
+    const parentIndex = allElements.findIndex((e) => e.ref === element.parent);
     if (parentIndex === -1) {
       return parentList;
     }

@@ -8,10 +8,10 @@ import { v4 as uuidv4 } from 'uuid';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import Nexus from '../../../../Nexus/Nexus';
 import theme from '../../../../theme';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { useProjectMutationState } from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { Alert } from '../../../../models/Alert';
-import { INeed } from '../../../../Nexus/entities/INeed';
+import { Need, Requirement } from '../../../../api/openapi-fetch';
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import {
   ModalBox,
@@ -20,13 +20,12 @@ import {
   ModalFieldsBox,
 } from '../../../../components/ModalBox/ModalBox';
 import { ModelType } from '../../../../Nexus/enums';
-import { Parentable } from '../../../../models/Parentable';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
   requirement: IRequirement;
-  need: Parentable<INeed>;
+  need: Need;
   handleClose: () => void;
 }
 
@@ -44,9 +43,9 @@ function EditRequirementForm({
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
-  const { editRequirement } = useProjectMutations();
+  const { editRequirement } = useProjectMutationState();
 
-  const methods = useForm<Parentable<IRequirement>>({
+  const methods = useForm<Requirement>({
     defaultValues: requirement,
     resolver: nexus.resolverService.resolver(ModelType.requirement),
   });
@@ -55,7 +54,7 @@ function EditRequirementForm({
     return <LoaderSpinner />;
   }
 
-  const onSubmit = async (put: Parentable<IRequirement>) => {
+  const onSubmit = async (put: Requirement) => {
     await editRequirement(put, need).then(() => {
       const alert: Alert = {
         id: uuidv4(),

@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import FormButtons from '../../../../components/Form/FormButtons';
 import Nexus from '../../../../Nexus/Nexus';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { useProjectMutationState } from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { Alert } from '../../../../models/Alert';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
@@ -27,7 +27,7 @@ export default function EditCodelistForm({
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
   const formStyles = useFormStyles();
-  const { editCodelist } = useProjectMutations();
+  const { editCodelist } = useProjectMutationState();
 
   const methods = useForm<ICodelist>({
     defaultValues: codelist,

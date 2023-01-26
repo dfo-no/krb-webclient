@@ -1,7 +1,7 @@
-import { IBank } from '../entities/IBank';
+import { ProjectForm } from '../../api/openapi-fetch';
 
 export default abstract class Adapter {
-  abstract save(bank: IBank): void;
+  abstract save(bank: ProjectForm): void;
 
-  abstract load(): IBank;
+  abstract load(): ProjectForm;
 }

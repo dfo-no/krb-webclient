@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
+import { Product } from '../../../../api/openapi-fetch';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import SearchUtils from '../../../../common/SearchUtils';
 import Utils from '../../../../common/Utils';
@@ -16,22 +17,20 @@ import {
 } from '../../../../components/SearchContainer/SearchContainer';
 import { StandardContainer } from '../../../../components/StandardContainer/StandardContainer';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import { Parentable } from '../../../../models/Parentable';
-import { IProduct } from '../../../../Nexus/entities/IProduct';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { useProjectMutationState } from '../../../../store/api/ProjectMutations';
 import DeleteProductForm from './DeleteProductForm';
 import EditProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
 
 export default function ProductPage(): React.ReactElement {
-  const [products, setProducts] = useState<Parentable<IProduct>[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const { setEditMode, setCreating, setDeleteMode } = useEditableState();
   const { t } = useTranslation();
 
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project, isLoading } = useGetProjectQuery(projectId);
-  const { editProducts } = useProjectMutations();
+  const { editProducts } = useProjectMutationState();
 
   useEffect(() => {
     if (project && project.products) {
@@ -43,25 +42,17 @@ export default function ProductPage(): React.ReactElement {
     return <LoaderSpinner />;
   }
 
-  const updateProductsArrangement = (
-    newProductList: Parentable<IProduct>[]
-  ): void => {
+  const updateProductsArrangement = (newProductList: Product[]): void => {
     setProducts(newProductList);
     editProducts(newProductList);
   };
 
-  const searchFieldCallback = (result: Parentable<IProduct>[]): void => {
+  const searchFieldCallback = (result: Product[]): void => {
     setProducts(result);
   };
 
-  const productsSearch = (
-    searchString: string,
-    list: Parentable<IProduct>[]
-  ): Parentable<IProduct>[] => {
-    return SearchUtils.searchParentable(
-      list,
-      searchString
-    ) as Parentable<IProduct>[];
+  const productsSearch = (searchString: string, list: Product[]): Product[] => {
+    return SearchUtils.searchParentable(list, searchString) as Product[];
   };
 
   const afterDelete = (): void => {
@@ -93,13 +84,10 @@ export default function ProductPage(): React.ReactElement {
         CreateComponent={
           <NewProductForm handleClose={() => setCreating(false)} />
         }
-        EditComponent={(item: Parentable<IProduct>) => (
+        EditComponent={(item: Product) => (
           <EditProductForm product={item} handleClose={() => setEditMode('')} />
         )}
-        DeleteComponent={(
-          item: Parentable<IProduct>,
-          child: React.ReactElement
-        ) => (
+        DeleteComponent={(item: Product, child: React.ReactElement) => (
           <DeleteProductForm
             children={child}
             product={item}

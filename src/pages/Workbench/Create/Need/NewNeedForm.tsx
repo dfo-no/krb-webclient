@@ -8,9 +8,9 @@ import { useParams } from 'react-router-dom';
 import Nexus from '../../../../Nexus/Nexus';
 import theme from '../../../../theme';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { useProjectMutationState } from '../../../../store/api/ProjectMutations';
 import { Alert } from '../../../../models/Alert';
-import { INeed } from '../../../../Nexus/entities/INeed';
+import { Need } from '../../../../api/openapi-fetch';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import {
   ModalBox,
@@ -19,30 +19,29 @@ import {
   ModalFieldsBox,
 } from '../../../../components/ModalBox/ModalBox';
 import { ModelType } from '../../../../Nexus/enums';
-import { Parentable } from '../../../../models/Parentable';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface IProps {
-  handleClose: (newNeed: Parentable<INeed> | null) => void;
+  handleClose: (newNeed: Need | null) => void;
 }
 
 function NewNeedForm({ handleClose }: IProps): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
 
   const nexus = Nexus.getInstance();
-  const defaultValues: Parentable<INeed> =
+  const defaultValues: Need =
     nexus.needService.generateDefaultNeedValues(projectId);
   const { addAlert } = AlertsContainer.useContainer();
-  const { addNeed } = useProjectMutations();
+  const { addNeed } = useProjectMutationState();
 
   const { t } = useTranslation();
 
-  const methods = useForm<Parentable<INeed>>({
+  const methods = useForm<Need>({
     resolver: nexus.resolverService.postResolver(ModelType.need),
     defaultValues,
   });
 
-  const onSubmit = async (post: Parentable<INeed>) => {
+  const onSubmit = async (post: Need) => {
     const newNeed = nexus.needService.createNeedWithId(post);
     await addNeed(newNeed).then(() => {
       const alert: Alert = {

@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../../Nexus/Nexus';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { useProjectMutationState } from '../../../../store/api/ProjectMutations';
 import { IPublication } from '../../../../Nexus/entities/IPublication';
 import { Alert } from '../../../../models/Alert';
 import { ModelType } from '../../../../Nexus/enums';
@@ -24,7 +24,7 @@ const DeletePublicationForm = ({
   handleClose,
 }: IProps): ReactElement => {
   const { deleteMode } = useEditableState();
-  const { deletePublication } = useProjectMutations();
+  const { deletePublication } = useProjectMutationState();
   const { data: publicationBank } = useGetBankQuery(publication.id, {
     skip: deleteMode !== publication.id,
   });

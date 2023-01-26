@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import FormButtons from '../../../../components/Form/FormButtons';
 import Nexus from '../../../../Nexus/Nexus';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { useProjectMutationState } from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import { Alert } from '../../../../models/Alert';
@@ -32,7 +32,7 @@ export default function NewCodeForm({
   const nexus = Nexus.getInstance();
   const formStyles = useFormStyles();
   const { projectId } = useParams<IRouteProjectParams>();
-  const { addCode } = useProjectMutations();
+  const { addCode } = useProjectMutationState();
 
   const defaultValues: Parentable<ICode> =
     nexus.codelistService.generateDefaultCodeValues(projectId);

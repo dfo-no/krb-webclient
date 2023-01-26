@@ -7,7 +7,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import theme from '../../theme';
 import NestableHierarcy from './NestableHierarcy';
-import { Parentable } from '../../models/Parentable';
 import { useEditableState } from '../EditableContext/EditableContext';
 import { IBaseModelWithTitleAndDesc } from '../../models/IBaseModelWithTitleAndDesc';
 import { FormContainerBox } from '../Form/FormContainerBox';
@@ -75,12 +74,12 @@ const useStyles = makeStyles({
 });
 
 interface IProps<T extends IBaseModelWithTitleAndDesc> {
-  dispatchfunc: (items: Parentable<T>[]) => void;
-  inputlist: Parentable<T>[];
+  dispatchfunc: (items: T[]) => void;
+  inputlist: T[];
   CreateComponent: React.ReactElement;
-  EditComponent: (item: Parentable<T>) => React.ReactElement;
+  EditComponent: (item: T) => React.ReactElement;
   DeleteComponent?: (
-    item: Parentable<T>,
+    item: T,
     children: React.ReactElement
   ) => React.ReactElement;
   depth: number;
@@ -103,11 +102,11 @@ const NestableHierarcyEditableComponents = <
   const isEditing = () => {
     return editMode !== '';
   };
-  const isEditingItem = (item: Parentable<T>) => {
-    return item && item.id === editMode;
+  const isEditingItem = (item: T) => {
+    return item && item.ref === editMode;
   };
 
-  const renderTextBox = (item: Parentable<T>, handler: React.ReactNode) => {
+  const renderTextBox = (item: T, handler: React.ReactNode) => {
     return (
       <Box className={classes.nestableItemCustom}>
         {!isEditing() && <Box className={classes.handlerIcon}>{handler}</Box>}
@@ -117,13 +116,13 @@ const NestableHierarcyEditableComponents = <
         <Box className={classes.textItemDescription}>
           <Typography variant="sm">{item.description}</Typography>
         </Box>
-        <FormIconButton onClick={() => setEditMode(item.id)}>
+        <FormIconButton onClick={() => setEditMode(item.ref)}>
           <EditOutlinedIcon />
         </FormIconButton>
         {DeleteComponent && (
           <FormIconButton
             hoverColor={theme.palette.errorRed.main}
-            onClick={() => setDeleteMode(item.id)}
+            onClick={() => setDeleteMode(item.ref)}
           >
             <DeleteIcon />
           </FormIconButton>
@@ -132,7 +131,7 @@ const NestableHierarcyEditableComponents = <
     );
   };
 
-  const renderItem = (item: Parentable<T>, handler: React.ReactNode) => {
+  const renderItem = (item: T, handler: React.ReactNode) => {
     if (isEditingItem(item)) {
       return <FormContainerBox>{EditComponent(item)}</FormContainerBox>;
     }
