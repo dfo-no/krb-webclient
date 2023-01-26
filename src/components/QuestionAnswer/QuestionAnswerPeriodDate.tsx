@@ -16,12 +16,14 @@ interface IProps {
   item: IPeriodDateQuestion;
   existingAnswer?: IRequirementAnswer;
   onSubmit: (post: IPeriodDateQuestion) => void;
+  isInfo?: boolean;
 }
 
 const QuestionAnswerPeriodDate = ({
   item,
   existingAnswer,
   onSubmit,
+  isInfo,
 }: IProps): React.ReactElement => {
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
@@ -67,6 +69,7 @@ const QuestionAnswerPeriodDate = ({
               maxDate={item.config.toBoundary ?? undefined}
               name={'answer.fromDate'}
               color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+              isDisabled={isInfo}
             />
             {item.config.isPeriod && (
               <DateCtrl
@@ -74,6 +77,7 @@ const QuestionAnswerPeriodDate = ({
                 maxDate={item.config.toBoundary ?? undefined}
                 name={'answer.toDate'}
                 color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+                isDisabled={isInfo}
               />
             )}
           </FlexRowBox>

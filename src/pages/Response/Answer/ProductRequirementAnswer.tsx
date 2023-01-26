@@ -118,13 +118,12 @@ export default function ProductRequirementAnswer({
         {renderBadge(requirementAnswer.id)}
       </div>
       <span>{requirementVariant?.description}</span>
-      {!isInfo && (
-        <ProductQuestionAnswer
-          requirementAnswer={requirementAnswer}
-          existingAnswer={existingAnswer}
-          productIndex={productIndex}
-        />
-      )}
+      <ProductQuestionAnswer
+        requirementAnswer={requirementAnswer}
+        existingAnswer={existingAnswer}
+        productIndex={productIndex}
+        isInfo={isInfo}
+      />
       {isAwardCriteria(requirementAnswer.id) && (
         <>
           {isTextQuestionType ? (

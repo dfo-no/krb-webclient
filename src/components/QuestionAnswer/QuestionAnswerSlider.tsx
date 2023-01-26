@@ -10,17 +10,20 @@ import Nexus from '../../Nexus/Nexus';
 import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { QuestionVariant } from '../../Nexus/enums';
+import FlexRowBox from '../FlexBox/FlexRowBox';
 
 interface IProps {
   item: ISliderQuestion;
   existingAnswer?: IRequirementAnswer;
   onSubmit: (post: ISliderQuestion) => void;
+  isInfo?: boolean;
 }
 
 const QuestionAnswerSlider = ({
   item,
   existingAnswer,
   onSubmit,
+  isInfo,
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
@@ -58,15 +61,17 @@ const QuestionAnswerSlider = ({
             isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
           }
         >
-          <HorizontalTextCtrl
-            className={css.InputCtrl}
-            id={'answerValue'}
-            name={'answer.value'}
-            placeholder={t('Value')}
-            type={'number'}
-            adornment={item.config.unit}
-            color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
-          />
+          <FlexRowBox>
+            <HorizontalTextCtrl
+              id={'answerValue'}
+              name={'answer.value'}
+              placeholder={t('Value')}
+              type={'number'}
+              adornment={item.config.unit}
+              color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+              isDisabled={isInfo}
+            />
+          </FlexRowBox>
           {isPrefilledResponse && (
             <div className={css.Buttons}>
               <Button type={Type.Submit}>{t('Save')}</Button>

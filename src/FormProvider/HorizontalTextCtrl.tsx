@@ -52,7 +52,7 @@ const HorizontalTextCtrl = ({
         name={name}
         defaultValue={defaultValue}
         render={({ field }) => (
-          <div className={css.HorizontalTextCtrl}>
+          <div className={css.HorizontalTextCtrl} data-disabled={isDisabled}>
             {label && <span aria-label={'label'}>{label}</span>}
             <DFOInput
               id={id}

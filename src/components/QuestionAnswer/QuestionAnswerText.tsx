@@ -15,12 +15,14 @@ interface IProps {
   item: ITextQuestion;
   existingAnswer?: IRequirementAnswer;
   onSubmit: (post: ITextQuestion) => void;
+  isInfo?: boolean;
 }
 
 const QuestionAnswerText = ({
   item,
   existingAnswer,
   onSubmit,
+  isInfo,
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
@@ -45,37 +47,41 @@ const QuestionAnswerText = ({
   }, [existingAnswer, methods]);
 
   return (
-    <div className={css.QuestionAnswer}>
-      <FormProvider {...methods}>
-        <form
-          onSubmit={methods.handleSubmit(onSubmit)}
-          autoComplete="off"
-          noValidate
-          onChange={
-            isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
-          }
-        >
-          <TextAreaCtrl
-            className={css.TextAreaCtrl}
-            name={'answer.text'}
-            placeholder={t('Answer')}
-            rows={3}
-            color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
-          />
-          {isPrefilledResponse && (
-            <div className={css.Buttons}>
-              <Button type={Type.Submit}>{t('Save')}</Button>
-              <Button
-                variant={Variant.Inverted}
-                onClick={() => methods.reset()}
-              >
-                {t('Reset')}
-              </Button>
-            </div>
-          )}
-        </form>
-      </FormProvider>
-    </div>
+    <>
+      {!isInfo && (
+        <div className={css.QuestionAnswer}>
+          <FormProvider {...methods}>
+            <form
+              onSubmit={methods.handleSubmit(onSubmit)}
+              autoComplete="off"
+              noValidate
+              onChange={
+                isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
+              }
+            >
+              <TextAreaCtrl
+                className={css.TextAreaCtrl}
+                name={'answer.text'}
+                placeholder={t('Answer')}
+                rows={3}
+                color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+              />
+              {isPrefilledResponse && (
+                <div className={css.Buttons}>
+                  <Button type={Type.Submit}>{t('Save')}</Button>
+                  <Button
+                    variant={Variant.Inverted}
+                    onClick={() => methods.reset()}
+                  >
+                    {t('Reset')}
+                  </Button>
+                </div>
+              )}
+            </form>
+          </FormProvider>
+        </div>
+      )}
+    </>
   );
 };
 

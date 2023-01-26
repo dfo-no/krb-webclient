@@ -15,12 +15,14 @@ interface IProps {
   item: ICheckboxQuestion;
   existingAnswer?: IRequirementAnswer;
   onSubmit: (post: ICheckboxQuestion) => void;
+  isInfo?: boolean;
 }
 
 const QuestionAnswerCheckbox = ({
   item,
   existingAnswer,
   onSubmit,
+  isInfo,
 }: IProps): React.ReactElement => {
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
@@ -59,6 +61,7 @@ const QuestionAnswerCheckbox = ({
             name={'answer.value'}
             recommendedAlternative={item.config.preferedAlternative}
             color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+            isDisabled={isInfo}
           />
           {isPrefilledResponse && (
             <div className={css.Buttons}>

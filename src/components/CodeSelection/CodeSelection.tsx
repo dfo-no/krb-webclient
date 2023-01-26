@@ -13,12 +13,14 @@ interface IProps {
   name: string;
   codesList: Parentable<ICode>[];
   codeSelection?: ICodeSelection[];
+  isDisabled?: boolean;
 }
 
 const CodeSelection = ({
   name,
   codesList,
   codeSelection,
+  isDisabled,
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const location = useLocation();
@@ -99,10 +101,11 @@ const CodeSelection = ({
         onClick={() => onClick(item, selected, onChange)}
         data-pre-response={isPrefilledResponse}
       >
-        <div className={css.itemTitle}>
+        <div className={css.itemTitle} data-disabled={isDisabled}>
           <DFOCheckbox
             checked={codeChecked(item, selected)}
             _color={'var(--text-primary-color)'}
+            disabled={isDisabled}
           />
           <span data-mandatory={codeMandatory(item)}>{item.title}</span>
         </div>

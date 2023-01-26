@@ -16,12 +16,14 @@ interface IProps {
   item: ITimeQuestion;
   existingAnswer?: IRequirementAnswer;
   onSubmit: (post: ITimeQuestion) => void;
+  isInfo?: boolean;
 }
 
 const QuestionAnswerTime = ({
   item,
   existingAnswer,
   onSubmit,
+  isInfo,
 }: IProps): React.ReactElement => {
   const nexus = Nexus.getInstance();
   const location = useLocation();
@@ -65,6 +67,7 @@ const QuestionAnswerTime = ({
               maxTime={item.config.toBoundary ?? undefined}
               name={'answer.fromTime'}
               color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+              isDisabled={isInfo}
             />
             {item.config.isPeriod && (
               <TimeCtrl
@@ -72,6 +75,7 @@ const QuestionAnswerTime = ({
                 maxTime={item.config.toBoundary ?? undefined}
                 name={'answer.toTime'}
                 color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+                isDisabled={isInfo}
               />
             )}
           </FlexRowBox>

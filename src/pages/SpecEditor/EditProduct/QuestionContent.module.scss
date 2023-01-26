@@ -242,12 +242,6 @@
           height: 3.4rem;
           padding: 0 var(--small-gap);
           margin-left: auto;
-
-          &[data-disabled='true'] {
-            div {
-              background-color: var(--gray-color);
-            }
-          }
         }
       }
     }
