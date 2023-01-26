@@ -1,13 +1,14 @@
 import { Fetcher } from 'openapi-typescript-fetch';
 import { useEffect, useState } from 'react';
+import useSWR from 'swr';
 
 import { components, paths } from './generated';
 
 const fetcher = Fetcher.for<paths>();
 
 fetcher.configure({
-  baseUrl: 'https://krb-backend-api.azurewebsites.net',
-  // baseUrl: 'http://localhost:8080',
+  // baseUrl: 'https://krb-backend-api.azurewebsites.net',
+  baseUrl: 'http://localhost:8080',
 
   // init: {
   //   headers: {
@@ -16,6 +17,10 @@ fetcher.configure({
   // },
   // use: [...] // middlewares
 });
+
+type FetcherArg = RequestInfo | URL;
+const swrFetcher = (...args: FetcherArg[]) =>
+  fetch('http://localhost:8080' + args[0]).then((res) => res.json());
 
 export type ProjectForm = components['schemas']['ProjectForm'];
 export type Codelist = components['schemas']['CodelistForm'];
@@ -36,6 +41,19 @@ export const findProjects = fetcher
   .path('/api/v1/projects')
   .method('get')
   .create();
+
+export const useProject = (ref: string) => {
+  const { data, error, isLoading } = useSWR<ProjectForm, never>(
+    `/api/v1/projects/${ref}`,
+    swrFetcher
+  );
+
+  return {
+    project: data,
+    isLoading,
+    isError: error,
+  };
+};
 
 export const useFindOneProject = (projectRef: string) => {
   const [isLoading, setLoading] = useState(false);
