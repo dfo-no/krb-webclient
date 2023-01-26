@@ -19,8 +19,12 @@ fetcher.configure({
 
 export type ProjectForm = components['schemas']['ProjectForm'];
 export type Codelist = components['schemas']['CodelistForm'];
+export type Code = components['schemas']['CodeForm'];
 export type Need = components['schemas']['NeedForm'];
 export type Requirement = components['schemas']['RequirementForm'];
+export type RequirementVariant =
+  components['schemas']['RequirementVariantForm'];
+export type Product = components['schemas']['ProductForm'];
 export type PublicationForm = components['schemas']['PublicationForm'];
 
 export const createProject = fetcher
