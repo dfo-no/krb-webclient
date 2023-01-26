@@ -86,8 +86,8 @@ class SearchUtils {
     );
   }
 
-  static searchTitleAndDescription(
-    items: TitleAndDescription[],
+  static searchTitleAndDescription<T extends TitleAndDescription>(
+    items: T[],
     searchString: string
   ) {
     return items.filter((item) =>
