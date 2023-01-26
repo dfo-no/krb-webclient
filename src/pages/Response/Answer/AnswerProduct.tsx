@@ -1,32 +1,21 @@
 import React, { ReactElement } from 'react';
-import { RouteComponentProps, useHistory } from 'react-router-dom';
-import { Button } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 
 import ProductRequirementAnswer from './ProductRequirementAnswer';
 import { INeed } from '../../../Nexus/entities/INeed';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
-import { GENERAL, RESPONSE } from '../../../common/PathConstants';
-import Panel from '../../../components/UI/Panel/Panel';
+import { GENERAL } from '../../../common/PathConstants';
 import css from '../../Stylesheets/EditorFullPage.module.scss';
 import { useResponseState } from '../ResponseContext';
 import Utils from '../../../common/Utils';
+import { DFOAccordion } from '../../../components/DFOAccordion/DFOAccordion';
 
-type AnswerProductMatchParams = { productId: string };
+type Props = { productId: string };
 
-type Props = RouteComponentProps<AnswerProductMatchParams>;
-
-export default function AnswerProduct({ match }: Props): React.ReactElement {
-  const { t } = useTranslation();
-  const history = useHistory();
+export default function AnswerProducts({
+  productId,
+}: Props): React.ReactElement {
   const { response } = useResponseState();
   const existingNeeds = new Set<INeed>();
-
-  const productId = match.params.productId;
-
-  const toOverviewPage = (): void => {
-    history.push(`/${RESPONSE}/${response.id}`);
-  };
 
   const renderRequirementAnswer = (
     requirementAnswer: IRequirementAnswer
@@ -76,18 +65,17 @@ export default function AnswerProduct({ match }: Props): React.ReactElement {
     });
   };
 
+  const body = (): ReactElement => {
+    return <>{renderRequirements()}</>;
+  };
+
   return (
-    <div className={css.ProductOverview}>
-      <div className={css.ProductOverview__content}>
-        <div className={css.ProductRequirements}>{renderRequirements()}</div>
-      </div>
-      <Panel
-        panelColor={'white'}
-        children={
-          <Button variant="primary" onClick={toOverviewPage}>
-            {t('Save')}
-          </Button>
-        }
+    <div className={css.AnswerProduct}>
+      <DFOAccordion
+        className={css.Accordion}
+        eventKey={productId}
+        header={<></>}
+        body={body()}
       />
     </div>
   );
