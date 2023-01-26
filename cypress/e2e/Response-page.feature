@@ -56,3 +56,8 @@ Feature: Besvarelse
     Then Ser jeg "Absolutte krav" har "4/4"
     And Ser jeg "Totalt evaluert fradrag" har "2,000.00 NOK"
     And Ser jeg absolutte krav av "El-bil" produkt er "svart"
+
+  Scenario: Jeg kan ikke rediger krav av type informasjon
+    Given Jeg lager besvarelse fra spesifikasjon "specification_all_answer_typer.pdf"
+    When Jeg redigerer produkt "Verdi"
+    Then Ser jeg kravet "Verdi" er ikke aktiv

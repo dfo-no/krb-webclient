@@ -29,7 +29,6 @@
       display: flex;
       gap: var(--tiny-gap);
       align-items: center;
-      width: 10%;
 
       &[data-disabled='true'] {
         path {
