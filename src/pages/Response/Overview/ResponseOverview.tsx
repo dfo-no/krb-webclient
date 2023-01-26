@@ -1,15 +1,13 @@
 import React from 'react';
 import { Typography } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
-import EditIcon from '@mui/icons-material/Edit';
 import CheckBoxOutlinedIcon from '@mui/icons-material/CheckBoxOutlined';
 import WarningAmberOutlinedIcon from '@mui/icons-material/WarningAmberOutlined';
 
 import css from '../../Stylesheets/EditorFullPage.module.scss';
 import DownloadToolbarItem from '../Download/DownloadToolbarItem';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
-import { GENERAL, PRODUCTS, RESPONSE } from '../../../common/PathConstants';
+import { GENERAL } from '../../../common/PathConstants';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
 import { useResponseState } from '../ResponseContext';
@@ -17,20 +15,12 @@ import SupplierInfoToolbar from '../../SpecEditor/SpecificationOverview/element/
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { currencyService } from '../../../Nexus/services/CurrencyService';
 import { IResponseProduct } from '../../../Nexus/entities/IResponseProduct';
+import AnswerProduct from '../Answer/AnswerProduct';
+import { AccordionProvider } from '../../../components/DFOAccordion/AccordionContext';
 
 function ResponseOverview(): React.ReactElement {
   const { t } = useTranslation();
-  const history = useHistory();
   const { response } = useResponseState();
-
-  const genericPressed = () => {
-    history.push(`/${RESPONSE}/${response.id}/${PRODUCTS}/${GENERAL}`);
-  };
-
-  const productPressed = (product: ISpecificationProduct) => {
-    history.push(`/${RESPONSE}/${response.id}/${PRODUCTS}/${product.id}`);
-  };
-
   const specification = response.specification;
 
   const isGeneralRequirements = () => {
@@ -170,7 +160,9 @@ function ResponseOverview(): React.ReactElement {
               />
             </span>
           )}
-          {isAwardedRequirements(responseProduct.requirementAnswers) && (
+          {isAwardedRequirements(
+            responseProduct.originProduct.requirementAnswers
+          ) && (
             <ToolbarItem
               primaryText={t('Total evaluated discount')}
               secondaryText={totalEvaluatedDiscount(
@@ -203,15 +195,10 @@ function ResponseOverview(): React.ReactElement {
           <div>{renderProductInfo()}</div>
           <div className={css.Description}>
             <Typography>{product.description}</Typography>
-            <Toolbar>
-              <ToolbarItem
-                secondaryText={t('Edit the product')}
-                icon={<EditIcon />}
-                handleClick={() => productPressed(product)}
-                fontSize={'small'}
-              />
-            </Toolbar>
           </div>
+          <AccordionProvider>
+            <AnswerProduct productId={product.id} />
+          </AccordionProvider>
         </div>
       </li>
     );
@@ -275,16 +262,9 @@ function ResponseOverview(): React.ReactElement {
                 ))}
             </div>
             <div>{renderGeneralRequirementInfo()}</div>
-            <div className={css.General}>
-              <Toolbar>
-                <ToolbarItem
-                  secondaryText={t('Edit general requirements')}
-                  icon={<EditIcon />}
-                  handleClick={() => genericPressed()}
-                  fontSize={'small'}
-                />
-              </Toolbar>
-            </div>
+            <AccordionProvider>
+              <AnswerProduct productId={GENERAL} />
+            </AccordionProvider>
           </div>
         </li>
       </ul>
