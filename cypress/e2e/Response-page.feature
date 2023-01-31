@@ -58,3 +58,13 @@ Feature: Besvarelse
     Given Jeg lager besvarelse fra spesifikasjon "specification_all_answer_typer.pdf"
     When Jeg klikker på accordian knapp av produkt "Verdi"
     Then Ser jeg kravet "Verdi" er ikke aktiv
+
+  Scenario: Jeg kan navigere mellom produkter
+    Given Jeg lager besvarelse fra spesifikasjon "specification_all_answer_typer.pdf"
+    When Jeg klikker på accordian knapp av produkt "Ja/Nei"
+    Then Ser jeg produkt "Ja/Nei" er åpent
+    And Ser jeg "Forrige produkt" er ikke aktiv
+    When Jeg klikker på "Neste produkt" knappen
+    Then Ser jeg produkt "Verdi" er åpent
+    When Jeg klikker på accordian knapp av produkt "Verdi"
+    Then Ser jeg produkt "Verdi" er lukket

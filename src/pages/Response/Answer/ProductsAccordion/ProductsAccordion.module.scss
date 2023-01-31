@@ -1,0 +1,42 @@
+.ProductsAccordion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--small-gap);
+
+  .Header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+
+    &__icon {
+      padding: var(--small-gap);
+      margin-left: auto;
+
+      path {
+        fill: var(--secondary-light-gray-color);
+      }
+    }
+  }
+  .Content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--small-gap);
+    padding: var(--small-gap);
+
+    .ActionButtons {
+      display: flex;
+      justify-content: space-between;
+      padding: var(--small-gap) 0;
+      border-top: 0.2rem solid var(--gray-color);
+
+      button {
+        font-size: var(--small-fontsize);
+      }
+    }
+  }
+
+  .Hidden {
+    display: none;
+  }
+}

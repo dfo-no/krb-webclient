@@ -35,7 +35,7 @@ Then('Jeg klikker på {string} knappen', (button: string) => {
 When(
   'Jeg kan velge navn ved å klikke på {string} knappen',
   (button: string) => {
-    cy.get('li > div > button').contains(button).click();
+    cy.get('li > div > button').contains(button).click({ force: true });
   }
 );
 
