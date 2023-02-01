@@ -178,7 +178,9 @@ export default function ProductsAccordion({
                   </span>
                 </div>
                 <div className={productIndex == i ? css.Content : css.Hidden}>
-                  <AnswerProduct productId={p.id} />
+                  <div className={css.AnswerProduct}>
+                    <AnswerProduct productId={p.id} />
+                  </div>
                   <div className={css.ActionButtons}>
                     <Button
                       variant={Variant.Ghost}

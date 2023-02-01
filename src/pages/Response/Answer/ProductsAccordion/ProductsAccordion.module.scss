@@ -22,13 +22,16 @@
     display: flex;
     flex-direction: column;
     gap: var(--small-gap);
-    padding: var(--small-gap);
+
+    .AnswerProduct {
+      padding: 0 var(--small-gap);
+    }
 
     .ActionButtons {
       display: flex;
       justify-content: space-between;
-      padding: var(--small-gap) 0;
       border-top: 0.2rem solid var(--gray-color);
+      padding: var(--small-gap);
 
       button {
         font-size: var(--small-fontsize);
