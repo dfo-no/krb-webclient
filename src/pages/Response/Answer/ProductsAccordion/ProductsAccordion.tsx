@@ -191,7 +191,7 @@ export default function ProductsAccordion({
                     </Button>
                     <Button
                       variant={Variant.Ghost}
-                      icon={Symbols.Cross}
+                      icon={Symbols.ChevronUp}
                       iconLocation={Location.Before}
                       onClick={() => handleClick(i)}
                     >
