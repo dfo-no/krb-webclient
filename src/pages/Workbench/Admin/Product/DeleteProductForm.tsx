@@ -70,8 +70,8 @@ export default function DeleteProductForm({
     infoText = `${t('Cant delete this product')} ${t('Product has children')}`;
   }
 
-  const onSubmit = (put: Parentable<IProduct>): void => {
-    deleteProduct(put).then(() => {
+  const onSubmit = (productToDelete: Parentable<IProduct>): void => {
+    deleteProduct(productToDelete).then(() => {
       const alert: Alert = {
         id: uuidv4(),
         style: 'success',

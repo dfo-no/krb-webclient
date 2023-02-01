@@ -2,6 +2,7 @@ import StoreService from './StoreService';
 import UuidService from './UuidService';
 import { IBank } from '../entities/IBank';
 import { ModelType } from '../enums';
+import { ProjectForm } from '../../api/nexus2';
 
 export default class ProjectService {
   UuidService = new UuidService();
@@ -19,6 +20,14 @@ export default class ProjectService {
   public getProject(): IBank {
     return this.storeService.getBank();
   }
+
+  public static defaultProject = (): ProjectForm => {
+    return {
+      title: '',
+      description: '',
+      ref: '',
+    };
+  };
 
   public static defaultBank = (): IBank => {
     return {

@@ -1,6 +1,7 @@
 import { ReactElement, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import {
   deleteProject,
@@ -12,9 +13,10 @@ import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../Nexus/Nexus';
 import UuidService from '../../../Nexus/services/UuidService';
 import { Alert } from '../../../models/Alert';
-import { ModelType } from '../../../Nexus/enums';
 import { useEditableState } from '../../../components/EditableContext/EditableContext';
 import { AlertsContainer } from '../../../components/Alert/AlertContext';
+import ErrorSummary from '../../../Form/ErrorSummary';
+import { ProjectSchema } from '../../../Nexus/entities/IBank';
 
 interface Props {
   children: ReactElement;
@@ -36,7 +38,7 @@ export function DeleteProjectForm({
 
   const methods = useForm<ProjectForm>({
     defaultValues: project,
-    resolver: nexus.resolverService.resolver(ModelType.bank),
+    resolver: zodResolver(ProjectSchema),
   });
 
   useEffect(() => {
@@ -81,6 +83,7 @@ export function DeleteProjectForm({
           infoText={infoText}
           handleClose={handleClose}
         />
+        <ErrorSummary errors={methods.formState.errors} />
       </form>
     </FormProvider>
   );
