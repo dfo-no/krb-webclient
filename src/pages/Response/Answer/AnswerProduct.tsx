@@ -69,14 +69,18 @@ export default function AnswerProducts({
     return <>{renderRequirements()}</>;
   };
 
-  return (
-    <div className={css.AnswerProduct}>
-      <DFOAccordion
-        className={css.Accordion}
-        eventKey={productId}
-        header={<></>}
-        body={body()}
-      />
-    </div>
-  );
+  if (productId == GENERAL) {
+    return (
+      <div className={css.AnswerProduct}>
+        <DFOAccordion
+          className={css.Accordion}
+          eventKey={productId}
+          header={<></>}
+          body={body()}
+        />
+      </div>
+    );
+  }
+
+  return <div className={css.AnswerProduct}>{body()}</div>;
 }

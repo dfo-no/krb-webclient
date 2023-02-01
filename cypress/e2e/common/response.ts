@@ -1,3 +1,4 @@
+/* eslint-disable cypress/no-unnecessary-waiting */
 import { Given, Then, When } from '@badeball/cypress-cucumber-preprocessor';
 import { clickAndWaitForResponse, uploadFile } from './helpers';
 
@@ -52,11 +53,13 @@ Then(
       cy.get('[class^="EditorFullPage"]')
         .contains(title)
         .parent()
+        .parent()
         .find(`[data-testid="CheckBoxOutlinedIcon"]`)
         .should('be.visible');
     } else if (status === 'ikke svart') {
       cy.get('[class^="EditorFullPage"]')
         .contains(title)
+        .parent()
         .parent()
         .find(`[data-testid="WarningAmberOutlinedIcon"]`)
         .should('be.visible');
@@ -88,12 +91,34 @@ Then('Jeg besvarer {string} kravet med bekreftet', (title: string) => {
 
 When('Jeg klikker på accordian knapp av produkt {string}', (title: string) => {
   cy.contains(title)
-    .parent()
-    .parent()
-    .find(`[data-testid="ExpandMoreIcon"]`)
+    .parentsUntil('li')
+    .find(
+      title === 'Generelle krav'
+        ? `[data-testid="ExpandMoreIcon"]`
+        : `[class*="Header"]`
+    )
     .click();
+  cy.wait(500);
 });
 
 Then('Ser jeg kravet {string} er ikke aktiv', (fieldName: string) => {
   cy.get(`input[placeholder="${fieldName}"]`).should('be.disabled');
+});
+
+Then('Ser jeg {string} er ikke aktiv', (button: string) => {
+  cy.get('[class*="button_"]').contains(button).parent().should('be.disabled');
+});
+
+Then('Ser jeg produkt {string} er åpent', (productName: string) => {
+  cy.contains(productName)
+    .parentsUntil('[class*="Header"]')
+    .parent()
+    .should('have.attr', 'data-expanded', 'true');
+});
+
+Then('Ser jeg produkt {string} er lukket', (productName: string) => {
+  cy.contains(productName)
+    .parentsUntil('[class*="Header"]')
+    .parent()
+    .should('have.attr', 'data-expanded', 'false');
 });

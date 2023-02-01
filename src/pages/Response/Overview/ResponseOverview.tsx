@@ -6,7 +6,6 @@ import WarningAmberOutlinedIcon from '@mui/icons-material/WarningAmberOutlined';
 
 import css from '../../Stylesheets/EditorFullPage.module.scss';
 import DownloadToolbarItem from '../Download/DownloadToolbarItem';
-import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
 import { GENERAL } from '../../../common/PathConstants';
 import ToolbarItem from '../../../components/UI/Toolbar/ToolbarItem';
 import Toolbar from '../../../components/UI/Toolbar/ToolBar';
@@ -14,9 +13,9 @@ import { useResponseState } from '../ResponseContext';
 import SupplierInfoToolbar from '../../SpecEditor/SpecificationOverview/element/SupplierInfoToolbar';
 import { IRequirementAnswer } from '../../../Nexus/entities/IRequirementAnswer';
 import { currencyService } from '../../../Nexus/services/CurrencyService';
-import { IResponseProduct } from '../../../Nexus/entities/IResponseProduct';
 import AnswerProduct from '../Answer/AnswerProduct';
 import { AccordionProvider } from '../../../components/DFOAccordion/AccordionContext';
+import ProductsAccordion from '../Answer/ProductsAccordion/ProductsAccordion';
 
 function ResponseOverview(): React.ReactElement {
   const { t } = useTranslation();
@@ -91,14 +90,6 @@ function ResponseOverview(): React.ReactElement {
     return currencyService(response.specification.currencyUnit, discount);
   };
 
-  const mandatoryRequirements = (responseProduct: IResponseProduct) => {
-    return `${absoluteRequirementAnswered(
-      responseProduct.requirementAnswers
-    )}/${absoluteRequirements(
-      responseProduct.originProduct.requirementAnswers
-    )}`;
-  };
-
   const isMandatoryRequirements = (
     requirementAnswer: (IRequirementAnswer | undefined)[]
   ) => {
@@ -119,91 +110,6 @@ function ResponseOverview(): React.ReactElement {
     return isAwarded;
   };
 
-  const isAllRequirementsAnswered = (responseProduct: IResponseProduct) => {
-    return (
-      absoluteRequirements(responseProduct.originProduct.requirementAnswers) ===
-      absoluteRequirementAnswered(responseProduct.requirementAnswers)
-    );
-  };
-
-  const renderProducts = (
-    product: ISpecificationProduct,
-    responseProduct: IResponseProduct
-  ) => {
-    const renderProductInfo = () => {
-      return (
-        <Toolbar>
-          <ToolbarItem
-            primaryText={t('Quantity')}
-            secondaryText={`${product.amount} ${product.unit}`}
-            fontSize={'small'}
-          />
-          <ToolbarItem
-            primaryText={t('Type')}
-            secondaryText={product.originProduct.title}
-            fontSize={'small'}
-          />
-          {isMandatoryRequirements(
-            responseProduct.originProduct.requirementAnswers
-          ) && (
-            <span
-              className={
-                !isAllRequirementsAnswered(responseProduct)
-                  ? css.RequirementAnswered__no
-                  : ''
-              }
-            >
-              <ToolbarItem
-                primaryText={t('Mandatory requirements')}
-                secondaryText={mandatoryRequirements(responseProduct)}
-                fontSize={'small'}
-              />
-            </span>
-          )}
-          {isAwardedRequirements(
-            responseProduct.originProduct.requirementAnswers
-          ) && (
-            <ToolbarItem
-              primaryText={t('Total evaluated discount')}
-              secondaryText={totalEvaluatedDiscount(
-                responseProduct.requirementAnswers
-              )}
-              fontSize={'small'}
-            />
-          )}
-        </Toolbar>
-      );
-    };
-
-    return (
-      <li key={product.id}>
-        <div className={css.CardContent}>
-          <div className={css.CardTitle}>
-            <Typography variant="mdBold">{product.title}</Typography>
-            {absoluteRequirementAnswered(responseProduct.requirementAnswers) >
-              0 &&
-              (isAllRequirementsAnswered(responseProduct) ? (
-                <CheckBoxOutlinedIcon
-                  className={css.RequirementAnswered__yes}
-                />
-              ) : (
-                <WarningAmberOutlinedIcon
-                  className={css.RequirementAnswered__no}
-                />
-              ))}
-          </div>
-          <div>{renderProductInfo()}</div>
-          <div className={css.Description}>
-            <Typography>{product.description}</Typography>
-          </div>
-          <AccordionProvider>
-            <AnswerProduct productId={product.id} />
-          </AccordionProvider>
-        </div>
-      </li>
-    );
-  };
-
   const renderGeneralRequirement = (
     requirementAnswer: (IRequirementAnswer | undefined)[]
   ) => {
@@ -213,10 +119,8 @@ function ResponseOverview(): React.ReactElement {
           {isMandatoryRequirements(requirementAnswer) && (
             <span
               className={
-                !(
-                  absoluteRequirements(requirementAnswer) ===
-                  absoluteRequirementAnswered(response.requirementAnswers)
-                )
+                absoluteRequirements(requirementAnswer) !==
+                absoluteRequirementAnswered(response.requirementAnswers)
                   ? css.RequirementAnswered__no
                   : ''
               }
@@ -295,16 +199,18 @@ function ResponseOverview(): React.ReactElement {
           caseNumber={specification?.caseNumber}
         />
         {isGeneralRequirements() && generalRequirements()}
-        {specification.products.length > 0 && (
-          <ul>
-            {specification.products.map((element, index) => {
-              const responseProduct = response.products[index];
-
-              if (responseProduct.originProduct.requirementAnswers.length > 0)
-                return renderProducts(element, responseProduct);
-            })}
-          </ul>
-        )}
+        <ul>
+          {specification.products.length > 0 && (
+            <ProductsAccordion
+              specProducts={specification.products}
+              absoluteRequirements={absoluteRequirements}
+              absoluteRequirementAnswered={absoluteRequirementAnswered}
+              totalEvaluatedDiscount={totalEvaluatedDiscount}
+              isMandatoryRequirements={isMandatoryRequirements}
+              isAwardedRequirements={isAwardedRequirements}
+            />
+          )}
+        </ul>
       </div>
     </div>
   );
