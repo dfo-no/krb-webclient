@@ -20,7 +20,10 @@ import {
 
 export function Projects(): React.ReactElement {
   const { t } = useTranslation();
-  const [projectList, setProjectList] = useState<ProjectForm[]>();
+  const [completeProjectList, setCompleteProjectList] =
+    useState<ProjectForm[]>();
+  const [filteredProjectList, setFilteredProjectList] =
+    useState<ProjectForm[]>();
   const [loading, setLoading] = useState<boolean>(true);
   const [isOpen, setOpen] = useState(false);
 
@@ -28,10 +31,11 @@ export function Projects(): React.ReactElement {
     findProjects({}).then(async (projectsResponse) => {
       setLoading(false);
       if (projectsResponse) {
-        setProjectList(projectsResponse.data);
+        setCompleteProjectList(projectsResponse.data);
+        setFilteredProjectList(projectsResponse.data);
       }
     });
-  }, [setProjectList]);
+  }, [setCompleteProjectList, setFilteredProjectList]);
 
   if (loading) {
     return <LoaderSpinner />;
@@ -42,7 +46,7 @@ export function Projects(): React.ReactElement {
   };
 
   const searchFieldCallback = (result: ProjectForm[]) => {
-    setProjectList(result);
+    setFilteredProjectList(result);
   };
 
   const renderProjects = (list: ProjectForm[]) => {
@@ -73,7 +77,7 @@ export function Projects(): React.ReactElement {
     );
   };
 
-  if (!projectList?.length) {
+  if (!completeProjectList?.length) {
     return (
       <Box className={css.Projects}>
         <Box className={css.TitleContainer}>
@@ -101,7 +105,7 @@ export function Projects(): React.ReactElement {
         <SearchContainer className={css.SearchContainer}>
           <SearchFieldContainer>
             <DFOSearchBar
-              list={projectList}
+              list={completeProjectList}
               placeholder={t('common.Search for banks')}
               callback={searchFieldCallback}
               searchFunction={searchFunction}
@@ -111,7 +115,7 @@ export function Projects(): React.ReactElement {
         </SearchContainer>
         <div className={css.ListContainer}>
           <List className={css.List} aria-label="projects">
-            {projectList && renderProjects(projectList)}
+            {filteredProjectList && renderProjects(filteredProjectList)}
           </List>
         </div>
       </div>
