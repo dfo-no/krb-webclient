@@ -20,7 +20,7 @@ export default class ProjectService {
     return this.storeService.getBank();
   }
 
-  public static defaultProject = (): IBank => {
+  public static defaultBank = (): IBank => {
     return {
       id: '',
       title: '',

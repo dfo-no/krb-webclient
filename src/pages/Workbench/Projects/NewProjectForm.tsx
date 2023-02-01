@@ -29,7 +29,7 @@ const NewProjectForm = ({ handleClose }: Props) => {
   const nexus = Nexus.getInstance();
 
   // TODO Should contain a defaultValue from options to fully control the Select
-  const defaultValues = ProjectService.defaultProject();
+  const defaultValues = ProjectService.defaultBank();
   const [postProject] = usePostProjectMutation();
 
   const methods = useForm<IBank>({
