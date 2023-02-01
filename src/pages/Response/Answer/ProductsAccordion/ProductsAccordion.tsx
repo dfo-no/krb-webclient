@@ -49,7 +49,6 @@ export default function ProductsAccordion({
     const responseProduct = response.products[i];
     return responseProduct.originProduct.requirementAnswers.length > 0;
   }).length;
-  let productResponse: IResponseProduct;
 
   const handleClick = (index: number) => {
     if (productIndex == index) {
@@ -155,14 +154,11 @@ export default function ProductsAccordion({
 
   return (
     <div className={css.ProductsAccordion}>
-      {specProducts
-        .filter((product, i) => {
-          productResponse = response.products[i];
-          return productResponse.originProduct.requirementAnswers.length > 0;
-        })
-        .map((p, i) => {
-          return (
-            <ul key={i}>
+      {specProducts.map((p, i) => {
+        const productResponse = response.products[i];
+        return (
+          <ul key={i}>
+            {productResponse.originProduct.requirementAnswers.length > 0 && (
               <li>
                 <div
                   className={css.Header}
@@ -211,9 +207,10 @@ export default function ProductsAccordion({
                   </div>
                 </div>
               </li>
-            </ul>
-          );
-        })}
+            )}
+          </ul>
+        );
+      })}
     </div>
   );
 }
