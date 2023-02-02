@@ -71,7 +71,11 @@ export default function Create(): React.ReactElement {
       <Box className={css.Create}>
         <CreateSideBar project={project} needs={needsWithParent} />
         <Box className={css.MainContent}>
-          <>{needs.length === 0 && <ProjectStart project={project} />}</>
+          <>
+            {needs.length === 0 && (
+              <ProjectStart needs={needs} project={project} />
+            )}
+          </>
         </Box>
       </Box>
     );

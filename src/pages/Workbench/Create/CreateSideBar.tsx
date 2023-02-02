@@ -8,8 +8,7 @@ import 'react-nestable/dist/styles/index.css';
 
 import css from './Create.module.scss';
 import NestableHierarcy from '../../../components/NestableHierarchy/NestableHierarcyNew';
-import NewNeed from './Need/NewNeed';
-// import useProjectMutations from '../../../store/api/ProjectMutations';
+import { NewNeed } from './Need/NewNeed';
 import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
 import { useSelectState } from './SelectContext';
 import { Need, ProjectForm } from '../../../api/nexus2';
@@ -77,8 +76,7 @@ const CreateSideBar = ({ project, needs }: Props): React.ReactElement => {
 
   return (
     <ScrollableContainer className={css.SideBar}>
-      {hasNeeds() && <NewNeed buttonText={t('Add new need')} />}
-
+      {hasNeeds() && <NewNeed needs={needs} buttonText={t('Add new need')} />}
       <NestableHierarcy
         inputlist={needs}
         className={css.Nestable}
