@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { Box } from '@mui/material/';
 import { useParams } from 'react-router-dom';
 
@@ -16,15 +16,17 @@ import { useSelectState } from './SelectContext';
 import { VariantProvider } from '../VariantContext';
 import { HeaderContainer } from '../../../components/Header/HeaderContext';
 import {
+  Need,
   useFindNeeds,
   useFindRequirementsForProject,
   useProject,
-} from '../../../api/openapi-fetch';
+} from '../../../api/nexus2';
 
 export default function Create(): React.ReactElement {
   const { projectId: projectRef } = useParams<IRouteProjectParams>();
   const { needs, isLoading: needsIsLoading } = useFindNeeds(projectRef);
   const { project, isLoading: projectIsLoading } = useProject(projectRef);
+  const [needsWithParent, setNeedsWithParent] = useState<Need[]>([]);
 
   const { requirements: allRequirements } =
     useFindRequirementsForProject(projectRef);
@@ -44,6 +46,12 @@ export default function Create(): React.ReactElement {
   });
 
   useEffect(() => {
+    if (needs) {
+      setNeedsWithParent(needs.map((need) => ({ ...need, parent: '' })));
+    }
+  }, [needs]);
+
+  useEffect(() => {
     if (project) setTitle(project?.title || '');
     return function cleanup() {
       setTitle('');
@@ -58,20 +66,14 @@ export default function Create(): React.ReactElement {
     return <></>;
   }
 
-  const renderCreatePageWithContent = (
-    children: ReactElement
-  ): ReactElement => {
+  if (needIndex === null || !needs[needIndex]) {
     return (
       <Box className={css.Create}>
-        <CreateSideBar />
-        <Box className={css.MainContent}>{children}</Box>
+        <CreateSideBar project={project} needs={needsWithParent} />
+        <Box className={css.MainContent}>
+          <>{needs.length === 0 && <ProjectStart project={project} />}</>
+        </Box>
       </Box>
-    );
-  };
-
-  if (needIndex === null || !needs[needIndex]) {
-    return renderCreatePageWithContent(
-      <>{needs.length === 0 && <ProjectStart project={project} />}</>
     );
   }
   const currentNeed = needs[needIndex];
@@ -93,9 +95,11 @@ export default function Create(): React.ReactElement {
   };
 
   const renderNeedCard = (): ReactElement => {
+    console.log('gserghrt');
+
     return (
       <Box className={css.Need}>
-        <NeedHeader />
+        <NeedHeader project={project} needs={needs} />
         <Box className={css.Requirements}>
           <NewRequirement need={needs[needIndex]} />
           <ScrollableContainer className={css.List}>
@@ -113,13 +117,18 @@ export default function Create(): React.ReactElement {
     );
   };
 
-  return renderCreatePageWithContent(
-    <DeleteNeed
-      need={currentNeed}
-      canBeDeleted={!!currentRequirements && currentRequirements.length > 0}
-      handleClose={needDeleted}
-    >
-      {renderNeedCard()}
-    </DeleteNeed>
+  return (
+    <Box className={css.Create}>
+      <CreateSideBar project={project} needs={needsWithParent} />
+      <Box className={css.MainContent}>
+        <DeleteNeed
+          need={currentNeed}
+          canBeDeleted={!!currentRequirements && currentRequirements.length > 0}
+          handleClose={needDeleted}
+        >
+          {renderNeedCard()}
+        </DeleteNeed>
+      </Box>
+    </Box>
   );
 }

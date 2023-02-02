@@ -17,12 +17,7 @@ import {
   ModalFieldsBox,
 } from '../../../../components/ModalBox/ModalBox';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
-import {
-  createNeed,
-  NeedForm,
-  NeedSchema,
-  setRefOnItem,
-} from '../../../../api/nexus2';
+import { createNeed, NeedForm, NeedSchema } from '../../../../api/nexus2';
 
 interface Props {
   handleClose: (newNeed: NeedForm | null) => void;
@@ -41,14 +36,13 @@ function NewNeedForm({ handleClose }: Props): React.ReactElement {
   const methods = useForm<NeedForm>({
     resolver: zodResolver(NeedSchema),
     defaultValues: {
-      ref: '',
+      ref: uuidv4(),
       title: '',
       description: '',
     },
   });
 
-  const onSubmit = async (post: NeedForm) => {
-    const newNeed = setRefOnItem(post);
+  const onSubmit = async (newNeed: NeedForm) => {
     await createNeed({ projectRef: projectId, ...newNeed }).then(() => {
       const alert: Alert = {
         id: uuidv4(),

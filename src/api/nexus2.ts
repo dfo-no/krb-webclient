@@ -2,7 +2,7 @@ import { Fetcher } from 'openapi-typescript-fetch';
 import { useEffect, useState } from 'react';
 import { createContainer } from 'unstated-next';
 import useSWR from 'swr';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
 import { components, paths } from './generated';
@@ -11,9 +11,9 @@ import { components, paths } from './generated';
 // export const baseUrl = 'http://localhost:1080',
 export const baseUrl = 'http://localhost:8080'; // Exported for use in tests
 
-export const setRefOnItem = <T extends { ref: string }>(item: T) => {
-  return { ...item, ref: uuidv4() };
-};
+// export const setRefOnItem = <T extends { ref: string }>(item: T) => {
+//   return { ...item, ref: uuidv4() };
+// };
 
 const fetcher = Fetcher.for<paths>();
 
@@ -46,22 +46,34 @@ export const ProjectSchema = z.object({
   title: z
     .string()
     .min(
-      5,
-      'Something about projecty title TODO: temporary error mesage needs to be integrated with i18n '
+      1,
+      'Project title to short TODO: temporary error mesage needs to be integrated with i18n '
     ),
   description: z.string(),
-  ref: z.string(),
+  ref: z.string(), // TODO: Validate UUID
 });
 
 export const NeedSchema = z.object({
   title: z
     .string()
     .min(
-      5,
-      'Something about projecty title TODO: temporary error mesage needs to be integrated with i18n '
+      1,
+      'Need title too short TODO: temporary error mesage needs to be integrated with i18n '
     ),
   description: z.string(),
-  ref: z.string(),
+  ref: z.string(), // TODO: Validate UUID
+});
+
+export const RequirementSchema = z.object({
+  title: z
+    .string()
+    .min(
+      1,
+      'Need title too short TODO: temporary error mesage needs to be integrated with i18n '
+    ),
+  description: z.string(),
+  ref: z.string(), // TODO: Validate UUID
+  needRef: z.string(), // TODO: Validate UUID
 });
 
 // interface Base<T> {
@@ -92,11 +104,13 @@ type Base<T> = {
   [Properties in keyof T]: T[Properties];
 };
 
+type Parentable = { parent: string };
+
 // export type Codelist = Base<CodelistForm> & {};
 
 // export type Code = Base<CodeForm> & {};
 
-// export type Need = Base<NeedForm> & {};
+export type Need = Base<NeedForm> & Parentable;
 
 // export type Requirement = Base<RequirementForm> & {};
 
@@ -185,6 +199,11 @@ export const useFindCodelists = (projectRef: string) => {
   return { isLoading, codelists };
 };
 
+export const createNeed = fetcher
+  .path('/api/v1/projects/{projectRef}/needs')
+  .method('post')
+  .create();
+
 export const useNeeds = (ref: string) => {
   const { data, error, isLoading } = useSWR<NeedForm[], never>(
     `/api/v1/projects/${ref}/needs`,
@@ -220,9 +239,14 @@ export const useFindNeeds = (projectRef: string) => {
   return { isLoading, needs };
 };
 
-export const createNeed = fetcher
-  .path('/api/v1/projects/{projectRef}/needs')
+export const createRequirement = fetcher
+  .path('/api/v1/projects/{projectRef}/requirements')
   .method('post')
+  .create();
+
+export const updateRequirement = fetcher
+  .path('/api/v1/projects/{projectRef}/requirements/{requirementRef}')
+  .method('put')
   .create();
 
 export const useFindRequirementsForProject = (projectRef: string) => {

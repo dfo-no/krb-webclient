@@ -1,5 +1,4 @@
 import { Box, Typography } from '@mui/material/';
-import { useParams } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import theme from '../../../../theme';
@@ -7,18 +6,24 @@ import EditNeed from './EditNeed';
 import { DFOCardHeader } from '../../../../components/DFOCard/DFOCardHeader';
 import { DFOCardHeaderIconButton } from '../../../../components/DFOCard/DFOCardHeaderIconButton';
 import { DFOHeaderContentBox } from '../../../../components/DFOCard/DFOHeaderContentBox';
-import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { useSelectState } from '../SelectContext';
+import { NeedForm, ProjectForm } from '../../../../api/nexus2';
 
-export default function NeedHeader(): React.ReactElement {
-  const { projectId } = useParams<IRouteProjectParams>();
-  const { data: project } = useGetProjectQuery(projectId);
+type Props = {
+  project: ProjectForm;
+  needs: NeedForm[];
+};
+
+export default function NeedHeader({
+  project,
+  needs,
+}: Props): React.ReactElement {
   const { needIndex, setDeleteMode } = useSelectState();
 
   if (!project || needIndex === null) {
     return <></>;
   }
+  console.log('rgghserth');
 
   return (
     <DFOCardHeader>
@@ -35,12 +40,12 @@ export default function NeedHeader(): React.ReactElement {
             variant="lgBold"
             sx={{ fontFamily: 'var(--header-font)' }}
           >
-            {project.needs[needIndex] && project.needs[needIndex].title}
+            {needs[needIndex] && needs[needIndex].title}
           </Typography>
-          <EditNeed need={project.needs[needIndex]} />
+          {/* <EditNeed need={needs[needIndex]} /> TODO: Fix */}
           <DFOCardHeaderIconButton
             hoverColor={theme.palette.errorRed.main}
-            onClick={() => setDeleteMode(project.needs[needIndex].id)}
+            onClick={() => setDeleteMode(needs[needIndex].ref)}
             sx={{ alignSelf: 'baseline' }}
           >
             <DeleteIcon />
@@ -50,7 +55,7 @@ export default function NeedHeader(): React.ReactElement {
           variant="smBold"
           sx={{ paddingTop: 1, fontFamily: 'var(--header-font)' }}
         >
-          {project.needs[needIndex] && project.needs[needIndex].description}
+          {needs[needIndex] && needs[needIndex].description}
         </Typography>
       </DFOHeaderContentBox>
     </DFOCardHeader>

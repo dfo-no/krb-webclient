@@ -3,65 +3,55 @@ import classnames from 'classnames';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import Typography from '@mui/material/Typography';
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import 'react-nestable/dist/styles/index.css';
 
 import css from './Create.module.scss';
-import NestableHierarcy from '../../../components/NestableHierarchy/NestableHierarcy';
+import NestableHierarcy from '../../../components/NestableHierarchy/NestableHierarcyNew';
 import NewNeed from './Need/NewNeed';
-import useProjectMutations from '../../../store/api/ProjectMutations';
-import { INeed } from '../../../Nexus/entities/INeed';
-import { IRouteProjectParams } from '../../../models/IRouteProjectParams';
-import { Parentable } from '../../../models/Parentable';
+// import useProjectMutations from '../../../store/api/ProjectMutations';
 import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
-import { useGetProjectQuery } from '../../../store/api/bankApi';
 import { useSelectState } from './SelectContext';
+import { Need, ProjectForm } from '../../../api/nexus2';
 
-const CreateSideBar = (): React.ReactElement => {
-  const { projectId } = useParams<IRouteProjectParams>();
-  const { data: project } = useGetProjectQuery(projectId);
+type Props = {
+  project: ProjectForm;
+  needs: Need[];
+};
+
+const CreateSideBar = ({ project, needs }: Props): React.ReactElement => {
   const { needId, setNeedId, setNeedIndex } = useSelectState();
-  const { editNeeds } = useProjectMutations();
+  // const { editNeeds } = useProjectMutations();
   const { t } = useTranslation();
-  const [needs, setNeeds] = useState<Parentable<INeed>[]>([]);
-
-  useEffect(() => {
-    if (project && project.needs) {
-      setNeeds(project.needs);
-    }
-  }, [project]);
 
   if (!project) {
-    return <></>;
+    return <div className={css.SideBar}>No project found</div>;
   }
 
   const hasNeeds = (): boolean => {
     return needs.length !== 0;
   };
 
-  const updateNeedsArrangement = (newNeedList: Parentable<INeed>[]) => {
+  const updateNeedsArrangement = (newNeedList: Need[]) => {
     if (needId) {
-      const newIndex = newNeedList.findIndex((need) => need.id === needId);
+      const newIndex = newNeedList.findIndex((need) => need.ref === needId);
       setNeedIndex(newIndex);
     }
-    setNeeds(newNeedList);
-    editNeeds(newNeedList);
+    // editNeeds(newNeedList);
   };
 
-  const selectNeed = (item: Parentable<INeed>) => {
-    const index = project.needs.findIndex((n) => n.id === item.id);
+  const selectNeed = (item: Need) => {
+    const index = needs.findIndex((n) => n.ref === item.ref);
     setNeedIndex(index);
-    setNeedId(project.needs[index].id);
+    setNeedId(needs[index].ref);
   };
 
-  const itemClicked = (item: Parentable<INeed>) => {
+  const itemClicked = (item: Need) => {
     selectNeed(item);
   };
 
   const renderItem = (
-    item: Parentable<INeed>,
+    item: Need,
     handler: React.ReactNode,
     collapseIcon: React.ReactNode
   ) => {
@@ -69,7 +59,7 @@ const CreateSideBar = (): React.ReactElement => {
       <Box
         className={classnames(
           css.NestableItem,
-          needId && needId === item.id ? css.Selected : null
+          needId && needId === item.ref ? css.Selected : null
         )}
         onClick={() => itemClicked(item)}
       >
