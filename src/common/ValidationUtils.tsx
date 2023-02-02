@@ -153,6 +153,47 @@ class ValidationUtils {
       return fromTime >= fromTimeBoundary && fromTime <= toTimeBoundary;
     }
   };
+
+  static codelistQuestion = (requirementAnswer: IRequirementAnswer) => {
+    const optionalCodeMinAmount =
+      'optionalCodeMinAmount' in requirementAnswer.question.config &&
+      requirementAnswer.question.config.optionalCodeMinAmount
+        ? requirementAnswer.question.config.optionalCodeMinAmount
+        : 0;
+    const optionalCodeMaxAmount =
+      'optionalCodeMaxAmount' in requirementAnswer.question.config &&
+      requirementAnswer.question.config.optionalCodeMaxAmount
+        ? requirementAnswer.question.config.optionalCodeMaxAmount
+        : 0;
+    const configCodes =
+      'codes' in requirementAnswer.question.config &&
+      requirementAnswer.question.config.codes.length > 0
+        ? requirementAnswer.question.config.codes
+        : null;
+    const answerCodes =
+      'codes' in requirementAnswer.question.answer &&
+      requirementAnswer.question.answer.codes.length > 0
+        ? requirementAnswer.question.answer.codes
+        : null;
+
+    const mandatoryCodes = configCodes?.filter((code) => code.mandatory);
+    const optionalCodes = configCodes?.filter((code) => !code.mandatory);
+
+    const optionalAnswered = optionalCodes?.filter((code) =>
+      answerCodes?.includes(code.code)
+    );
+    const mandatoryAnswered = mandatoryCodes?.filter((code) =>
+      answerCodes?.includes(code.code)
+    );
+
+    return (
+      mandatoryAnswered &&
+      optionalAnswered &&
+      mandatoryAnswered?.length === mandatoryCodes?.length &&
+      optionalAnswered?.length >= optionalCodeMinAmount &&
+      optionalAnswered?.length <= optionalCodeMaxAmount
+    );
+  };
 }
 
 export default ValidationUtils;
