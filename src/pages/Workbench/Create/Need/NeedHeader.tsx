@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material/';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import theme from '../../../../theme';
-import EditNeed from './EditNeed';
+import { EditNeed } from './EditNeed';
 import { DFOCardHeader } from '../../../../components/DFOCard/DFOCardHeader';
 import { DFOCardHeaderIconButton } from '../../../../components/DFOCard/DFOCardHeaderIconButton';
 import { DFOHeaderContentBox } from '../../../../components/DFOCard/DFOHeaderContentBox';
@@ -11,19 +11,15 @@ import { NeedForm, ProjectForm } from '../../../../api/nexus2';
 
 type Props = {
   project: ProjectForm;
-  needs: NeedForm[];
+  need: NeedForm;
 };
 
-export default function NeedHeader({
-  project,
-  needs,
-}: Props): React.ReactElement {
+export function NeedHeader({ project, need }: Props): React.ReactElement {
   const { needIndex, setDeleteMode } = useSelectState();
 
   if (!project || needIndex === null) {
     return <></>;
   }
-  console.log('rgghserth');
 
   return (
     <DFOCardHeader>
@@ -40,12 +36,12 @@ export default function NeedHeader({
             variant="lgBold"
             sx={{ fontFamily: 'var(--header-font)' }}
           >
-            {needs[needIndex] && needs[needIndex].title}
+            {need && need.title}
           </Typography>
-          {/* <EditNeed need={needs[needIndex]} /> TODO: Fix */}
+          <EditNeed projectRef={project.ref} need={need} />
           <DFOCardHeaderIconButton
             hoverColor={theme.palette.errorRed.main}
-            onClick={() => setDeleteMode(needs[needIndex].ref)}
+            onClick={() => setDeleteMode(need.ref)}
             sx={{ alignSelf: 'baseline' }}
           >
             <DeleteIcon />
@@ -55,7 +51,7 @@ export default function NeedHeader({
           variant="smBold"
           sx={{ paddingTop: 1, fontFamily: 'var(--header-font)' }}
         >
-          {needs[needIndex] && needs[needIndex].description}
+          {need && need.description}
         </Typography>
       </DFOHeaderContentBox>
     </DFOCardHeader>

@@ -6,7 +6,7 @@ import css from './Create.module.scss';
 import CreateSideBar from './CreateSideBar';
 import DeleteNeed from './Need/DeleteNeed';
 import LoaderSpinner from '../../../common/LoaderSpinner';
-import NeedHeader from './Need/NeedHeader';
+import { NeedHeader } from './Need/NeedHeader';
 import NewRequirement from './Requirement/NewRequirement';
 import ProjectStart from './ProjectStart';
 import Requirement from './Requirement/Requirement';
@@ -99,9 +99,9 @@ export default function Create(): React.ReactElement {
 
     return (
       <Box className={css.Need}>
-        <NeedHeader project={project} needs={needs} />
+        <NeedHeader project={project} need={currentNeed} />
         <Box className={css.Requirements}>
-          <NewRequirement need={needs[needIndex]} />
+          <NewRequirement need={currentNeed} />
           <ScrollableContainer className={css.List}>
             {currentRequirements &&
               currentRequirements.map((req, index) => {

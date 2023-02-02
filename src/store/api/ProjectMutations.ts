@@ -208,13 +208,6 @@ function useProjectMutations() {
     throw Error('Cant save changes to Project');
   }
 
-  async function editNeeds(needs: Parentable<INeed>[]): Promise<BankOrError> {
-    if (project) {
-      return putProject({ ...project, needs: needs });
-    }
-    throw Error('Cant save changes to Project');
-  }
-
   // REQUIREMENTS
   async function addRequirement(
     requirement: IRequirement,
@@ -328,9 +321,7 @@ function useProjectMutations() {
     deleteCode,
     editCodes,
     addNeed,
-    editNeed,
     deleteNeed,
-    editNeeds,
     addRequirement,
     editRequirement,
     deleteRequirement,

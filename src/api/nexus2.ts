@@ -239,6 +239,11 @@ export const useFindNeeds = (projectRef: string) => {
   return { isLoading, needs };
 };
 
+export const updateNeed = fetcher
+  .path('/api/v1/projects/{projectRef}/needs/{needRef}')
+  .method('put')
+  .create();
+
 export const createRequirement = fetcher
   .path('/api/v1/projects/{projectRef}/requirements')
   .method('post')
