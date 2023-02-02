@@ -156,11 +156,12 @@ export default function ProductsAccordion({
   return (
     <div className={css.ProductsAccordion}>
       {specProducts
-        .filter((product, i) => {
-          productResponse = response.products[i];
-          return productResponse.originProduct.requirementAnswers.length > 0;
+        .filter((product, index) => {
+          const responseProduct = response.products[index];
+          return responseProduct.originProduct.requirementAnswers.length > 0;
         })
         .map((p, i) => {
+          productResponse = response.products[i];
           return (
             <ul key={i}>
               <li>

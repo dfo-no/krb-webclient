@@ -32,7 +32,9 @@ export default function ProductRequirementAnswer({
         case QuestionVariant.Q_CONFIRMATION:
           return requirementAnswer.question.config.discount > 0;
         case QuestionVariant.Q_CODELIST:
-          return requirementAnswer.question.config.codes?.length > 0;
+          return requirementAnswer.question.config.codes
+            .map((c) => c.discount > 0)
+            .includes(true);
         case QuestionVariant.Q_SLIDER:
           return requirementAnswer.question.config.discountsValue?.length > 0;
         case QuestionVariant.Q_PERIOD_DATE:
