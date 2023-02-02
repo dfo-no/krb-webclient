@@ -2,15 +2,23 @@ import { Fetcher } from 'openapi-typescript-fetch';
 import { useEffect, useState } from 'react';
 import { createContainer } from 'unstated-next';
 import useSWR from 'swr';
+import { v4 as uuidv4 } from 'uuid';
+import { z } from 'zod';
 
 import { components, paths } from './generated';
+
+// export const baseUrl  'https://krb-backend-api.azurewebsites.net',
+// export const baseUrl = 'http://localhost:1080',
+export const baseUrl = 'http://localhost:8080'; // Exported for use in tests
+
+export const setRefOnItem = <T extends { ref: string }>(item: T) => {
+  return { ...item, ref: uuidv4() };
+};
 
 const fetcher = Fetcher.for<paths>();
 
 fetcher.configure({
-  // baseUrl: 'https://krb-backend-api.azurewebsites.net',
-  baseUrl: 'http://localhost:8080',
-  // baseUrl: 'http://localhost:1080',
+  baseUrl: baseUrl,
 
   // init: {
   //   headers: {
@@ -22,7 +30,7 @@ fetcher.configure({
 
 type FetcherArg = RequestInfo | URL;
 const swrFetcher = (...args: FetcherArg[]) =>
-  fetch('http://localhost:8080' + args[0]).then((res) => res.json());
+  fetch(baseUrl + args[0]).then((res) => res.json());
 
 export type ProjectForm = components['schemas']['ProjectForm'];
 export type CodelistForm = components['schemas']['CodelistForm'];
@@ -33,6 +41,28 @@ export type RequirementVariantForm =
   components['schemas']['RequirementVariantForm'];
 export type ProductForm = components['schemas']['ProductForm'];
 export type PublicationForm = components['schemas']['PublicationForm'];
+
+export const ProjectSchema = z.object({
+  title: z
+    .string()
+    .min(
+      5,
+      'Something about projecty title TODO: temporary error mesage needs to be integrated with i18n '
+    ),
+  description: z.string(),
+  ref: z.string(),
+});
+
+export const NeedSchema = z.object({
+  title: z
+    .string()
+    .min(
+      5,
+      'Something about projecty title TODO: temporary error mesage needs to be integrated with i18n '
+    ),
+  description: z.string(),
+  ref: z.string(),
+});
 
 // interface Base<T> {
 //   [key: string]: keyof T;
@@ -189,6 +219,11 @@ export const useFindNeeds = (projectRef: string) => {
 
   return { isLoading, needs };
 };
+
+export const createNeed = fetcher
+  .path('/api/v1/projects/{projectRef}/needs')
+  .method('post')
+  .create();
 
 export const useFindRequirementsForProject = (projectRef: string) => {
   const [isLoading, setLoading] = useState(false);

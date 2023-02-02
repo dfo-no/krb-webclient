@@ -16,9 +16,8 @@ import {
   ModalFieldsBox,
 } from '../../../components/ModalBox/ModalBox';
 import { AlertsContainer } from '../../../components/Alert/AlertContext';
-import { createProject } from '../../../api/nexus2';
+import { createProject, ProjectSchema } from '../../../api/nexus2';
 import { ProjectForm } from '../../../api/nexus2';
-import { ProjectSchema } from '../../../Nexus/entities/IBank';
 import ErrorSummary from '../../../Form/ErrorSummary';
 
 interface Props {

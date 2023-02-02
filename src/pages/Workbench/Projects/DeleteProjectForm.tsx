@@ -16,7 +16,7 @@ import { Alert } from '../../../models/Alert';
 import { useEditableState } from '../../../components/EditableContext/EditableContext';
 import { AlertsContainer } from '../../../components/Alert/AlertContext';
 import ErrorSummary from '../../../Form/ErrorSummary';
-import { ProjectSchema } from '../../../Nexus/entities/IBank';
+import { ProjectSchema } from '../../../api/nexus2';
 
 interface Props {
   children: ReactElement;

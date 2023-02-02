@@ -1,5 +1,3 @@
-import { z } from 'zod';
-
 import CustomJoi from '../Joi/CustomJoi';
 import { BaseNeedSchema, INeed } from './INeed';
 import { BaseProductSchema, IProduct } from './IProduct';
@@ -9,17 +7,6 @@ import { BaseModelSchema, IBaseModel } from './IBaseModel';
 import { IInheritedBank } from './IInheritedBank';
 import { ModelType } from '../enums';
 import { Parentable } from '../../models/Parentable';
-
-export const ProjectSchema = z.object({
-  title: z
-    .string()
-    .min(
-      5,
-      'Something about projecty title TODO: temporary error mesage needs to be integrated with i18n '
-    ),
-  description: z.string(),
-  ref: z.string(),
-});
 
 export const BaseBankSchema = BaseModelSchema.keys({
   title: CustomJoi.validateLongText(),

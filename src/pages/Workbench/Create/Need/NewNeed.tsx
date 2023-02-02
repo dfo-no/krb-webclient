@@ -5,11 +5,10 @@ import { useParams } from 'react-router-dom';
 
 import Dialog from '../../../../components/DFODialog/DFODialog';
 import NewNeedForm from './NewNeedForm';
-import { INeed } from '../../../../Nexus/entities/INeed';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import { Parentable } from '../../../../models/Parentable';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { useSelectState } from '../SelectContext';
+import { NeedForm } from '../../../../api/nexus2';
 
 interface Props {
   buttonText: string;
@@ -25,11 +24,11 @@ const NewNeed = ({ buttonText }: Props) => {
     return <></>;
   }
 
-  const onClose = (newNeed: Parentable<INeed> | null) => {
+  const onClose = (newNeed: NeedForm | null) => {
     setOpen(false);
     if (newNeed) {
       setNeedIndex(project.needs.length);
-      setNeedId(newNeed.id);
+      setNeedId(newNeed.ref);
     }
   };
 

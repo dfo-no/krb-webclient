@@ -3,13 +3,12 @@ import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router-dom';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import Nexus from '../../../../Nexus/Nexus';
 import theme from '../../../../theme';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
 import { Alert } from '../../../../models/Alert';
-import { INeed } from '../../../../Nexus/entities/INeed';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import {
   ModalBox,
@@ -17,33 +16,40 @@ import {
   ModalButtonsBox,
   ModalFieldsBox,
 } from '../../../../components/ModalBox/ModalBox';
-import { ModelType } from '../../../../Nexus/enums';
-import { Parentable } from '../../../../models/Parentable';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
+import {
+  createNeed,
+  NeedForm,
+  NeedSchema,
+  setRefOnItem,
+} from '../../../../api/nexus2';
 
 interface Props {
-  handleClose: (newNeed: Parentable<INeed> | null) => void;
+  handleClose: (newNeed: NeedForm | null) => void;
 }
 
 function NewNeedForm({ handleClose }: Props): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
 
   const nexus = Nexus.getInstance();
-  const defaultValues: Parentable<INeed> =
-    nexus.needService.generateDefaultNeedValues(projectId);
+  // const defaultValues: NeedForm =
+  //   nexus.needService.generateDefaultNeedValues(projectId);
   const { addAlert } = AlertsContainer.useContainer();
-  const { addNeed } = useProjectMutations();
 
   const { t } = useTranslation();
 
-  const methods = useForm<Parentable<INeed>>({
-    resolver: nexus.resolverService.postResolver(ModelType.need),
-    defaultValues,
+  const methods = useForm<NeedForm>({
+    resolver: zodResolver(NeedSchema),
+    defaultValues: {
+      ref: '',
+      title: '',
+      description: '',
+    },
   });
 
-  const onSubmit = async (post: Parentable<INeed>) => {
-    const newNeed = nexus.needService.createNeedWithId(post);
-    await addNeed(newNeed).then(() => {
+  const onSubmit = async (post: NeedForm) => {
+    const newNeed = setRefOnItem(post);
+    await createNeed({ projectRef: projectId, ...newNeed }).then(() => {
       const alert: Alert = {
         id: uuidv4(),
         style: 'success',
