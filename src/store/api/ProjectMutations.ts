@@ -7,12 +7,9 @@ import Utils from '../../common/Utils';
 import { IBank } from '../../Nexus/entities/IBank';
 import { ICode } from '../../Nexus/entities/ICode';
 import { ICodelist } from '../../Nexus/entities/ICodelist';
-import { INeed } from '../../Nexus/entities/INeed';
 import { IProduct } from '../../Nexus/entities/IProduct';
 import { IPublication } from '../../Nexus/entities/IPublication';
-import { IRequirement } from '../../Nexus/entities/IRequirement';
 import { IRouteProjectParams } from '../../models/IRouteProjectParams';
-import { IVariant } from '../../Nexus/entities/IVariant';
 import { Parentable } from '../../models/Parentable';
 import { useGetProjectQuery, usePutProjectMutation } from './bankApi';
 
@@ -183,129 +180,6 @@ function useProjectMutations() {
     throw Error('Cant save changes to Project');
   }
 
-  // NEEDS
-  async function addNeed(need: Parentable<INeed>): Promise<BankOrError> {
-    if (project) {
-      const editedNeeds = Utils.addElementToList(need, project.needs);
-      return putProject({ ...project, needs: editedNeeds });
-    }
-    throw Error('Cant save changes to Project');
-  }
-
-  async function editNeed(need: Parentable<INeed>): Promise<BankOrError> {
-    if (project) {
-      const editedNeeds = Utils.replaceElementInList(need, project.needs);
-      return putProject({ ...project, needs: editedNeeds });
-    }
-    throw Error('Cant save changes to Project');
-  }
-
-  async function deleteNeed(need: Parentable<INeed>): Promise<BankOrError> {
-    if (project) {
-      const editedNeeds = Utils.removeElementFromList(need, project.needs);
-      return putProject({ ...project, needs: editedNeeds });
-    }
-    throw Error('Cant save changes to Project');
-  }
-
-  // REQUIREMENTS
-  async function addRequirement(
-    requirement: IRequirement,
-    need: Parentable<INeed>
-  ): Promise<BankOrError> {
-    if (project) {
-      const editedRequirements = Utils.addElementToList(
-        requirement,
-        need.requirements
-      );
-      return editNeed({ ...need, requirements: editedRequirements });
-    }
-    throw Error('Cant save changes to Project');
-  }
-
-  async function editRequirement(
-    requirement: IRequirement,
-    need: Parentable<INeed>
-  ): Promise<BankOrError> {
-    if (project) {
-      const editedRequirements = Utils.replaceElementInList(
-        requirement,
-        need.requirements
-      );
-      return editNeed({ ...need, requirements: editedRequirements });
-    }
-    throw Error('Cant save changes to Project');
-  }
-
-  async function deleteRequirement(
-    requirement: IRequirement,
-    need: Parentable<INeed>
-  ): Promise<BankOrError> {
-    if (project) {
-      const editedRequirements = Utils.removeElementFromList(
-        requirement,
-        need.requirements
-      );
-      return editNeed({ ...need, requirements: editedRequirements });
-    }
-    throw Error('Cant save changes to Project');
-  }
-
-  // VARIANTS
-  async function addVariant(
-    variant: IVariant,
-    requirement: IRequirement,
-    need: Parentable<INeed>
-  ): Promise<BankOrError> {
-    if (project) {
-      const editedVariants = Utils.addElementToList(
-        variant,
-        requirement.variants
-      );
-      return editRequirement(
-        { ...requirement, variants: editedVariants },
-        need
-      );
-    }
-    throw Error('Cant save changes to Project');
-  }
-
-  async function editVariant(
-    variant: IVariant,
-    requirement: IRequirement,
-    need: Parentable<INeed>
-  ): Promise<BankOrError> {
-    if (project) {
-      const editedVariants = Utils.replaceElementInList(
-        variant,
-        requirement.variants
-      );
-      return editRequirement(
-        { ...requirement, variants: editedVariants },
-        need
-      );
-    }
-    throw Error('Cant save changes to Project');
-  }
-
-  async function deleteVariant(
-    variant: IVariant,
-    requirement: IRequirement,
-    need: Parentable<INeed>
-  ): Promise<BankOrError> {
-    if (project) {
-      const editedVariants = Utils.removeElementFromList(
-        variant,
-        requirement.variants
-      );
-      return editRequirement(
-        { ...requirement, variants: editedVariants },
-        need
-      );
-    }
-    throw Error('Cant save changes to Project');
-  }
-
   return {
     deleteProject,
     deletePublication,
@@ -320,14 +194,6 @@ function useProjectMutations() {
     editCode,
     deleteCode,
     editCodes,
-    addNeed,
-    deleteNeed,
-    addRequirement,
-    editRequirement,
-    deleteRequirement,
-    addVariant,
-    editVariant,
-    deleteVariant,
   };
 }
 

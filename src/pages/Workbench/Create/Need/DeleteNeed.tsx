@@ -1,12 +1,11 @@
 import { useTranslation } from 'react-i18next';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 import { Box } from '@mui/material/';
 
-import { Alert } from '../../../../models/Alert';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+// import { Alert } from '../../../../models/Alert';
 import { useSelectState } from '../SelectContext';
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
-import { AlertsContainer } from '../../../../components/Alert/AlertContext';
+// import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import { Need } from '../../../../api/openapi-fetch';
 
 interface Props {
@@ -23,10 +22,9 @@ export function DeleteNeed({
   canBeDeleted,
   handleClose,
 }: Props): React.ReactElement {
-  const { addAlert } = AlertsContainer.useContainer();
+  // const { addAlert } = AlertsContainer.useContainer();
 
   const { t } = useTranslation();
-  const { deleteNeed } = useProjectMutations();
 
   const { deleteMode } = useSelectState();
 

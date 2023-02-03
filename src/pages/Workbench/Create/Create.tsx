@@ -108,10 +108,10 @@ export default function Create(): React.ReactElement {
           <NewRequirement projectRef={projectRef} need={currentNeed} />
           <ScrollableContainer className={css.List}>
             {currentRequirements &&
-              currentRequirements.map((req, index) => {
+              currentRequirements.map((req) => {
                 return (
                   <VariantProvider key={req.ref}>
-                    <Requirement requirementIndex={index} />
+                    <Requirement projectRef={projectRef} requirement={req} />
                   </VariantProvider>
                 );
               })}

@@ -1,28 +1,38 @@
 import Box from '@mui/material/Box';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import Variant from './Variant';
-import DeleteVariant from './DeleteVariant';
-import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import { useGetProjectQuery } from '../../../../store/api/bankApi';
+import { DeleteVariant } from './DeleteVariant';
 import { useSelectState } from '../SelectContext';
 import { useVariantState } from '../../VariantContext';
-import NewVariantForm from './NewVariantForm';
+import { NewVariantForm } from './NewVariantForm';
+import {
+  findRequirementVariants,
+  RequirementVariantForm,
+} from '../../../../api/nexus2';
 
 interface Props {
-  requirement: IRequirement;
-  requirementIndex: number;
+  projectRef: string;
+  requirementRef: string;
 }
 
-const VariantsList = ({ requirement, requirementIndex }: Props) => {
-  const { projectId } = useParams<IRouteProjectParams>();
-  const { data: project } = useGetProjectQuery(projectId);
+export const VariantsList = ({ projectRef, requirementRef }: Props) => {
   const { needIndex, setDeleteMode, createVariant, setCreateVariant } =
     useSelectState();
   const { setOpenVariants } = useVariantState();
 
-  if (!project || needIndex === null) {
+  const [variants, setVariants] = useState<RequirementVariantForm[]>([]);
+
+  useEffect(() => {
+    findRequirementVariants({
+      projectRef,
+      requirementRef,
+    }).then((response) => {
+      setVariants(response.data);
+    });
+  }, [projectRef, requirementRef]);
+
+  if (needIndex === null) {
     return <></>;
   }
 
@@ -41,30 +51,30 @@ const VariantsList = ({ requirement, requirementIndex }: Props) => {
 
   return (
     <Box>
-      {createVariant === requirement.id && (
+      {createVariant === requirementRef && (
         <NewVariantForm
-          need={project.needs[needIndex]}
-          requirement={project.needs[needIndex].requirements[requirementIndex]}
+          projectRef={projectRef}
+          requirementRef={requirementRef}
           handleClose={() => variantCreated()}
         />
       )}
-      {requirement.variants.map((variant, index) => {
+      {variants.map((variant, index) => {
         return (
           <DeleteVariant
+            projectRef={projectRef}
             key={index}
-            variant={variant}
-            requirement={
-              project.needs[needIndex].requirements[requirementIndex]
-            }
-            need={project.needs[needIndex]}
-            handleClose={() => variantDeleted(variant.id)}
+            requirementRef={requirementRef}
+            requirementVariantRef={variant.ref}
+            handleClose={() => variantDeleted(variant.ref)}
           >
-            <Variant variant={variant} requirementIndex={requirementIndex} />
+            <Variant
+              projectRef={projectRef}
+              requirementRef={requirementRef}
+              variant={variant}
+            />
           </DeleteVariant>
         );
       })}
     </Box>
   );
 };
-
-export default VariantsList;

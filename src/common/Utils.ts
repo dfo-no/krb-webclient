@@ -8,7 +8,7 @@ import { IResponse } from '../Nexus/entities/IResponse';
 import { IRequirement } from '../Nexus/entities/IRequirement';
 import { ISpecification } from '../Nexus/entities/ISpecification';
 import { IVariant } from '../Nexus/entities/IVariant';
-import { Levelable } from '../models/Levelable';
+import { Levelable, LevelableKRB858 } from '../models/Levelable';
 import { Nestable, NestableKRB858 } from '../models/Nestable';
 import { Parentable, ParentableKRB858 } from '../models/Parentable';
 import { QuestionType } from '../Nexus/entities/QuestionType';
@@ -220,6 +220,23 @@ class Utils {
     }, []);
   }
 
+  private static flattenNestableKRB858<T extends RefAndParentable>(
+    items: NestableKRB858<T>[]
+  ): NestableKRB858<T>[] {
+    return items.reduce((result: NestableKRB858<T>[], current) => {
+      if (current.children) {
+        const children = Utils.flattenNestableKRB858(current.children);
+        // eslint-disable-next-line no-param-reassign
+        current.children = [];
+        result.push(current);
+        result.push(...children);
+      } else {
+        result.push(current);
+      }
+      return result;
+    }, []);
+  }
+
   static nestableList2Parentable<T extends IBaseModel>(
     items: Nestable<T>[]
   ): Parentable<T>[] {
@@ -257,7 +274,14 @@ class Utils {
     items: Nestable<T>[]
   ): Levelable<T>[] {
     const result = Utils.flattenNestable(items);
-    return result as Levelable<T>[];
+    return result as Levelable<T>[]; // TODO: Can we remove as cast?
+  }
+
+  static nestable2LevelableKRB858<T extends RefAndParentable>(
+    items: NestableKRB858<T>[]
+  ): LevelableKRB858<T>[] {
+    const result = Utils.flattenNestableKRB858(items);
+    return result;
   }
 
   static parentable2Levelable<T extends IBaseModel>(
@@ -265,6 +289,13 @@ class Utils {
   ): Levelable<T>[] {
     const nestable = Utils.parentable2Nestable(items);
     return Utils.nestable2Levelable(nestable);
+  }
+
+  static parentable2LevelableKRB858<T extends RefAndParentable>(
+    items: T[]
+  ): LevelableKRB858<T>[] {
+    const nestable = Utils.parentable2NestableKRB858(items);
+    return Utils.nestable2LevelableKRB858(nestable);
   }
 
   static parentable2Nestable<T extends IBaseModel>(

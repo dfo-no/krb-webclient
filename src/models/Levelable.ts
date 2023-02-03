@@ -4,3 +4,8 @@ export type Levelable<T extends IBaseModel> = T & {
   parent: string;
   level: number;
 };
+
+export type LevelableKRB858<T> = T & {
+  parent: string;
+  level: number;
+};

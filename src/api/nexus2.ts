@@ -76,6 +76,31 @@ export const RequirementSchema = z.object({
   needRef: z.string(), // TODO: Validate UUID
 });
 
+export const RequirementVariantFormSchema = z.object({
+  ref: z.string(), // TODO: Validate UUID
+  description: z
+    .string()
+    .min(
+      1,
+      'Need title too short TODO: temporary error mesage needs to be integrated with i18n '
+    ),
+  requirementText: z
+    .string()
+    .min(
+      1,
+      'Need title too short TODO: temporary error mesage needs to be integrated with i18n '
+    ),
+  instruction: z
+    .string()
+    .min(
+      1,
+      'Need title too short TODO: temporary error mesage needs to be integrated with i18n '
+    ),
+  useProduct: z.boolean(), // TODO: optional
+  useSpecification: z.boolean(), // TODO: optional
+  useQualification: z.boolean(), // TODO: optional
+});
+
 // interface Base<T> {
 //   [key: string]: keyof T;
 // }
@@ -275,6 +300,44 @@ export const useFindRequirementsForProject = (projectRef: string) => {
 
   return { isLoading, requirements };
 };
+
+export const deleteRequirement = fetcher
+  .path('/api/v1/projects/{projectRef}/requirements/{requirementRef}')
+  .method('delete')
+  .create();
+
+export const createRequirementVariant = fetcher
+  .path(
+    '/api/v1/projects/{projectRef}/requirements/{requirementRef}/requirementvariants'
+  )
+  .method('post')
+  .create();
+
+export const findRequirementVariants = fetcher
+  .path(
+    '/api/v1/projects/{projectRef}/requirements/{requirementRef}/requirementvariants'
+  )
+  .method('get')
+  .create();
+
+export const updateRequirementVariant = fetcher
+  .path(
+    '/api/v1/projects/{projectRef}/requirements/{requirementRef}/requirementvariants/{requirementVariantRef}'
+  )
+  .method('put')
+  .create();
+
+export const deleteRequirementVariant = fetcher
+  .path(
+    '/api/v1/projects/{projectRef}/requirements/{requirementRef}/requirementvariants/{requirementVariantRef}'
+  )
+  .method('delete')
+  .create();
+
+export const findProducts = fetcher
+  .path('/api/v1/projects/{projectRef}/products')
+  .method('get')
+  .create();
 
 export const findPublications = fetcher
   .path('/api/v1/projects/{projectref}/publications')

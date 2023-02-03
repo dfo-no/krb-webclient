@@ -5,18 +5,15 @@ import { v4 as uuidv4 } from 'uuid';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import Nexus from '../../../../Nexus/Nexus';
-import RequirementService from '../../../../Nexus/services/RequirementService';
 import theme from '../../../../theme';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { Alert } from '../../../../models/Alert';
-import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import {
   ModalBox,
   ModalButton,
   ModalButtonsBox,
   ModalFieldsBox,
 } from '../../../../components/ModalBox/ModalBox';
-import { ModelType } from '../../../../Nexus/enums';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import { Need } from '../../../../api/openapi-fetch';
 import {
@@ -51,7 +48,6 @@ export function NewRequirementForm({
   });
 
   const onSubmit = async (newRequirement: RequirementForm) => {
-    // TODO: Uncomment
     await createRequirement({ projectRef, ...newRequirement }).then(() => {
       const alert: Alert = {
         id: uuidv4(),

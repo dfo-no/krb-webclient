@@ -10,71 +10,71 @@ import {
   AccordionSummary,
   AccordionDetails,
 } from '@mui/material';
-import { useForm, FormProvider, useWatch } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { useForm, FormProvider /* useWatch */ } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import GeneralErrorMessage from '../../../../Form/GeneralErrorMessage';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import Nexus from '../../../../Nexus/Nexus';
-import theme from '../../../../theme';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
-import VariantFormContent from './VariantFormContent';
-import { FormIconButton } from '../../../../components/Form/FormIconButton';
-import { DFOChip } from '../../../../components/DFOChip/DFOChip';
+// import theme from '../../../../theme';
+import { VariantFormContent } from './VariantFormContent';
+// import { FormIconButton } from '../../../../components/Form/FormIconButton';
+// import { DFOChip } from '../../../../components/DFOChip/DFOChip';
 import { Alert } from '../../../../models/Alert';
-import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import { IVariant } from '../../../../Nexus/entities/IVariant';
-import { ModelType, VariantType } from '../../../../Nexus/enums';
-import { useGetProjectQuery } from '../../../../store/api/bankApi';
+// import { VariantType } from '../../../../Nexus/enums';
 import { useSelectState } from '../SelectContext';
 import { useVariantState } from '../../VariantContext';
 import ErrorSummary from '../../../../Form/ErrorSummary';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
+import {
+  RequirementVariantForm,
+  RequirementVariantFormSchema,
+  updateRequirementVariant,
+} from '../../../../api/nexus2';
 
 interface Props {
-  variant: IVariant;
-  requirementIndex: number;
+  projectRef: string;
+  requirementRef: string;
+  variant: RequirementVariantForm;
 }
 
-const Variant = ({ variant, requirementIndex }: Props) => {
+const Variant = ({ projectRef, requirementRef, variant }: Props) => {
   const { t } = useTranslation();
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
-  const { projectId } = useParams<IRouteProjectParams>();
-  const { data: project } = useGetProjectQuery(projectId);
 
-  const { editVariant } = useProjectMutations();
   const { openVariants, setOpenVariants } = useVariantState();
   const { needIndex, setDeleteMode } = useSelectState();
 
-  const methods = useForm<IVariant>({
-    resolver: nexus.resolverService.resolver(ModelType.variant),
+  const methods = useForm<RequirementVariantForm>({
+    resolver: zodResolver(RequirementVariantFormSchema),
     defaultValues: variant,
   });
-  const useTypeWatch = useWatch({ name: 'type', control: methods.control });
+  // const useTypeWatch = useWatch({ name: 'type', control: methods.control }); TODO: Uncomment and fix
 
-  if (!project || needIndex === null) {
+  if (needIndex === null) {
     return <LoaderSpinner />;
   }
 
-  const onSubmit = async (put: IVariant) => {
-    await editVariant(
-      put,
-      project.needs[needIndex].requirements[requirementIndex],
-      project.needs[needIndex]
-    ).then(() => {
+  const onSubmit = async (updatedVariant: RequirementVariantForm) => {
+    await updateRequirementVariant({
+      projectRef,
+      requirementRef,
+      requirementVariantRef: updatedVariant.ref,
+      ...updatedVariant,
+    }).then(() => {
       const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'successfully updated variant',
       };
       addAlert(alert);
-      methods.reset({ ...put });
+      methods.reset({ ...updatedVariant });
       setOpenVariants((ov) => {
         const tmp = [...ov];
-        tmp.splice(tmp.indexOf(variant.id), 1);
+        tmp.splice(tmp.indexOf(variant.ref), 1);
         return tmp;
       });
     });
@@ -84,20 +84,20 @@ const Variant = ({ variant, requirementIndex }: Props) => {
     () =>
     (event: SyntheticEvent<Element, Event>, isExpanded: boolean): void => {
       if (isExpanded) {
-        setOpenVariants((ov) => [...ov, variant.id]);
+        setOpenVariants((ov) => [...ov, variant.ref]);
       } else {
         setOpenVariants((ov) => {
           const tmp = [...ov];
-          tmp.splice(tmp.indexOf(variant.id), 1);
+          tmp.splice(tmp.indexOf(variant.ref), 1);
           return tmp;
         });
       }
     };
 
-  const confirmDelete = (id: string, event: MouseEvent): void => {
-    event.stopPropagation();
-    setDeleteMode(id);
-  };
+  // const confirmDelete = (id: string, event: MouseEvent): void => { TODO: Uncomment and fix
+  //   event.stopPropagation();
+  //   setDeleteMode(id);
+  // };
 
   return (
     <FormProvider {...methods}>
@@ -107,29 +107,32 @@ const Variant = ({ variant, requirementIndex }: Props) => {
         noValidate
       >
         <Accordion
-          key={variant.id}
+          key={variant.ref}
           onChange={accordionChange()}
-          expanded={openVariants.some((id) => id === variant.id)}
+          expanded={openVariants.some((id) => id === variant.ref)}
           elevation={0}
         >
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             <Typography>{variant.description}</Typography>
-            <Box sx={{ display: 'flex', marginLeft: 'auto' }}>
+            {/* <Box sx={{ display: 'flex', marginLeft: 'auto' }}> TODO: Uncomment and fix
               {useTypeWatch === VariantType.info && (
                 <DFOChip label={t('Info')} />
               )}
               <FormIconButton
                 hoverColor={theme.palette.errorRed.main}
                 onClick={(event) =>
-                  confirmDelete(variant.id, event as unknown as MouseEvent)
+                  confirmDelete(variant.ref, event as unknown as MouseEvent)
                 }
               >
                 <DeleteIcon />
               </FormIconButton>
-            </Box>
+            </Box> */}
           </AccordionSummary>
           <AccordionDetails sx={{ display: 'flex', flexDirection: 'column' }}>
-            <VariantFormContent control={methods.control} />
+            <VariantFormContent
+              projectRef={projectRef}
+              control={methods.control}
+            />
             <Box
               sx={{
                 display: 'flex',
