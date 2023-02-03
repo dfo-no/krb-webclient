@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import React from 'react';
 import { Box, Divider, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 

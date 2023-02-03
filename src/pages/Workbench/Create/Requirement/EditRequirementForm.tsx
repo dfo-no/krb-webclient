@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';

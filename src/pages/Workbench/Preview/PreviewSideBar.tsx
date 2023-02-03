@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import React from 'react';
 import { Box, Typography, List, ListItem } from '@mui/material';
 import { t } from 'i18next';
 

@@ -1,5 +1,4 @@
 import Button from '@mui/material/Button';
-import React from 'react';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
