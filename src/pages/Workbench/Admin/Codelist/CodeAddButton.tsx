@@ -4,11 +4,11 @@ import { Box, Button, Typography } from '@mui/material/';
 
 import { useButtonStyles } from './CodelistStyles';
 
-interface IProps {
+interface Props {
   onClick: () => void;
 }
 
-export default function CodeAddButton({ onClick }: IProps): React.ReactElement {
+export default function CodeAddButton({ onClick }: Props): React.ReactElement {
   const classes = useButtonStyles();
   const { t } = useTranslation();
 

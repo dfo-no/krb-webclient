@@ -11,12 +11,12 @@ import { useSelectState } from '../SelectContext';
 import { useVariantState } from '../../VariantContext';
 import NewVariantForm from './NewVariantForm';
 
-interface IProps {
+interface Props {
   requirement: IRequirement;
   requirementIndex: number;
 }
 
-const VariantsList = ({ requirement, requirementIndex }: IProps) => {
+const VariantsList = ({ requirement, requirementIndex }: Props) => {
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
   const { needIndex, setDeleteMode, createVariant, setCreateVariant } =

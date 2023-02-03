@@ -11,11 +11,11 @@ import { Parentable } from '../../../../models/Parentable';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { useSelectState } from '../SelectContext';
 
-interface IProps {
+interface Props {
   buttonText: string;
 }
 
-const NewNeed = ({ buttonText }: IProps) => {
+const NewNeed = ({ buttonText }: Props) => {
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
   const [isOpen, setOpen] = useState(false);

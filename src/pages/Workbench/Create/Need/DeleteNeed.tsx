@@ -11,7 +11,7 @@ import { useSelectState } from '../SelectContext';
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   children: React.ReactElement;
   need: Parentable<INeed>;
   handleClose: () => void;
@@ -22,7 +22,7 @@ function DeleteNeed({
   children,
   need,
   handleClose,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
 
   const { t } = useTranslation();

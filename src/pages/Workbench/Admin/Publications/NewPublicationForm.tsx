@@ -19,7 +19,7 @@ import {
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   project: IBank;
   handleClose: () => void;
 }
@@ -27,7 +27,7 @@ interface IProps {
 export default function NewPublicationForm({
   project,
   handleClose,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const [addBank] = useAddBankMutation();

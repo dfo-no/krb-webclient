@@ -15,7 +15,7 @@ import { useSelectState } from '../SelectContext';
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   children: React.ReactElement;
   requirement: IRequirement;
   need: Parentable<INeed>;
@@ -28,7 +28,7 @@ function DeleteRequirement({
   requirement,
   need,
   handleClose,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
 

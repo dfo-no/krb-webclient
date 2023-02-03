@@ -17,11 +17,11 @@ import { IVariant } from '../../../../Nexus/entities/IVariant';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { VariantType } from '../../../../Nexus/enums';
 
-interface IProps {
+interface Props {
   control: Control<IVariant>;
 }
 
-const VariantFormContent = ({ control }: IProps) => {
+const VariantFormContent = ({ control }: Props) => {
   const { t } = useTranslation();
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);

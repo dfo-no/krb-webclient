@@ -9,13 +9,13 @@ import { useTranslation } from 'react-i18next';
 import css from './Variant.module.scss';
 import { QuestionVariant } from '../../../../Nexus/enums';
 
-interface IProps {
+interface Props {
   isOpen: boolean;
   selectedValue: QuestionVariant | null;
   onClose: (value: QuestionVariant | null) => void;
 }
 
-const SelectQuestionDialog = ({ onClose, selectedValue, isOpen }: IProps) => {
+const SelectQuestionDialog = ({ onClose, selectedValue, isOpen }: Props) => {
   const { t } = useTranslation();
 
   const handleClose = (): void => {
