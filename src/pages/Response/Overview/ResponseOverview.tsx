@@ -16,6 +16,8 @@ import { currencyService } from '../../../Nexus/services/CurrencyService';
 import AnswerProduct from '../Answer/AnswerProduct';
 import { AccordionProvider } from '../../../components/DFOAccordion/AccordionContext';
 import ProductsAccordion from '../Answer/ProductsAccordion/ProductsAccordion';
+import { QuestionVariant } from '../../../Nexus/enums';
+import ValidationUtils from '../../../common/ValidationUtils';
 
 function ResponseOverview(): React.ReactElement {
   const { t } = useTranslation();
@@ -61,6 +63,38 @@ function ResponseOverview(): React.ReactElement {
           totalAbsoluteRequirements++;
       });
       return totalAbsoluteRequirements;
+    } else return 0;
+  };
+
+  const isAbsoluteRequirementAnswered = (
+    requirementAnswer: IRequirementAnswer | undefined
+  ) => {
+    if (requirementAnswer?.question.type) {
+      switch (requirementAnswer?.question.type) {
+        case QuestionVariant.Q_CHECKBOX:
+          return ValidationUtils.checkboxQuestion(requirementAnswer);
+
+        case QuestionVariant.Q_CODELIST:
+          return ValidationUtils.codelistQuestion(requirementAnswer);
+
+        case QuestionVariant.Q_CONFIRMATION:
+          return ValidationUtils.confirmationQuestion(requirementAnswer);
+
+        case QuestionVariant.Q_SLIDER:
+          return ValidationUtils.sliderQuestion(requirementAnswer);
+
+        case QuestionVariant.Q_TEXT:
+          return ValidationUtils.textQuestion(requirementAnswer);
+
+        case QuestionVariant.Q_PERIOD_DATE:
+          return ValidationUtils.periodDateQuestion(requirementAnswer);
+
+        case QuestionVariant.Q_TIME:
+          return ValidationUtils.timeQuestion(requirementAnswer);
+
+        default:
+          return false;
+      }
     }
   };
 
@@ -70,7 +104,11 @@ function ResponseOverview(): React.ReactElement {
     if (requirementAnswer?.length > 0) {
       let absoluteReqAnswered = 0;
       requirementAnswer?.forEach((element) => {
-        if (!isAwardedRequirement(element)) absoluteReqAnswered++;
+        if (
+          !isAwardedRequirement(element) &&
+          isAbsoluteRequirementAnswered(element)
+        )
+          absoluteReqAnswered++;
       });
       return absoluteReqAnswered;
     } else {
