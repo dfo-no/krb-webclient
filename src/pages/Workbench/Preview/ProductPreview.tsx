@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Divider, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';

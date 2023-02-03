@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
 import { useParams } from 'react-router-dom';
-import React from 'react';
 
 import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import Variant from './Variant';

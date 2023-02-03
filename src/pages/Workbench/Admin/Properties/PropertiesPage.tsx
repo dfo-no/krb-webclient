@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Button } from '@mui/material/';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';

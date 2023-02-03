@@ -1,5 +1,5 @@
+import { useState } from 'react';
 import classnames from 'classnames';
-import React from 'react';
 import { Box, Typography, List, ListItem } from '@mui/material';
 import { t } from 'i18next';
 
@@ -17,7 +17,7 @@ export default function PreviewSideBar({
   parentableArray,
 }: Props): React.ReactElement {
   const { setSelected } = usePreviewState();
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleListItemClick = (
     value: Parentable<IProduct> | null,

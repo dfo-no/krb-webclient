@@ -3,7 +3,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 import css from './Variant.module.scss';

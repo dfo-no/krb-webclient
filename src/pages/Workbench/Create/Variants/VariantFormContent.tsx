@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { Control, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
