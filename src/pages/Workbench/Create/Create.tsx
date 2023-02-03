@@ -7,7 +7,7 @@ import CreateSideBar from './CreateSideBar';
 import DeleteNeed from './Need/DeleteNeed';
 import LoaderSpinner from '../../../common/LoaderSpinner';
 import { NeedHeader } from './Need/NeedHeader';
-import NewRequirement from './Requirement/NewRequirement';
+import { NewRequirement } from './Requirement/NewRequirement';
 import ProjectStart from './ProjectStart';
 import Requirement from './Requirement/Requirement';
 import { IRouteProjectParams } from '../../../models/IRouteProjectParams';
@@ -105,7 +105,7 @@ export default function Create(): React.ReactElement {
       <Box className={css.Need}>
         <NeedHeader project={project} need={currentNeed} />
         <Box className={css.Requirements}>
-          <NewRequirement need={currentNeed} />
+          <NewRequirement projectRef={projectRef} need={currentNeed} />
           <ScrollableContainer className={css.List}>
             {currentRequirements &&
               currentRequirements.map((req, index) => {
