@@ -162,6 +162,11 @@ export const findProjects = fetcher
   .method('get')
   .create();
 
+export const findOneProject = fetcher
+  .path('/api/v1/projects/{projectRef}')
+  .method('get')
+  .create();
+
 export const useProject = (ref: string) => {
   const { data, error, isLoading } = useSWR<ProjectForm, never>(
     `/api/v1/projects/${ref}`,
@@ -180,13 +185,13 @@ export const useFindOneProject = (projectRef: string) => {
   const [project, setProject] = useState<ProjectForm>();
 
   useEffect(() => {
-    const findOneProject = fetcher
+    const findOneProjectFetcher = fetcher
       .path('/api/v1/projects/{projectRef}')
       .method('get')
       .create();
 
     setLoading(true);
-    findOneProject({ projectRef }).then(async (projectsResponse) => {
+    findOneProjectFetcher({ projectRef }).then(async (projectsResponse) => {
       setLoading(false);
       if (projectsResponse) {
         setProject(projectsResponse.data);
@@ -196,6 +201,11 @@ export const useFindOneProject = (projectRef: string) => {
 
   return { isLoading, project };
 };
+
+export const updateProject = fetcher
+  .path('/api/v1/projects/{projectRef}')
+  .method('put')
+  .create();
 
 export const deleteProject = fetcher
   .path('/api/v1/projects/{projectRef}')

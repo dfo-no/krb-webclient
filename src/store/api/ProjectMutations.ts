@@ -23,15 +23,6 @@ function useProjectMutations() {
   const [putProject] = usePutProjectMutation();
 
   // PROJECT
-  async function deleteProject(projectToDelete: IBank): Promise<BankOrError> {
-    if (projectToDelete) {
-      return putProject({
-        ...projectToDelete,
-        deletedDate: DateService.getNowString(),
-      });
-    }
-    throw Error('Cant save changes to Project');
-  }
 
   // PUBLICATIONS
   async function deletePublication(
@@ -181,7 +172,6 @@ function useProjectMutations() {
   }
 
   return {
-    deleteProject,
     deletePublication,
     addProduct,
     editProduct,
