@@ -15,7 +15,7 @@ import { IVariant } from '../../../../Nexus/entities/IVariant';
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   children: React.ReactElement;
   variant: IVariant;
   requirement: IRequirement;
@@ -30,7 +30,7 @@ function DeleteVariant({
   requirement,
   need,
   handleClose,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
 

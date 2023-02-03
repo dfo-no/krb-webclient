@@ -9,13 +9,13 @@ import { IProduct } from '../../../Nexus/entities/IProduct';
 import { Parentable } from '../../../models/Parentable';
 import { usePreviewState } from './PreviewContext';
 
-interface IProps {
+interface Props {
   parentableArray: Parentable<IProduct>[];
 }
 
 export default function PreviewSideBar({
   parentableArray,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { setSelected } = usePreviewState();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
 

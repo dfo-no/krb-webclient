@@ -9,12 +9,12 @@ import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import { Parentable } from '../../../../models/Parentable';
 import { useSelectState } from '../SelectContext';
 
-interface IProps {
+interface Props {
   requirement: IRequirement;
   need: Parentable<INeed>;
 }
 
-const EditRequirement = ({ requirement, need }: IProps) => {
+const EditRequirement = ({ requirement, need }: Props) => {
   const [isEditOpen, setEditOpen] = useState(false);
   const { setDeleteMode } = useSelectState();
 

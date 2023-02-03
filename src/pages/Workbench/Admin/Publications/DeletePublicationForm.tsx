@@ -12,7 +12,7 @@ import { useEditableState } from '../../../../components/EditableContext/Editabl
 import { useGetBankQuery } from '../../../../store/api/bankApi';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   children: ReactElement;
   publication: IPublication;
   handleClose: () => void;
@@ -22,7 +22,7 @@ const DeletePublicationForm = ({
   children,
   publication,
   handleClose,
-}: IProps): ReactElement => {
+}: Props): ReactElement => {
   const { deleteMode } = useEditableState();
   const { deletePublication } = useProjectMutations();
   const { data: publicationBank } = useGetBankQuery(publication.id, {

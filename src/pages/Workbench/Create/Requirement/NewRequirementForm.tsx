@@ -24,12 +24,12 @@ import { ModelType } from '../../../../Nexus/enums';
 import { Parentable } from '../../../../models/Parentable';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   need: Parentable<INeed>;
   handleClose: (id: string) => void;
 }
 
-function NewRequirementForm({ need, handleClose }: IProps): React.ReactElement {
+function NewRequirementForm({ need, handleClose }: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();

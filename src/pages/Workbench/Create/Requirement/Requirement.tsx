@@ -30,11 +30,11 @@ const useStyles = makeStyles({
   },
 });
 
-interface IProps {
+interface Props {
   requirementIndex: number;
 }
 
-const Requirement = ({ requirementIndex }: IProps) => {
+const Requirement = ({ requirementIndex }: Props) => {
   const classes = useStyles();
   const { openVariants } = useVariantState();
   const { projectId } = useParams<IRouteProjectParams>();

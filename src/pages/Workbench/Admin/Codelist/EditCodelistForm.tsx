@@ -14,7 +14,7 @@ import { ModelType } from '../../../../Nexus/enums';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   codelist: ICodelist;
   handleClose: (newCodelist: ICodelist | null) => void;
 }
@@ -22,7 +22,7 @@ interface IProps {
 export default function EditCodelistForm({
   codelist,
   handleClose,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();

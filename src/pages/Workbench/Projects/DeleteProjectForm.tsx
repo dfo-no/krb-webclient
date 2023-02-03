@@ -12,7 +12,7 @@ import { ModelType } from '../../../Nexus/enums';
 import { useEditableState } from '../../../components/EditableContext/EditableContext';
 import { AlertsContainer } from '../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   children: ReactElement;
   bank: IBank;
   handleClose: () => void;
@@ -22,7 +22,7 @@ export default function DeleteProjectForm({
   children,
   bank,
   handleClose,
-}: IProps): ReactElement {
+}: Props): ReactElement {
   const { t } = useTranslation();
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();

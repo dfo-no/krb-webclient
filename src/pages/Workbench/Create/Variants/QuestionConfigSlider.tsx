@@ -13,11 +13,11 @@ const ConfigBox = styled(Box)(() => ({
   margin: 'var(--small-gap)',
 }));
 
-interface IProps {
+interface Props {
   index: number;
 }
 
-const QuestionConfigSlider = ({ index }: IProps) => {
+const QuestionConfigSlider = ({ index }: Props) => {
   const { t } = useTranslation();
   const { control, setValue } = useFormContext<IVariant>();
 

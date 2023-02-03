@@ -15,7 +15,7 @@ import { Parentable } from '../../../../models/Parentable';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   tag: Parentable<ITag>;
   handleClose: () => void;
 }
@@ -23,7 +23,7 @@ interface IProps {
 export default function EditTagForm({
   tag,
   handleClose,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();

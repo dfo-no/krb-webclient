@@ -17,7 +17,7 @@ import { useEditableState } from '../../../../components/EditableContext/Editabl
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   children: React.ReactElement;
   product: Parentable<IProduct>;
   handleClose: () => void;
@@ -27,7 +27,7 @@ export default function DeleteProductForm({
   children,
   product,
   handleClose,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { deleteProduct } = useProjectMutations();
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();

@@ -10,13 +10,13 @@ import { IRouteProjectParams } from '../../../models/IRouteProjectParams';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import { useVariantState } from '../VariantContext';
 
-interface IProps {
+interface Props {
   requirement: IRequirement;
 }
 
 export default function RequirementPreview({
   requirement,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
   const { openVariants } = useVariantState();

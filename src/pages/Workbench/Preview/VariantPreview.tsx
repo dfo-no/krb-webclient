@@ -19,13 +19,11 @@ import { IVariant } from '../../../Nexus/entities/IVariant';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import { useVariantState } from '../VariantContext';
 
-interface IProps {
+interface Props {
   variant: IVariant;
 }
 
-export default function VariantPreview({
-  variant,
-}: IProps): React.ReactElement {
+export default function VariantPreview({ variant }: Props): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
   const { setOpenVariants } = useVariantState();

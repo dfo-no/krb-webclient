@@ -12,11 +12,11 @@ import { IBank } from '../../../Nexus/entities/IBank';
 import { useEditableState } from '../../../components/EditableContext/EditableContext';
 import { WORKBENCH } from '../../../common/PathConstants';
 
-interface IProps {
+interface Props {
   project: IBank;
 }
 
-const ProjectItem = ({ project }: IProps) => {
+const ProjectItem = ({ project }: Props) => {
   const { setDeleteMode } = useEditableState();
 
   const handleCloseDelete = () => {
