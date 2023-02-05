@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import 'react-nestable/dist/styles/index.css';
 
 import css from './Create.module.scss';
-import NestableHierarcy from '../../../components/NestableHierarchy/NestableHierarcyNew';
+import NestableHierarcy from '../../../components/NestableHierarchy/NestableHierarcyKRB858';
 import { NewNeed } from './Need/NewNeed';
 import { ScrollableContainer } from '../../../components/ScrollableContainer/ScrollableContainer';
 import { useSelectState } from './SelectContext';
