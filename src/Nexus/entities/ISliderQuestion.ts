@@ -63,7 +63,7 @@ export const SliderQuestionAnswerSchema = SliderQuestionWorkbenchSchema.keys({
     discountsValue: CustomJoi.validateSliderValues(DiscountValueSchema),
   }),
   answer: CustomJoi.object().keys({
-    value: CustomJoi.validateSliderAnswer(),
+    value: CustomJoi.validateNumber(),
     discount: CustomJoi.validateDiscount(),
   }),
 });
