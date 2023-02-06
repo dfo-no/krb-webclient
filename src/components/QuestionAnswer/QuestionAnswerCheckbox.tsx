@@ -10,12 +10,14 @@ import YesNoSelection from '../YesNoSelection/YesNoSelection';
 import { ICheckboxQuestion } from '../../Nexus/entities/ICheckboxQuestion';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { QuestionVariant } from '../../Nexus/enums';
+import ValidationUtils from '../../common/ValidationUtils';
 
 interface IProps {
   item: ICheckboxQuestion;
   existingAnswer?: IRequirementAnswer;
   onSubmit: (post: ICheckboxQuestion) => void;
   isInfo?: boolean;
+  isAwardCriteria?: boolean;
 }
 
 const QuestionAnswerCheckbox = ({
@@ -23,6 +25,7 @@ const QuestionAnswerCheckbox = ({
   existingAnswer,
   onSubmit,
   isInfo,
+  isAwardCriteria,
 }: IProps): React.ReactElement => {
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
@@ -63,6 +66,13 @@ const QuestionAnswerCheckbox = ({
             color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
             isDisabled={isInfo}
           />
+          {existingAnswer &&
+            !isAwardCriteria &&
+            !ValidationUtils.checkboxQuestion(existingAnswer) && (
+              <div className={css.error}>
+                {ValidationUtils.checkboxQuestionValidationMsg(existingAnswer)}
+              </div>
+            )}
           {isPrefilledResponse && (
             <div className={css.Buttons}>
               <Button type={Type.Submit}>{t('Save')}</Button>

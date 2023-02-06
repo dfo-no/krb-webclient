@@ -10,12 +10,14 @@ import TextAreaCtrl from '../../FormProvider/TextAreaCtrl';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { ITextQuestion } from '../../Nexus/entities/ITextQuestion';
 import { QuestionVariant } from '../../Nexus/enums';
+import ValidationUtils from '../../common/ValidationUtils';
 
 interface IProps {
   item: ITextQuestion;
   existingAnswer?: IRequirementAnswer;
   onSubmit: (post: ITextQuestion) => void;
   isInfo?: boolean;
+  isAwardCriteria?: boolean;
 }
 
 const QuestionAnswerText = ({
@@ -23,6 +25,7 @@ const QuestionAnswerText = ({
   existingAnswer,
   onSubmit,
   isInfo,
+  isAwardCriteria,
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
@@ -66,6 +69,13 @@ const QuestionAnswerText = ({
                 rows={3}
                 color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
               />
+              {existingAnswer &&
+                !isAwardCriteria &&
+                !ValidationUtils.textQuestion(existingAnswer) && (
+                  <div className={css.error}>
+                    {ValidationUtils.textQuestionValidationMsg()}
+                  </div>
+                )}
               {isPrefilledResponse && (
                 <div className={css.Buttons}>
                   <Button type={Type.Submit}>{t('Save')}</Button>
