@@ -111,14 +111,14 @@ Then('Ser jeg {string} er ikke aktiv', (button: string) => {
 
 Then('Ser jeg produkt {string} er åpent', (productName: string) => {
   cy.contains(productName)
-    .parentsUntil('[class*="Header"]')
+    .parentsUntil('li')
     .parent()
     .should('have.attr', 'data-expanded', 'true');
 });
 
 Then('Ser jeg produkt {string} er lukket', (productName: string) => {
   cy.contains(productName)
-    .parentsUntil('[class*="Header"]')
+    .parentsUntil('li')
     .parent()
     .should('have.attr', 'data-expanded', 'false');
 });
