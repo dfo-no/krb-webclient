@@ -134,6 +134,7 @@ export default function ProductRequirementAnswer({
         existingAnswer={existingAnswer}
         productId={productId}
         isInfo={isInfo}
+        isAwardCriteria={isAwardCriteria(requirementAnswer.id)}
       />
       {isAwardCriteria(requirementAnswer.id) && (
         <>

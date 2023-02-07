@@ -75,7 +75,10 @@ function ResponseOverview(): React.ReactElement {
           return ValidationUtils.checkboxQuestion(requirementAnswer);
 
         case QuestionVariant.Q_CODELIST:
-          return ValidationUtils.codelistQuestion(requirementAnswer);
+          return (
+            ValidationUtils.codelistOptionalQuestion(requirementAnswer) &&
+            ValidationUtils.codelistMandatoryQuestion(requirementAnswer)
+          );
 
         case QuestionVariant.Q_CONFIRMATION:
           return ValidationUtils.confirmationQuestion(requirementAnswer);

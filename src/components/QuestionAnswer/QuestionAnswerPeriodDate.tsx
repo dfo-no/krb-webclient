@@ -11,12 +11,14 @@ import { IPeriodDateQuestion } from '../../Nexus/entities/IPeriodDateQuestion';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { QuestionVariant } from '../../Nexus/enums';
 import FlexRowBox from '../FlexBox/FlexRowBox';
+import ValidationUtils from '../../common/ValidationUtils';
 
 interface IProps {
   item: IPeriodDateQuestion;
   existingAnswer?: IRequirementAnswer;
   onSubmit: (post: IPeriodDateQuestion) => void;
   isInfo?: boolean;
+  isAwardCriteria?: boolean;
 }
 
 const QuestionAnswerPeriodDate = ({
@@ -24,6 +26,7 @@ const QuestionAnswerPeriodDate = ({
   existingAnswer,
   onSubmit,
   isInfo,
+  isAwardCriteria,
 }: IProps): React.ReactElement => {
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
@@ -81,6 +84,22 @@ const QuestionAnswerPeriodDate = ({
               />
             )}
           </FlexRowBox>
+          {existingAnswer &&
+            (!isAwardCriteria &&
+            !ValidationUtils.periodDateQuestion(existingAnswer) ? (
+              <div className={css.error}>
+                {ValidationUtils.periodDateQuestionValidationMsg(
+                  existingAnswer
+                )}
+              </div>
+            ) : (
+              <div className={css.info}>
+                {ValidationUtils.periodDateQuestionValidationMsg(
+                  existingAnswer,
+                  'INFO'
+                )}
+              </div>
+            ))}
           {isPrefilledResponse && (
             <div className={css.Buttons}>
               <Button type={Type.Submit}>{t('Save')}</Button>

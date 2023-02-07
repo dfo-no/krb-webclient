@@ -20,6 +20,7 @@ interface IProps {
   existingAnswer?: IRequirementAnswer;
   productId: string;
   isInfo?: boolean;
+  isAwardCriteria?: boolean;
 }
 
 export default function ProductQuestionAnswer({
@@ -27,6 +28,7 @@ export default function ProductQuestionAnswer({
   existingAnswer,
   productId,
   isInfo,
+  isAwardCriteria,
 }: IProps): React.ReactElement {
   const { response, addProductAnswer, addRequirementAnswer } =
     useResponseState();
@@ -67,6 +69,7 @@ export default function ProductQuestionAnswer({
           existingAnswer={existingAnswer}
           onSubmit={onSubmit}
           isInfo={isInfo}
+          isAwardCriteria={isAwardCriteria}
         />
       );
     case QuestionVariant.Q_CODELIST:
@@ -102,6 +105,7 @@ export default function ProductQuestionAnswer({
           existingAnswer={existingAnswer}
           onSubmit={onSubmit}
           isInfo={isInfo}
+          isAwardCriteria={isAwardCriteria}
         />
       );
     case QuestionVariant.Q_PERIOD_DATE:
@@ -111,6 +115,7 @@ export default function ProductQuestionAnswer({
           existingAnswer={existingAnswer}
           onSubmit={onSubmit}
           isInfo={isInfo}
+          isAwardCriteria={isAwardCriteria}
         />
       );
     case QuestionVariant.Q_SLIDER:
@@ -120,6 +125,7 @@ export default function ProductQuestionAnswer({
           existingAnswer={existingAnswer}
           onSubmit={onSubmit}
           isInfo={isInfo}
+          isAwardCriteria={isAwardCriteria}
         />
       );
     case QuestionVariant.Q_TEXT:
@@ -129,6 +135,7 @@ export default function ProductQuestionAnswer({
           existingAnswer={existingAnswer}
           onSubmit={onSubmit}
           isInfo={isInfo}
+          isAwardCriteria={isAwardCriteria}
         />
       );
     case QuestionVariant.Q_TIME:
@@ -138,6 +145,7 @@ export default function ProductQuestionAnswer({
           existingAnswer={existingAnswer}
           onSubmit={onSubmit}
           isInfo={isInfo}
+          isAwardCriteria={isAwardCriteria}
         />
       );
     case QuestionVariant.Q_FILEUPLOAD:

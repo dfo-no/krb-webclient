@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
@@ -51,12 +50,6 @@ const QuestionAnswerCodelist = ({
     }
   }, [existingAnswer, methods]);
 
-  const getInfoText = () => {
-    return `${t('RESP_ANS_CODELIST_INFO_MIN')} ${
-      item.config.optionalCodeMinAmount
-    }, ${t('RESP_ANS_CODELIST_INFO_MAX')} ${item.config.optionalCodeMaxAmount}`;
-  };
-
   return (
     <div className={css.QuestionAnswer}>
       <FormProvider {...methods}>
@@ -68,10 +61,10 @@ const QuestionAnswerCodelist = ({
             isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
           }
         >
-          <Typography variant={'sm'}>{getInfoText()}</Typography>
           {codesList && (
             <CodeSelection
               name={'answer.codes'}
+              existingAnswer={existingAnswer}
               codesList={codesList}
               codeSelection={item.config.codes}
               isDisabled={isInfo}
