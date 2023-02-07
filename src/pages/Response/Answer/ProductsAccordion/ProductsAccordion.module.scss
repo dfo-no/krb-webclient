@@ -3,51 +3,63 @@
   flex-direction: column;
   gap: var(--small-gap);
 
-  .Header {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    cursor: pointer;
-
-    &[data-expanded='true'] {
-      position: fixed;
-      z-index: 1;
-      background-color: var(--white-color);
-      border: 0.1rem var(--border-color-secondary) solid;
-    }
-
-    &__icon {
-      padding: 0 var(--small-gap);
-      margin-left: auto;
-
-      path {
-        fill: var(--secondary-light-gray-color);
-      }
-    }
-  }
-  .Content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--small-gap);
-
-    .AnswerProduct {
-      padding: 0 var(--small-gap);
-    }
-
-    .ActionButtons {
+  ul {
+    li {
       display: flex;
       justify-content: space-between;
-      border-top: 0.2rem solid var(--gray-color);
-      padding: var(--small-gap);
+      flex-direction: column;
+      .Header {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        cursor: pointer;
+        width: inherit;
 
-      button {
-        font-size: var(--small-fontsize);
-        font-weight: var(--font-weight-semibold);
+        &__icon {
+          padding: 0 var(--small-gap);
+          margin-left: auto;
+
+          path {
+            fill: var(--secondary-light-gray-color);
+          }
+        }
+      }
+
+      .Content {
+        display: flex;
+        flex-direction: column;
+        gap: var(--small-gap);
+
+        .AnswerProduct {
+          padding: 0 var(--small-gap);
+        }
+
+        .ActionButtons {
+          display: flex;
+          justify-content: space-between;
+          border-top: 0.2rem solid var(--gray-color);
+          padding: var(--small-gap);
+
+          button {
+            font-size: var(--small-fontsize);
+            font-weight: var(--font-weight-semibold);
+          }
+        }
+      }
+
+      .Hidden {
+        display: none;
+      }
+
+      &[data-expanded='true'] {
+        .Header {
+          position: sticky;
+          background-color: var(--white-color);
+          border: 0.1rem var(--border-color-secondary) solid;
+          top: 7.5rem;
+          z-index: 1;
+        }
       }
     }
-  }
-
-  .Hidden {
-    display: none;
   }
 }

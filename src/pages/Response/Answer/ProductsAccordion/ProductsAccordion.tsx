@@ -167,16 +167,10 @@ export default function ProductsAccordion({
           productResponse = response.products[i];
           return (
             <ul key={i}>
-              <li>
-                <div
-                  className={css.Header}
-                  onClick={() => handleClick(i)}
-                  data-expanded={productIndex == i}
-                >
-                  <div>
-                    {specProducts.length > 0 &&
-                      renderProducts(p, productResponse, i)}
-                  </div>
+              <li data-expanded={productIndex == i}>
+                <div className={css.Header} onClick={() => handleClick(i)}>
+                  {specProducts.length > 0 &&
+                    renderProducts(p, productResponse, i)}
                   <span className={css.Header__icon}>
                     {productIndex == i ? <ExpandLess /> : <ExpandMore />}
                   </span>
