@@ -7,7 +7,8 @@ import theme from '../../theme';
 import { FormTextButton } from './FormTextButton';
 
 interface IProps {
-  children: React.ReactNode;
+  children: React.ReactElement;
+  activated?: boolean;
   canBeDeleted: boolean;
   infoText: string;
   handleClose: () => void;
@@ -16,48 +17,60 @@ interface IProps {
 
 export default function DeleteFrame({
   children,
+  activated = true,
   canBeDeleted,
   infoText,
   handleClose,
   onDelete = () => {},
 }: IProps): React.ReactElement {
-  return (
-    <FormDeleteBox
-      boxColor={
-        canBeDeleted ? theme.palette.errorRed.main : theme.palette.gray500.main
-      }
-    >
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          padding: 1,
-          marginLeft: 1,
-        }}
+  if (!children) {
+    return <></>;
+  } else if (!activated) {
+    return children;
+  } else {
+    return (
+      <FormDeleteBox
+        boxColor={
+          canBeDeleted
+            ? theme.palette.errorRed.main
+            : theme.palette.gray500.main
+        }
       >
-        <Typography variant={'mdBold'} sx={{ color: theme.palette.white.main }}>
-          {infoText} {canBeDeleted ? t('Wish to delete') : ''}
-        </Typography>
-        {canBeDeleted && (
-          <FormTextButton
-            type="submit"
-            aria-label={t('Delete')}
-            onClick={onDelete}
-            sx={{ marginLeft: 'auto' }}
-          >
-            {t('Delete')}
-          </FormTextButton>
-        )}
-        <FormTextButton
-          onClick={handleClose}
-          aria-label={t('common.Cancel')}
-          sx={!canBeDeleted ? { marginLeft: 'auto' } : {}}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            padding: 1,
+            marginLeft: 1,
+          }}
         >
-          {t('common.Cancel')}
-        </FormTextButton>
-      </Box>
+          <Typography
+            variant={'mdBold'}
+            sx={{ color: theme.palette.white.main }}
+          >
+            {infoText} {canBeDeleted ? t('Wish to delete') : ''}
+          </Typography>
+          {canBeDeleted && (
+            <FormTextButton
+              type="submit"
+              aria-label={t('Delete')}
+              onClick={onDelete}
+              sx={{ marginLeft: 'auto' }}
+            >
+              {t('Delete')}
+            </FormTextButton>
+          )}
+          <FormTextButton
+            onClick={handleClose}
+            aria-label={t('common.Cancel')}
+            sx={!canBeDeleted ? { marginLeft: 'auto' } : {}}
+          >
+            {t('common.Cancel')}
+          </FormTextButton>
+        </Box>
 
-      {children}
-    </FormDeleteBox>
-  );
+        {children}
+      </FormDeleteBox>
+    );
+  }
 }

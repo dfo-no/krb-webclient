@@ -11,8 +11,13 @@ import { useEditableState } from '../../../../components/EditableContext/Editabl
 import { usePanelStyles } from './CodelistStyles';
 import { useSelectState } from './SelectContext';
 import { CodelistItem } from './CodelistItem';
+import { IBank } from '../../../../Nexus/entities/IBank';
 
-const CodelistPanel = (): React.ReactElement => {
+type Props = {
+  project: IBank;
+};
+
+const CodelistPanel = ({ project }: Props): React.ReactElement => {
   const classes = usePanelStyles();
   const {
     selectedCodelist,
@@ -43,6 +48,7 @@ const CodelistPanel = (): React.ReactElement => {
           {allCodelists &&
             allCodelists.map((codelist) => (
               <CodelistItem
+                project={project}
                 codelist={codelist}
                 setSelectedCodelist={setSelectedCodelist}
                 isSelected={

@@ -94,7 +94,7 @@ export default function CodeListPage(): React.ReactElement {
       <Box className={classes.tableContainer}>
         <Box className={classes.codelistContainer}>
           <EditableProvider>
-            <CodelistPanel />
+            <CodelistPanel project={project} />
           </EditableProvider>
         </Box>
         <Box className={classes.codeContainer}>
