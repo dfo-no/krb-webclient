@@ -2,9 +2,9 @@ import React, { ReactElement } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 
-import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { DeleteFrame } from '../../../../components/DeleteFrame/DeleteFrame';
 import { IPublication } from '../../../../Nexus/entities/IPublication';
 import { Alert } from '../../../../models/Alert';
 import { ModelType } from '../../../../Nexus/enums';

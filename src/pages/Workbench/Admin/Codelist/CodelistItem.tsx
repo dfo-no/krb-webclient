@@ -3,17 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import { Dispatch, SetStateAction } from 'react';
 
-import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import Utils from '../../../../common/Utils';
+import { DeleteFrame } from '../../../../components/DeleteFrame/DeleteFrame';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 import { Alert } from '../../../../models/Alert';
 import { ModelType } from '../../../../Nexus/enums';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import { IBank } from '../../../../Nexus/entities/IBank';
-import EditCodelistForm from './EditCodelistForm';
+import { EditCodelistForm } from './EditCodelistForm';
 import { useSelectState } from './SelectContext';
 import { DisplayCodelist } from './DisplayCodelist';
 

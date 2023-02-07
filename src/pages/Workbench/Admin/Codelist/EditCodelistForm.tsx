@@ -19,7 +19,7 @@ interface Props {
   handleClose: (newCodelist: ICodelist | null) => void;
 }
 
-export default function EditCodelistForm({
+export function EditCodelistForm({
   codelist,
   handleClose,
 }: Props): React.ReactElement {

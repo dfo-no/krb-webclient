@@ -2,9 +2,9 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
-import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
+import { DeleteFrame } from '../../../../components/DeleteFrame/DeleteFrame';
 import { Alert } from '../../../../models/Alert';
 import { ICode } from '../../../../Nexus/entities/ICode';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';

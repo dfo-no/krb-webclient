@@ -2,8 +2,8 @@ import React from 'react';
 import { Box, Typography } from '@mui/material/';
 import { t } from 'i18next';
 
-import { FormDeleteBox } from './FormDeleteBox';
 import theme from '../../theme';
+import { FormDeleteBox } from './FormDeleteBox';
 import { FormTextButton } from './FormTextButton';
 
 interface IProps {
@@ -15,7 +15,7 @@ interface IProps {
   onDelete?: () => void;
 }
 
-export default function DeleteFrame({
+export function DeleteFrame({
   children,
   activated = true,
   canBeDeleted,
