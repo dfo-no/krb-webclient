@@ -1,4 +1,3 @@
-import React from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Box, List, Typography } from '@mui/material';

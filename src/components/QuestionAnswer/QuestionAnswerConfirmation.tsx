@@ -10,12 +10,14 @@ import Nexus from '../../Nexus/Nexus';
 import { IConfirmationQuestion } from '../../Nexus/entities/IConfirmationQuestion';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { QuestionVariant } from '../../Nexus/enums';
+import ValidationUtils from '../../common/ValidationUtils';
 
 interface IProps {
   item: IConfirmationQuestion;
   existingAnswer?: IRequirementAnswer;
   onSubmit: (post: IConfirmationQuestion) => void;
   isInfo?: boolean;
+  isAwardCriteria?: boolean;
 }
 
 const QuestionAnswerConfirmation = ({
@@ -23,6 +25,7 @@ const QuestionAnswerConfirmation = ({
   existingAnswer,
   onSubmit,
   isInfo,
+  isAwardCriteria,
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
@@ -66,6 +69,13 @@ const QuestionAnswerConfirmation = ({
                 label={t('Confirm')}
                 color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
               />
+              {existingAnswer &&
+                !isAwardCriteria &&
+                !ValidationUtils.confirmationQuestion(existingAnswer) && (
+                  <div className={css.error}>
+                    {ValidationUtils.confirmationQuestionValidationMsg()}
+                  </div>
+                )}
               {isPrefilledResponse && (
                 <div className={css.Buttons}>
                   <Button type={Type.Submit}>{t('Save')}</Button>

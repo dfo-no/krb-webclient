@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
@@ -15,7 +14,7 @@ import { Parentable } from '../../../../models/Parentable';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   tag: Parentable<ITag>;
   handleClose: () => void;
 }
@@ -23,7 +22,7 @@ interface IProps {
 export default function EditTagForm({
   tag,
   handleClose,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();

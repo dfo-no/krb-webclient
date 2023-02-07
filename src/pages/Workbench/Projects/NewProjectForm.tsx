@@ -19,11 +19,11 @@ import { ModelType } from '../../../Nexus/enums';
 import { usePostProjectMutation } from '../../../store/api/bankApi';
 import { AlertsContainer } from '../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   handleClose: () => void;
 }
 
-const NewProjectForm = ({ handleClose }: IProps) => {
+const NewProjectForm = ({ handleClose }: Props) => {
   const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();

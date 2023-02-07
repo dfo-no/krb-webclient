@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -22,11 +21,11 @@ import { ModelType } from '../../../../Nexus/enums';
 import { Parentable } from '../../../../models/Parentable';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   handleClose: (newNeed: Parentable<INeed> | null) => void;
 }
 
-function NewNeedForm({ handleClose }: IProps): React.ReactElement {
+function NewNeedForm({ handleClose }: Props): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
 
   const nexus = Nexus.getInstance();

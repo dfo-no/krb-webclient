@@ -1,5 +1,5 @@
+import { useState } from 'react';
 import classnames from 'classnames';
-import React from 'react';
 import { Box, Typography, List, ListItem } from '@mui/material';
 import { t } from 'i18next';
 
@@ -9,15 +9,15 @@ import { IProduct } from '../../../Nexus/entities/IProduct';
 import { Parentable } from '../../../models/Parentable';
 import { usePreviewState } from './PreviewContext';
 
-interface IProps {
+interface Props {
   parentableArray: Parentable<IProduct>[];
 }
 
 export default function PreviewSideBar({
   parentableArray,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { setSelected } = usePreviewState();
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleListItemClick = (
     value: Parentable<IProduct> | null,

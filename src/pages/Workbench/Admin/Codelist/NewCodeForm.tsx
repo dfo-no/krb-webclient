@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +17,7 @@ import { Parentable } from '../../../../models/Parentable';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   codelist: ICodelist;
   handleClose: (newCode: Parentable<ICode> | null) => void;
 }
@@ -26,7 +25,7 @@ interface IProps {
 export default function NewCodeForm({
   codelist,
   handleClose,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();

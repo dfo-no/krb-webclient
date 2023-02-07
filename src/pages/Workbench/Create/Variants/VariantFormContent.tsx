@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { Control, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -17,11 +16,11 @@ import { IVariant } from '../../../../Nexus/entities/IVariant';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { VariantType } from '../../../../Nexus/enums';
 
-interface IProps {
+interface Props {
   control: Control<IVariant>;
 }
 
-const VariantFormContent = ({ control }: IProps) => {
+const VariantFormContent = ({ control }: Props) => {
   const { t } = useTranslation();
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);

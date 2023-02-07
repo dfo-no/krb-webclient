@@ -11,12 +11,14 @@ import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { ITimeQuestion } from '../../Nexus/entities/ITimeQuestion';
 import { QuestionVariant } from '../../Nexus/enums';
 import FlexRowBox from '../FlexBox/FlexRowBox';
+import ValidationUtils from '../../common/ValidationUtils';
 
 interface IProps {
   item: ITimeQuestion;
   existingAnswer?: IRequirementAnswer;
   onSubmit: (post: ITimeQuestion) => void;
   isInfo?: boolean;
+  isAwardCriteria?: boolean;
 }
 
 const QuestionAnswerTime = ({
@@ -24,6 +26,7 @@ const QuestionAnswerTime = ({
   existingAnswer,
   onSubmit,
   isInfo,
+  isAwardCriteria,
 }: IProps): React.ReactElement => {
   const nexus = Nexus.getInstance();
   const location = useLocation();
@@ -79,6 +82,20 @@ const QuestionAnswerTime = ({
               />
             )}
           </FlexRowBox>
+          {existingAnswer &&
+            (!isAwardCriteria &&
+            !ValidationUtils.timeQuestion(existingAnswer) ? (
+              <div className={css.error}>
+                {ValidationUtils.timeQuestionValidationMsg(existingAnswer)}
+              </div>
+            ) : (
+              <div className={css.info}>
+                {ValidationUtils.timeQuestionValidationMsg(
+                  existingAnswer,
+                  'INFO'
+                )}
+              </div>
+            ))}
           {isPrefilledResponse && (
             <div className={css.Buttons}>
               <Button type={Type.Submit}>{t('Save')}</Button>

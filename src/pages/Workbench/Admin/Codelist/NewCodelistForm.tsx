@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import { useTranslation } from 'react-i18next';
@@ -16,13 +15,13 @@ import { ModelType } from '../../../../Nexus/enums';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   handleClose: (newCodelist: ICodelist | null) => void;
 }
 
 export default function NewCodelistForm({
   handleClose,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();

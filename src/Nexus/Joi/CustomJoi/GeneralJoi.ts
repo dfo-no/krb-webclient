@@ -1,5 +1,7 @@
 import Joi, { Schema } from 'joi';
 
+import { ErrorMessage } from './Questions/ErrorMessage';
+
 const TextValidator = (joi: Joi.Root) => ({
   type: 'validateText',
   base: joi.string().required(),
@@ -40,6 +42,9 @@ const BooleanOptionalValidator = (joi: Joi.Root) => ({
 const NumberValidator = (joi: Joi.Root) => ({
   type: 'validateNumber',
   base: joi.number().required(),
+  messages: {
+    'number.base': ErrorMessage.VAL_NUMBER_BASE,
+  },
 });
 
 const EmptyNumberValidator = (joi: Joi.Root) => ({

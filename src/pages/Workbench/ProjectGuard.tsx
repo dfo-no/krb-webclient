@@ -1,4 +1,3 @@
-import React from 'react';
 import { Route, useParams } from 'react-router-dom';
 
 import AdminGuard from './Admin/AdminGuard';

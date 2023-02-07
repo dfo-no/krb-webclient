@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, useRouteMatch, withRouter } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';

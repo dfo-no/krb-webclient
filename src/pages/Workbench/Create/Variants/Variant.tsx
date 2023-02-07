@@ -33,12 +33,12 @@ import { useVariantState } from '../../VariantContext';
 import ErrorSummary from '../../../../Form/ErrorSummary';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   variant: IVariant;
   requirementIndex: number;
 }
 
-const Variant = ({ variant, requirementIndex }: IProps) => {
+const Variant = ({ variant, requirementIndex }: Props) => {
   const { t } = useTranslation();
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();

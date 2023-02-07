@@ -1,4 +1,3 @@
-import React from 'react';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 
@@ -8,11 +7,11 @@ import NewNeed from './Need/NewNeed';
 import theme from '../../../theme';
 import { IBank } from '../../../Nexus/entities/IBank';
 
-interface IProps {
+interface Props {
   project: IBank;
 }
 
-export default function ProjectStart({ project }: IProps): React.ReactElement {
+export default function ProjectStart({ project }: Props): React.ReactElement {
   const { t } = useTranslation();
 
   return (

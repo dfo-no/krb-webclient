@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +23,7 @@ import { Parentable } from '../../../../models/Parentable';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   requirement: IRequirement;
   need: Parentable<INeed>;
   handleClose: () => void;
@@ -38,7 +37,7 @@ function EditRequirementForm({
   requirement,
   need,
   handleClose,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { projectId } = useParams<IRouteParams>();
   const { data: project } = useGetProjectQuery(projectId);
   const { addAlert } = AlertsContainer.useContainer();

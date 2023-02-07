@@ -14,7 +14,7 @@ import { useEditableState } from '../../../../components/EditableContext/Editabl
 import { useGetBankQuery } from '../../../../store/api/bankApi';
 import { ISpecification } from '../../../../Nexus/entities/ISpecification';
 
-interface IProps {
+interface Props {
   publication: IPublication;
   chooseSpecification: Dispatch<ISpecification>;
 }
@@ -22,7 +22,7 @@ interface IProps {
 const PublicationItem = ({
   publication,
   chooseSpecification,
-}: IProps): ReactElement => {
+}: Props): ReactElement => {
   const { t } = useTranslation();
   const { setDeleteMode } = useEditableState();
 

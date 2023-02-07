@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
@@ -16,7 +15,7 @@ import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { ModelType } from '../../../../Nexus/enums';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   codelist: ICodelist;
   code: Parentable<ICode>;
   handleClose: (newCode: Parentable<ICode> | null) => void;
@@ -26,7 +25,7 @@ function EditCodeForm({
   codelist,
   code,
   handleClose,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();

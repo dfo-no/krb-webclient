@@ -1,5 +1,4 @@
 import Button from '@mui/material/Button';
-import React from 'react';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -22,7 +21,7 @@ import { Parentable } from '../../../../models/Parentable';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   need: Parentable<INeed>;
   requirement: IRequirement;
   handleClose: () => void;
@@ -32,7 +31,7 @@ function NewVariantForm({
   need,
   requirement,
   handleClose,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();

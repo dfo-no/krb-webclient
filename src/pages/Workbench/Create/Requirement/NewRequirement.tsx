@@ -9,11 +9,11 @@ import { INeed } from '../../../../Nexus/entities/INeed';
 import { Parentable } from '../../../../models/Parentable';
 import { useSelectState } from '../SelectContext';
 
-interface IProps {
+interface Props {
   need: Parentable<INeed>;
 }
 
-const NewRequirement = ({ need }: IProps) => {
+const NewRequirement = ({ need }: Props) => {
   const [isNewOpen, setNewOpen] = useState(false);
   const { setCreateVariant } = useSelectState();
 

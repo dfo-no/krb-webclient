@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -17,7 +16,7 @@ import { useEditableState } from '../../../../components/EditableContext/Editabl
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   children: React.ReactElement;
   tag: Parentable<ITag>;
   handleClose: () => void;
@@ -27,7 +26,7 @@ export default function DeleteTagForm({
   children,
   tag,
   handleClose,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { deleteTag } = useProjectMutations();
   const nexus = Nexus.getInstance();
   const { addAlert } = AlertsContainer.useContainer();

@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
@@ -16,7 +15,7 @@ import { useEditableState } from '../../../../components/EditableContext/Editabl
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   children: React.ReactElement;
   codelist: ICodelist;
   code: Parentable<ICode>;
@@ -28,7 +27,7 @@ export default function DeleteCodeForm({
   codelist,
   code,
   handleClose,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { deleteCode } = useProjectMutations();
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();

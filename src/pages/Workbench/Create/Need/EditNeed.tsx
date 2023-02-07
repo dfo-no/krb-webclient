@@ -8,11 +8,11 @@ import { INeed } from '../../../../Nexus/entities/INeed';
 import { Parentable } from '../../../../models/Parentable';
 import { useSelectState } from '../SelectContext';
 
-interface IProps {
+interface Props {
   need: Parentable<INeed>;
 }
 
-const EditNeed = ({ need }: IProps) => {
+const EditNeed = ({ need }: Props) => {
   const [isEditOpen, setEditOpen] = useState(false);
   const { setDeleteMode } = useSelectState();
 

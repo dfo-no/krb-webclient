@@ -8,9 +8,12 @@ import { DFOCheckbox } from '../DFOCheckbox/DFOCheckbox';
 import { ICode } from '../../Nexus/entities/ICode';
 import { ICodeSelection } from '../../Nexus/entities/ICodelistQuestion';
 import { Parentable } from '../../models/Parentable';
+import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
+import ValidationUtils from '../../common/ValidationUtils';
 
 interface IProps {
   name: string;
+  existingAnswer?: IRequirementAnswer;
   codesList: Parentable<ICode>[];
   codeSelection?: ICodeSelection[];
   isDisabled?: boolean;
@@ -18,6 +21,7 @@ interface IProps {
 
 const CodeSelection = ({
   name,
+  existingAnswer,
   codesList,
   codeSelection,
   isDisabled,
@@ -28,7 +32,6 @@ const CodeSelection = ({
   const isPrefilledResponse = location.pathname.includes(
     'prefilledresponse'
   ) as boolean;
-
   const sortCodes = (codesToBeSorted: ICode[]): ICode[] => {
     return [...codesToBeSorted].sort((a, b) => {
       const aSelection = codeSelection?.find((cs) => cs.code === a.id);
@@ -128,6 +131,17 @@ const CodeSelection = ({
               {mandatoryCodesList()?.map((item) => {
                 return renderCodesList(item, selected, onChange);
               })}
+              {existingAnswer && (
+                <div
+                  className={
+                    ValidationUtils.codelistMandatoryQuestion(existingAnswer)
+                      ? css.info
+                      : css.error
+                  }
+                >
+                  {t('All mandatory options must be confirmed')}
+                </div>
+              )}
             </>
           )}
           {optionalCodesList().length > 0 && (
@@ -136,6 +150,19 @@ const CodeSelection = ({
               {optionalCodesList()?.map((item) => {
                 return renderCodesList(item, selected, onChange);
               })}
+              {existingAnswer && (
+                <div
+                  className={
+                    ValidationUtils.codelistOptionalQuestion(existingAnswer)
+                      ? css.info
+                      : css.error
+                  }
+                >
+                  {ValidationUtils.codelistOptionalValidationMsg(
+                    existingAnswer
+                  )}
+                </div>
+              )}
             </>
           )}
           {!isMandatoryOrOptionalCodes() &&

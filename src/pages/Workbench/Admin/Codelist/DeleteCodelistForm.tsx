@@ -1,4 +1,3 @@
-import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -16,7 +15,7 @@ import { useEditableState } from '../../../../components/EditableContext/Editabl
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   children: React.ReactElement;
   codelist: ICodelist;
   handleClose: (codelist: ICodelist | null) => void;
@@ -26,7 +25,7 @@ export default function DeleteCodelistForm({
   children,
   codelist,
   handleClose,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { deleteCodelist } = useProjectMutations();
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();

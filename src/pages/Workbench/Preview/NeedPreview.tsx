@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 
@@ -11,11 +10,11 @@ import { Parentable } from '../../../models/Parentable';
 import { useGetProjectQuery } from '../../../store/api/bankApi';
 import { VariantProvider } from '../VariantContext';
 
-interface IProps {
+interface Props {
   need: Parentable<INeed>;
 }
 
-export default function NeedPreview({ need }: IProps): React.ReactElement {
+export default function NeedPreview({ need }: Props): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
 

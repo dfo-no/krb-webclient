@@ -11,12 +11,14 @@ import { ISliderQuestion } from '../../Nexus/entities/ISliderQuestion';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { QuestionVariant } from '../../Nexus/enums';
 import FlexRowBox from '../FlexBox/FlexRowBox';
+import ValidationUtils from '../../common/ValidationUtils';
 
 interface IProps {
   item: ISliderQuestion;
   existingAnswer?: IRequirementAnswer;
   onSubmit: (post: ISliderQuestion) => void;
   isInfo?: boolean;
+  isAwardCriteria?: boolean;
 }
 
 const QuestionAnswerSlider = ({
@@ -24,6 +26,7 @@ const QuestionAnswerSlider = ({
   existingAnswer,
   onSubmit,
   isInfo,
+  isAwardCriteria,
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
@@ -72,6 +75,20 @@ const QuestionAnswerSlider = ({
               isDisabled={isInfo}
             />
           </FlexRowBox>
+          {existingAnswer &&
+            (!isAwardCriteria &&
+            !ValidationUtils.sliderQuestion(existingAnswer) ? (
+              <div className={css.error}>
+                {ValidationUtils.sliderQuestionValidationMsg(existingAnswer)}
+              </div>
+            ) : (
+              <div className={css.info}>
+                {ValidationUtils.sliderQuestionValidationMsg(
+                  existingAnswer,
+                  'INFO'
+                )}
+              </div>
+            ))}
           {isPrefilledResponse && (
             <div className={css.Buttons}>
               <Button type={Type.Submit}>{t('Save')}</Button>

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import { Box } from '@mui/material/';
@@ -11,7 +10,7 @@ import { useSelectState } from '../SelectContext';
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
-interface IProps {
+interface Props {
   children: React.ReactElement;
   need: Parentable<INeed>;
   handleClose: () => void;
@@ -22,7 +21,7 @@ function DeleteNeed({
   children,
   need,
   handleClose,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
 
   const { t } = useTranslation();

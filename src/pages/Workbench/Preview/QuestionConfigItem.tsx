@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, styled, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -15,13 +14,13 @@ const ConfigBox = styled(Box)(() => ({
   margin: 16,
 }));
 
-interface IProps {
+interface Props {
   item: QuestionType;
 }
 
 export default function QuestionConfigItem({
   item,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
   const { t } = useTranslation();

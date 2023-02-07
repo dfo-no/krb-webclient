@@ -21,4 +21,14 @@
   .TextAreaCtrl {
     max-width: 25.5rem;
   }
+
+  .info {
+    padding-top: 1rem;
+    color: var(--warning-color-secondary);
+  }
+
+  .error {
+    padding-top: 1rem;
+    color: var(--error-color);
+  }
 }

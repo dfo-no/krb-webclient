@@ -18,12 +18,12 @@ const ConfigBox = styled(Box)(() => ({
   margin: 'var(--small-gap)',
 }));
 
-interface IProps {
+interface Props {
   item: QuestionType;
   index: number;
 }
 
-const QuestionConfig = ({ item, index }: IProps) => {
+const QuestionConfig = ({ item, index }: Props) => {
   const { t } = useTranslation();
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);

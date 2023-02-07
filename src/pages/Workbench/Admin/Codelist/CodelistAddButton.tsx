@@ -1,16 +1,15 @@
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Button, Typography } from '@mui/material/';
 
 import { useButtonStyles } from './CodelistStyles';
 
-interface IProps {
+interface Props {
   onClick: () => void;
 }
 
 export default function CodelistAddButton({
   onClick,
-}: IProps): React.ReactElement {
+}: Props): React.ReactElement {
   const classes = useButtonStyles();
   const { t } = useTranslation();
 
