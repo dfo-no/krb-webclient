@@ -26,9 +26,9 @@ export default function DeleteSpecProduct({
   const { addAlert } = AlertsContainer.useContainer();
   const { setProductIndex } = useProductIndexState();
   const { deleteSpecificationProduct } = useSpecificationState();
-  const { deleteMode } = useSelectState();
+  const { deleteCandidateId } = useSelectState();
 
-  if (!product || deleteMode !== product.id) {
+  if (!product || deleteCandidateId !== product.id) {
     return children;
   }
 

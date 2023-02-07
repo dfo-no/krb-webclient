@@ -8,25 +8,25 @@ import {
 } from 'react';
 
 interface IEditableContext {
-  editMode: string;
-  setEditMode: Dispatch<SetStateAction<string>>;
+  currentlyEditedItemId: string;
+  setCurrentlyEditedItemId: Dispatch<SetStateAction<string>>;
   isCreating: boolean;
   setCreating: Dispatch<SetStateAction<boolean>>;
-  deleteMode: string;
-  setDeleteMode: Dispatch<SetStateAction<string>>;
+  deleteCandidateId: string;
+  setDeleteCandidateId: Dispatch<SetStateAction<string>>;
 }
 
 const initialContext: IEditableContext = {
-  editMode: '',
-  setEditMode: function (): void {
+  currentlyEditedItemId: '',
+  setCurrentlyEditedItemId: function (): void {
     throw new Error('Function not implemented.');
   },
   isCreating: false,
   setCreating: function (): void {
     throw new Error('Function not implemented.');
   },
-  deleteMode: '',
-  setDeleteMode: function (): void {
+  deleteCandidateId: '',
+  setDeleteCandidateId: function (): void {
     throw new Error('Function not implemented.');
   },
 };
@@ -38,40 +38,40 @@ interface IProps {
 }
 
 export const EditableProvider = ({ children }: IProps) => {
-  const [editMode, setEditMode] = useState('');
+  const [currentlyEditedItemId, setCurrentlyEditedItemId] = useState('');
   const [isCreating, setCreating] = useState(false);
-  const [deleteMode, setDeleteMode] = useState('');
+  const [deleteCandidateId, setDeleteCandidateId] = useState('');
 
   useEffect(() => {
-    if (editMode !== '') {
+    if (currentlyEditedItemId !== '') {
       setCreating(false);
-      setDeleteMode('');
+      setDeleteCandidateId('');
     }
-  }, [editMode]);
+  }, [currentlyEditedItemId]);
 
   useEffect(() => {
     if (isCreating) {
-      setEditMode('');
-      setDeleteMode('');
+      setCurrentlyEditedItemId('');
+      setDeleteCandidateId('');
     }
   }, [isCreating]);
 
   useEffect(() => {
-    if (deleteMode !== '') {
+    if (deleteCandidateId !== '') {
       setCreating(false);
-      setEditMode('');
+      setCurrentlyEditedItemId('');
     }
-  }, [deleteMode]);
+  }, [deleteCandidateId]);
 
   return (
     <EditableContext.Provider
       value={{
-        editMode,
-        setEditMode,
+        currentlyEditedItemId,
+        setCurrentlyEditedItemId,
         isCreating,
         setCreating,
-        deleteMode,
-        setDeleteMode,
+        deleteCandidateId,
+        setDeleteCandidateId,
       }}
     >
       {children}

@@ -14,7 +14,7 @@ import { useSelectState } from '../SelectContext';
 export default function NeedHeader(): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
-  const { needIndex, setDeleteMode } = useSelectState();
+  const { needIndex, setDeleteCandidateId } = useSelectState();
 
   if (!project || needIndex === null) {
     return <></>;
@@ -40,7 +40,7 @@ export default function NeedHeader(): React.ReactElement {
           <EditNeed need={project.needs[needIndex]} />
           <DFOCardHeaderIconButton
             hoverColor={theme.palette.errorRed.main}
-            onClick={() => setDeleteMode(project.needs[needIndex].id)}
+            onClick={() => setDeleteCandidateId(project.needs[needIndex].id)}
             sx={{ alignSelf: 'baseline' }}
           >
             <DeleteIcon />

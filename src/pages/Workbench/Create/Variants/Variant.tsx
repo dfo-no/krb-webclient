@@ -47,7 +47,7 @@ const Variant = ({ variant, requirementIndex }: Props) => {
 
   const { editVariant } = useProjectMutations();
   const { openVariants, setOpenVariants } = useVariantState();
-  const { needIndex, setDeleteMode } = useSelectState();
+  const { needIndex, setDeleteCandidateId } = useSelectState();
 
   const methods = useForm<IVariant>({
     resolver: nexus.resolverService.resolver(ModelType.variant),
@@ -96,7 +96,7 @@ const Variant = ({ variant, requirementIndex }: Props) => {
 
   const confirmDelete = (id: string, event: MouseEvent): void => {
     event.stopPropagation();
-    setDeleteMode(id);
+    setDeleteCandidateId(id);
   };
 
   return (

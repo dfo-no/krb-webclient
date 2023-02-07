@@ -32,7 +32,7 @@ export default function DeleteProductForm({
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
-  const { deleteMode } = useEditableState();
+  const { deleteCandidateId } = useEditableState();
 
   const methods = useForm<Parentable<IProduct>>({
     defaultValues: product,
@@ -48,7 +48,7 @@ export default function DeleteProductForm({
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
 
-  if (deleteMode !== product.id) {
+  if (deleteCandidateId !== product.id) {
     return children;
   }
 

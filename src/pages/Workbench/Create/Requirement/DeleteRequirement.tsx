@@ -34,14 +34,14 @@ function DeleteRequirement({
   const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
   const { deleteRequirement } = useProjectMutations();
-  const { deleteMode } = useSelectState();
+  const { deleteCandidateId } = useSelectState();
   const hasChildren = requirement.variants.length > 0;
 
   if (!project) {
     return <></>;
   }
 
-  if (deleteMode !== requirement.id) {
+  if (deleteCandidateId !== requirement.id) {
     return children;
   }
 

@@ -27,12 +27,12 @@ const CodePanel = (): React.ReactElement => {
   const classes = usePanelStyles();
   const { selectedCodelist, setSelectedCodelist } = useSelectState();
   const {
-    editMode,
-    setEditMode,
+    currentlyEditedItemId,
+    setCurrentlyEditedItemId,
     isCreating,
     setCreating,
-    deleteMode,
-    setDeleteMode,
+    deleteCandidateId,
+    setDeleteCandidateId,
   } = useEditableState();
   const [codes, setCodes] = useState<Parentable<ICode>[]>([]);
 
@@ -42,11 +42,11 @@ const CodePanel = (): React.ReactElement => {
 
   useEffect(() => {
     if (selectedCodelist) {
-      setEditMode('');
+      setCurrentlyEditedItemId('');
       setCreating(false);
       setCodes(selectedCodelist.codes);
     }
-  }, [selectedCodelist, setEditMode, setCreating]);
+  }, [selectedCodelist, setCurrentlyEditedItemId, setCreating]);
 
   // If no codelist is selected, we cant create the component
   if (!selectedCodelist || !project) {
@@ -59,10 +59,10 @@ const CodePanel = (): React.ReactElement => {
   };
 
   const isEditing = () => {
-    return editMode !== '' && deleteMode !== '';
+    return currentlyEditedItemId !== '' && deleteCandidateId !== '';
   };
   const isEditingItem = (item: Parentable<ICode>) => {
-    return item && item.id === editMode;
+    return item && item.id === currentlyEditedItemId;
   };
 
   const handleCloseEdit = (newCode: Parentable<ICode> | null) => {
@@ -73,7 +73,7 @@ const CodePanel = (): React.ReactElement => {
       );
       setSelectedCodelist({ ...selectedCodelist, codes: newCodes });
     }
-    setEditMode('');
+    setCurrentlyEditedItemId('');
   };
 
   const handleCloseCreate = (newCode: Parentable<ICode> | null) => {
@@ -92,7 +92,7 @@ const CodePanel = (): React.ReactElement => {
       );
       setSelectedCodelist({ ...selectedCodelist, codes: newCodes });
     }
-    setDeleteMode('');
+    setDeleteCandidateId('');
   };
 
   const renderCodeItem = (
@@ -107,13 +107,13 @@ const CodePanel = (): React.ReactElement => {
             <Typography variant="smBold">{item.title}</Typography>
             <FormIconButton
               sx={{ marginLeft: 'auto' }}
-              onClick={() => setEditMode(item.id)}
+              onClick={() => setCurrentlyEditedItemId(item.id)}
             >
               <EditOutlinedIcon />
             </FormIconButton>
             <FormIconButton
               hoverColor={theme.palette.errorRed.main}
-              onClick={() => setDeleteMode(item.id)}
+              onClick={() => setDeleteCandidateId(item.id)}
             >
               <DeleteIcon />
             </FormIconButton>

@@ -97,14 +97,18 @@ const NestableHierarcyEditableComponents = <
   depth,
 }: IProps<T>): React.ReactElement => {
   const classes = useStyles();
-  const { editMode, setEditMode, isCreating, setDeleteMode } =
-    useEditableState();
+  const {
+    currentlyEditedItemId,
+    setCurrentlyEditedItemId,
+    isCreating,
+    setDeleteCandidateId,
+  } = useEditableState();
 
   const isEditing = () => {
-    return editMode !== '';
+    return currentlyEditedItemId !== '';
   };
   const isEditingItem = (item: Parentable<T>) => {
-    return item && item.id === editMode;
+    return item && item.id === currentlyEditedItemId;
   };
 
   const renderTextBox = (item: Parentable<T>, handler: React.ReactNode) => {
@@ -117,13 +121,13 @@ const NestableHierarcyEditableComponents = <
         <Box className={classes.textItemDescription}>
           <Typography variant="sm">{item.description}</Typography>
         </Box>
-        <FormIconButton onClick={() => setEditMode(item.id)}>
+        <FormIconButton onClick={() => setCurrentlyEditedItemId(item.id)}>
           <EditOutlinedIcon />
         </FormIconButton>
         {DeleteComponent && (
           <FormIconButton
             hoverColor={theme.palette.errorRed.main}
-            onClick={() => setDeleteMode(item.id)}
+            onClick={() => setDeleteCandidateId(item.id)}
           >
             <DeleteIcon />
           </FormIconButton>

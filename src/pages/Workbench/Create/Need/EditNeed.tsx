@@ -14,11 +14,11 @@ interface Props {
 
 const EditNeed = ({ need }: Props) => {
   const [isEditOpen, setEditOpen] = useState(false);
-  const { setDeleteMode } = useSelectState();
+  const { setDeleteCandidateId } = useSelectState();
 
   const handleOpen = () => {
     setEditOpen(true);
-    setDeleteMode('');
+    setDeleteCandidateId('');
   };
 
   const onClose = () => {

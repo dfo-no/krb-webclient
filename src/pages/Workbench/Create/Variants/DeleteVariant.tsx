@@ -35,9 +35,9 @@ function DeleteVariant({
 
   const { addAlert } = AlertsContainer.useContainer();
   const { deleteVariant } = useProjectMutations();
-  const { deleteMode } = useSelectState();
+  const { deleteCandidateId } = useSelectState();
 
-  if (deleteMode !== variant.id) {
+  if (deleteCandidateId !== variant.id) {
     return children;
   }
 

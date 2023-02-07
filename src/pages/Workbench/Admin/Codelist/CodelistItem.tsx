@@ -34,8 +34,12 @@ export function CodelistItem({
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
-  const { editMode, setEditMode, deleteMode, setDeleteMode } =
-    useEditableState();
+  const {
+    currentlyEditedItemId,
+    setCurrentlyEditedItemId,
+    deleteCandidateId,
+    setDeleteCandidateId,
+  } = useEditableState();
   const { allCodelists, setAllCodelists } = useSelectState();
 
   const methods = useForm<ICodelist>({
@@ -55,7 +59,7 @@ export function CodelistItem({
     if (newCodelist) {
       setSelectedCodelist(newCodelist);
     }
-    setEditMode('');
+    setCurrentlyEditedItemId('');
   };
 
   const handleCloseDelete = (deletedCodelist: ICodelist | null) => {
@@ -65,7 +69,7 @@ export function CodelistItem({
         Utils.removeElementFromList(deletedCodelist, allCodelists)
       );
     }
-    setDeleteMode('');
+    setDeleteCandidateId('');
   };
 
   const onSubmit = (put: ICodelist): void => {
@@ -81,7 +85,9 @@ export function CodelistItem({
   };
 
   const isEditingItem = (maybeEditedCodelist: ICodelist) => {
-    return maybeEditedCodelist && maybeEditedCodelist.id === editMode;
+    return (
+      maybeEditedCodelist && maybeEditedCodelist.id === currentlyEditedItemId
+    );
   };
 
   if (isEditingItem(codelist)) {
@@ -97,7 +103,7 @@ export function CodelistItem({
           noValidate
         >
           <DeleteFrame
-            activated={deleteMode === codelist.id}
+            activated={deleteCandidateId === codelist.id}
             canBeDeleted={!isInUse}
             infoText={infoText}
             handleClose={() => handleCloseDelete(null)}

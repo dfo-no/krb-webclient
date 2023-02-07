@@ -27,10 +27,10 @@ function DeleteNeed({
   const { t } = useTranslation();
   const { deleteNeed } = useProjectMutations();
 
-  const { deleteMode } = useSelectState();
+  const { deleteCandidateId } = useSelectState();
   const hasChildren = need.requirements.length > 0;
 
-  if (deleteMode !== need.id) {
+  if (deleteCandidateId !== need.id) {
     return children;
   }
 

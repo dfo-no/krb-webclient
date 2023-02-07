@@ -21,15 +21,19 @@ export const DisplayCodelist = ({
   setSelectedCodelist,
 }: Props) => {
   const classes = usePanelStyles();
-  const { editMode, setEditMode, deleteMode, setDeleteMode } =
-    useEditableState();
+  const {
+    currentlyEditedItemId,
+    setCurrentlyEditedItemId,
+    deleteCandidateId,
+    setDeleteCandidateId,
+  } = useEditableState();
 
   const itemClicked = (clickedCodelist: ICodelist) => {
-    if (editMode !== '') {
-      setEditMode('');
+    if (currentlyEditedItemId !== '') {
+      setCurrentlyEditedItemId('');
     }
-    if (deleteMode !== '') {
-      setDeleteMode('');
+    if (deleteCandidateId !== '') {
+      setDeleteCandidateId('');
     }
     setSelectedCodelist(clickedCodelist);
   };
@@ -40,12 +44,12 @@ export const DisplayCodelist = ({
 
   const enterEditMode = (codelistToEdit: ICodelist) => {
     setSelectedCodelist(codelistToEdit);
-    setEditMode(codelistToEdit.id);
+    setCurrentlyEditedItemId(codelistToEdit.id);
   };
 
   const enterDeleteMode = (codelistToDelete: ICodelist) => {
     setSelectedCodelist(codelistToDelete);
-    setDeleteMode(codelistToDelete.id);
+    setDeleteCandidateId(codelistToDelete.id);
   };
   return (
     <Box
