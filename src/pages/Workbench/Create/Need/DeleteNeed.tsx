@@ -6,11 +6,11 @@ import { Box } from '@mui/material/';
 import { useSelectState } from '../SelectContext';
 import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 // import { AlertsContainer } from '../../../../components/Alert/AlertContext';
-import { Need } from '../../../../api/openapi-fetch';
+import { NeedForm } from '../../../../api/nexus2';
 
 interface Props {
   children: React.ReactElement;
-  need: Need;
+  need: NeedForm;
   canBeDeleted: boolean;
   handleClose: () => void;
 }

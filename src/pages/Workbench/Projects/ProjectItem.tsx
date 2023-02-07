@@ -5,7 +5,7 @@ import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 
-import { ProjectForm } from '../../../api/openapi-fetch';
+import { ProjectForm } from '../../../api/nexus2';
 import { WORKBENCH } from '../../../common/PathConstants';
 import { useEditableState } from '../../../components/EditableContext/EditableContext';
 import { FormIconButton } from '../../../components/Form/FormIconButton';

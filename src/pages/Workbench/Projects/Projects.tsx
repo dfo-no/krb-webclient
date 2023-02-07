@@ -11,7 +11,7 @@ import { EditableProvider } from '../../../components/EditableContext/EditableCo
 import NewProjectForm from './NewProjectForm';
 import { ProjectItem } from './ProjectItem';
 import css from './Projects.module.scss';
-import { findProjects, ProjectForm } from '../../../api/openapi-fetch';
+import { findProjects, ProjectForm } from '../../../api/nexus2';
 import {
   NewButtonContainer,
   SearchContainer,

@@ -15,7 +15,7 @@ import {
   ModalFieldsBox,
 } from '../../../../components/ModalBox/ModalBox';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
-import { Need } from '../../../../api/openapi-fetch';
+import { NeedForm } from '../../../../api/nexus2';
 import {
   createRequirement,
   RequirementForm,
@@ -24,7 +24,7 @@ import {
 
 interface Props {
   projectRef: string;
-  need: Need;
+  need: NeedForm;
   handleClose: (id: string) => void;
 }
 

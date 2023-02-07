@@ -7,9 +7,9 @@ import { z } from 'zod';
 
 import { components, paths } from './generated';
 
-// export const baseUrl  'https://krb-backend-api.azurewebsites.net',
-// export const baseUrl = 'http://localhost:1080',
-export const baseUrl = 'http://localhost:8080'; // Exported for use in tests
+export const baseUrl = 'https://krb-backend-api.azurewebsites.net';
+// export const baseUrl = 'http://localhost:1080';
+// export const baseUrl = 'http://localhost:8080'; // Exported for use in tests
 
 // export const setRefOnItem = <T extends { ref: string }>(item: T) => {
 //   return { ...item, ref: uuidv4() };

@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { useFindCodelists } from '../../../../api/openapi-fetch';
+import { useFindCodelists } from '../../../../api/nexus2';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import SearchUtils from '../../../../common/SearchUtils';
 import { DFOSearchBar } from '../../../../components/DFOSearchBar/DFOSearchBar';

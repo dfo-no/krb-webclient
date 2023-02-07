@@ -6,11 +6,11 @@ import { useState } from 'react';
 import Dialog from '../../../../components/DFODialog/DFODialog';
 import { NewRequirementForm } from './NewRequirementForm';
 import { useSelectState } from '../SelectContext';
-import { Need } from '../../../../api/openapi-fetch';
+import { NeedForm } from '../../../../api/nexus2';
 
 interface Props {
   projectRef: string;
-  need: Need;
+  need: NeedForm;
 }
 
 export const NewRequirement = ({ projectRef, need }: Props) => {

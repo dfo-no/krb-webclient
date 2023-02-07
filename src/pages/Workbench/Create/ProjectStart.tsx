@@ -5,7 +5,7 @@ import css from '../../Stylesheets/NoProducts.module.scss';
 import mainIllustration from '../../../assets/images/main-illustration.svg';
 import { NewNeed } from './Need/NewNeed';
 import theme from '../../../theme';
-import { ProjectForm } from '../../../api/openapi-fetch';
+import { ProjectForm } from '../../../api/nexus2';
 import { NeedForm } from '../../../api/nexus2';
 
 interface Props {

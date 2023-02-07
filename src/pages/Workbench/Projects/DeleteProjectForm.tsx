@@ -8,7 +8,7 @@ import {
   findPublications,
   ProjectForm,
   PublicationForm,
-} from '../../../api/openapi-fetch';
+} from '../../../api/nexus2';
 import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../Nexus/Nexus';
 import UuidService from '../../../Nexus/services/UuidService';
