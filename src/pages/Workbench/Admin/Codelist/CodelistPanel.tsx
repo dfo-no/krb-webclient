@@ -14,13 +14,18 @@ import { CodelistItem } from './CodelistItem';
 
 const CodelistPanel = (): React.ReactElement => {
   const classes = usePanelStyles();
-  const { setCodelist, codelists, setCodelists } = useSelectState();
+  const {
+    selectedCodelist,
+    setSelectedCodelist,
+    allCodelists,
+    setAllCodelists,
+  } = useSelectState();
   const { isCreating, setCreating } = useEditableState();
 
   const handleCloseCreate = (newCodelist: ICodelist | null) => {
     if (newCodelist) {
-      setCodelist(newCodelist);
-      setCodelists(Utils.addElementToList(newCodelist, codelists));
+      setSelectedCodelist(newCodelist);
+      setAllCodelists(Utils.addElementToList(newCodelist, allCodelists));
     }
     setCreating(false);
   };
@@ -35,9 +40,15 @@ const CodelistPanel = (): React.ReactElement => {
       )}
       <ScrollableContainer>
         <List className={classes.list} aria-label="codelist">
-          {codelists &&
-            codelists.map((codelist, index) => (
-              <CodelistItem codelist={codelist} index={index} />
+          {allCodelists &&
+            allCodelists.map((codelist) => (
+              <CodelistItem
+                codelist={codelist}
+                setSelectedCodelist={setSelectedCodelist}
+                isSelected={
+                  !!(selectedCodelist && selectedCodelist.id === codelist.id)
+                }
+              />
             ))}
         </List>
       </ScrollableContainer>

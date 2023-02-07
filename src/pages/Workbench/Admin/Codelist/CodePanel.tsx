@@ -25,7 +25,7 @@ import { useSelectState } from './SelectContext';
 
 const CodePanel = (): React.ReactElement => {
   const classes = usePanelStyles();
-  const { codelist, setCodelist } = useSelectState();
+  const { selectedCodelist, setSelectedCodelist } = useSelectState();
   const {
     editMode,
     setEditMode,
@@ -41,21 +41,21 @@ const CodePanel = (): React.ReactElement => {
   const { editCodes } = useProjectMutations();
 
   useEffect(() => {
-    if (codelist) {
+    if (selectedCodelist) {
       setEditMode('');
       setCreating(false);
-      setCodes(codelist.codes);
+      setCodes(selectedCodelist.codes);
     }
-  }, [codelist, setEditMode, setCreating]);
+  }, [selectedCodelist, setEditMode, setCreating]);
 
   // If no codelist is selected, we cant create the component
-  if (!codelist || !project) {
+  if (!selectedCodelist || !project) {
     return <></>;
   }
 
   const updateCodesArrangement = (newCodes: Parentable<ICode>[]) => {
     setCodes(newCodes);
-    editCodes(newCodes, codelist);
+    editCodes(newCodes, selectedCodelist);
   };
 
   const isEditing = () => {
@@ -67,24 +67,30 @@ const CodePanel = (): React.ReactElement => {
 
   const handleCloseEdit = (newCode: Parentable<ICode> | null) => {
     if (newCode) {
-      const newCodes = Utils.replaceElementInList(newCode, codelist.codes);
-      setCodelist({ ...codelist, codes: newCodes });
+      const newCodes = Utils.replaceElementInList(
+        newCode,
+        selectedCodelist.codes
+      );
+      setSelectedCodelist({ ...selectedCodelist, codes: newCodes });
     }
     setEditMode('');
   };
 
   const handleCloseCreate = (newCode: Parentable<ICode> | null) => {
     if (newCode) {
-      const newCodes = Utils.addElementToList(newCode, codelist.codes);
-      setCodelist({ ...codelist, codes: newCodes });
+      const newCodes = Utils.addElementToList(newCode, selectedCodelist.codes);
+      setSelectedCodelist({ ...selectedCodelist, codes: newCodes });
     }
     setCreating(false);
   };
 
   const handleCloseDelete = (deletedCode: Parentable<ICode> | null) => {
     if (deletedCode) {
-      const newCodes = Utils.removeElementFromList(deletedCode, codelist.codes);
-      setCodelist({ ...codelist, codes: newCodes });
+      const newCodes = Utils.removeElementFromList(
+        deletedCode,
+        selectedCodelist.codes
+      );
+      setSelectedCodelist({ ...selectedCodelist, codes: newCodes });
     }
     setDeleteMode('');
   };
@@ -125,7 +131,7 @@ const CodePanel = (): React.ReactElement => {
       return (
         <FormContainerBox sx={{ marginBottom: 1 }}>
           <EditCodeForm
-            codelist={codelist}
+            codelist={selectedCodelist}
             code={item}
             handleClose={handleCloseEdit}
           />
@@ -135,7 +141,7 @@ const CodePanel = (): React.ReactElement => {
     return (
       <DeleteCodeForm
         children={renderCodeItem(item, handler)}
-        codelist={codelist}
+        codelist={selectedCodelist}
         code={item}
         handleClose={handleCloseDelete}
       />
@@ -147,7 +153,10 @@ const CodePanel = (): React.ReactElement => {
       <CodeAddButton onClick={() => setCreating(true)} />
       {isCreating && (
         <FormContainerBox sx={{ marginBottom: 1 }}>
-          <NewCodeForm codelist={codelist} handleClose={handleCloseCreate} />
+          <NewCodeForm
+            codelist={selectedCodelist}
+            handleClose={handleCloseCreate}
+          />
         </FormContainerBox>
       )}
       <ScrollableContainer>

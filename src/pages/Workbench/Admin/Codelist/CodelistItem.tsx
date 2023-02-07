@@ -1,6 +1,7 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Box, Typography } from '@mui/material';
+import { Dispatch, SetStateAction } from 'react';
 
 import theme from '../../../../theme';
 import DeleteCodelistForm from './DeleteCodelistForm';
@@ -15,13 +16,18 @@ import Utils from '../../../../common/Utils';
 
 type Props = {
   codelist: ICodelist;
-  index: number;
+  setSelectedCodelist: Dispatch<SetStateAction<ICodelist | null>>;
+  isSelected: boolean;
 };
 
-export const CodelistItem = ({ codelist: item, index: i }: Props) => {
+export const CodelistItem = ({
+  codelist,
+  setSelectedCodelist,
+  isSelected,
+}: Props) => {
   const classes = usePanelStyles();
 
-  const { codelist, setCodelist, codelists, setCodelists } = useSelectState();
+  const { allCodelists, setAllCodelists } = useSelectState();
   const { editMode, setEditMode, deleteMode, setDeleteMode } =
     useEditableState();
 
@@ -32,20 +38,22 @@ export const CodelistItem = ({ codelist: item, index: i }: Props) => {
     if (deleteMode !== '') {
       setDeleteMode('');
     }
-    setCodelist(clickedCodelist);
+    setSelectedCodelist(clickedCodelist);
   };
 
   const handleCloseEdit = (newCodelist: ICodelist | null) => {
     if (newCodelist) {
-      setCodelist(newCodelist);
+      setSelectedCodelist(newCodelist);
     }
     setEditMode('');
   };
 
   const handleCloseDelete = (deletedCodelist: ICodelist | null) => {
     if (deletedCodelist) {
-      setCodelist(null);
-      setCodelists(Utils.removeElementFromList(deletedCodelist, codelists));
+      setSelectedCodelist(null);
+      setAllCodelists(
+        Utils.removeElementFromList(deletedCodelist, allCodelists)
+      );
     }
     setDeleteMode('');
   };
@@ -54,28 +62,26 @@ export const CodelistItem = ({ codelist: item, index: i }: Props) => {
     return maybeEditedCodelist && maybeEditedCodelist.id === editMode;
   };
 
-  const isSelectedClass = (maybeSelectedCodelist: ICodelist) => {
-    return codelist && codelist.id === maybeSelectedCodelist.id
-      ? classes.selectedItem
-      : '';
+  const isSelectedClass = () => {
+    return isSelected ? classes.selectedItem : '';
   };
 
   const enterEditMode = (codelistToEdit: ICodelist) => {
-    setCodelist(codelistToEdit);
+    setSelectedCodelist(codelistToEdit);
     setEditMode(codelistToEdit.id);
   };
 
   const enterDeleteMode = (codelistToDelete: ICodelist) => {
-    setCodelist(codelistToDelete);
+    setSelectedCodelist(codelistToDelete);
     setDeleteMode(codelistToDelete.id);
   };
 
-  const renderCodelistItem = (codelistToRender: ICodelist) => {
+  const renderCodelist = (codelistToRender: ICodelist) => {
     return (
       <Box
-        className={`${classes.listItem} ${classes.withHover} ${isSelectedClass(
-          codelistToRender
-        )}`}
+        className={`${classes.listItem} ${
+          classes.withHover
+        } ${isSelectedClass()}`}
       >
         <Box
           className={classes.textItem}
@@ -105,19 +111,20 @@ export const CodelistItem = ({ codelist: item, index: i }: Props) => {
     );
   };
 
-  if (isEditingItem(item)) {
+  if (isEditingItem(codelist)) {
     return (
-      <FormContainerBox sx={{ marginBottom: 1 }} key={i}>
-        <EditCodelistForm codelist={item} handleClose={handleCloseEdit} />
+      <FormContainerBox sx={{ marginBottom: 1 }} key={codelist.id}>
+        <EditCodelistForm codelist={codelist} handleClose={handleCloseEdit} />
       </FormContainerBox>
     );
+  } else {
+    return (
+      <DeleteCodelistForm
+        key={codelist.id}
+        children={renderCodelist(codelist)}
+        codelist={codelist}
+        handleClose={handleCloseDelete}
+      />
+    );
   }
-  return (
-    <DeleteCodelistForm
-      key={i}
-      children={renderCodelistItem(item)}
-      codelist={item}
-      handleClose={handleCloseDelete}
-    />
-  );
 };

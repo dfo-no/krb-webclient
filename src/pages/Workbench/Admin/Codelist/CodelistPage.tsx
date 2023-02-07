@@ -43,7 +43,7 @@ const useStyles = makeStyles({
 });
 
 export default function CodeListPage(): React.ReactElement {
-  const { codelist, codelists, setCodelists } = useSelectState();
+  const { selectedCodelist, allCodelists, setAllCodelists } = useSelectState();
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -52,9 +52,9 @@ export default function CodeListPage(): React.ReactElement {
 
   useEffect(() => {
     if (project && project.codelist) {
-      setCodelists(project.codelist);
+      setAllCodelists(project.codelist);
     }
-  }, [setCodelists, project]);
+  }, [setAllCodelists, project]);
 
   if (isLoading) {
     return <LoaderSpinner />;
@@ -65,7 +65,7 @@ export default function CodeListPage(): React.ReactElement {
   }
 
   const searchFieldCallback = (result: ICodelist[]) => {
-    setCodelists(result);
+    setAllCodelists(result);
   };
 
   const codelistSearch = (searchString: string, list: ICodelist[]) => {
@@ -73,8 +73,8 @@ export default function CodeListPage(): React.ReactElement {
   };
 
   const showCodeContainer = () => {
-    if (codelist) {
-      return codelists.some((cl) => cl.id === codelist.id);
+    if (selectedCodelist) {
+      return allCodelists.some((cl) => cl.id === selectedCodelist.id);
     }
     return false;
   };
