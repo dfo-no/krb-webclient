@@ -11,6 +11,7 @@ import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { ITextQuestion } from '../../Nexus/entities/ITextQuestion';
 import { QuestionVariant } from '../../Nexus/enums';
 import ValidationUtils from '../../common/ValidationUtils';
+import ValidationMessageForm from '../../Form/ValidationMessageForm/ValidationMessageForm';
 
 interface IProps {
   item: ITextQuestion;
@@ -62,20 +63,28 @@ const QuestionAnswerText = ({
                 isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
               }
             >
-              <TextAreaCtrl
-                className={css.TextAreaCtrl}
-                name={'answer.text'}
-                placeholder={t('Answer')}
-                rows={3}
-                color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
-              />
-              {existingAnswer &&
-                !isAwardCriteria &&
-                !ValidationUtils.textQuestion(existingAnswer) && (
-                  <div className={css.error}>
-                    {ValidationUtils.textQuestionValidationMsg()}
-                  </div>
-                )}
+              <ValidationMessageForm
+                isError={
+                  !!existingAnswer &&
+                  !ValidationUtils.textQuestion(existingAnswer) &&
+                  !isAwardCriteria
+                }
+                message={
+                  existingAnswer &&
+                  !isAwardCriteria &&
+                  !ValidationUtils.textQuestion(existingAnswer)
+                    ? ValidationUtils.textQuestionValidationMsg()
+                    : ''
+                }
+              >
+                <TextAreaCtrl
+                  className={css.TextAreaCtrl}
+                  name={'answer.text'}
+                  placeholder={t('Answer')}
+                  rows={3}
+                  color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+                />
+              </ValidationMessageForm>
               {isPrefilledResponse && (
                 <div className={css.Buttons}>
                   <Button type={Type.Submit}>{t('Save')}</Button>
