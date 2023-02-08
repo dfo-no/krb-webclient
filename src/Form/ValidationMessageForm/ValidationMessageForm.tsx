@@ -16,7 +16,11 @@ export default function ValidationMessageForm({
       {children}
       {message && (
         <div
-          className={isError ? css.MessageForm__error : css.MessageForm__info}
+          className={
+            isError
+              ? css.ValidationMessageForm__error
+              : css.ValidationMessageForm__info
+          }
         >
           {message}
         </div>
