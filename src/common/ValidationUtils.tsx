@@ -55,7 +55,11 @@ class ValidationUtils {
         : null;
 
     if (answer >= 0 && min >= 0 && max && step) {
-      return answer >= min && answer <= max && (answer as number) % step === 0;
+      return (
+        answer >= min &&
+        answer <= max &&
+        ((answer as number) * 100) % (step * 100) === 0
+      );
     }
   };
 
