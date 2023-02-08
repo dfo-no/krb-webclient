@@ -12,7 +12,7 @@ import { ITimeQuestion } from '../../Nexus/entities/ITimeQuestion';
 import { QuestionVariant } from '../../Nexus/enums';
 import FlexRowBox from '../FlexBox/FlexRowBox';
 import ValidationUtils from '../../common/ValidationUtils';
-import MessageForm from '../../Form/MessageForm/MessageForm';
+import ValidationMessageForm from '../../Form/ValidationMessageForm/ValidationMessageForm';
 
 interface IProps {
   item: ITimeQuestion;
@@ -65,7 +65,7 @@ const QuestionAnswerTime = ({
             isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
           }
         >
-          <MessageForm
+          <ValidationMessageForm
             isError={
               !!existingAnswer &&
               !ValidationUtils.timeQuestion(existingAnswer) &&
@@ -97,7 +97,7 @@ const QuestionAnswerTime = ({
                 />
               )}
             </FlexRowBox>
-          </MessageForm>
+          </ValidationMessageForm>
           {isPrefilledResponse && (
             <div className={css.Buttons}>
               <Button type={Type.Submit}>{t('Save')}</Button>

@@ -1,14 +1,18 @@
 import React, { ReactNode } from 'react';
 
-import css from './MessageForm.module.scss';
+import css from './ValidationMessageForm.module.scss';
 interface Props {
   children: ReactNode;
   message?: string;
   isError: boolean;
 }
-export default function MessageForm({ children, message, isError }: Props) {
+export default function ValidationMessageForm({
+  children,
+  message,
+  isError,
+}: Props) {
   return (
-    <div className={css.MessageForm} data-error={isError}>
+    <div className={css.ValidationMessageForm} data-error={isError}>
       {children}
       {message && (
         <div

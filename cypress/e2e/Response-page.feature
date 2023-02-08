@@ -69,12 +69,12 @@ Feature: Besvarelse
     When Jeg klikker på accordian knapp av produkt "Verdi"
     Then Ser jeg produkt "Verdi" er lukket
 
-  Scenario: Jeg kan besvare absolute kravet og ser hjelpe tekst og feilmeldinger
+  Scenario: Jeg kan besvare absolute kravet og ser hjelpetekst og feilmeldinger
     Given Jeg lager besvarelse fra spesifikasjon "specification-el-bil-til-kommunedrift.pdf"
     When Jeg klikker på accordian knapp av produkt "El-bil"
-    Then Ser jeg hjelpe Tekst "Angi verdi mellom 1 og 3 i hele 1" for "Seter foran" kravet
+    Then Ser jeg hjelpetekst "Angi verdi mellom 1 og 3 i hele 1" for "Seter foran" kravet
     When Jeg besvarer "Seter foran" kravet med 4
-    Then Ser jeg hjelpe Tekst "Dette er absolutt krav og som må besvares med en verdi mellom 1 og 3 i hele 1" for "Seter foran" kravet
+    Then Ser jeg hjelpetekst "Dette er absolutt krav og som må besvares med en verdi mellom 1 og 3 i hele 1" for "Seter foran" kravet
     When Jeg besvarer "Fabrikk-ny" kravet med "Ja"
     And Jeg besvarer "Fabrikk-ny" kravet med "Nei"
-    Then Ser jeg hjelpe Tekst "Dette er absolutt krav som må besvares" for "Fabrikk-ny" kravet
+    Then Ser jeg hjelpetekst "Dette er absolutt krav som må besvares" for "Fabrikk-ny" kravet

@@ -11,7 +11,7 @@ import { IConfirmationQuestion } from '../../Nexus/entities/IConfirmationQuestio
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { QuestionVariant } from '../../Nexus/enums';
 import ValidationUtils from '../../common/ValidationUtils';
-import MessageForm from '../../Form/MessageForm/MessageForm';
+import ValidationMessageForm from '../../Form/ValidationMessageForm/ValidationMessageForm';
 
 interface IProps {
   item: IConfirmationQuestion;
@@ -65,7 +65,7 @@ const QuestionAnswerConfirmation = ({
                 isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
               }
             >
-              <MessageForm
+              <ValidationMessageForm
                 isError={
                   !!existingAnswer &&
                   !ValidationUtils.confirmationQuestion(existingAnswer) &&
@@ -84,7 +84,7 @@ const QuestionAnswerConfirmation = ({
                   label={t('Confirm')}
                   color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
                 />
-              </MessageForm>
+              </ValidationMessageForm>
               {isPrefilledResponse && (
                 <div className={css.Buttons}>
                   <Button type={Type.Submit}>{t('Save')}</Button>

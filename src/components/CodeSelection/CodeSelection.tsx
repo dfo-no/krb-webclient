@@ -13,7 +13,7 @@ import {
 import { Parentable } from '../../models/Parentable';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import ValidationUtils from '../../common/ValidationUtils';
-import MessageForm from '../../Form/MessageForm/MessageForm';
+import ValidationMessageForm from '../../Form/ValidationMessageForm/ValidationMessageForm';
 
 interface IProps {
   name: string;
@@ -135,7 +135,7 @@ const CodeSelection = ({
         <div className={css.Selection}>
           {mandatoryCodesList().length > 0 && (
             <>
-              <MessageForm
+              <ValidationMessageForm
                 isError={
                   !!existingAnswer &&
                   !!question &&
@@ -148,12 +148,12 @@ const CodeSelection = ({
                 {mandatoryCodesList()?.map((item) => {
                   return renderCodesList(item, selected, onChange);
                 })}
-              </MessageForm>
+              </ValidationMessageForm>
             </>
           )}
           {optionalCodesList().length > 0 && (
             <>
-              <MessageForm
+              <ValidationMessageForm
                 isError={
                   !!existingAnswer &&
                   !!question &&
@@ -169,7 +169,7 @@ const CodeSelection = ({
                 {optionalCodesList()?.map((item) => {
                   return renderCodesList(item, selected, onChange);
                 })}
-              </MessageForm>
+              </ValidationMessageForm>
             </>
           )}
           {!isMandatoryOrOptionalCodes() &&

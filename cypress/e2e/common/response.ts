@@ -134,7 +134,7 @@ Then('Ser jeg produkt {string} er lukket', (productName: string) => {
 });
 
 Then(
-    'Ser jeg hjelpe Tekst {string} for {string} kravet',
+    'Ser jeg hjelpetekst {string} for {string} kravet',
     (infoText: string, title: string) => {
         cy.get('[class^="EditorFullPage"]')
             .contains(title)

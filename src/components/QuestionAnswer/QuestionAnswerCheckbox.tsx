@@ -11,7 +11,7 @@ import { ICheckboxQuestion } from '../../Nexus/entities/ICheckboxQuestion';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { QuestionVariant } from '../../Nexus/enums';
 import ValidationUtils from '../../common/ValidationUtils';
-import MessageForm from '../../Form/MessageForm/MessageForm';
+import ValidationMessageForm from '../../Form/ValidationMessageForm/ValidationMessageForm';
 
 interface IProps {
   item: ICheckboxQuestion;
@@ -61,7 +61,7 @@ const QuestionAnswerCheckbox = ({
             isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
           }
         >
-          <MessageForm
+          <ValidationMessageForm
             isError={
               !!existingAnswer &&
               !ValidationUtils.checkboxQuestion(existingAnswer) &&
@@ -81,7 +81,7 @@ const QuestionAnswerCheckbox = ({
               color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
               isDisabled={isInfo}
             />
-          </MessageForm>
+          </ValidationMessageForm>
           {isPrefilledResponse && (
             <div className={css.Buttons}>
               <Button type={Type.Submit}>{t('Save')}</Button>

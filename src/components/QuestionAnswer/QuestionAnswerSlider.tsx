@@ -12,7 +12,7 @@ import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { QuestionVariant } from '../../Nexus/enums';
 import FlexRowBox from '../FlexBox/FlexRowBox';
 import ValidationUtils from '../../common/ValidationUtils';
-import MessageForm from '../../Form/MessageForm/MessageForm';
+import ValidationMessageForm from '../../Form/ValidationMessageForm/ValidationMessageForm';
 
 interface IProps {
   item: ISliderQuestion;
@@ -65,7 +65,7 @@ const QuestionAnswerSlider = ({
             isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
           }
         >
-          <MessageForm
+          <ValidationMessageForm
             isError={
               !!existingAnswer &&
               !ValidationUtils.sliderQuestion(existingAnswer)
@@ -89,7 +89,7 @@ const QuestionAnswerSlider = ({
                 isDisabled={isInfo}
               />
             </FlexRowBox>
-          </MessageForm>
+          </ValidationMessageForm>
           {isPrefilledResponse && (
             <div className={css.Buttons}>
               <Button type={Type.Submit}>{t('Save')}</Button>
