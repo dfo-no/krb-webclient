@@ -64,6 +64,7 @@ const QuestionAnswerCodelist = ({
           {codesList && (
             <CodeSelection
               name={'answer.codes'}
+              question={item}
               existingAnswer={existingAnswer}
               codesList={codesList}
               codeSelection={item.config.codes}

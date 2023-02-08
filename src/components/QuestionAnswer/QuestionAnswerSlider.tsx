@@ -12,6 +12,7 @@ import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { QuestionVariant } from '../../Nexus/enums';
 import FlexRowBox from '../FlexBox/FlexRowBox';
 import ValidationUtils from '../../common/ValidationUtils';
+import MessageForm from '../../Form/MessageForm/MessageForm';
 
 interface IProps {
   item: ISliderQuestion;
@@ -64,31 +65,32 @@ const QuestionAnswerSlider = ({
             isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
           }
         >
-          <FlexRowBox>
-            <HorizontalTextCtrl
-              id={'answerValue'}
-              name={'answer.value'}
-              placeholder={t('Value')}
-              type={'number'}
-              adornment={item.config.unit}
-              color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
-              isDisabled={isInfo}
-            />
-          </FlexRowBox>
-          {existingAnswer &&
-            (!isAwardCriteria &&
-            !ValidationUtils.sliderQuestion(existingAnswer) ? (
-              <div className={css.error}>
-                {ValidationUtils.sliderQuestionValidationMsg(existingAnswer)}
-              </div>
-            ) : (
-              <div className={css.info}>
-                {ValidationUtils.sliderQuestionValidationMsg(
-                  existingAnswer,
-                  'INFO'
-                )}
-              </div>
-            ))}
+          <MessageForm
+            isError={
+              !!existingAnswer &&
+              !ValidationUtils.sliderQuestion(existingAnswer) &&
+              !isAwardCriteria
+            }
+            message={
+              existingAnswer &&
+              !isAwardCriteria &&
+              !ValidationUtils.sliderQuestion(existingAnswer)
+                ? ValidationUtils.sliderQuestionValidationMsg(item)
+                : ValidationUtils.sliderQuestionValidationMsg(item, true)
+            }
+          >
+            <FlexRowBox>
+              <HorizontalTextCtrl
+                id={'answerValue'}
+                name={'answer.value'}
+                placeholder={t('Value')}
+                type={'number'}
+                adornment={item.config.unit}
+                color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+                isDisabled={isInfo}
+              />
+            </FlexRowBox>
+          </MessageForm>
           {isPrefilledResponse && (
             <div className={css.Buttons}>
               <Button type={Type.Submit}>{t('Save')}</Button>

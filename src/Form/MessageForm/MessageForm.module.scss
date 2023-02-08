@@ -1,0 +1,17 @@
+.MessageForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tiny-gap);
+
+  &[data-error='true'] {
+    padding-left: var(--tiny-gap);
+    border-left: 0.2rem solid var(--error-color);
+  }
+
+  &__error {
+    color: var(--error-color);
+  }
+  &__info {
+    color: var(--warning-color-secondary);
+  }
+}
