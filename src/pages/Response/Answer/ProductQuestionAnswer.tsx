@@ -96,6 +96,7 @@ export default function ProductQuestionAnswer({
           onSubmit={onSubmit}
           codesList={codesList}
           isInfo={isInfo}
+          isAwardCriteria={isAwardCriteria}
         />
       );
     case QuestionVariant.Q_CONFIRMATION:

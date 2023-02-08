@@ -22,6 +22,7 @@ interface IProps {
   codesList: Parentable<ICode>[];
   codeSelection?: ICodeSelection[];
   isDisabled?: boolean;
+  isAwardCriteria?: boolean;
 }
 
 const CodeSelection = ({
@@ -31,6 +32,7 @@ const CodeSelection = ({
   codesList,
   codeSelection,
   isDisabled,
+  isAwardCriteria,
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const location = useLocation();
@@ -137,7 +139,8 @@ const CodeSelection = ({
                 isError={
                   !!existingAnswer &&
                   !!question &&
-                  !ValidationUtils.codelistMandatoryQuestion(existingAnswer)
+                  !ValidationUtils.codelistMandatoryQuestion(existingAnswer) &&
+                  !isAwardCriteria
                 }
                 message={ValidationUtils.codelistMandatoryValidationMsg()}
               >
@@ -154,7 +157,8 @@ const CodeSelection = ({
                 isError={
                   !!existingAnswer &&
                   !!question &&
-                  !ValidationUtils.codelistOptionalQuestion(existingAnswer)
+                  !ValidationUtils.codelistOptionalQuestion(existingAnswer) &&
+                  !isAwardCriteria
                 }
                 message={
                   question &&
