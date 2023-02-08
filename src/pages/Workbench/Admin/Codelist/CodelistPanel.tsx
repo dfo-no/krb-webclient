@@ -21,20 +21,20 @@ const CodelistPanel = (): React.ReactElement => {
   const classes = usePanelStyles();
   const { codelist, setCodelist, codelists, setCodelists } = useSelectState();
   const {
-    editMode,
-    setEditMode,
+    currentlyEditedItemId,
+    setCurrentlyEditedItemId,
     isCreating,
     setCreating,
-    deleteMode,
-    setDeleteMode,
+    deleteCandidateId,
+    setDeleteCandidateId,
   } = useEditableState();
 
   const itemClicked = (item: ICodelist) => {
-    if (editMode !== '') {
-      setEditMode('');
+    if (currentlyEditedItemId !== '') {
+      setCurrentlyEditedItemId('');
     }
-    if (deleteMode !== '') {
-      setDeleteMode('');
+    if (deleteCandidateId !== '') {
+      setDeleteCandidateId('');
     }
     setCodelist(item);
   };
@@ -43,7 +43,7 @@ const CodelistPanel = (): React.ReactElement => {
     if (newCodelist) {
       setCodelist(newCodelist);
     }
-    setEditMode('');
+    setCurrentlyEditedItemId('');
   };
 
   const handleCloseCreate = (newCodelist: ICodelist | null) => {
@@ -59,11 +59,11 @@ const CodelistPanel = (): React.ReactElement => {
       setCodelist(null);
       setCodelists(Utils.removeElementFromList(deletedCodelist, codelists));
     }
-    setDeleteMode('');
+    setDeleteCandidateId('');
   };
 
   const isEditingItem = (item: ICodelist) => {
-    return item && item.id === editMode;
+    return item && item.id === currentlyEditedItemId;
   };
 
   const selectedClass = (item: ICodelist) => {
@@ -72,12 +72,12 @@ const CodelistPanel = (): React.ReactElement => {
 
   const enterEditMode = (item: ICodelist) => {
     setCodelist(item);
-    setEditMode(item.id);
+    setCurrentlyEditedItemId(item.id);
   };
 
   const enterDeleteMode = (item: ICodelist) => {
     setCodelist(item);
-    setDeleteMode(item.id);
+    setDeleteCandidateId(item.id);
   };
 
   const renderCodelistItem = (item: ICodelist) => {

@@ -27,7 +27,7 @@ export default function DeleteProjectForm({
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { deleteProject } = useProjectMutations();
-  const { deleteMode } = useEditableState();
+  const { deleteCandidateId } = useEditableState();
   const uuidService = new UuidService();
 
   const methods = useForm<IBank>({
@@ -35,7 +35,7 @@ export default function DeleteProjectForm({
     resolver: nexus.resolverService.resolver(ModelType.bank),
   });
 
-  if (deleteMode !== bank.id) {
+  if (deleteCandidateId !== bank.id) {
     return children;
   }
 
