@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Box, Typography } from '@mui/material/';
-import { useParams } from 'react-router-dom';
 
 import CodeAddButton from './CodeAddButton';
 import DeleteCodeForm from './DeleteCodeForm';
@@ -15,17 +14,22 @@ import Utils from '../../../../common/Utils';
 import { FormContainerBox } from '../../../../components/Form/FormContainerBox';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { ICode } from '../../../../Nexus/entities/ICode';
-import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { Parentable } from '../../../../models/Parentable';
 import { ScrollableContainer } from '../../../../components/ScrollableContainer/ScrollableContainer';
-import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { usePanelStyles } from './CodelistStyles';
-import { useSelectState } from './SelectContext';
+import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 
-const CodePanel = (): React.ReactElement => {
+type Props = {
+  selectedCodelist: ICodelist;
+  setSelectedCodelist: Dispatch<SetStateAction<ICodelist | null>>;
+};
+
+export const CodePanel = ({
+  selectedCodelist,
+  setSelectedCodelist,
+}: Props): React.ReactElement => {
   const classes = usePanelStyles();
-  const { selectedCodelist, setSelectedCodelist } = useSelectState();
   const {
     currentlyEditedItemId,
     setCurrentlyEditedItemId,
@@ -36,8 +40,6 @@ const CodePanel = (): React.ReactElement => {
   } = useEditableState();
   const [codes, setCodes] = useState<Parentable<ICode>[]>([]);
 
-  const { projectId } = useParams<IRouteProjectParams>();
-  const { data: project } = useGetProjectQuery(projectId);
   const { editCodes } = useProjectMutations();
 
   useEffect(() => {
@@ -47,11 +49,6 @@ const CodePanel = (): React.ReactElement => {
       setCodes(selectedCodelist.codes);
     }
   }, [selectedCodelist, setCurrentlyEditedItemId, setCreating]);
-
-  // If no codelist is selected, we cant create the component
-  if (!selectedCodelist || !project) {
-    return <></>;
-  }
 
   const updateCodesArrangement = (newCodes: Parentable<ICode>[]) => {
     setCodes(newCodes);
@@ -171,5 +168,3 @@ const CodePanel = (): React.ReactElement => {
     </Box>
   );
 };
-
-export default CodePanel;

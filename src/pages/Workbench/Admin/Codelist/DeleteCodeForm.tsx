@@ -1,5 +1,4 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
 import Nexus from '../../../../Nexus/Nexus';
@@ -8,11 +7,9 @@ import { DeleteFrame } from '../../../../components/DeleteFrame/DeleteFrame';
 import { Alert } from '../../../../models/Alert';
 import { ICode } from '../../../../Nexus/entities/ICode';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
-import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { ModelType } from '../../../../Nexus/enums';
 import { Parentable } from '../../../../models/Parentable';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
-import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface Props {
@@ -38,26 +35,15 @@ export default function DeleteCodeForm({
     resolver: nexus.resolverService.resolver(ModelType.code),
   });
 
-  const { projectId } = useParams<IRouteProjectParams>();
-  const { data: project } = useGetProjectQuery(projectId);
-
-  if (deleteCandidateId !== code.id) {
-    return children;
-  }
-
-  if (!project) {
-    return <></>;
-  }
-
-  const onSubmit = (post: Parentable<ICode>): void => {
-    deleteCode(post, codelist).then(() => {
+  const onSubmit = (codeToDelete: Parentable<ICode>): void => {
+    deleteCode(codeToDelete, codelist).then(() => {
       const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully deleted code',
       };
       addAlert(alert);
-      handleClose(post);
+      handleClose(codeToDelete);
     });
   };
 
@@ -70,6 +56,7 @@ export default function DeleteCodeForm({
       >
         <DeleteFrame
           children={children}
+          activated={deleteCandidateId === code.id}
           canBeDeleted={true}
           infoText={''}
           handleClose={() => handleClose(null)}

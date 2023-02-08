@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import CodelistPanel from './CodelistPanel';
-import CodePanel from './CodePanel';
+import { CodePanel } from './CodePanel';
 import DFOSearchBar from '../../../../components/DFOSearchBar/DFOSearchBar';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import SearchUtils from '../../../../common/SearchUtils';
@@ -43,7 +43,12 @@ const useStyles = makeStyles({
 });
 
 export default function CodeListPage(): React.ReactElement {
-  const { selectedCodelist, allCodelists, setAllCodelists } = useSelectState();
+  const {
+    selectedCodelist,
+    setSelectedCodelist,
+    allCodelists,
+    setAllCodelists,
+  } = useSelectState();
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -98,9 +103,12 @@ export default function CodeListPage(): React.ReactElement {
           </EditableProvider>
         </Box>
         <Box className={classes.codeContainer}>
-          {showCodeContainer() && (
+          {showCodeContainer() && selectedCodelist && (
             <EditableProvider>
-              <CodePanel />
+              <CodePanel
+                selectedCodelist={selectedCodelist}
+                setSelectedCodelist={setSelectedCodelist}
+              />
             </EditableProvider>
           )}
         </Box>
