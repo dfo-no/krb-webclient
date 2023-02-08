@@ -18,7 +18,7 @@ interface Props {
 const VariantsList = ({ requirement, requirementIndex }: Props) => {
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
-  const { needIndex, setDeleteMode, createVariant, setCreateVariant } =
+  const { needIndex, setDeleteCandidateId, createVariant, setCreateVariant } =
     useSelectState();
   const { setOpenVariants } = useVariantState();
 
@@ -27,7 +27,7 @@ const VariantsList = ({ requirement, requirementIndex }: Props) => {
   }
 
   const variantDeleted = (variantId: string) => {
-    setDeleteMode('');
+    setDeleteCandidateId('');
     setOpenVariants((ov) => {
       const tmp = [...ov];
       tmp.splice(tmp.indexOf(variantId), 1);

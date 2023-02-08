@@ -24,7 +24,7 @@ const PublicationItem = ({
   chooseSpecification,
 }: Props): ReactElement => {
   const { t } = useTranslation();
-  const { setDeleteMode } = useEditableState();
+  const { setDeleteCandidateId } = useEditableState();
 
   const { data: bank } = useGetBankQuery(publication.bankId);
   const specification = bank
@@ -32,11 +32,11 @@ const PublicationItem = ({
     : null;
 
   const handleCloseDelete = () => {
-    setDeleteMode('');
+    setDeleteCandidateId('');
   };
 
   const enterDeleteMode = (item: IPublication): void => {
-    setDeleteMode(item.id);
+    setDeleteCandidateId(item.id);
   };
 
   return (

@@ -20,7 +20,7 @@ import { HeaderContainer } from '../../../components/Header/HeaderContext';
 export default function Create(): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project, isLoading } = useGetProjectQuery(projectId);
-  const { needIndex, setNeedIndex, setNeedId, setDeleteMode } =
+  const { needIndex, setNeedIndex, setNeedId, setDeleteCandidateId } =
     useSelectState();
   const { setTitle } = HeaderContainer.useContainer();
 
@@ -69,7 +69,7 @@ export default function Create(): React.ReactElement {
   }
 
   const needDeleted = (): void => {
-    setDeleteMode('');
+    setDeleteCandidateId('');
     if (project.needs.length === 1) {
       setNeedIndex(null);
       setNeedId(null);

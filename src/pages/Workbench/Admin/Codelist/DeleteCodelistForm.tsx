@@ -30,7 +30,7 @@ export default function DeleteCodelistForm({
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
-  const { deleteMode } = useEditableState();
+  const { deleteCandidateId } = useEditableState();
 
   const methods = useForm<ICodelist>({
     defaultValues: codelist,
@@ -40,7 +40,7 @@ export default function DeleteCodelistForm({
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
 
-  if (deleteMode !== codelist.id) {
+  if (deleteCandidateId !== codelist.id) {
     return children;
   }
 

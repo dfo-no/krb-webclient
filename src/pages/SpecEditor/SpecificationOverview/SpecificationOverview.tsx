@@ -47,7 +47,7 @@ export default function SpecificationOverview(): React.ReactElement {
   const { specification, openProductSelection, setOpenProductSelection } =
     useSpecificationState();
   const history = useHistory();
-  const { setDeleteMode } = useSelectState();
+  const { setDeleteCandidateId } = useSelectState();
   const [editingSpecification, setEditingSpecification] = useState(false);
 
   const open = (): void => {
@@ -56,12 +56,12 @@ export default function SpecificationOverview(): React.ReactElement {
     }
   };
   const onDelete = (): void => {
-    setDeleteMode('');
+    setDeleteCandidateId('');
   };
 
   const handleDelete = (pid: string): void => {
     if (!editingSpecification) {
-      setDeleteMode(pid);
+      setDeleteCandidateId(pid);
     }
   };
 

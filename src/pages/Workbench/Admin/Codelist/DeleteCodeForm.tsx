@@ -31,7 +31,7 @@ export default function DeleteCodeForm({
   const { deleteCode } = useProjectMutations();
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
-  const { deleteMode } = useEditableState();
+  const { deleteCandidateId } = useEditableState();
 
   const methods = useForm<Parentable<ICode>>({
     defaultValues: code,
@@ -41,7 +41,7 @@ export default function DeleteCodeForm({
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
 
-  if (deleteMode !== code.id) {
+  if (deleteCandidateId !== code.id) {
     return children;
   }
 

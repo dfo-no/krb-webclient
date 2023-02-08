@@ -23,10 +23,10 @@ const DeletePublicationForm = ({
   publication,
   handleClose,
 }: Props): ReactElement => {
-  const { deleteMode } = useEditableState();
+  const { deleteCandidateId } = useEditableState();
   const { deletePublication } = useProjectMutations();
   const { data: publicationBank } = useGetBankQuery(publication.id, {
-    skip: deleteMode !== publication.id,
+    skip: deleteCandidateId !== publication.id,
   });
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
@@ -60,7 +60,7 @@ const DeletePublicationForm = ({
       });
   };
 
-  if (deleteMode !== publication.id) {
+  if (deleteCandidateId !== publication.id) {
     return children;
   }
 

@@ -39,7 +39,8 @@ const Requirement = ({ requirementIndex }: Props) => {
   const { openVariants } = useVariantState();
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
-  const { needIndex, setDeleteMode, setCreateVariant } = useSelectState();
+  const { needIndex, setDeleteCandidateId, setCreateVariant } =
+    useSelectState();
 
   if (!project || needIndex === null) {
     return <></>;
@@ -50,7 +51,7 @@ const Requirement = ({ requirementIndex }: Props) => {
   };
 
   const requirementDeleted = () => {
-    setDeleteMode('');
+    setDeleteCandidateId('');
   };
 
   const renderRequirement = () => {
@@ -81,7 +82,7 @@ const Requirement = ({ requirementIndex }: Props) => {
           <FormIconButton
             hoverColor={theme.palette.errorRed.main}
             onClick={() =>
-              setDeleteMode(
+              setDeleteCandidateId(
                 project.needs[needIndex].requirements[requirementIndex].id
               )
             }

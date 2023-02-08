@@ -25,7 +25,8 @@ import NewTagForm from './NewTagForm';
 
 export default function TagPage(): React.ReactElement {
   const { t } = useTranslation();
-  const { setEditMode, setCreating, setDeleteMode } = useEditableState();
+  const { setCurrentlyEditedItemId, setCreating, setDeleteCandidateId } =
+    useEditableState();
   const [tags, setTags] = useState<Parentable<ITag>[]>([]);
 
   const { projectId } = useParams<IRouteProjectParams>();
@@ -82,7 +83,10 @@ export default function TagPage(): React.ReactElement {
         inputlist={tags}
         CreateComponent={<NewTagForm handleClose={() => setCreating(false)} />}
         EditComponent={(item: Parentable<ITag>) => (
-          <EditTagForm tag={item} handleClose={() => setEditMode('')} />
+          <EditTagForm
+            tag={item}
+            handleClose={() => setCurrentlyEditedItemId('')}
+          />
         )}
         DeleteComponent={(
           item: Parentable<ITag>,
@@ -91,7 +95,7 @@ export default function TagPage(): React.ReactElement {
           <DeleteTagForm
             children={children}
             tag={item}
-            handleClose={() => setDeleteMode('')}
+            handleClose={() => setDeleteCandidateId('')}
           />
         )}
         depth={8}

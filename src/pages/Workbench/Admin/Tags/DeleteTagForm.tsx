@@ -31,7 +31,7 @@ export default function DeleteTagForm({
   const nexus = Nexus.getInstance();
   const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
-  const { deleteMode } = useEditableState();
+  const { deleteCandidateId } = useEditableState();
 
   const methods = useForm<Parentable<ITag>>({
     defaultValues: tag,
@@ -41,7 +41,7 @@ export default function DeleteTagForm({
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
 
-  if (deleteMode !== tag.id) {
+  if (deleteCandidateId !== tag.id) {
     return children;
   }
 
