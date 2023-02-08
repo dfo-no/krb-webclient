@@ -240,18 +240,16 @@ function ResponseOverview(): React.ReactElement {
           caseNumber={specification?.caseNumber}
         />
         {isGeneralRequirements() && generalRequirements()}
-        <ul>
-          {specification.products.length > 0 && (
-            <ProductsAccordion
-              specProducts={specification.products}
-              absoluteRequirements={absoluteRequirements}
-              absoluteRequirementAnswered={absoluteRequirementAnswered}
-              totalEvaluatedDiscount={totalEvaluatedDiscount}
-              isMandatoryRequirements={isMandatoryRequirements}
-              isAwardedRequirements={isAwardedRequirements}
-            />
-          )}
-        </ul>
+        {specification.products.length > 0 && (
+          <ProductsAccordion
+            specProducts={specification.products}
+            absoluteRequirements={absoluteRequirements}
+            absoluteRequirementAnswered={absoluteRequirementAnswered}
+            totalEvaluatedDiscount={totalEvaluatedDiscount}
+            isMandatoryRequirements={isMandatoryRequirements}
+            isAwardedRequirements={isAwardedRequirements}
+          />
+        )}
       </div>
     </div>
   );

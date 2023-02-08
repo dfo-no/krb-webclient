@@ -82,7 +82,8 @@ export default function ProductsAccordion({
 
   const renderProducts = (
     product: ISpecificationProduct,
-    responseProduct: IResponseProduct
+    responseProduct: IResponseProduct,
+    index: number
   ) => {
     const renderProductInfo = () => {
       return (
@@ -146,7 +147,9 @@ export default function ProductsAccordion({
             ))}
         </div>
         <div>{renderProductInfo()}</div>
-        <div className={style.Description}>
+        <div
+          className={productIndex !== index ? style.Description : css.Hidden}
+        >
           <Typography>{product.description}</Typography>
         </div>
       </div>
@@ -164,16 +167,10 @@ export default function ProductsAccordion({
           productResponse = response.products[i];
           return (
             <ul key={i}>
-              <li>
-                <div
-                  className={css.Header}
-                  onClick={() => handleClick(i)}
-                  data-expanded={productIndex == i}
-                >
-                  <div>
-                    {specProducts.length > 0 &&
-                      renderProducts(p, productResponse)}
-                  </div>
+              <li data-expanded={productIndex == i}>
+                <div className={css.Header} onClick={() => handleClick(i)}>
+                  {specProducts.length > 0 &&
+                    renderProducts(p, productResponse, i)}
                   <span className={css.Header__icon}>
                     {productIndex == i ? <ExpandLess /> : <ExpandMore />}
                   </span>
