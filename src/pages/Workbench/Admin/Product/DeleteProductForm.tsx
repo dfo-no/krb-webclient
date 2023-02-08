@@ -21,12 +21,14 @@ interface Props {
   children: React.ReactElement;
   product: Parentable<IProduct>;
   handleClose: () => void;
+  handleCancel: () => void;
 }
 
 export default function DeleteProductForm({
   children,
   product,
   handleClose,
+  handleCancel,
 }: Props): React.ReactElement {
   const { deleteProduct } = useProjectMutations();
   const { addAlert } = AlertsContainer.useContainer();
@@ -93,7 +95,7 @@ export default function DeleteProductForm({
           children={children}
           canBeDeleted={!hasChildren}
           infoText={infoText}
-          handleClose={handleClose}
+          handleCancel={handleCancel}
         />
       </form>
     </FormProvider>

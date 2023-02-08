@@ -18,13 +18,15 @@ import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 interface Props {
   children: React.ReactElement;
   codelist: ICodelist;
-  handleClose: (codelist: ICodelist | null) => void;
+  handleClose: (codelist: ICodelist) => void;
+  handleCancel: () => void;
 }
 
 export default function DeleteCodelistForm({
   children,
   codelist,
   handleClose,
+  handleCancel,
 }: Props): React.ReactElement {
   const { deleteCodelist } = useProjectMutations();
   const { addAlert } = AlertsContainer.useContainer();
@@ -79,7 +81,7 @@ export default function DeleteCodelistForm({
           children={children}
           canBeDeleted={!isInUse}
           infoText={infoText}
-          handleClose={() => handleClose(null)}
+          handleCancel={handleCancel}
         />
       </form>
     </FormProvider>

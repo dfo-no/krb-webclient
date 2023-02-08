@@ -18,13 +18,15 @@ import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 interface Props {
   codelist: ICodelist;
   code: Parentable<ICode>;
-  handleClose: (newCode: Parentable<ICode> | null) => void;
+  handleClose: (newCode: Parentable<ICode>) => void;
+  handleCancel: () => void;
 }
 
 function EditCodeForm({
   codelist,
   code,
   handleClose,
+  handleCancel,
 }: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
@@ -69,7 +71,7 @@ function EditCodeForm({
             label={t('Description')}
             placeholder={''}
           />
-          <FormButtons handleClose={() => handleClose(null)} />
+          <FormButtons handleCancel={handleCancel} />
         </FormItemBox>
       </form>
     </FormProvider>

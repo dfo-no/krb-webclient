@@ -19,7 +19,8 @@ interface Props {
   children: React.ReactElement;
   codelist: ICodelist;
   code: Parentable<ICode>;
-  handleClose: (code: Parentable<ICode> | null) => void;
+  handleClose: (code: Parentable<ICode>) => void;
+  handleCancel: () => void;
 }
 
 export default function DeleteCodeForm({
@@ -27,6 +28,7 @@ export default function DeleteCodeForm({
   codelist,
   code,
   handleClose,
+  handleCancel,
 }: Props): React.ReactElement {
   const { deleteCode } = useProjectMutations();
   const { addAlert } = AlertsContainer.useContainer();
@@ -72,7 +74,7 @@ export default function DeleteCodeForm({
           children={children}
           canBeDeleted={true}
           infoText={''}
-          handleClose={() => handleClose(null)}
+          handleCancel={handleCancel}
         />
       </form>
     </FormProvider>

@@ -55,7 +55,8 @@ export default function SpecificationOverview(): React.ReactElement {
       setOpenProductSelection(true);
     }
   };
-  const onDelete = (): void => {
+
+  const onFinished = (): void => {
     setDeleteCandidateId('');
   };
 
@@ -141,7 +142,11 @@ export default function SpecificationOverview(): React.ReactElement {
     };
     return (
       <li key={product.id}>
-        <DeleteSpecProduct product={product} handleClose={onDelete}>
+        <DeleteSpecProduct
+          product={product}
+          handleClose={onFinished}
+          handleCancel={onFinished}
+        >
           <div className={css.CardContent}>
             <div className={css.CardTitle}>
               <Typography className={css.Text} variant="mdBold">

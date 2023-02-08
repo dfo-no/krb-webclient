@@ -19,12 +19,14 @@ import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface Props {
   codelist: ICodelist;
-  handleClose: (newCode: Parentable<ICode> | null) => void;
+  handleClose: (newCode: Parentable<ICode>) => void;
+  handleCancel: () => void;
 }
 
 export default function NewCodeForm({
   codelist,
   handleClose,
+  handleCancel,
 }: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
@@ -75,7 +77,7 @@ export default function NewCodeForm({
             label={t('Description')}
             placeholder={''}
           />
-          <FormButtons handleClose={() => handleClose(null)} />
+          <FormButtons handleCancel={handleCancel} />
         </FormItemBox>
       </form>
     </FormProvider>

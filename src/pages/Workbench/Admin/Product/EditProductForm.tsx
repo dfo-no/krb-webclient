@@ -16,12 +16,14 @@ import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface Props {
   product: Parentable<IProduct>;
-  handleClose: (newProduct: Parentable<IProduct> | null) => void;
+  handleClose: (newProduct: Parentable<IProduct>) => void;
+  handleCancel: () => void;
 }
 
 export default function EditProductForm({
   product,
   handleClose,
+  handleCancel,
 }: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
@@ -67,7 +69,7 @@ export default function EditProductForm({
             placeholder={''}
           />
           <VerticalTextCtrl name="unit" label={t('Unit')} placeholder={''} />
-          <FormButtons handleClose={() => handleClose(null)} />
+          <FormButtons handleCancel={handleCancel} />
         </FormItemBox>
       </form>
     </FormProvider>

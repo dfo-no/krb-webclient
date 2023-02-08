@@ -30,9 +30,10 @@ export default function EditProduct(): React.ReactElement {
 
   const product = specification.products.find((prod) => prod.id === productId);
 
-  const onDelete = (): void => {
+  const onFinished = (): void => {
     setDeleteCandidateId('');
   };
+
   const toOverviewPage = (): void => {
     history.push(`/${SPECIFICATION}/${specification.id}`);
   };
@@ -71,7 +72,11 @@ export default function EditProduct(): React.ReactElement {
   };
 
   return (
-    <DeleteSpecProduct product={product} handleClose={onDelete}>
+    <DeleteSpecProduct
+      product={product}
+      handleClose={onFinished}
+      handleCancel={onFinished}
+    >
       <div className={css.ProductOverview}>
         <div className={css.ProductOverview__content}>
           {!editingProduct && (

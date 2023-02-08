@@ -20,11 +20,16 @@ import { Parentable } from '../../../../models/Parentable';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface Props {
-  handleClose: (need: Parentable<INeed> | null) => void;
   need: Parentable<INeed>;
+  handleClose: (need: Parentable<INeed>) => void;
+  handleCancel: () => void;
 }
 
-function EditNeedForm({ need, handleClose }: Props): React.ReactElement {
+function EditNeedForm({
+  need,
+  handleClose,
+  handleCancel,
+}: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
@@ -72,7 +77,7 @@ function EditNeedForm({ need, handleClose }: Props): React.ReactElement {
             />
           </ModalFieldsBox>
           <ModalButtonsBox>
-            <ModalButton variant="cancel" onClick={() => handleClose(null)}>
+            <ModalButton variant="cancel" onClick={handleCancel}>
               {t('common.Cancel')}
             </ModalButton>
             <ModalButton variant="save" type="submit">
