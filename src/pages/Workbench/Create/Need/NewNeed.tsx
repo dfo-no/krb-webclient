@@ -25,12 +25,11 @@ const NewNeed = ({ buttonText }: Props) => {
     return <></>;
   }
 
-  const onClose = (newNeed: Parentable<INeed> | null) => {
+  const onClose = (newNeed: Parentable<INeed>) => {
     setOpen(false);
-    if (newNeed) {
-      setNeedIndex(project.needs.length);
-      setNeedId(newNeed.id);
-    }
+
+    setNeedIndex(project.needs.length);
+    setNeedId(newNeed.id);
   };
 
   return (
@@ -47,7 +46,12 @@ const NewNeed = ({ buttonText }: Props) => {
       <Dialog
         isOpen={isOpen}
         handleClose={() => setOpen(false)}
-        children={<NewNeedForm handleClose={onClose} />}
+        children={
+          <NewNeedForm
+            handleClose={onClose}
+            handleCancel={() => setOpen(false)}
+          />
+        }
       />
     </Box>
   );

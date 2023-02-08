@@ -65,27 +65,24 @@ const CodePanel = (): React.ReactElement => {
     return item && item.id === currentlyEditedItemId;
   };
 
-  const handleCloseEdit = (newCode: Parentable<ICode> | null) => {
-    if (newCode) {
-      const newCodes = Utils.replaceElementInList(newCode, codelist.codes);
-      setCodelist({ ...codelist, codes: newCodes });
-    }
+  const handleCloseEdit = (newCode: Parentable<ICode>) => {
+    const newCodes = Utils.replaceElementInList(newCode, codelist.codes);
+    setCodelist({ ...codelist, codes: newCodes });
+
     setCurrentlyEditedItemId('');
   };
 
-  const handleCloseCreate = (newCode: Parentable<ICode> | null) => {
-    if (newCode) {
-      const newCodes = Utils.addElementToList(newCode, codelist.codes);
-      setCodelist({ ...codelist, codes: newCodes });
-    }
+  const handleCloseCreate = (newCode: Parentable<ICode>) => {
+    const newCodes = Utils.addElementToList(newCode, codelist.codes);
+    setCodelist({ ...codelist, codes: newCodes });
+
     setCreating(false);
   };
 
-  const handleCloseDelete = (deletedCode: Parentable<ICode> | null) => {
-    if (deletedCode) {
-      const newCodes = Utils.removeElementFromList(deletedCode, codelist.codes);
-      setCodelist({ ...codelist, codes: newCodes });
-    }
+  const handleCloseDelete = (deletedCode: Parentable<ICode>) => {
+    const newCodes = Utils.removeElementFromList(deletedCode, codelist.codes);
+    setCodelist({ ...codelist, codes: newCodes });
+
     setDeleteCandidateId('');
   };
 
@@ -128,6 +125,7 @@ const CodePanel = (): React.ReactElement => {
             codelist={codelist}
             code={item}
             handleClose={handleCloseEdit}
+            handleCancel={() => setCurrentlyEditedItemId('')}
           />
         </FormContainerBox>
       );
@@ -138,6 +136,7 @@ const CodePanel = (): React.ReactElement => {
         codelist={codelist}
         code={item}
         handleClose={handleCloseDelete}
+        handleCancel={() => setDeleteCandidateId('')}
       />
     );
   };
@@ -147,7 +146,11 @@ const CodePanel = (): React.ReactElement => {
       <CodeAddButton onClick={() => setCreating(true)} />
       {isCreating && (
         <FormContainerBox sx={{ marginBottom: 1 }}>
-          <NewCodeForm codelist={codelist} handleClose={handleCloseCreate} />
+          <NewCodeForm
+            codelist={codelist}
+            handleClose={handleCloseCreate}
+            handleCancel={() => setCreating(false)}
+          />
         </FormContainerBox>
       )}
       <ScrollableContainer>

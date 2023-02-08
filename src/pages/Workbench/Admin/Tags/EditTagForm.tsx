@@ -66,7 +66,7 @@ export default function EditTagForm({
             label={t('Description')}
             placeholder={''}
           />
-          <FormButtons handleClose={() => handleClose()} />
+          <FormButtons handleCancel={() => handleClose()} />
         </FormItemBox>
       </form>
     </FormProvider>

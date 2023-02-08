@@ -65,7 +65,7 @@ export default function DeleteProjectForm({
           children={children}
           canBeDeleted={true}
           infoText={infoText}
-          handleClose={handleClose}
+          handleCancel={handleClose}
         />
       </form>
     </FormProvider>

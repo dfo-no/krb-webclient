@@ -39,26 +39,23 @@ const CodelistPanel = (): React.ReactElement => {
     setCodelist(item);
   };
 
-  const handleCloseEdit = (newCodelist: ICodelist | null) => {
-    if (newCodelist) {
-      setCodelist(newCodelist);
-    }
+  const handleCloseEdit = (newCodelist: ICodelist) => {
+    setCodelist(newCodelist);
+
     setCurrentlyEditedItemId('');
   };
 
-  const handleCloseCreate = (newCodelist: ICodelist | null) => {
-    if (newCodelist) {
-      setCodelist(newCodelist);
-      setCodelists(Utils.addElementToList(newCodelist, codelists));
-    }
+  const handleCloseCreate = (newCodelist: ICodelist) => {
+    setCodelist(newCodelist);
+    setCodelists(Utils.addElementToList(newCodelist, codelists));
+
     setCreating(false);
   };
 
-  const handleCloseDelete = (deletedCodelist: ICodelist | null) => {
-    if (deletedCodelist) {
-      setCodelist(null);
-      setCodelists(Utils.removeElementFromList(deletedCodelist, codelists));
-    }
+  const handleCloseDelete = (deletedCodelist: ICodelist) => {
+    setCodelist(null);
+    setCodelists(Utils.removeElementFromList(deletedCodelist, codelists));
+
     setDeleteCandidateId('');
   };
 
@@ -116,7 +113,11 @@ const CodelistPanel = (): React.ReactElement => {
     if (isEditingItem(item)) {
       return (
         <FormContainerBox sx={{ marginBottom: 1 }} key={i}>
-          <EditCodelistForm codelist={item} handleClose={handleCloseEdit} />
+          <EditCodelistForm
+            codelist={item}
+            handleClose={handleCloseEdit}
+            handleCancel={() => setCurrentlyEditedItemId('')}
+          />
         </FormContainerBox>
       );
     }
@@ -126,6 +127,7 @@ const CodelistPanel = (): React.ReactElement => {
         children={renderCodelistItem(item)}
         codelist={item}
         handleClose={handleCloseDelete}
+        handleCancel={() => setDeleteCandidateId('')}
       />
     );
   };
@@ -135,7 +137,10 @@ const CodelistPanel = (): React.ReactElement => {
       <CodelistAddButton onClick={() => setCreating(true)} />
       {isCreating && (
         <FormContainerBox>
-          <NewCodelistForm handleClose={handleCloseCreate} />
+          <NewCodelistForm
+            handleClose={handleCloseCreate}
+            handleCancel={() => setCreating(false)}
+          />
         </FormContainerBox>
       )}
       <ScrollableContainer>
