@@ -68,8 +68,7 @@ const QuestionAnswerSlider = ({
           <MessageForm
             isError={
               !!existingAnswer &&
-              !ValidationUtils.sliderQuestion(existingAnswer) &&
-              !isAwardCriteria
+              !ValidationUtils.sliderQuestion(existingAnswer)
             }
             message={
               existingAnswer &&
