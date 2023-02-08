@@ -11,7 +11,7 @@ interface IProps {
   activated?: boolean;
   canBeDeleted: boolean;
   infoText: string;
-  handleClose: () => void;
+  handleCancel: () => void;
   onDelete?: () => void;
 }
 
@@ -20,7 +20,7 @@ export function DeleteFrame({
   activated = true,
   canBeDeleted,
   infoText,
-  handleClose,
+  handleCancel,
   onDelete = () => {},
 }: IProps): React.ReactElement {
   if (!children) {
@@ -61,14 +61,13 @@ export function DeleteFrame({
             </FormTextButton>
           )}
           <FormTextButton
-            onClick={handleClose}
+            onClick={handleCancel}
             aria-label={t('common.Cancel')}
             sx={!canBeDeleted ? { marginLeft: 'auto' } : {}}
           >
             {t('common.Cancel')}
           </FormTextButton>
         </Box>
-
         {children}
       </FormDeleteBox>
     );

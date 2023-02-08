@@ -98,6 +98,7 @@ export default function ProductPage(): React.ReactElement {
           <EditProductForm
             product={item}
             handleClose={() => setCurrentlyEditedItemId('')}
+            handleCancel={() => setCurrentlyEditedItemId('')}
           />
         )}
         DeleteComponent={(
@@ -108,6 +109,9 @@ export default function ProductPage(): React.ReactElement {
             children={child}
             product={item}
             handleClose={afterDelete}
+            handleCancel={() => {
+              setDeleteCandidateId('');
+            }}
           />
         )}
         depth={8}

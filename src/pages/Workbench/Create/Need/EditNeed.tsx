@@ -40,7 +40,13 @@ const EditNeed = ({ need }: Props) => {
       <Dialog
         isOpen={isEditOpen}
         handleClose={onClose}
-        children={<EditNeedForm need={need} handleClose={onClose} />}
+        children={
+          <EditNeedForm
+            need={need}
+            handleClose={onClose}
+            handleCancel={onClose}
+          />
+        }
       />
     </>
   );

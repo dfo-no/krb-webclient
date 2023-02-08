@@ -62,33 +62,30 @@ export const CodePanel = ({
     return item && item.id === currentlyEditedItemId;
   };
 
-  const handleCloseEdit = (newCode: Parentable<ICode> | null) => {
-    if (newCode) {
-      const newCodes = Utils.replaceElementInList(
-        newCode,
-        selectedCodelist.codes
-      );
-      setSelectedCodelist({ ...selectedCodelist, codes: newCodes });
-    }
+  const handleCloseEdit = (newCode: Parentable<ICode>) => {
+    const newCodes = Utils.replaceElementInList(
+      newCode,
+      selectedCodelist.codes
+    );
+    setSelectedCodelist({ ...selectedCodelist, codes: newCodes });
+
     setCurrentlyEditedItemId('');
   };
 
-  const handleCloseCreate = (newCode: Parentable<ICode> | null) => {
-    if (newCode) {
-      const newCodes = Utils.addElementToList(newCode, selectedCodelist.codes);
-      setSelectedCodelist({ ...selectedCodelist, codes: newCodes });
-    }
+  const handleCloseCreate = (newCode: Parentable<ICode>) => {
+    const newCodes = Utils.addElementToList(newCode, selectedCodelist.codes);
+    setSelectedCodelist({ ...selectedCodelist, codes: newCodes });
+
     setCreating(false);
   };
 
-  const handleCloseDelete = (deletedCode: Parentable<ICode> | null) => {
-    if (deletedCode) {
-      const newCodes = Utils.removeElementFromList(
-        deletedCode,
-        selectedCodelist.codes
-      );
-      setSelectedCodelist({ ...selectedCodelist, codes: newCodes });
-    }
+  const handleCloseDelete = (deletedCode: Parentable<ICode>) => {
+    const newCodes = Utils.removeElementFromList(
+      deletedCode,
+      selectedCodelist.codes
+    );
+    setSelectedCodelist({ ...selectedCodelist, codes: newCodes });
+
     setDeleteCandidateId('');
   };
 
@@ -131,6 +128,7 @@ export const CodePanel = ({
             codelist={selectedCodelist}
             code={item}
             handleClose={handleCloseEdit}
+            handleCancel={() => setCurrentlyEditedItemId('')}
           />
         </FormContainerBox>
       );
@@ -141,6 +139,7 @@ export const CodePanel = ({
         codelist={selectedCodelist}
         code={item}
         handleClose={handleCloseDelete}
+        handleCancel={() => setDeleteCandidateId('')}
       />
     );
   };
@@ -153,6 +152,7 @@ export const CodePanel = ({
           <NewCodeForm
             codelist={selectedCodelist}
             handleClose={handleCloseCreate}
+            handleCancel={() => setCreating(false)}
           />
         </FormContainerBox>
       )}

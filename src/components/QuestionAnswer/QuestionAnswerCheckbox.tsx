@@ -11,6 +11,7 @@ import { ICheckboxQuestion } from '../../Nexus/entities/ICheckboxQuestion';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { QuestionVariant } from '../../Nexus/enums';
 import ValidationUtils from '../../common/ValidationUtils';
+import ValidationMessageForm from '../../Form/ValidationMessageForm/ValidationMessageForm';
 
 interface IProps {
   item: ICheckboxQuestion;
@@ -60,19 +61,27 @@ const QuestionAnswerCheckbox = ({
             isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
           }
         >
-          <YesNoSelection
-            name={'answer.value'}
-            recommendedAlternative={item.config.preferedAlternative}
-            color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
-            isDisabled={isInfo}
-          />
-          {existingAnswer &&
-            !isAwardCriteria &&
-            !ValidationUtils.checkboxQuestion(existingAnswer) && (
-              <div className={css.error}>
-                {ValidationUtils.checkboxQuestionValidationMsg(existingAnswer)}
-              </div>
-            )}
+          <ValidationMessageForm
+            isError={
+              !!existingAnswer &&
+              !ValidationUtils.checkboxQuestion(existingAnswer) &&
+              !isAwardCriteria
+            }
+            message={
+              existingAnswer &&
+              !isAwardCriteria &&
+              !ValidationUtils.checkboxQuestion(existingAnswer)
+                ? ValidationUtils.checkboxQuestionValidationMsg(item)
+                : ''
+            }
+          >
+            <YesNoSelection
+              name={'answer.value'}
+              recommendedAlternative={item.config.preferedAlternative}
+              color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+              isDisabled={isInfo}
+            />
+          </ValidationMessageForm>
           {isPrefilledResponse && (
             <div className={css.Buttons}>
               <Button type={Type.Submit}>{t('Save')}</Button>

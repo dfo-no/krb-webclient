@@ -80,6 +80,16 @@ Then(
       .type(value);
   }
 );
+
+Then('Jeg besvarer {string} kravet med {string}', (title: string, value: string) => {
+    cy.get('[class^="ProductRequirementAnswer_"]')
+        .contains(title)
+        .parent()
+        .parent()
+        .contains(value)
+        .click();
+});
+
 Then('Jeg besvarer {string} kravet med bekreftet', (title: string) => {
   cy.get('[class^="ProductRequirementAnswer_"]')
     .contains(title)
@@ -111,14 +121,26 @@ Then('Ser jeg {string} er ikke aktiv', (button: string) => {
 
 Then('Ser jeg produkt {string} er åpent', (productName: string) => {
   cy.contains(productName)
-    .parentsUntil('[class*="Header"]')
+    .parentsUntil('li')
     .parent()
     .should('have.attr', 'data-expanded', 'true');
 });
 
 Then('Ser jeg produkt {string} er lukket', (productName: string) => {
   cy.contains(productName)
-    .parentsUntil('[class*="Header"]')
+    .parentsUntil('li')
     .parent()
     .should('have.attr', 'data-expanded', 'false');
 });
+
+Then(
+    'Ser jeg hjelpetekst {string} for {string} kravet',
+    (infoText: string, title: string) => {
+        cy.get('[class^="EditorFullPage"]')
+            .contains(title)
+            .parent()
+            .parent()
+            .contains(infoText);
+    }
+);
+

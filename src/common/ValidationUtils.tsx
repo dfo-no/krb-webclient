@@ -4,6 +4,11 @@ import { t } from 'i18next';
 
 import DateUtils from './DateUtils';
 import { IRequirementAnswer } from '../Nexus/entities/IRequirementAnswer';
+import { ICheckboxQuestion } from '../Nexus/entities/ICheckboxQuestion';
+import { ISliderQuestion } from '../Nexus/entities/ISliderQuestion';
+import { ITimeQuestion } from '../Nexus/entities/ITimeQuestion';
+import { IPeriodDateQuestion } from '../Nexus/entities/IPeriodDateQuestion';
+import { ICodelistQuestion } from '../Nexus/entities/ICodelistQuestion';
 
 class ValidationUtils {
   static localeMap: { [key: string]: Locale } = {
@@ -50,7 +55,11 @@ class ValidationUtils {
         : null;
 
     if (answer >= 0 && min >= 0 && max && step) {
-      return answer >= min && answer <= max && (answer as number) % step === 0;
+      return (
+        answer >= min &&
+        answer <= max &&
+        ((answer as number) * 100) % (step * 100) === 0
+      );
     }
   };
 
@@ -224,12 +233,10 @@ class ValidationUtils {
     );
   };
 
-  static checkboxQuestionValidationMsg = (
-    requirementAnswer: IRequirementAnswer
-  ) => {
+  static checkboxQuestionValidationMsg = (question: ICheckboxQuestion) => {
     const preferedAlternative =
-      'preferedAlternative' in requirementAnswer.question.config &&
-      requirementAnswer.question.config.preferedAlternative;
+      'preferedAlternative' in question.config &&
+      question.config.preferedAlternative;
     const answerWith = preferedAlternative ? t('common.Yes') : t('common.No');
     return (
       t('These are absolute requirements that must be answered with') +
@@ -246,20 +253,14 @@ class ValidationUtils {
   };
 
   static sliderQuestionValidationMsg = (
-    requirementAnswer: IRequirementAnswer,
-    type?: string
+    question: ISliderQuestion,
+    isInfoText?: boolean
   ) => {
-    const min =
-      'min' in requirementAnswer.question.config &&
-      requirementAnswer.question.config.min;
-    const max =
-      'max' in requirementAnswer.question.config &&
-      requirementAnswer.question.config.max;
-    const step =
-      'step' in requirementAnswer.question.config &&
-      requirementAnswer.question.config.step;
+    const min = question.config.min;
+    const max = question.config.max;
+    const step = question.config.step;
     return (
-      (type
+      (isInfoText
         ? t('Enter value between')
         : t(
             'This is an absolute requirement and must be answered with a value between'
@@ -273,32 +274,18 @@ class ValidationUtils {
   };
 
   static periodDateQuestionValidationMsg = (
-    requirementAnswer: IRequirementAnswer,
-    type?: string
+    question: IPeriodDateQuestion,
+    isInfoText?: boolean
   ) => {
-    const periodMin =
-      'periodMin' in requirementAnswer.question.config &&
-      requirementAnswer.question.config.periodMin;
-    const periodMax =
-      'periodMax' in requirementAnswer.question.config &&
-      requirementAnswer.question.config.periodMax;
-    const fromBoundary =
-      'fromBoundary' in requirementAnswer.question.config &&
-      requirementAnswer.question.config.fromBoundary
-        ? requirementAnswer.question.config.fromBoundary
-        : null;
-    const toBoundary =
-      'toBoundary' in requirementAnswer.question.config &&
-      requirementAnswer.question.config.toBoundary
-        ? requirementAnswer.question.config.toBoundary
-        : null;
-    const isPeriod =
-      'isPeriod' in requirementAnswer.question.config &&
-      requirementAnswer.question.config.isPeriod;
+    const periodMin = question.config.periodMin;
+    const periodMax = question.config.periodMax;
+    const fromBoundary = question.config.fromBoundary;
+    const toBoundary = question.config.toBoundary;
+    const isPeriod = question.config.isPeriod;
 
     if (isPeriod)
       return (
-        (type
+        (isInfoText
           ? t('Enter date period on')
           : t(
               'This is an absolute requirement and must be answered with a date range'
@@ -314,7 +301,7 @@ class ValidationUtils {
     else {
     }
     return (
-      (type
+      (isInfoText
         ? t('Enter value between')
         : t(
             'This is an absolute requirement and must be answered with a date between'
@@ -326,30 +313,18 @@ class ValidationUtils {
   };
 
   static timeQuestionValidationMsg = (
-    requirementAnswer: IRequirementAnswer,
-    type?: string
+    question: ITimeQuestion,
+    isInfoText?: boolean
   ) => {
-    const timePeriodMax =
-      'timePeriodMax' in requirementAnswer.question.config &&
-      requirementAnswer.question.config.timePeriodMax;
-    const fromBoundary =
-      'fromBoundary' in requirementAnswer.question.config &&
-      requirementAnswer.question.config.fromBoundary
-        ? requirementAnswer.question.config.fromBoundary
-        : null;
-    const toBoundary =
-      'toBoundary' in requirementAnswer.question.config &&
-      requirementAnswer.question.config.toBoundary
-        ? requirementAnswer.question.config.toBoundary
-        : null;
-    const isPeriod =
-      'isPeriod' in requirementAnswer.question.config &&
-      requirementAnswer.question.config.isPeriod;
+    const timePeriodMax = question.config.timePeriodMax;
+    const fromBoundary = question.config.fromBoundary;
+    const toBoundary = question.config.toBoundary;
+    const isPeriod = question.config.isPeriod;
 
     if (isPeriod && timePeriodMax) {
       const timePeriodMaxToHours = new Date(timePeriodMax).getHours();
       return (
-        (type
+        (isInfoText
           ? t('Enter time period on')
           : t(
               'This is an absolute requirement and must be answered with a time frame'
@@ -363,7 +338,7 @@ class ValidationUtils {
     } else {
     }
     return (
-      (type
+      (isInfoText
         ? t('Enter value between')
         : t(
             'This is an absolute requirement and must be answered with a time between'
@@ -374,17 +349,9 @@ class ValidationUtils {
     );
   };
 
-  static codelistValidationMsg = (requirementAnswer: IRequirementAnswer) => {
-    const optionalCodeMinAmount =
-      'optionalCodeMinAmount' in requirementAnswer.question.config &&
-      requirementAnswer.question.config.optionalCodeMinAmount
-        ? requirementAnswer.question.config.optionalCodeMinAmount
-        : 0;
-    const optionalCodeMaxAmount =
-      'optionalCodeMaxAmount' in requirementAnswer.question.config &&
-      requirementAnswer.question.config.optionalCodeMaxAmount
-        ? requirementAnswer.question.config.optionalCodeMaxAmount
-        : 0;
+  static codelistOptionalValidationMsg = (question: ICodelistQuestion) => {
+    const optionalCodeMinAmount = question.config.optionalCodeMinAmount;
+    const optionalCodeMaxAmount = question.config.optionalCodeMaxAmount;
     return (
       t('Choose between') +
       optionalCodeMinAmount +
@@ -394,26 +361,8 @@ class ValidationUtils {
     );
   };
 
-  static codelistOptionalValidationMsg = (
-    requirementAnswer: IRequirementAnswer
-  ) => {
-    const optionalCodeMinAmount =
-      'optionalCodeMinAmount' in requirementAnswer.question.config &&
-      requirementAnswer.question.config.optionalCodeMinAmount
-        ? requirementAnswer.question.config.optionalCodeMinAmount
-        : 0;
-    const optionalCodeMaxAmount =
-      'optionalCodeMaxAmount' in requirementAnswer.question.config &&
-      requirementAnswer.question.config.optionalCodeMaxAmount
-        ? requirementAnswer.question.config.optionalCodeMaxAmount
-        : 0;
-    return (
-      t('Choose between') +
-      optionalCodeMinAmount +
-      t('And') +
-      optionalCodeMaxAmount +
-      t('optional options')
-    );
+  static codelistMandatoryValidationMsg = () => {
+    return t('All mandatory options must be confirmed');
   };
 }
 

@@ -63,7 +63,7 @@ function DeleteVariant({
         children={children}
         canBeDeleted={true}
         infoText={''}
-        handleClose={handleClose}
+        handleCancel={handleClose}
         onDelete={onDelete}
       />
     </Box>

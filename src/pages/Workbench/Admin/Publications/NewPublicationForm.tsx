@@ -85,7 +85,7 @@ export default function NewPublicationForm({
               label={t('Comment')}
               placeholder={''}
             />
-            <FormButtons handleClose={() => handleClose()} />
+            <FormButtons handleCancel={() => handleClose()} />
           </FormItemBox>
           <GeneralErrorMessage errors={methods.formState.errors} />
         </form>

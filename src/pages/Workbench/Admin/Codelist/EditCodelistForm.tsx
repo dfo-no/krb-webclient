@@ -16,12 +16,14 @@ import { FormContainerBox } from '../../../../components/Form/FormContainerBox';
 
 interface Props {
   codelist: ICodelist;
-  handleClose: (newCodelist: ICodelist | null) => void;
+  handleClose: (newCodelist: ICodelist) => void;
+  handleCancel: () => void;
 }
 
 export function EditCodelistForm({
   codelist,
   handleClose,
+  handleCancel,
 }: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
@@ -67,7 +69,7 @@ export function EditCodelistForm({
               label={t('Description')}
               placeholder={''}
             />
-            <FormButtons handleClose={() => handleClose(null)} />
+            <FormButtons handleCancel={handleCancel} />
           </FormItemBox>
         </form>
       </FormProvider>

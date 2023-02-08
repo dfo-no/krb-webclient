@@ -78,7 +78,7 @@ export default function DeleteTagForm({
           children={children}
           canBeDeleted={!hasChildren}
           infoText={infoText}
-          handleClose={handleClose}
+          handleCancel={handleClose}
         />
       </form>
     </FormProvider>

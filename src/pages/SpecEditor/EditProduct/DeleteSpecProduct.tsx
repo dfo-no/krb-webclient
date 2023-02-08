@@ -15,12 +15,14 @@ interface IProps {
   children: React.ReactElement;
   product?: ISpecificationProduct;
   handleClose: () => void;
+  handleCancel: () => void;
 }
 
 export default function DeleteSpecProduct({
   children,
   product,
   handleClose,
+  handleCancel,
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
   const { addAlert } = AlertsContainer.useContainer();
@@ -58,7 +60,7 @@ export default function DeleteSpecProduct({
         children={children}
         canBeDeleted={!hasChildren}
         infoText={infoText}
-        handleClose={handleClose}
+        handleCancel={handleCancel}
         onDelete={onDelete}
       />
     </Box>

@@ -40,7 +40,10 @@ const CodelistPanel = ({ project }: Props): React.ReactElement => {
       <CodelistAddButton onClick={() => setCreating(true)} />
       {isCreating && (
         <FormContainerBox>
-          <NewCodelistForm handleClose={handleCloseCreate} />
+          <NewCodelistForm
+            handleClose={handleCloseCreate}
+            handleCancel={() => setCreating(false)}
+          />
         </FormContainerBox>
       )}
       <ScrollableContainer>

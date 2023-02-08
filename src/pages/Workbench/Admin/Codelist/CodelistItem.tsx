@@ -55,10 +55,9 @@ export function CodelistItem({
       )}`
     : '';
 
-  const handleCloseEdit = (newCodelist: ICodelist | null) => {
-    if (newCodelist) {
-      setSelectedCodelist(newCodelist);
-    }
+  const handleCloseEdit = (newCodelist: ICodelist) => {
+    setSelectedCodelist(newCodelist);
+
     setCurrentlyEditedItemId('');
   };
 
@@ -92,7 +91,11 @@ export function CodelistItem({
 
   if (isEditingItem(codelist)) {
     return (
-      <EditCodelistForm codelist={codelist} handleClose={handleCloseEdit} />
+      <EditCodelistForm
+        codelist={codelist}
+        handleClose={handleCloseEdit}
+        handleCancel={() => setCurrentlyEditedItemId('')}
+      />
     );
   } else {
     return (
@@ -106,7 +109,7 @@ export function CodelistItem({
             activated={deleteCandidateId === codelist.id}
             canBeDeleted={!isInUse}
             infoText={infoText}
-            handleClose={() => handleCloseDelete(null)}
+            handleCancel={() => handleCloseDelete(null)}
           >
             <DisplayCodelist
               codelist={codelist}

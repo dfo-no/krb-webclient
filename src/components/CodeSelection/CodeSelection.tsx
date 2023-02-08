@@ -6,25 +6,33 @@ import { useLocation } from 'react-router-dom';
 import css from './Selection.module.scss';
 import { DFOCheckbox } from '../DFOCheckbox/DFOCheckbox';
 import { ICode } from '../../Nexus/entities/ICode';
-import { ICodeSelection } from '../../Nexus/entities/ICodelistQuestion';
+import {
+  ICodelistQuestion,
+  ICodeSelection,
+} from '../../Nexus/entities/ICodelistQuestion';
 import { Parentable } from '../../models/Parentable';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import ValidationUtils from '../../common/ValidationUtils';
+import ValidationMessageForm from '../../Form/ValidationMessageForm/ValidationMessageForm';
 
 interface IProps {
   name: string;
+  question?: ICodelistQuestion;
   existingAnswer?: IRequirementAnswer;
   codesList: Parentable<ICode>[];
   codeSelection?: ICodeSelection[];
   isDisabled?: boolean;
+  isAwardCriteria?: boolean;
 }
 
 const CodeSelection = ({
   name,
+  question,
   existingAnswer,
   codesList,
   codeSelection,
   isDisabled,
+  isAwardCriteria,
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const location = useLocation();
@@ -127,42 +135,41 @@ const CodeSelection = ({
         <div className={css.Selection}>
           {mandatoryCodesList().length > 0 && (
             <>
-              <label>{t('Mandatory')}</label>
-              {mandatoryCodesList()?.map((item) => {
-                return renderCodesList(item, selected, onChange);
-              })}
-              {existingAnswer && (
-                <div
-                  className={
-                    ValidationUtils.codelistMandatoryQuestion(existingAnswer)
-                      ? css.info
-                      : css.error
-                  }
-                >
-                  {t('All mandatory options must be confirmed')}
-                </div>
-              )}
+              <ValidationMessageForm
+                isError={
+                  !!existingAnswer &&
+                  !!question &&
+                  !ValidationUtils.codelistMandatoryQuestion(existingAnswer) &&
+                  !isAwardCriteria
+                }
+                message={ValidationUtils.codelistMandatoryValidationMsg()}
+              >
+                <label>{t('Mandatory')}</label>
+                {mandatoryCodesList()?.map((item) => {
+                  return renderCodesList(item, selected, onChange);
+                })}
+              </ValidationMessageForm>
             </>
           )}
           {optionalCodesList().length > 0 && (
             <>
-              <label>{t('Optional')}</label>
-              {optionalCodesList()?.map((item) => {
-                return renderCodesList(item, selected, onChange);
-              })}
-              {existingAnswer && (
-                <div
-                  className={
-                    ValidationUtils.codelistOptionalQuestion(existingAnswer)
-                      ? css.info
-                      : css.error
-                  }
-                >
-                  {ValidationUtils.codelistOptionalValidationMsg(
-                    existingAnswer
-                  )}
-                </div>
-              )}
+              <ValidationMessageForm
+                isError={
+                  !!existingAnswer &&
+                  !!question &&
+                  !ValidationUtils.codelistOptionalQuestion(existingAnswer) &&
+                  !isAwardCriteria
+                }
+                message={
+                  question &&
+                  ValidationUtils.codelistOptionalValidationMsg(question)
+                }
+              >
+                <label>{t('Optional')}</label>
+                {optionalCodesList()?.map((item) => {
+                  return renderCodesList(item, selected, onChange);
+                })}
+              </ValidationMessageForm>
             </>
           )}
           {!isMandatoryOrOptionalCodes() &&

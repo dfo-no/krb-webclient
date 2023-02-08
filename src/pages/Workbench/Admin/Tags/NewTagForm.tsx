@@ -70,7 +70,7 @@ export default function NewTagForm({ handleClose }: Props): React.ReactElement {
             label={t('Description')}
             placeholder={''}
           />
-          <FormButtons handleClose={() => handleClose()} />
+          <FormButtons handleCancel={() => handleClose()} />
         </FormItemBox>
       </form>
     </FormProvider>

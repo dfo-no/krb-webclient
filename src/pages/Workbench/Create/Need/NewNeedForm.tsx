@@ -22,10 +22,11 @@ import { Parentable } from '../../../../models/Parentable';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface Props {
-  handleClose: (newNeed: Parentable<INeed> | null) => void;
+  handleClose: (newNeed: Parentable<INeed>) => void;
+  handleCancel: () => void;
 }
 
-function NewNeedForm({ handleClose }: Props): React.ReactElement {
+function NewNeedForm({ handleClose, handleCancel }: Props): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
 
   const nexus = Nexus.getInstance();
@@ -80,7 +81,7 @@ function NewNeedForm({ handleClose }: Props): React.ReactElement {
             />
           </ModalFieldsBox>
           <ModalButtonsBox>
-            <ModalButton variant="cancel" onClick={() => handleClose(null)}>
+            <ModalButton variant="cancel" onClick={handleCancel}>
               {t('common.Cancel')}
             </ModalButton>
             <ModalButton variant="save" type="submit">

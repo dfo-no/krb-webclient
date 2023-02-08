@@ -75,7 +75,7 @@ const DeletePublicationForm = ({
           children={children}
           canBeDeleted={true}
           infoText={''}
-          handleClose={handleClose}
+          handleCancel={handleClose}
         />
       </form>
     </FormProvider>

@@ -11,6 +11,7 @@ import { IConfirmationQuestion } from '../../Nexus/entities/IConfirmationQuestio
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { QuestionVariant } from '../../Nexus/enums';
 import ValidationUtils from '../../common/ValidationUtils';
+import ValidationMessageForm from '../../Form/ValidationMessageForm/ValidationMessageForm';
 
 interface IProps {
   item: IConfirmationQuestion;
@@ -64,18 +65,26 @@ const QuestionAnswerConfirmation = ({
                 isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
               }
             >
-              <CheckboxCtrl
-                name={'answer.value'}
-                label={t('Confirm')}
-                color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
-              />
-              {existingAnswer &&
-                !isAwardCriteria &&
-                !ValidationUtils.confirmationQuestion(existingAnswer) && (
-                  <div className={css.error}>
-                    {ValidationUtils.confirmationQuestionValidationMsg()}
-                  </div>
-                )}
+              <ValidationMessageForm
+                isError={
+                  !!existingAnswer &&
+                  !ValidationUtils.confirmationQuestion(existingAnswer) &&
+                  !isAwardCriteria
+                }
+                message={
+                  existingAnswer &&
+                  !isAwardCriteria &&
+                  !ValidationUtils.confirmationQuestion(existingAnswer)
+                    ? ValidationUtils.confirmationQuestionValidationMsg()
+                    : ''
+                }
+              >
+                <CheckboxCtrl
+                  name={'answer.value'}
+                  label={t('Confirm')}
+                  color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+                />
+              </ValidationMessageForm>
               {isPrefilledResponse && (
                 <div className={css.Buttons}>
                   <Button type={Type.Submit}>{t('Save')}</Button>

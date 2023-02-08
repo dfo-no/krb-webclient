@@ -56,7 +56,7 @@ function DeleteNeed({
         children={children}
         canBeDeleted={!hasChildren}
         infoText={infoText}
-        handleClose={handleClose}
+        handleCancel={handleClose}
         onDelete={onDelete}
       />
     </Box>

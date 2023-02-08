@@ -12,6 +12,7 @@ import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { QuestionVariant } from '../../Nexus/enums';
 import FlexRowBox from '../FlexBox/FlexRowBox';
 import ValidationUtils from '../../common/ValidationUtils';
+import ValidationMessageForm from '../../Form/ValidationMessageForm/ValidationMessageForm';
 
 interface IProps {
   item: IPeriodDateQuestion;
@@ -66,40 +67,39 @@ const QuestionAnswerPeriodDate = ({
             isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
           }
         >
-          <FlexRowBox>
-            <DateCtrl
-              minDate={item.config.fromBoundary ?? undefined}
-              maxDate={item.config.toBoundary ?? undefined}
-              name={'answer.fromDate'}
-              color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
-              isDisabled={isInfo}
-            />
-            {item.config.isPeriod && (
+          <ValidationMessageForm
+            isError={
+              !!existingAnswer &&
+              !ValidationUtils.periodDateQuestion(existingAnswer) &&
+              !isAwardCriteria
+            }
+            message={
+              existingAnswer &&
+              !isAwardCriteria &&
+              !ValidationUtils.periodDateQuestion(existingAnswer)
+                ? ValidationUtils.periodDateQuestionValidationMsg(item)
+                : ValidationUtils.periodDateQuestionValidationMsg(item, true)
+            }
+          >
+            <FlexRowBox>
               <DateCtrl
                 minDate={item.config.fromBoundary ?? undefined}
                 maxDate={item.config.toBoundary ?? undefined}
-                name={'answer.toDate'}
+                name={'answer.fromDate'}
                 color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
                 isDisabled={isInfo}
               />
-            )}
-          </FlexRowBox>
-          {existingAnswer &&
-            (!isAwardCriteria &&
-            !ValidationUtils.periodDateQuestion(existingAnswer) ? (
-              <div className={css.error}>
-                {ValidationUtils.periodDateQuestionValidationMsg(
-                  existingAnswer
-                )}
-              </div>
-            ) : (
-              <div className={css.info}>
-                {ValidationUtils.periodDateQuestionValidationMsg(
-                  existingAnswer,
-                  'INFO'
-                )}
-              </div>
-            ))}
+              {item.config.isPeriod && (
+                <DateCtrl
+                  minDate={item.config.fromBoundary ?? undefined}
+                  maxDate={item.config.toBoundary ?? undefined}
+                  name={'answer.toDate'}
+                  color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+                  isDisabled={isInfo}
+                />
+              )}
+            </FlexRowBox>
+          </ValidationMessageForm>
           {isPrefilledResponse && (
             <div className={css.Buttons}>
               <Button type={Type.Submit}>{t('Save')}</Button>
