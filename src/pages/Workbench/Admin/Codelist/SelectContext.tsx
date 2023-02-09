@@ -4,14 +4,16 @@ import { createContainer } from 'unstated-next';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 
 const useSelectContext = () => {
-  const [codelist, setCodelist] = useState<ICodelist | null>(null);
-  const [codelists, setCodelists] = useState<ICodelist[]>([]);
+  const [selectedCodelist, setSelectedCodelist] = useState<ICodelist | null>(
+    null
+  );
+  const [allCodelists, setAllCodelists] = useState<ICodelist[]>([]);
 
   return {
-    codelist,
-    setCodelist,
-    codelists,
-    setCodelists,
+    selectedCodelist,
+    setSelectedCodelist,
+    allCodelists,
+    setAllCodelists,
   };
 };
 

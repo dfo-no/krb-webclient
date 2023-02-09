@@ -17,14 +17,14 @@ interface Props {
 }
 
 export const ProjectItem = ({ project }: Props) => {
-  const { setDeleteMode } = useEditableState();
+  const { setDeleteCandidateId } = useEditableState();
 
   const handleCloseDelete = () => {
-    setDeleteMode('');
+    setDeleteCandidateId('');
   };
 
   const enterDeleteMode = (item: ProjectForm) => {
-    if (item.ref) setDeleteMode(item.ref);
+    if (item.ref) setDeleteCandidateId(item.ref);
   };
 
   return (

@@ -31,7 +31,7 @@ export default function Create(): React.ReactElement {
   const { requirements: allRequirements } =
     useFindRequirementsForProject(projectRef);
 
-  const { needIndex, setNeedIndex, setNeedId, setDeleteMode } =
+  const { needIndex, setNeedIndex, setNeedId, setDeleteCandidateId } =
     useSelectState();
   const { setTitle } = HeaderContainer.useContainer();
 
@@ -87,7 +87,7 @@ export default function Create(): React.ReactElement {
   );
 
   const needDeleted = (): void => {
-    setDeleteMode('');
+    setDeleteCandidateId('');
     if (needs.length === 1) {
       setNeedIndex(null);
       setNeedId(undefined);

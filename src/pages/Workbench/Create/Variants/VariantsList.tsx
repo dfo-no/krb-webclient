@@ -17,7 +17,7 @@ interface Props {
 }
 
 export const VariantsList = ({ projectRef, requirementRef }: Props) => {
-  const { needIndex, setDeleteMode, createVariant, setCreateVariant } =
+  const { needIndex, setDeleteCandidateId, createVariant, setCreateVariant } =
     useSelectState();
   const { setOpenVariants } = useVariantState();
 
@@ -37,7 +37,7 @@ export const VariantsList = ({ projectRef, requirementRef }: Props) => {
   }
 
   const variantDeleted = (variantId: string) => {
-    setDeleteMode('');
+    setDeleteCandidateId('');
     setOpenVariants((ov) => {
       const tmp = [...ov];
       tmp.splice(tmp.indexOf(variantId), 1);

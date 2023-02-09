@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
-import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import Utils from '../../../../common/Utils';
+import { DeleteFrame } from '../../../../components/DeleteFrame/DeleteFrame';
 import { Alert } from '../../../../models/Alert';
 import { IProduct } from '../../../../Nexus/entities/IProduct';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
@@ -21,18 +21,20 @@ interface Props {
   children: React.ReactElement;
   product: Parentable<IProduct>;
   handleClose: () => void;
+  handleCancel: () => void;
 }
 
 export default function DeleteProductForm({
   children,
   product,
   handleClose,
+  handleCancel,
 }: Props): React.ReactElement {
   const { deleteProduct } = useProjectMutations();
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
-  const { deleteMode } = useEditableState();
+  const { deleteCandidateId } = useEditableState();
 
   const methods = useForm<Parentable<IProduct>>({
     defaultValues: product,
@@ -48,7 +50,7 @@ export default function DeleteProductForm({
   const { projectId } = useParams<IRouteProjectParams>();
   const { data: project } = useGetProjectQuery(projectId);
 
-  if (deleteMode !== product.id) {
+  if (deleteCandidateId !== product.id) {
     return children;
   }
 
@@ -93,7 +95,7 @@ export default function DeleteProductForm({
           children={children}
           canBeDeleted={!hasChildren}
           infoText={infoText}
-          handleClose={handleClose}
+          handleCancel={handleCancel}
         />
       </form>
     </FormProvider>

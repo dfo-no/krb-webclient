@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Typography } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
@@ -20,6 +19,7 @@ interface IProps {
   onSubmit: (post: ICodelistQuestion) => void;
   codesList?: Parentable<ICode>[];
   isInfo?: boolean;
+  isAwardCriteria?: boolean;
 }
 
 const QuestionAnswerCodelist = ({
@@ -28,6 +28,7 @@ const QuestionAnswerCodelist = ({
   onSubmit,
   codesList,
   isInfo,
+  isAwardCriteria,
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
@@ -51,12 +52,6 @@ const QuestionAnswerCodelist = ({
     }
   }, [existingAnswer, methods]);
 
-  const getInfoText = () => {
-    return `${t('RESP_ANS_CODELIST_INFO_MIN')} ${
-      item.config.optionalCodeMinAmount
-    }, ${t('RESP_ANS_CODELIST_INFO_MAX')} ${item.config.optionalCodeMaxAmount}`;
-  };
-
   return (
     <div className={css.QuestionAnswer}>
       <FormProvider {...methods}>
@@ -68,13 +63,15 @@ const QuestionAnswerCodelist = ({
             isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
           }
         >
-          <Typography variant={'sm'}>{getInfoText()}</Typography>
           {codesList && (
             <CodeSelection
               name={'answer.codes'}
+              question={item}
+              existingAnswer={existingAnswer}
               codesList={codesList}
               codeSelection={item.config.codes}
               isDisabled={isInfo}
+              isAwardCriteria={isAwardCriteria}
             />
           )}
           {isPrefilledResponse && (

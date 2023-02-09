@@ -26,7 +26,8 @@ import NewProductForm from './NewProductForm';
 
 export default function ProductPage(): React.ReactElement {
   const [products, setProducts] = useState<Parentable<IProduct>[]>([]);
-  const { setEditMode, setCreating, setDeleteMode } = useEditableState();
+  const { setCurrentlyEditedItemId, setCreating, setDeleteCandidateId } =
+    useEditableState();
   const { t } = useTranslation();
 
   const { projectId } = useParams<IRouteProjectParams>();
@@ -65,7 +66,7 @@ export default function ProductPage(): React.ReactElement {
   };
 
   const afterDelete = (): void => {
-    setDeleteMode('');
+    setDeleteCandidateId('');
     setProducts(Utils.filterOutDeletedElements(project.products));
   };
 
@@ -94,7 +95,11 @@ export default function ProductPage(): React.ReactElement {
           <NewProductForm handleClose={() => setCreating(false)} />
         }
         EditComponent={(item: Parentable<IProduct>) => (
-          <EditProductForm product={item} handleClose={() => setEditMode('')} />
+          <EditProductForm
+            product={item}
+            handleClose={() => setCurrentlyEditedItemId('')}
+            handleCancel={() => setCurrentlyEditedItemId('')}
+          />
         )}
         DeleteComponent={(
           item: Parentable<IProduct>,
@@ -104,6 +109,9 @@ export default function ProductPage(): React.ReactElement {
             children={child}
             product={item}
             handleClose={afterDelete}
+            handleCancel={() => {
+              setDeleteCandidateId('');
+            }}
           />
         )}
         depth={8}

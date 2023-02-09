@@ -47,7 +47,7 @@ export default function SpecificationOverview(): React.ReactElement {
   const { specification, openProductSelection, setOpenProductSelection } =
     useSpecificationState();
   const history = useHistory();
-  const { setDeleteMode } = useSelectState();
+  const { setDeleteCandidateId } = useSelectState();
   const [editingSpecification, setEditingSpecification] = useState(false);
 
   const open = (): void => {
@@ -55,13 +55,14 @@ export default function SpecificationOverview(): React.ReactElement {
       setOpenProductSelection(true);
     }
   };
-  const onDelete = (): void => {
-    setDeleteMode('');
+
+  const onFinished = (): void => {
+    setDeleteCandidateId('');
   };
 
   const handleDelete = (pid: string): void => {
     if (!editingSpecification) {
-      setDeleteMode(pid);
+      setDeleteCandidateId(pid);
     }
   };
 
@@ -141,7 +142,11 @@ export default function SpecificationOverview(): React.ReactElement {
     };
     return (
       <li key={product.id}>
-        <DeleteSpecProduct product={product} handleClose={onDelete}>
+        <DeleteSpecProduct
+          product={product}
+          handleClose={onFinished}
+          handleCancel={onFinished}
+        >
           <div className={css.CardContent}>
             <div className={css.CardTitle}>
               <Typography className={css.Text} variant="mdBold">

@@ -16,12 +16,11 @@ export const NewNeed = ({ needs, buttonText }: Props) => {
   const [isOpen, setOpen] = useState(false);
   const { setNeedIndex, setNeedId } = useSelectState();
 
-  const onClose = (newNeed: NeedForm | null) => {
+  const onClose = (newNeed: NeedForm) => {
     setOpen(false);
-    if (newNeed) {
-      setNeedIndex(needs.length);
-      setNeedId(newNeed.ref);
-    }
+
+    setNeedIndex(needs.length);
+    setNeedId(newNeed.ref);
   };
 
   return (
@@ -38,7 +37,12 @@ export const NewNeed = ({ needs, buttonText }: Props) => {
       <Dialog
         isOpen={isOpen}
         handleClose={() => setOpen(false)}
-        children={<NewNeedForm handleClose={onClose} />}
+        children={
+          <NewNeedForm
+            handleClose={onClose}
+            handleCancel={() => setOpen(false)}
+          />
+        }
       />
     </Box>
   );

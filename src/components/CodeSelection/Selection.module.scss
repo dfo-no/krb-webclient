@@ -47,4 +47,14 @@
   label {
     font-weight: var(--font-weight-semibold);
   }
+
+  .info {
+    padding-bottom: 1rem;
+    color: var(--warning-color-secondary);
+  }
+
+  .error {
+    padding-bottom: 1rem;
+    color: var(--error-color);
+  }
 }

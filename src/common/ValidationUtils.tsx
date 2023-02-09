@@ -1,6 +1,21 @@
+import enLocale from 'date-fns/locale/en-US';
+import nbLocale from 'date-fns/locale/nb';
+import { t } from 'i18next';
+
+import DateUtils from './DateUtils';
 import { IRequirementAnswer } from '../Nexus/entities/IRequirementAnswer';
+import { ICheckboxQuestion } from '../Nexus/entities/ICheckboxQuestion';
+import { ISliderQuestion } from '../Nexus/entities/ISliderQuestion';
+import { ITimeQuestion } from '../Nexus/entities/ITimeQuestion';
+import { IPeriodDateQuestion } from '../Nexus/entities/IPeriodDateQuestion';
+import { ICodelistQuestion } from '../Nexus/entities/ICodelistQuestion';
 
 class ValidationUtils {
+  static localeMap: { [key: string]: Locale } = {
+    en: enLocale,
+    nb: nbLocale,
+  };
+
   static confirmationQuestion = (requirementAnswer: IRequirementAnswer) => {
     return (
       'value' in requirementAnswer.question.answer &&
@@ -40,7 +55,11 @@ class ValidationUtils {
         : null;
 
     if (answer >= 0 && min >= 0 && max && step) {
-      return answer >= min && answer <= max && (answer as number) % step === 0;
+      return (
+        answer >= min &&
+        answer <= max &&
+        ((answer as number) * 100) % (step * 100) === 0
+      );
     }
   };
 
@@ -142,7 +161,8 @@ class ValidationUtils {
         timePeriodMaxToDay.getHours() * 60 + timePeriodMaxToDay.getMinutes();
       const timePeriodDifferenceToDay = new Date(toTime - fromTime);
       const timePeriodDifferenceToMinutes =
-        timePeriodDifferenceToDay.getHours() * 60 +
+        timePeriodDifferenceToDay.getHours() * 60 -
+        60 +
         timePeriodDifferenceToDay.getMinutes();
       return (
         fromTime >= fromTimeBoundary &&
@@ -154,7 +174,32 @@ class ValidationUtils {
     }
   };
 
-  static codelistQuestion = (requirementAnswer: IRequirementAnswer) => {
+  static codelistMandatoryQuestion = (
+    requirementAnswer: IRequirementAnswer
+  ) => {
+    const configCodes =
+      'codes' in requirementAnswer.question.config &&
+      requirementAnswer.question.config.codes.length > 0
+        ? requirementAnswer.question.config.codes
+        : null;
+    const answerCodes =
+      'codes' in requirementAnswer.question.answer &&
+      requirementAnswer.question.answer.codes.length > 0
+        ? requirementAnswer.question.answer.codes
+        : null;
+
+    const mandatoryCodes = configCodes?.filter((code) => code.mandatory);
+
+    const mandatoryAnswered = mandatoryCodes?.filter((code) =>
+      answerCodes?.includes(code.code)
+    );
+
+    return (
+      mandatoryAnswered && mandatoryAnswered?.length === mandatoryCodes?.length
+    );
+  };
+
+  static codelistOptionalQuestion = (requirementAnswer: IRequirementAnswer) => {
     const optionalCodeMinAmount =
       'optionalCodeMinAmount' in requirementAnswer.question.config &&
       requirementAnswer.question.config.optionalCodeMinAmount
@@ -176,23 +221,148 @@ class ValidationUtils {
         ? requirementAnswer.question.answer.codes
         : null;
 
-    const mandatoryCodes = configCodes?.filter((code) => code.mandatory);
     const optionalCodes = configCodes?.filter((code) => !code.mandatory);
-
     const optionalAnswered = optionalCodes?.filter((code) =>
-      answerCodes?.includes(code.code)
-    );
-    const mandatoryAnswered = mandatoryCodes?.filter((code) =>
       answerCodes?.includes(code.code)
     );
 
     return (
-      mandatoryAnswered &&
       optionalAnswered &&
-      mandatoryAnswered?.length === mandatoryCodes?.length &&
       optionalAnswered?.length >= optionalCodeMinAmount &&
       optionalAnswered?.length <= optionalCodeMaxAmount
     );
+  };
+
+  static checkboxQuestionValidationMsg = (question: ICheckboxQuestion) => {
+    const preferedAlternative =
+      'preferedAlternative' in question.config &&
+      question.config.preferedAlternative;
+    const answerWith = preferedAlternative ? t('common.Yes') : t('common.No');
+    return (
+      t('These are absolute requirements that must be answered with') +
+      answerWith
+    );
+  };
+
+  static confirmationQuestionValidationMsg = () => {
+    return t('This is an absolute requirement and must be answered');
+  };
+
+  static textQuestionValidationMsg = () => {
+    return t('This is an absolute requirement and must therefore be confirmed');
+  };
+
+  static sliderQuestionValidationMsg = (
+    question: ISliderQuestion,
+    isInfoText?: boolean
+  ) => {
+    const min = question.config.min;
+    const max = question.config.max;
+    const step = question.config.step;
+    return (
+      (isInfoText
+        ? t('Enter value between')
+        : t(
+            'This is an absolute requirement and must be answered with a value between'
+          )) +
+      min +
+      t('And') +
+      max +
+      t('for the whole') +
+      step
+    );
+  };
+
+  static periodDateQuestionValidationMsg = (
+    question: IPeriodDateQuestion,
+    isInfoText?: boolean
+  ) => {
+    const periodMin = question.config.periodMin;
+    const periodMax = question.config.periodMax;
+    const fromBoundary = question.config.fromBoundary;
+    const toBoundary = question.config.toBoundary;
+    const isPeriod = question.config.isPeriod;
+
+    if (isPeriod)
+      return (
+        (isInfoText
+          ? t('Enter date period on')
+          : t(
+              'This is an absolute requirement and must be answered with a date range'
+            )) +
+        periodMin +
+        t(' To ') +
+        periodMax +
+        t('days in between') +
+        DateUtils.prettyFormatDateError(fromBoundary) +
+        t('And') +
+        DateUtils.prettyFormatDateError(toBoundary)
+      );
+    else {
+    }
+    return (
+      (isInfoText
+        ? t('Enter value between')
+        : t(
+            'This is an absolute requirement and must be answered with a date between'
+          )) +
+      DateUtils.prettyFormatDateError(fromBoundary) +
+      t('And') +
+      DateUtils.prettyFormatDateError(toBoundary)
+    );
+  };
+
+  static timeQuestionValidationMsg = (
+    question: ITimeQuestion,
+    isInfoText?: boolean
+  ) => {
+    const timePeriodMax = question.config.timePeriodMax;
+    const fromBoundary = question.config.fromBoundary;
+    const toBoundary = question.config.toBoundary;
+    const isPeriod = question.config.isPeriod;
+
+    if (isPeriod && timePeriodMax) {
+      const timePeriodMaxToHours = new Date(timePeriodMax).getHours();
+      return (
+        (isInfoText
+          ? t('Enter time period on')
+          : t(
+              'This is an absolute requirement and must be answered with a time frame'
+            )) +
+        timePeriodMaxToHours +
+        t('hours between') +
+        DateUtils.prettyFormatTime(fromBoundary) +
+        t('And') +
+        DateUtils.prettyFormatTime(toBoundary)
+      );
+    } else {
+    }
+    return (
+      (isInfoText
+        ? t('Enter value between')
+        : t(
+            'This is an absolute requirement and must be answered with a time between'
+          )) +
+      DateUtils.prettyFormatTime(fromBoundary) +
+      t('And') +
+      DateUtils.prettyFormatTime(toBoundary)
+    );
+  };
+
+  static codelistOptionalValidationMsg = (question: ICodelistQuestion) => {
+    const optionalCodeMinAmount = question.config.optionalCodeMinAmount;
+    const optionalCodeMaxAmount = question.config.optionalCodeMaxAmount;
+    return (
+      t('Choose between') +
+      optionalCodeMinAmount +
+      t('And') +
+      optionalCodeMaxAmount +
+      t('optional options')
+    );
+  };
+
+  static codelistMandatoryValidationMsg = () => {
+    return t('All mandatory options must be confirmed');
   };
 }
 

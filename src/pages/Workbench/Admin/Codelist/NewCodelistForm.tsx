@@ -16,11 +16,13 @@ import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface Props {
-  handleClose: (newCodelist: ICodelist | null) => void;
+  handleClose: (newCodelist: ICodelist) => void;
+  handleCancel: () => void;
 }
 
 export default function NewCodelistForm({
   handleClose,
+  handleCancel,
 }: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
@@ -71,7 +73,7 @@ export default function NewCodelistForm({
             label={t('Description')}
             placeholder={''}
           />
-          <FormButtons handleClose={() => handleClose(null)} />
+          <FormButtons handleCancel={handleCancel} />
         </FormItemBox>
       </form>
     </FormProvider>

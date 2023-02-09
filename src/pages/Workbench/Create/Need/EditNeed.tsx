@@ -14,11 +14,11 @@ interface Props {
 
 export const EditNeed = ({ projectRef, need }: Props) => {
   const [isEditOpen, setEditOpen] = useState(false);
-  const { setDeleteMode } = useSelectState();
+  const { setDeleteCandidateId } = useSelectState();
 
   const handleOpen = () => {
     setEditOpen(true);
-    setDeleteMode('');
+    setDeleteCandidateId('');
   };
 
   const onClose = () => {
@@ -45,6 +45,7 @@ export const EditNeed = ({ projectRef, need }: Props) => {
             projectRef={projectRef}
             need={need}
             handleClose={onClose}
+            handleCancel={onClose}
           />
         }
       />

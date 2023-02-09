@@ -46,7 +46,7 @@ const Variant = ({ projectRef, requirementRef, variant }: Props) => {
   const nexus = Nexus.getInstance();
 
   const { openVariants, setOpenVariants } = useVariantState();
-  const { needIndex, setDeleteMode } = useSelectState();
+  const { needIndex, setDeleteCandidateId } = useSelectState();
 
   const methods = useForm<RequirementVariantForm>({
     resolver: zodResolver(RequirementVariantFormSchema),
@@ -96,7 +96,7 @@ const Variant = ({ projectRef, requirementRef, variant }: Props) => {
 
   // const confirmDelete = (id: string, event: MouseEvent): void => { TODO: Uncomment and fix
   //   event.stopPropagation();
-  //   setDeleteMode(id);
+  //   setDeleteCandidateId(id);
   // };
 
   return (

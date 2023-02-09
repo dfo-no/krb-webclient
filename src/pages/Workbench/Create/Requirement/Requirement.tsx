@@ -36,7 +36,8 @@ interface Props {
 const Requirement = ({ projectRef, requirement }: Props) => {
   const classes = useStyles();
   const { openVariants } = useVariantState();
-  const { needIndex, setDeleteMode, setCreateVariant } = useSelectState();
+  const { needIndex, setDeleteCandidateId, setCreateVariant } =
+    useSelectState();
 
   if (needIndex === null) {
     return <></>;
@@ -47,7 +48,7 @@ const Requirement = ({ projectRef, requirement }: Props) => {
   };
 
   const requirementDeleted = () => {
-    setDeleteMode('');
+    setDeleteCandidateId('');
   };
 
   const renderRequirement = () => {
@@ -72,7 +73,7 @@ const Requirement = ({ projectRef, requirement }: Props) => {
           <EditRequirement projectRef={projectRef} requirement={requirement} />
           <FormIconButton
             hoverColor={theme.palette.errorRed.main}
-            onClick={() => setDeleteMode(requirement.ref)}
+            onClick={() => setDeleteCandidateId(requirement.ref)}
             sx={{ alignSelf: 'baseline' }}
           >
             <DeleteIcon />

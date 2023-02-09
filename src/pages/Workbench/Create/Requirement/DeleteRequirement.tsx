@@ -5,7 +5,7 @@ import { Box } from '@mui/material/';
 
 import { Alert } from '../../../../models/Alert';
 import { useSelectState } from '../SelectContext';
-import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
+import { DeleteFrame } from '../../../../components/DeleteFrame/DeleteFrame';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import {
   deleteRequirement,
@@ -29,7 +29,8 @@ function DeleteRequirement({
 }: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
-  const { deleteMode } = useSelectState();
+  const { deleteCandidateId } = useSelectState();
+  // const hasChildren = requirement.variants.length > 0; //TODO: Skal denne være med videre?
 
   const [variants, setVariants] = useState<RequirementVariantForm[]>([]);
 
@@ -44,7 +45,7 @@ function DeleteRequirement({
 
   const hasChildren = variants.length > 0;
 
-  if (deleteMode !== requirementRef) {
+  if (deleteCandidateId !== requirementRef) {
     return children;
   }
 
@@ -70,7 +71,7 @@ function DeleteRequirement({
         children={children}
         canBeDeleted={!hasChildren}
         infoText={infoText}
-        handleClose={handleClose}
+        handleCancel={handleClose}
         onDelete={onDelete}
       />
     </Box>

@@ -18,15 +18,17 @@ import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import { NeedForm, NeedSchema, updateNeed } from '../../../../api/nexus2';
 
 interface Props {
-  handleClose: (need: NeedForm | null) => void;
   projectRef: string;
   need: NeedForm;
+  handleClose: (need: NeedForm) => void;
+  handleCancel: () => void;
 }
 
 function EditNeedForm({
-  need,
   projectRef,
+  need,
   handleClose,
+  handleCancel,
 }: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
@@ -78,7 +80,7 @@ function EditNeedForm({
             />
           </ModalFieldsBox>
           <ModalButtonsBox>
-            <ModalButton variant="cancel" onClick={() => handleClose(null)}>
+            <ModalButton variant="cancel" onClick={handleCancel}>
               {t('common.Cancel')}
             </ModalButton>
             <ModalButton variant="save" type="submit">

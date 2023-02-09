@@ -10,14 +10,15 @@ import { useSelectState } from '../SelectContext';
 import { NeedForm, ProjectForm } from '../../../../api/nexus2';
 
 type Props = {
-  project: ProjectForm;
+  project: ProjectForm; // TODO: only needs ref
   need: NeedForm;
 };
 
 export function NeedHeader({ project, need }: Props): React.ReactElement {
-  const { needIndex, setDeleteMode } = useSelectState();
+  const { needIndex, setDeleteCandidateId } = useSelectState();
 
   if (!project || needIndex === null) {
+    // TODO: not needed
     return <></>;
   }
 
@@ -41,7 +42,7 @@ export function NeedHeader({ project, need }: Props): React.ReactElement {
           <EditNeed projectRef={project.ref} need={need} />
           <DFOCardHeaderIconButton
             hoverColor={theme.palette.errorRed.main}
-            onClick={() => setDeleteMode(need.ref)}
+            onClick={() => setDeleteCandidateId(need.ref)}
             sx={{ alignSelf: 'baseline' }}
           >
             <DeleteIcon />

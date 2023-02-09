@@ -4,7 +4,7 @@ import { Box } from '@mui/material/';
 
 // import { Alert } from '../../../../models/Alert';
 import { useSelectState } from '../SelectContext';
-import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
+import { DeleteFrame } from '../../../../components/DeleteFrame/DeleteFrame';
 // import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import { NeedForm } from '../../../../api/nexus2';
 
@@ -26,9 +26,10 @@ export function DeleteNeed({
 
   const { t } = useTranslation();
 
-  const { deleteMode } = useSelectState();
+  const { deleteCandidateId } = useSelectState();
+  // const hasChildren = need.requirements.length > 0; // TODO: Skal denne linja være med videre?
 
-  if (deleteMode !== need.ref) {
+  if (deleteCandidateId !== need.ref) {
     return children;
   }
 
@@ -55,7 +56,7 @@ export function DeleteNeed({
         children={children}
         canBeDeleted={canBeDeleted}
         infoText={infoText}
-        handleClose={handleClose}
+        handleCancel={handleClose}
         onDelete={onDelete}
       />
     </Box>

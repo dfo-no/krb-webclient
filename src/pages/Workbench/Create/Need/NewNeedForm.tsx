@@ -20,10 +20,11 @@ import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import { createNeed, NeedForm, NeedSchema } from '../../../../api/nexus2';
 
 interface Props {
-  handleClose: (newNeed: NeedForm | null) => void;
+  handleClose: (newNeed: NeedForm) => void;
+  handleCancel: () => void;
 }
 
-function NewNeedForm({ handleClose }: Props): React.ReactElement {
+function NewNeedForm({ handleClose, handleCancel }: Props): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
 
   const nexus = Nexus.getInstance();
@@ -80,7 +81,7 @@ function NewNeedForm({ handleClose }: Props): React.ReactElement {
             />
           </ModalFieldsBox>
           <ModalButtonsBox>
-            <ModalButton variant="cancel" onClick={() => handleClose(null)}>
+            <ModalButton variant="cancel" onClick={handleCancel}>
               {t('common.Cancel')}
             </ModalButton>
             <ModalButton variant="save" type="submit">

@@ -3,7 +3,7 @@ import { Box } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 
-import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
+import { DeleteFrame } from '../../../components/DeleteFrame/DeleteFrame';
 import { Alert } from '../../../models/Alert';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';
@@ -15,20 +15,22 @@ interface IProps {
   children: React.ReactElement;
   product?: ISpecificationProduct;
   handleClose: () => void;
+  handleCancel: () => void;
 }
 
 export default function DeleteSpecProduct({
   children,
   product,
   handleClose,
+  handleCancel,
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
   const { addAlert } = AlertsContainer.useContainer();
   const { setProductIndex } = useProductIndexState();
   const { deleteSpecificationProduct } = useSpecificationState();
-  const { deleteMode } = useSelectState();
+  const { deleteCandidateId } = useSelectState();
 
-  if (!product || deleteMode !== product.id) {
+  if (!product || deleteCandidateId !== product.id) {
     return children;
   }
 
@@ -58,7 +60,7 @@ export default function DeleteSpecProduct({
         children={children}
         canBeDeleted={!hasChildren}
         infoText={infoText}
-        handleClose={handleClose}
+        handleCancel={handleCancel}
         onDelete={onDelete}
       />
     </Box>

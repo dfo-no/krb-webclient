@@ -12,15 +12,18 @@ import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import { ModelType } from '../../../../Nexus/enums';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
+import { FormContainerBox } from '../../../../components/Form/FormContainerBox';
 
 interface Props {
   codelist: ICodelist;
-  handleClose: (newCodelist: ICodelist | null) => void;
+  handleClose: (newCodelist: ICodelist) => void;
+  handleCancel: () => void;
 }
 
-export default function EditCodelistForm({
+export function EditCodelistForm({
   codelist,
   handleClose,
+  handleCancel,
 }: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
@@ -46,28 +49,30 @@ export default function EditCodelistForm({
   }
 
   return (
-    <FormProvider {...methods}>
-      <form
-        className={formStyles.flexGrowForm}
-        onSubmit={methods.handleSubmit(onSubmit)}
-        autoComplete="off"
-        noValidate
-      >
-        <FormItemBox>
-          <VerticalTextCtrl
-            name="title"
-            label={t('Title')}
-            placeholder={''}
-            autoFocus
-          />
-          <VerticalTextCtrl
-            name="description"
-            label={t('Description')}
-            placeholder={''}
-          />
-          <FormButtons handleClose={() => handleClose(null)} />
-        </FormItemBox>
-      </form>
-    </FormProvider>
+    <FormContainerBox sx={{ marginBottom: 1 }} key={codelist.id}>
+      <FormProvider {...methods}>
+        <form
+          className={formStyles.flexGrowForm}
+          onSubmit={methods.handleSubmit(onSubmit)}
+          autoComplete="off"
+          noValidate
+        >
+          <FormItemBox>
+            <VerticalTextCtrl
+              name="title"
+              label={t('Title')}
+              placeholder={''}
+              autoFocus
+            />
+            <VerticalTextCtrl
+              name="description"
+              label={t('Description')}
+              placeholder={''}
+            />
+            <FormButtons handleCancel={handleCancel} />
+          </FormItemBox>
+        </form>
+      </FormProvider>
+    </FormContainerBox>
   );
 }

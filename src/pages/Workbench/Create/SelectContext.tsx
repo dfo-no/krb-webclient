@@ -4,7 +4,7 @@ import { createContainer } from 'unstated-next';
 const useSelectContext = () => {
   const [needIndex, setNeedIndex] = useState<number | null>(null);
   const [needId, setNeedId] = useState<string | null>();
-  const [deleteMode, setDeleteMode] = useState('');
+  const [deleteCandidateId, setDeleteCandidateId] = useState('');
   const [createVariant, setCreateVariant] = useState('');
 
   return {
@@ -12,8 +12,8 @@ const useSelectContext = () => {
     setNeedIndex,
     needId,
     setNeedId,
-    deleteMode,
-    setDeleteMode,
+    deleteCandidateId,
+    setDeleteCandidateId,
     createVariant,
     setCreateVariant,
   };

@@ -9,7 +9,7 @@ import {
   ProjectForm,
   PublicationForm,
 } from '../../../api/nexus2';
-import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
+import { DeleteFrame } from '../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../Nexus/Nexus';
 import UuidService from '../../../Nexus/services/UuidService';
 import { Alert } from '../../../models/Alert';
@@ -32,7 +32,7 @@ export function DeleteProjectForm({
   const { t } = useTranslation();
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
-  const { deleteMode } = useEditableState();
+  const { deleteCandidateId } = useEditableState();
   const uuidService = new UuidService();
   const [publications, setPublications] = useState<PublicationForm[]>([]);
 
@@ -42,14 +42,14 @@ export function DeleteProjectForm({
   });
 
   useEffect(() => {
-    if (deleteMode === project.ref) {
+    if (deleteCandidateId === project.ref) {
       findPublications({ projectref: project.ref }).then((response) =>
         setPublications(response.data)
       );
     }
-  }, [deleteMode, project.ref]);
+  }, [deleteCandidateId, project.ref]);
 
-  if (deleteMode !== project.ref) {
+  if (deleteCandidateId !== project.ref) {
     return children;
   }
 
@@ -81,7 +81,7 @@ export function DeleteProjectForm({
           children={children}
           canBeDeleted={true}
           infoText={infoText}
-          handleClose={handleClose}
+          handleCancel={handleClose}
         />
         <ErrorSummary errors={methods.formState.errors} />
       </form>

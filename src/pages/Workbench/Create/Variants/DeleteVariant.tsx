@@ -3,7 +3,7 @@ import { Box } from '@mui/material/';
 
 import { Alert } from '../../../../models/Alert';
 import { useSelectState } from '../SelectContext';
-import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
+import { DeleteFrame } from '../../../../components/DeleteFrame/DeleteFrame';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import { deleteRequirementVariant } from '../../../../api/nexus2';
 
@@ -25,9 +25,9 @@ export function DeleteVariant({
   handleClose,
 }: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
-  const { deleteMode } = useSelectState();
+  const { deleteCandidateId } = useSelectState();
 
-  if (deleteMode !== requirementVariantRef) {
+  if (deleteCandidateId !== requirementVariantRef) {
     return children;
   }
 
@@ -53,7 +53,7 @@ export function DeleteVariant({
         children={children}
         canBeDeleted={true}
         infoText={''}
-        handleClose={handleClose}
+        handleCancel={handleClose}
         onDelete={onDelete}
       />
     </Box>

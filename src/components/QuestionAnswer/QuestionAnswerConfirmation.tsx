@@ -10,12 +10,15 @@ import Nexus from '../../Nexus/Nexus';
 import { IConfirmationQuestion } from '../../Nexus/entities/IConfirmationQuestion';
 import { IRequirementAnswer } from '../../Nexus/entities/IRequirementAnswer';
 import { QuestionVariant } from '../../Nexus/enums';
+import ValidationUtils from '../../common/ValidationUtils';
+import ValidationMessageForm from '../../Form/ValidationMessageForm/ValidationMessageForm';
 
 interface IProps {
   item: IConfirmationQuestion;
   existingAnswer?: IRequirementAnswer;
   onSubmit: (post: IConfirmationQuestion) => void;
   isInfo?: boolean;
+  isAwardCriteria?: boolean;
 }
 
 const QuestionAnswerConfirmation = ({
@@ -23,6 +26,7 @@ const QuestionAnswerConfirmation = ({
   existingAnswer,
   onSubmit,
   isInfo,
+  isAwardCriteria,
 }: IProps): React.ReactElement => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
@@ -61,11 +65,26 @@ const QuestionAnswerConfirmation = ({
                 isPrefilledResponse ? undefined : methods.handleSubmit(onSubmit)
               }
             >
-              <CheckboxCtrl
-                name={'answer.value'}
-                label={t('Confirm')}
-                color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
-              />
+              <ValidationMessageForm
+                isError={
+                  !!existingAnswer &&
+                  !ValidationUtils.confirmationQuestion(existingAnswer) &&
+                  !isAwardCriteria
+                }
+                message={
+                  existingAnswer &&
+                  !isAwardCriteria &&
+                  !ValidationUtils.confirmationQuestion(existingAnswer)
+                    ? ValidationUtils.confirmationQuestionValidationMsg()
+                    : ''
+                }
+              >
+                <CheckboxCtrl
+                  name={'answer.value'}
+                  label={t('Confirm')}
+                  color={isPrefilledResponse ? '' : 'var(--text-primary-color)'}
+                />
+              </ValidationMessageForm>
               {isPrefilledResponse && (
                 <div className={css.Buttons}>
                   <Button type={Type.Submit}>{t('Save')}</Button>

@@ -11,11 +11,11 @@ const FormButtonBox = styled(Box)(() => ({
 }));
 
 interface IProps {
-  handleClose: () => void;
+  handleCancel: () => void;
 }
 
 export default function FormButtons({
-  handleClose,
+  handleCancel,
 }: IProps): React.ReactElement {
   const { t } = useTranslation();
 
@@ -27,7 +27,7 @@ export default function FormButtons({
       <Button
         variant="cancel"
         sx={{ marginLeft: 2 }}
-        onClick={() => handleClose()}
+        onClick={() => handleCancel()}
         aria-label="close"
       >
         {t('common.Cancel')}

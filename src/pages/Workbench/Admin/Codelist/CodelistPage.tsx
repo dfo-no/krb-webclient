@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import { useFindCodelists } from '../../../../api/nexus2';
+import { CodelistPanel } from './CodelistPanel';
+import { CodePanel } from './CodePanel';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import SearchUtils from '../../../../common/SearchUtils';
 import { DFOSearchBar } from '../../../../components/DFOSearchBar/DFOSearchBar';
@@ -16,9 +18,8 @@ import {
 import { StandardContainer } from '../../../../components/StandardContainer/StandardContainer';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { ICodelist } from '../../../../Nexus/entities/ICodelist';
-import CodelistPanel from './CodelistPanel';
-import CodePanel from './CodePanel';
 import { useSelectState } from './SelectContext';
+import { useGetProjectQuery } from '../../../../store/api/bankApi';
 
 const useStyles = makeStyles({
   tableContainer: {
@@ -43,29 +44,36 @@ const useStyles = makeStyles({
 });
 
 export default function CodeListPage(): React.ReactElement {
-  const { codelist, codelists, setCodelists } = useSelectState();
+  const {
+    selectedCodelist,
+    setSelectedCodelist,
+    allCodelists,
+    setAllCodelists,
+  } = useSelectState();
   const classes = useStyles();
   const { t } = useTranslation();
 
   const { projectId } = useParams<IRouteProjectParams>();
+  const { data: project } = useGetProjectQuery(projectId);
   const { isLoading, codelists: loadedCodelists } = useFindCodelists(projectId);
 
   useEffect(() => {
     if (loadedCodelists) {
-      setCodelists(codelists);
+      setAllCodelists([]); // TODO: Fix type mismatch after merge
+      // setAllCodelists(loadedCodelists);
     }
-  }, [setCodelists, codelist, codelists, loadedCodelists]);
+  }, [setAllCodelists, loadedCodelists]);
 
   if (isLoading) {
     return <LoaderSpinner />;
   }
 
-  if (!loadedCodelists) {
+  if (!project || !loadedCodelists) {
     return <></>;
   }
 
   const searchFieldCallback = (result: ICodelist[]) => {
-    setCodelists(result);
+    setAllCodelists(result);
   };
 
   const codelistSearch = (searchString: string, list: ICodelist[]) => {
@@ -73,8 +81,8 @@ export default function CodeListPage(): React.ReactElement {
   };
 
   const showCodeContainer = () => {
-    if (codelist) {
-      return codelists.some((cl) => cl.id === codelist.id);
+    if (selectedCodelist) {
+      return allCodelists.some((cl) => cl.id === selectedCodelist.id);
     }
     return false;
   };
@@ -84,7 +92,7 @@ export default function CodeListPage(): React.ReactElement {
       <SearchContainer>
         <SearchFieldContainer>
           <DFOSearchBar
-            list={codelists}
+            list={allCodelists}
             placeholder={t('Search for codelist')}
             callback={searchFieldCallback}
             searchFunction={codelistSearch}
@@ -94,13 +102,16 @@ export default function CodeListPage(): React.ReactElement {
       <Box className={classes.tableContainer}>
         <Box className={classes.codelistContainer}>
           <EditableProvider>
-            <CodelistPanel />
+            <CodelistPanel project={project} />
           </EditableProvider>
         </Box>
         <Box className={classes.codeContainer}>
-          {showCodeContainer() && (
+          {showCodeContainer() && selectedCodelist && (
             <EditableProvider>
-              <CodePanel />
+              <CodePanel
+                selectedCodelist={selectedCodelist}
+                setSelectedCodelist={setSelectedCodelist}
+              />
             </EditableProvider>
           )}
         </Box>
