@@ -101,7 +101,6 @@ describe('CustomJoi', () => {
         number: orgNumber,
       });
       expect(reportSuccess?.error?.details[0].message).toBeUndefined();
-      // expect(isValid(orgNumber)).toBe(true);
     }
   );
 
@@ -128,5 +127,4 @@ describe('CustomJoi', () => {
       );
     }
   );
-  // });
 });
