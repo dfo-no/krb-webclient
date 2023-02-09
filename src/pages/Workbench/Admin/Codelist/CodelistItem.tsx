@@ -61,13 +61,10 @@ export function CodelistItem({
     setCurrentlyEditedItemId('');
   };
 
-  const handleCloseDelete = (deletedCodelist: ICodelist | null) => {
-    if (deletedCodelist) {
-      setSelectedCodelist(null);
-      setAllCodelists(
-        Utils.removeElementFromList(deletedCodelist, allCodelists)
-      );
-    }
+  const handleCloseDelete = (deletedCodelist: ICodelist) => {
+    setSelectedCodelist(null);
+    setAllCodelists(Utils.removeElementFromList(deletedCodelist, allCodelists));
+
     setDeleteCandidateId('');
   };
 
@@ -109,7 +106,7 @@ export function CodelistItem({
             activated={deleteCandidateId === codelist.id}
             canBeDeleted={!isInUse}
             infoText={infoText}
-            handleCancel={() => handleCloseDelete(null)}
+            handleCancel={() => setDeleteCandidateId('')}
           >
             <DisplayCodelist
               codelist={codelist}
