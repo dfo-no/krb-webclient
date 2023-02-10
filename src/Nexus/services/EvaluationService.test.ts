@@ -123,7 +123,7 @@ describe('EvaluationService', () => {
           title: 'Krav 1',
           description: '',
           needId: 'a63d26d1-4820-497c-ad5f-6113f6991c4e',
-          tags: [],
+          // tags: [],
           variants: [
             {
               requirementText: 'Krav tekst 1',
@@ -159,7 +159,7 @@ describe('EvaluationService', () => {
           title: 'Krav 2',
           description: '',
           needId: 'c16f5e18-85f7-4d5a-b0dd-2cdbb1fe17c9',
-          tags: [],
+          // tags: [],
           variants: [
             {
               requirementText: 'Krav tekst 2',
@@ -195,7 +195,7 @@ describe('EvaluationService', () => {
           title: 'Krav 3',
           description: '',
           needId: 'c16f5e18-85f7-4d5a-b0dd-2cdbb1fe17c9',
-          tags: [],
+          // tags: [],
           variants: [
             {
               requirementText: 'Krav tekst 3',
