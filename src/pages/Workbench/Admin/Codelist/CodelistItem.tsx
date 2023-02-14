@@ -21,6 +21,7 @@ interface Props {
   project: IBank;
   codelist: ICodelist;
   isSelected: boolean;
+  key: string;
   setSelectedCodelist: Dispatch<SetStateAction<ICodelist | null>>;
 }
 
@@ -28,6 +29,7 @@ export function CodelistItem({
   project,
   codelist,
   isSelected,
+  key,
   setSelectedCodelist,
 }: Props): React.ReactElement {
   const { deleteCodelist } = useProjectMutations();
@@ -90,6 +92,7 @@ export function CodelistItem({
     return (
       <EditCodelistForm
         codelist={codelist}
+        key={key}
         handleClose={handleCloseEdit}
         handleCancel={() => setCurrentlyEditedItemId('')}
       />
@@ -98,6 +101,7 @@ export function CodelistItem({
     return (
       <FormProvider {...methods}>
         <form
+          key={key}
           onSubmit={methods.handleSubmit(onSubmit)}
           autoComplete="off"
           noValidate

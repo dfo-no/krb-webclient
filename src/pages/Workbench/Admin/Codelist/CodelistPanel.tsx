@@ -64,6 +64,7 @@ const CodelistPanel = ({ project }: Props): React.ReactElement => {
                 isSelected={
                   !!(selectedCodelist && selectedCodelist.id === codelist.id)
                 }
+                key={codelist.id}
               />
             ))}
         </List>

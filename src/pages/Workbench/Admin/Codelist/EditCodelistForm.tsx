@@ -16,12 +16,14 @@ import { FormContainerBox } from '../../../../components/Form/FormContainerBox';
 
 interface Props {
   codelist: ICodelist;
+  key: string;
   handleClose: (newCodelist: ICodelist) => void;
   handleCancel: () => void;
 }
 
 export function EditCodelistForm({
   codelist,
+  key,
   handleClose,
   handleCancel,
 }: Props): React.ReactElement {
@@ -52,6 +54,7 @@ export function EditCodelistForm({
     <FormContainerBox sx={{ marginBottom: 1 }} key={codelist.id}>
       <FormProvider {...methods}>
         <form
+          key={key}
           className={formStyles.flexGrowForm}
           onSubmit={methods.handleSubmit(onSubmit)}
           autoComplete="off"
