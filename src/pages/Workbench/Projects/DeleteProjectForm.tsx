@@ -9,9 +9,9 @@ import {
   ProjectForm,
   PublicationForm,
 } from '../../../api/nexus2';
-import { DeleteFrame } from '../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../Nexus/Nexus';
 import UuidService from '../../../Nexus/services/UuidService';
+import { DeleteFrame } from '../../../components/DeleteFrame/DeleteFrame';
 import { Alert } from '../../../models/Alert';
 import { useEditableState } from '../../../components/EditableContext/EditableContext';
 import { AlertsContainer } from '../../../components/Alert/AlertContext';

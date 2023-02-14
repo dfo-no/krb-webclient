@@ -1,24 +1,28 @@
-import { useTranslation } from 'react-i18next';
 import { Box, Button, Typography } from '@mui/material/';
 
 import { useButtonStyles } from './CodelistStyles';
 
 interface Props {
+  heading: string;
+  buttonText: string;
   onClick: () => void;
 }
 
-export default function CodeAddButton({ onClick }: Props): React.ReactElement {
+export function ListHeader({
+  heading,
+  buttonText,
+  onClick,
+}: Props): React.ReactElement {
   const classes = useButtonStyles();
-  const { t } = useTranslation();
 
   return (
     <Box className={classes.buttonContainer}>
       <Box className={classes.buttonTitle}>
-        <Typography variant="smBold">{t('Code')}</Typography>
+        <Typography variant="smBold">{heading}</Typography>
       </Box>
       <Box className={classes.button}>
         <Button variant="primary" onClick={onClick}>
-          {t('Add new code')}
+          {buttonText}
         </Button>
       </Box>
     </Box>
