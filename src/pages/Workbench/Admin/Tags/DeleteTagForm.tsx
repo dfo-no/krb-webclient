@@ -3,10 +3,10 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 
-import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import Utils from '../../../../common/Utils';
+import { DeleteFrame } from '../../../../components/DeleteFrame/DeleteFrame';
 import { Alert } from '../../../../models/Alert';
 import { ITag } from '../../../../Nexus/entities/ITag';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';

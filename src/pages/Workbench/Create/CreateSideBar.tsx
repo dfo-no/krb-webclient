@@ -62,7 +62,7 @@ const CreateSideBar = (): React.ReactElement => {
 
   const renderItem = (
     item: Parentable<INeed>,
-    handler: React.ReactNode,
+    dragHandle: React.ReactNode,
     collapseIcon: React.ReactNode
   ) => {
     return (
@@ -73,7 +73,7 @@ const CreateSideBar = (): React.ReactElement => {
         )}
         onClick={() => itemClicked(item)}
       >
-        <Box className={css.Handle}>{handler}</Box>
+        <Box className={css.Handle}>{dragHandle}</Box>
         <Typography
           variant={item.parent === '' ? 'smBold' : 'sm'}
           className={css.ItemName}

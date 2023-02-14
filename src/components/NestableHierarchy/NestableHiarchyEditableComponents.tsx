@@ -111,10 +111,12 @@ const NestableHierarcyEditableComponents = <
     return item && item.id === currentlyEditedItemId;
   };
 
-  const renderTextBox = (item: Parentable<T>, handler: React.ReactNode) => {
+  const renderTextBox = (item: Parentable<T>, dragHandle: React.ReactNode) => {
     return (
       <Box className={classes.nestableItemCustom}>
-        {!isEditing() && <Box className={classes.handlerIcon}>{handler}</Box>}
+        {!isEditing() && (
+          <Box className={classes.handlerIcon}>{dragHandle}</Box>
+        )}
         <Box className={classes.textItemTitle}>
           <Typography variant="smBold">{item.title}</Typography>
         </Box>
@@ -136,13 +138,14 @@ const NestableHierarcyEditableComponents = <
     );
   };
 
-  const renderItem = (item: Parentable<T>, handler: React.ReactNode) => {
+  const renderItem = (item: Parentable<T>, dragHandle: React.ReactNode) => {
     if (isEditingItem(item)) {
       return <FormContainerBox>{EditComponent(item)}</FormContainerBox>;
     }
     return (
       <>
-        {DeleteComponent && DeleteComponent(item, renderTextBox(item, handler))}
+        {DeleteComponent &&
+          DeleteComponent(item, renderTextBox(item, dragHandle))}
       </>
     );
   };

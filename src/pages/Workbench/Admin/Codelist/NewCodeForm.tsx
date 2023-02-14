@@ -16,6 +16,7 @@ import { ModelType } from '../../../../Nexus/enums';
 import { Parentable } from '../../../../models/Parentable';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
+import { FormContainerBox } from '../../../../components/Form/FormContainerBox';
 
 interface Props {
   codelist: ICodelist;
@@ -58,28 +59,30 @@ export default function NewCodeForm({
   }
 
   return (
-    <FormProvider {...methods}>
-      <form
-        className={formStyles.flexGrowForm}
-        onSubmit={methods.handleSubmit(onSubmit)}
-        autoComplete="off"
-        noValidate
-      >
-        <FormItemBox>
-          <VerticalTextCtrl
-            name="title"
-            label={t('Title')}
-            placeholder={''}
-            autoFocus
-          />
-          <VerticalTextCtrl
-            name="description"
-            label={t('Description')}
-            placeholder={''}
-          />
-          <FormButtons handleCancel={handleCancel} />
-        </FormItemBox>
-      </form>
-    </FormProvider>
+    <FormContainerBox sx={{ marginBottom: 1 }}>
+      <FormProvider {...methods}>
+        <form
+          className={formStyles.flexGrowForm}
+          onSubmit={methods.handleSubmit(onSubmit)}
+          autoComplete="off"
+          noValidate
+        >
+          <FormItemBox>
+            <VerticalTextCtrl
+              name="title"
+              label={t('Title')}
+              placeholder={''}
+              autoFocus
+            />
+            <VerticalTextCtrl
+              name="description"
+              label={t('Description')}
+              placeholder={''}
+            />
+            <FormButtons handleCancel={handleCancel} />
+          </FormItemBox>
+        </form>
+      </FormProvider>
+    </FormContainerBox>
   );
 }
