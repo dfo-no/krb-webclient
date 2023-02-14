@@ -1,7 +1,8 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Box } from '@mui/material/';
+import { useTranslation } from 'react-i18next';
 
-import CodeAddButton from './CodeAddButton';
+import { ListHeader } from './ListHeader';
 import { DisplayCode } from './DisplayCode';
 import EditCodeForm from './EditCodeForm';
 import NestableHierarcy from '../../../../components/NestableHierarchy/NestableHierarcy';
@@ -25,6 +26,7 @@ export const CodePanel = ({
   setSelectedCodelist,
 }: Props): React.ReactElement => {
   const classes = usePanelStyles();
+  const { t } = useTranslation();
   const {
     currentlyEditedItemId,
     setCurrentlyEditedItemId,
@@ -110,7 +112,11 @@ export const CodePanel = ({
 
   return (
     <Box className={classes.topContainer}>
-      <CodeAddButton onClick={() => setCreating(true)} />
+      <ListHeader
+        heading={t('Code')}
+        buttonText={t('Add new code')}
+        onClick={() => setCreating(true)}
+      />
       {isCreating && (
         <NewCodeForm
           codelist={selectedCodelist}

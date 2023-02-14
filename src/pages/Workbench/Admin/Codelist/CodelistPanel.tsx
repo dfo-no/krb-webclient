@@ -1,7 +1,8 @@
 import { Box, List } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import 'react-nestable/dist/styles/index.css';
 
-import CodelistAddButton from './CodelistAddButton';
+import { ListHeader } from './ListHeader';
 import NewCodelistForm from './NewCodelistForm';
 import Utils from '../../../../common/Utils';
 import { FormContainerBox } from '../../../../components/Form/FormContainerBox';
@@ -19,6 +20,7 @@ type Props = {
 
 const CodelistPanel = ({ project }: Props): React.ReactElement => {
   const classes = usePanelStyles();
+  const { t } = useTranslation();
   const {
     selectedCodelist,
     setSelectedCodelist,
@@ -37,7 +39,12 @@ const CodelistPanel = ({ project }: Props): React.ReactElement => {
 
   return (
     <Box className={classes.topContainer}>
-      <CodelistAddButton onClick={() => setCreating(true)} />
+      {/* <Button onClick={() => setCreating(true)} /> */}
+      <ListHeader
+        heading={t('Codelist')}
+        buttonText={t('Add new codelist')}
+        onClick={() => setCreating(true)}
+      />
       {isCreating && (
         <FormContainerBox>
           <NewCodelistForm
