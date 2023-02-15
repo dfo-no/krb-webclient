@@ -99,8 +99,6 @@ const Breadcrumbs = (): ReactElement => {
   }
 
   if (isProject) {
-    console.log('actuall is project');
-
     breadcrumbs.push({
       label: `${t('Project')}/ ${getTitle()}`,
       url: baseUrl?.params?.projectId,

@@ -99,8 +99,6 @@ export default function Create(): React.ReactElement {
   };
 
   const renderNeedCard = (): ReactElement => {
-    console.log('gserghrt');
-
     return (
       <Box className={css.Need}>
         <NeedHeader project={project} need={currentNeed} />
