@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 
-import FormButtons from '../../../../components/Form/FormButtons';
+import { FormButtons } from '../../../../components/Form/FormButtons';
 import Nexus from '../../../../Nexus/Nexus';
 import ProductService from '../../../../Nexus/services/ProductService';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
