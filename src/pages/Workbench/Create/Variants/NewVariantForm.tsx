@@ -1,4 +1,3 @@
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Box } from '@mui/material';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -8,14 +7,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import GeneralErrorMessage from '../../../../Form/GeneralErrorMessage';
 import Nexus from '../../../../Nexus/Nexus';
-import { VariantFormContent } from './VariantFormContent';
-import { Alert } from '../../../../models/Alert';
-import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import {
   createRequirementVariant,
   RequirementVariantForm,
   RequirementVariantFormSchema,
 } from '../../../../api/nexus2';
+import { VariantFormContent } from './VariantFormContent';
+import { Alert } from '../../../../models/Alert';
+import { AlertsContainer } from '../../../../components/Alert/AlertContext';
+import { FormButtons } from '../../../../components/Form/FormButtons';
 
 interface Props {
   projectRef: string;
@@ -74,18 +74,7 @@ export function NewVariantForm({
               projectRef={projectRef}
               control={methods.control}
             />
-            <Box sx={{ display: 'flex', flexDirection: 'row', marginTop: 2 }}>
-              <Button
-                variant="cancel"
-                onClick={() => closeAndReset()}
-                sx={{ marginLeft: 'auto', marginRight: 2 }}
-              >
-                {t('common.Cancel')}
-              </Button>
-              <Button variant="save" type="submit">
-                {t('Save')}
-              </Button>
-            </Box>
+            <FormButtons handleCancel={closeAndReset} />
             <GeneralErrorMessage errors={methods.formState.errors} />
           </Box>
         </form>
