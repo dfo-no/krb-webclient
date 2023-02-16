@@ -5,17 +5,46 @@ import CustomJoi from '../../CustomJoi';
 describe('CodeJoi', () => {
   test('Joi validateMaxCodes() should show error message if not a positive integer over 1', () => {
     const schema = CustomJoi.object().keys({
-      max: CustomJoi.validateMaxCodes(),
+      question: {
+        config: {
+          optionalCodeMinAmount: CustomJoi.validateMinCodes(),
+          optionalCodeMaxAmount: CustomJoi.validateMaxCodes(),
+        },
+      },
     });
 
     const reportError1 = schema.validate({
-      max: 0,
+      question: {
+        config: {
+          optionalCodeMinAmount: 0,
+          optionalCodeMaxAmount: 0,
+        },
+      },
     });
     const reportError2 = schema.validate({
-      max: 1.2,
+      question: {
+        config: {
+          optionalCodeMinAmount: 0,
+          optionalCodeMaxAmount: 1.2,
+        },
+      },
     });
+    const reportError3 = schema.validate({
+      question: {
+        config: {
+          optionalCodeMinAmount: 5,
+          optionalCodeMaxAmount: 1,
+        },
+      },
+    });
+
     const reportSuccess = schema.validate({
-      max: 10,
+      question: {
+        config: {
+          optionalCodeMinAmount: 0,
+          optionalCodeMaxAmount: 10,
+        },
+      },
     });
     expect(reportError1?.error?.details[0].message).toEqual(
       'Må være minimum 1'
@@ -23,6 +52,10 @@ describe('CodeJoi', () => {
     expect(reportError2?.error?.details[0].message).toEqual(
       'Må være et positivt heltall'
     );
+    expect(reportError3?.error?.details[0].message).toEqual(
+      'Kan ikke være mindre enn 5'
+    );
+
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });
 
