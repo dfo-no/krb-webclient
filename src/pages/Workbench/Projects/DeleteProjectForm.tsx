@@ -2,10 +2,10 @@ import React, { ReactElement } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
 import Nexus from '../../../Nexus/Nexus';
 import useProjectMutations from '../../../store/api/ProjectMutations';
 import UuidService from '../../../Nexus/services/UuidService';
+import { DeleteFrame } from '../../../components/DeleteFrame/DeleteFrame';
 import { IBank } from '../../../Nexus/entities/IBank';
 import { Alert } from '../../../models/Alert';
 import { ModelType } from '../../../Nexus/enums';

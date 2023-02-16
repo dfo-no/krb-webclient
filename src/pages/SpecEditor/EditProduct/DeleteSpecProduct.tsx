@@ -3,7 +3,7 @@ import { Box } from '@mui/material/';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 
-import DeleteFrame from '../../../components/DeleteFrame/DeleteFrame';
+import { DeleteFrame } from '../../../components/DeleteFrame/DeleteFrame';
 import { Alert } from '../../../models/Alert';
 import { ISpecificationProduct } from '../../../Nexus/entities/ISpecificationProduct';
 import { useProductIndexState } from '../../../components/ProductIndexContext/ProductIndexContext';

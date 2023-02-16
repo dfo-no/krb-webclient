@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import CodelistPanel from './CodelistPanel';
-import CodePanel from './CodePanel';
+import { CodePanel } from './CodePanel';
 import DFOSearchBar from '../../../../components/DFOSearchBar/DFOSearchBar';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import SearchUtils from '../../../../common/SearchUtils';
@@ -43,7 +43,12 @@ const useStyles = makeStyles({
 });
 
 export default function CodeListPage(): React.ReactElement {
-  const { codelist, codelists, setCodelists } = useSelectState();
+  const {
+    selectedCodelist,
+    setSelectedCodelist,
+    allCodelists,
+    setAllCodelists,
+  } = useSelectState();
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -52,9 +57,9 @@ export default function CodeListPage(): React.ReactElement {
 
   useEffect(() => {
     if (project && project.codelist) {
-      setCodelists(project.codelist);
+      setAllCodelists(project.codelist);
     }
-  }, [setCodelists, project]);
+  }, [setAllCodelists, project]);
 
   if (isLoading) {
     return <LoaderSpinner />;
@@ -65,7 +70,7 @@ export default function CodeListPage(): React.ReactElement {
   }
 
   const searchFieldCallback = (result: ICodelist[]) => {
-    setCodelists(result);
+    setAllCodelists(result);
   };
 
   const codelistSearch = (searchString: string, list: ICodelist[]) => {
@@ -73,8 +78,8 @@ export default function CodeListPage(): React.ReactElement {
   };
 
   const showCodeContainer = () => {
-    if (codelist) {
-      return codelists.some((cl) => cl.id === codelist.id);
+    if (selectedCodelist) {
+      return allCodelists.some((cl) => cl.id === selectedCodelist.id);
     }
     return false;
   };
@@ -94,13 +99,16 @@ export default function CodeListPage(): React.ReactElement {
       <Box className={classes.tableContainer}>
         <Box className={classes.codelistContainer}>
           <EditableProvider>
-            <CodelistPanel />
+            <CodelistPanel project={project} />
           </EditableProvider>
         </Box>
         <Box className={classes.codeContainer}>
-          {showCodeContainer() && (
+          {showCodeContainer() && selectedCodelist && (
             <EditableProvider>
-              <CodePanel />
+              <CodePanel
+                selectedCodelist={selectedCodelist}
+                setSelectedCodelist={setSelectedCodelist}
+              />
             </EditableProvider>
           )}
         </Box>

@@ -11,7 +11,7 @@ import useProjectMutations from '../../../../store/api/ProjectMutations';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { useSelectState } from '../SelectContext';
 import { IVariant } from '../../../../Nexus/entities/IVariant';
-import DeleteFrame from '../../../../components/DeleteFrame/DeleteFrame';
+import { DeleteFrame } from '../../../../components/DeleteFrame/DeleteFrame';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface Props {

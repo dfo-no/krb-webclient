@@ -59,6 +59,8 @@ const OrganizationNumberValidator = (joi: Joi.Root) => ({
       }, 0);
       if (11 - (sum % 11) === +value.charAt(8)) {
         return { value };
+      } else if (11 - (sum % 11) === 11 && +value.charAt(8) === 0) {
+        return { value };
       }
     }
     return { value, errors: helpers.error('string.void') };
