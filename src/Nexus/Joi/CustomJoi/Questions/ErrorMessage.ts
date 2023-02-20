@@ -10,7 +10,7 @@ export enum ErrorMessage {
   VAL_NUMBER_MIN = 'Kan ikke være mindre enn {{#limit}}',
   VAL_NUMBER_MAX = 'Kan ikke være større enn {{#limit}}',
   VAL_NUMBER_CHECK = 'Varighet i antall dager må være innen den angitte datoperioden',
-  VAL_NUMBER_SLIDER_MAX = 'Overskrider forksjell mellom maks og min ({{#limit}})',
+  VAL_NUMBER_STEP = 'Må være en verdi i hele {{#step}}',
   VAL_VALUE_UNIQUE = 'Verdi kan ikke være like',
   VAL_NUMBER_MIN_1 = 'Må være minimum 1',
   VAL_NUMBER_CODE_DISCOUNT_MIN = 'Må være minimum 0',
