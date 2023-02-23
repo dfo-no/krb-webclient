@@ -9,8 +9,37 @@ const MaxCodeValidator = (joi: Joi.Root) => ({
     'number.base': ErrorMessage.VAL_NUMBER_BASE,
     'number.integer': ErrorMessage.VAL_NUMBER_INT,
     'number.min': ErrorMessage.VAL_NUMBER_MIN_1,
+    'number.check': ErrorMessage.VAL_NUMBER_MIN,
   },
   base: joi.number().integer().min(1).required(),
+  validate(value: number, helpers: Joi.CustomHelpers) {
+    const index =
+      'path' in helpers.state && helpers.state.path
+        ? helpers.state.path.indexOf('optionalCodeMaxAmount')
+        : null;
+    const optionalCodeMinAmount =
+      index && 'question' in helpers.state.ancestors[index]
+        ? helpers.state.ancestors[index].question.config.optionalCodeMinAmount
+        : null;
+    const optionalCodeMaxAmount =
+      index && 'question' in helpers.state.ancestors[index]
+        ? helpers.state.ancestors[index].question.config.optionalCodeMaxAmount
+        : null;
+    if (
+      value &&
+      optionalCodeMinAmount &&
+      optionalCodeMaxAmount &&
+      parseInt(optionalCodeMinAmount) > parseInt(optionalCodeMaxAmount)
+    ) {
+      return {
+        value,
+        errors: helpers.error('number.check', {
+          limit: optionalCodeMinAmount,
+        }),
+      };
+    }
+    return { value };
+  },
 });
 
 const MinCodeValidator = (joi: Joi.Root) => ({
