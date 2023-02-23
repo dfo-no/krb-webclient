@@ -38,7 +38,7 @@ const WorkbenchDiscountValueSchema = CustomJoi.object().keys({
 export const SliderQuestionWorkbenchSchema = QuestionBaseSchema.keys({
   type: CustomJoi.validateType(QuestionVariant.Q_SLIDER),
   config: ConfigBaseSchema.keys({
-    step: CustomJoi.validateSliderStep(),
+    step: CustomJoi.validateNumber(),
     min: CustomJoi.validateSliderMin(),
     max: CustomJoi.validateSliderMax(),
     unit: CustomJoi.validateOptionalText(),
@@ -56,7 +56,7 @@ const DiscountValueSchema = CustomJoi.object().keys({
 
 export const SliderQuestionAnswerSchema = SliderQuestionWorkbenchSchema.keys({
   config: ConfigBaseSchema.keys({
-    step: CustomJoi.validateSliderStep(),
+    step: CustomJoi.validateNumber(),
     min: CustomJoi.validateSliderMin(),
     max: CustomJoi.validateSliderMax(),
     unit: CustomJoi.validateOptionalText(),

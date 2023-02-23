@@ -7,8 +7,23 @@ const SliderMinValidator = (joi: Joi.Root) => ({
   messages: {
     'number.base': ErrorMessage.VAL_NUMBER_BASE,
     'number.min': ErrorMessage.VAL_NUMBER_INT,
+    'number.check': ErrorMessage.VAL_NUMBER_STEP,
   },
   base: joi.number().min(0).required(),
+  validate(value: number, helpers: Joi.CustomHelpers) {
+    const step = helpers.state.ancestors[0].step;
+    if (value && step) {
+      if ((value * 1000) % (step * 1000) !== 0) {
+        return {
+          value,
+          errors: helpers.error('number.check', {
+            step: step,
+          }),
+        };
+      }
+    }
+    return { value };
+  },
 });
 
 const SliderMaxValidator = (joi: Joi.Root) => ({
@@ -16,10 +31,12 @@ const SliderMaxValidator = (joi: Joi.Root) => ({
   messages: {
     'number.base': ErrorMessage.VAL_NUMBER_BASE,
     'number.min': ErrorMessage.VAL_NUMBER_MIN,
+    'number.check': ErrorMessage.VAL_NUMBER_STEP,
   },
   base: joi.number().required(),
   validate(value: number, helpers: Joi.CustomHelpers) {
     const min = helpers.state.ancestors[0].min;
+    const step = helpers.state.ancestors[0].step;
     if (value && min) {
       if (min > value) {
         return {
@@ -29,29 +46,11 @@ const SliderMaxValidator = (joi: Joi.Root) => ({
           }),
         };
       }
-    }
-    return { value };
-  },
-});
-
-const SliderStepValidator = (joi: Joi.Root) => ({
-  type: 'validateSliderStep',
-  messages: {
-    'number.base': ErrorMessage.VAL_NUMBER_BASE,
-    'number.min': ErrorMessage.VAL_NUMBER_INT,
-    'number.max': ErrorMessage.VAL_NUMBER_SLIDER_MAX,
-  },
-  base: joi.number().min(0).required(),
-  validate(value: number, helpers: Joi.CustomHelpers) {
-    const min = helpers.state.ancestors[0].min;
-    const max = helpers.state.ancestors[0].max;
-    if (value && min && max) {
-      const difference = Math.abs(max - min);
-      if (difference < value) {
+      if ((value * 1000) % (step * 1000) !== 0) {
         return {
           value,
-          errors: helpers.error('number.max', {
-            limit: difference,
+          errors: helpers.error('number.check', {
+            step: step,
           }),
         };
       }
@@ -66,11 +65,13 @@ const SliderValueValidator = (joi: Joi.Root) => ({
     'number.base': ErrorMessage.VAL_NUMBER_BASE,
     'number.min': ErrorMessage.VAL_NUMBER_MIN,
     'number.max': ErrorMessage.VAL_NUMBER_MAX,
+    'number.check': ErrorMessage.VAL_NUMBER_STEP,
   },
   base: joi.number().required(),
   validate(value: number, helpers: Joi.CustomHelpers) {
     const min = helpers.state.ancestors[2].min;
     const max = helpers.state.ancestors[2].max;
+    const step = helpers.state.ancestors[2].step;
     if (min && min > value) {
       return {
         value,
@@ -84,6 +85,14 @@ const SliderValueValidator = (joi: Joi.Root) => ({
         value,
         errors: helpers.error('number.max', {
           limit: max,
+        }),
+      };
+    }
+    if ((value * 1000) % (step * 1000) !== 0) {
+      return {
+        value,
+        errors: helpers.error('number.check', {
+          step: step,
         }),
       };
     }
@@ -134,7 +143,6 @@ const SliderValuesValidator = (joi: Joi.Root) => ({
 const SliderJoi = [
   SliderMinValidator,
   SliderMaxValidator,
-  SliderStepValidator,
   SliderValueValidator,
   SliderAnswerValidator,
   SliderValuesValidator,

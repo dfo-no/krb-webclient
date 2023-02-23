@@ -4,16 +4,26 @@ describe('SliderJoi', () => {
   test('Joi validateSliderMin() should show error message on value under 0', () => {
     const schema = CustomJoi.object().keys({
       min: CustomJoi.validateSliderMin(),
+      step: CustomJoi.validateNumber(),
     });
 
-    const reportError = schema.validate({
-      min: -1,
+    const reportError1 = schema.validate({
+      min: -2,
+      step: 2,
+    });
+    const reportError2 = schema.validate({
+      min: 3,
+      step: 2,
     });
     const reportSuccess = schema.validate({
-      min: 1,
+      min: 4,
+      step: 2,
     });
-    expect(reportError?.error?.details[0].message).toEqual(
+    expect(reportError1?.error?.details[0].message).toEqual(
       'Må være et positivt heltall'
+    );
+    expect(reportError2?.error?.details[0].message).toEqual(
+      'Må være en verdi i hele 2'
     );
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });
@@ -22,49 +32,29 @@ describe('SliderJoi', () => {
     const schema = CustomJoi.object().keys({
       min: CustomJoi.validateSliderMin(),
       max: CustomJoi.validateSliderMax(),
-    });
-
-    const reportError = schema.validate({
-      min: 10,
-      max: 1,
-    });
-    const reportSuccess = schema.validate({
-      min: 1,
-      max: 10,
-    });
-    expect(reportError?.error?.details[0].message).toEqual(
-      'Kan ikke være mindre enn 10'
-    );
-    expect(reportSuccess?.error?.details[0].message).toBeUndefined();
-  });
-
-  test('Joi validateSliderStep() should show error message on value under 0 or larger than min/max gap', () => {
-    const schema = CustomJoi.object().keys({
-      min: CustomJoi.validateSliderMin(),
-      max: CustomJoi.validateSliderMax(),
-      step: CustomJoi.validateSliderStep(),
+      step: CustomJoi.validateNumber(),
     });
 
     const reportError1 = schema.validate({
-      min: 1,
-      max: 10,
-      step: -1,
+      min: 10,
+      max: 4,
+      step: 2,
     });
     const reportError2 = schema.validate({
-      min: 1,
-      max: 10,
-      step: 10,
+      min: 2,
+      max: 9,
+      step: 2,
     });
     const reportSuccess = schema.validate({
-      min: 1,
+      min: 2,
       max: 10,
-      step: 1,
+      step: 2,
     });
     expect(reportError1?.error?.details[0].message).toEqual(
-      'Må være et positivt heltall'
+      'Kan ikke være mindre enn 10'
     );
     expect(reportError2?.error?.details[0].message).toEqual(
-      'Overskrider forksjell mellom maks og min (9)'
+      'Må være en verdi i hele 2'
     );
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });
@@ -73,6 +63,7 @@ describe('SliderJoi', () => {
     const schema = CustomJoi.object().keys({
       min: CustomJoi.validateSliderMin(),
       max: CustomJoi.validateSliderMax(),
+      step: CustomJoi.validateNumber(),
       values: CustomJoi.validateUniqueArray(
         CustomJoi.object().keys({
           value: CustomJoi.validateSliderValue(),
@@ -81,8 +72,9 @@ describe('SliderJoi', () => {
     });
 
     const reportError1 = schema.validate({
-      min: 1,
+      min: 2,
       max: 10,
+      step: 2,
       values: [
         {
           value: 0,
@@ -90,28 +82,43 @@ describe('SliderJoi', () => {
       ],
     });
     const reportError2 = schema.validate({
-      min: 1,
+      min: 2,
       max: 10,
+      step: 2,
       values: [
         {
           value: 12,
         },
       ],
     });
-    const reportSuccess = schema.validate({
-      min: 1,
+    const reportError3 = schema.validate({
+      min: 2,
       max: 10,
+      step: 2,
       values: [
         {
-          value: 5,
+          value: 9,
+        },
+      ],
+    });
+    const reportSuccess = schema.validate({
+      min: 2,
+      max: 10,
+      step: 2,
+      values: [
+        {
+          value: 8,
         },
       ],
     });
     expect(reportError1?.error?.details[0].message).toEqual(
-      'Kan ikke være mindre enn 1'
+      'Kan ikke være mindre enn 2'
     );
     expect(reportError2?.error?.details[0].message).toEqual(
       'Kan ikke være større enn 10'
+    );
+    expect(reportError3?.error?.details[0].message).toEqual(
+      'Må være en verdi i hele 2'
     );
     expect(reportSuccess?.error?.details[0].message).toBeUndefined();
   });
@@ -121,6 +128,7 @@ describe('SliderJoi', () => {
       config: {
         min: CustomJoi.validateSliderMin(),
         max: CustomJoi.validateSliderMax(),
+        step: CustomJoi.validateNumber(),
       },
       answer: {
         value: CustomJoi.validateSliderAnswer(),
@@ -131,6 +139,7 @@ describe('SliderJoi', () => {
       config: {
         min: 1,
         max: 10,
+        step: 1,
       },
       answer: {
         value: 0,
@@ -140,6 +149,7 @@ describe('SliderJoi', () => {
       config: {
         min: 1,
         max: 10,
+        step: 1,
       },
       answer: {
         value: 12,
@@ -149,6 +159,7 @@ describe('SliderJoi', () => {
       config: {
         min: 1,
         max: 10,
+        step: 1,
       },
       answer: {
         value: 5,
