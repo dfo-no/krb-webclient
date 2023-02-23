@@ -77,7 +77,9 @@ const QuestionAnswerSlider = ({
           <ValidationMessageForm
             isError={
               !!existingAnswer &&
-              !ValidationUtils.sliderQuestion(existingAnswer)
+              !ValidationUtils.sliderQuestion(existingAnswer) &&
+              !isAwardCriteria &&
+              !isInfo
             }
             message={validationMessage()}
           >

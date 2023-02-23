@@ -80,7 +80,8 @@ const QuestionAnswerPeriodDate = ({
             isError={
               !!existingAnswer &&
               !ValidationUtils.periodDateQuestion(existingAnswer) &&
-              !isAwardCriteria
+              !isAwardCriteria &&
+              !isInfo
             }
             message={validationMessage()}
           >

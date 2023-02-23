@@ -79,7 +79,8 @@ const QuestionAnswerTime = ({
             isError={
               !!existingAnswer &&
               !ValidationUtils.timeQuestion(existingAnswer) &&
-              !isAwardCriteria
+              !isAwardCriteria &&
+              !isInfo
             }
             message={validationMessage()}
           >
