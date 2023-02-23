@@ -53,6 +53,15 @@ const QuestionAnswerPeriodDate = ({
     }
   }, [existingAnswer, methods]);
 
+  const validationMessage = () => {
+    if (!isInfo) {
+      return existingAnswer &&
+        !isAwardCriteria &&
+        !ValidationUtils.periodDateQuestion(existingAnswer)
+        ? ValidationUtils.periodDateQuestionValidationMsg(item)
+        : ValidationUtils.periodDateQuestionValidationMsg(item, true);
+    }
+  };
   return (
     <div className={css.QuestionAnswer}>
       <FormProvider {...methods}>
@@ -73,13 +82,7 @@ const QuestionAnswerPeriodDate = ({
               !ValidationUtils.periodDateQuestion(existingAnswer) &&
               !isAwardCriteria
             }
-            message={
-              existingAnswer &&
-              !isAwardCriteria &&
-              !ValidationUtils.periodDateQuestion(existingAnswer)
-                ? ValidationUtils.periodDateQuestionValidationMsg(item)
-                : ValidationUtils.periodDateQuestionValidationMsg(item, true)
-            }
+            message={validationMessage()}
           >
             <FlexRowBox>
               <DateCtrl

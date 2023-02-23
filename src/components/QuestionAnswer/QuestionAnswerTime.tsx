@@ -51,6 +51,16 @@ const QuestionAnswerTime = ({
     }
   }, [existingAnswer, methods]);
 
+  const validationMessage = () => {
+    if (!isInfo) {
+      return existingAnswer &&
+        !isAwardCriteria &&
+        !ValidationUtils.timeQuestion(existingAnswer)
+        ? ValidationUtils.timeQuestionValidationMsg(item)
+        : ValidationUtils.timeQuestionValidationMsg(item, true);
+    }
+  };
+
   return (
     <div className={css.QuestionAnswer}>
       <FormProvider {...methods}>
@@ -71,13 +81,7 @@ const QuestionAnswerTime = ({
               !ValidationUtils.timeQuestion(existingAnswer) &&
               !isAwardCriteria
             }
-            message={
-              existingAnswer &&
-              !isAwardCriteria &&
-              !ValidationUtils.timeQuestion(existingAnswer)
-                ? ValidationUtils.timeQuestionValidationMsg(item)
-                : ValidationUtils.timeQuestionValidationMsg(item, true)
-            }
+            message={validationMessage()}
           >
             <FlexRowBox>
               <TimeCtrl
