@@ -67,10 +67,12 @@ const usePrefilledResponseContext = () => {
     setPrefilledResponse(
       produce(prefilledResponse, (draft) => {
         if (
-          draft.requirementAnswers.find((answer) => answer.id === payload.id)
+          draft.requirementAnswers.find(
+            (answer) => answer.questionId === payload.questionId
+          )
         ) {
           const oldSelectIndex = draft.requirementAnswers.findIndex(
-            (answer) => answer.id === payload.id
+            (answer) => answer.questionId === payload.questionId
           );
           draft.requirementAnswers.splice(oldSelectIndex, 1);
         }
