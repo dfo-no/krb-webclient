@@ -21,17 +21,33 @@ Feature: Forberedt besvarelse
     Then Jeg klikker på "Lagre" knapp for å lagre
     And Ser jeg "Test produkt" på siden
 
-    Scenario: Jeg kan besvare krav for produktet
-      Given Jeg åpner forberedt besvarelse
-      When Jeg klikker på "Rediger produktet" knapp
-      And Jeg klikker på "Ikke besvart" av kravet "Tilbehør i kupé" for å besvare
-      And Velger jeg "Koppholder for sjåfør" fra kodeliste
-      And Jeg klikker på "Lagre" knappen for å lagre besvare
-      Then Ser jeg svaret "Koppholder for sjåfør" på siden
-      When Jeg klikker på "Ikke besvart" av kravet "Seter foran" for å besvare
-      And Jeg velger 2 på verdi til kravet "Seter foran"
-      And Jeg klikker på "Lagre" knappen for å lagre besvare
-      Then Ser jeg svaret "2 sete(r)" på siden
+  Scenario: Jeg kan besvare krav for produktet
+    Given Jeg åpner forberedt besvarelse
+    When Jeg klikker på "Rediger produktet" knapp
+    And Jeg klikker på "Ikke besvart" av kravet "Tilbehør i kupé" for å besvare
+    And Velger jeg "Koppholder for sjåfør" fra kodeliste
+    And Jeg klikker på "Lagre" knappen for å lagre besvare
+    Then Ser jeg svaret "Koppholder for sjåfør" på siden
+    When Jeg klikker på "Ikke besvart" av kravet "Seter foran" for å besvare
+    And Jeg velger 2 på verdi til kravet "Seter foran"
+    And Jeg klikker på "Lagre" knappen for å lagre besvare
+    Then Ser jeg svaret "2 sete(r)" på siden
+    When Jeg klikker på "2 sete(r)" av kravet "Seter foran" for å besvare
+    And Jeg velger 3 på verdi til kravet "Seter foran"
+    And Jeg klikker på "Lagre" knappen for å lagre besvare
+    Then Ser jeg svaret "3 sete(r)" på siden
+
+  Scenario: Jeg kan besvare krav for produktets generelle krav
+    Given Jeg åpner forberedt besvarelse
+    When Jeg klikker på "Rediger generelle krav" knapp
+    And Jeg klikker på "Ikke besvart" av kravet "Leveringstid" for å besvare
+    And Jeg velger 10 på verdi til kravet "Leveringstid"
+    And Jeg klikker på "Lagre" knappen for å lagre besvare
+    Then Ser jeg svaret "10 dag(er)" på siden
+    When Jeg klikker på "10 dag(er)" av kravet "Leveringstid" for å besvare
+    And Jeg velger 30 på verdi til kravet "Leveringstid"
+    And Jeg klikker på "Lagre" knappen for å lagre besvare
+    Then Ser jeg svaret "30 dag(er)" på siden
 
   Scenario: Jeg kan laste ned forberedt besvarelse
     Given Jeg åpner forberedt besvarelse
