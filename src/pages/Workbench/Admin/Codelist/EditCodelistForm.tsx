@@ -4,10 +4,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { FormButtons } from '../../../../components/Form/FormButtons';
 import Nexus from '../../../../Nexus/Nexus';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { Alert } from '../../../../models/Alert';
-import { ICodelist } from '../../../../Nexus/entities/ICodelist';
+import { CodelistForm, updateCodelist } from '../../../../api/nexus2';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import { ModelType } from '../../../../Nexus/enums';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
@@ -15,13 +14,15 @@ import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import { FormContainerBox } from '../../../../components/Form/FormContainerBox';
 
 interface Props {
-  codelist: ICodelist;
+  projectRef: string;
+  codelist: CodelistForm;
   key: string;
-  handleClose: (newCodelist: ICodelist) => void;
+  handleClose: (newCodelist: CodelistForm) => void;
   handleCancel: () => void;
 }
 
 export function EditCodelistForm({
+  projectRef,
   codelist,
   key,
   handleClose,
@@ -31,27 +32,30 @@ export function EditCodelistForm({
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
   const formStyles = useFormStyles();
-  const { editCodelist } = useProjectMutations();
 
-  const methods = useForm<ICodelist>({
+  const methods = useForm<CodelistForm>({
     defaultValues: codelist,
     resolver: nexus.resolverService.resolver(ModelType.codelist),
   });
 
-  async function onSubmit(put: ICodelist) {
-    await editCodelist(put).then(() => {
+  async function onSubmit(updatedCodelist: CodelistForm) {
+    await updateCodelist({
+      projectRef,
+      codelistRef: codelist.ref,
+      ...updatedCodelist,
+    }).then(() => {
       const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully edited codelist',
       };
       addAlert(alert);
-      handleClose(put);
+      handleClose(updatedCodelist);
     });
   }
 
   return (
-    <FormContainerBox sx={{ marginBottom: 1 }} key={codelist.id}>
+    <FormContainerBox sx={{ marginBottom: 1 }} key={codelist.ref}>
       <FormProvider {...methods}>
         <form
           key={key}

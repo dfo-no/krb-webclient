@@ -16,7 +16,6 @@ import { QuestionVariant } from '../Nexus/enums';
 import { DiscountValuePair } from '../Nexus/entities/ISliderQuestion';
 import { TimeDiscountPair } from '../Nexus/entities/ITimeQuestion';
 import { DateDiscountPair } from '../Nexus/entities/IPeriodDateQuestion';
-// import { RefAndParentable } from '../components/NestableHierarchy/NestableHierarcyNew';
 
 // TODO: Not sure this type belongs here
 export type RefAndParentable = { ref: string } & ParentableKRB858;
@@ -524,3 +523,36 @@ class Utils {
 }
 
 export default Utils;
+
+export function replaceElementInList<T extends { ref: string }>(
+  element: T,
+  list: T[]
+): T[] {
+  const newList = [...list];
+  const index = newList.findIndex((elem) => elem.ref === element.ref);
+  if (index !== -1) {
+    newList.splice(index, 1, element);
+  }
+  return newList;
+}
+
+export function addElementToList<T extends { ref: string }>(
+  element: T,
+  list: T[]
+): T[] {
+  const newList = [...list];
+  newList.push(element);
+  return newList;
+}
+
+export function removeElementFromList<T extends { ref: string }>(
+  element: T,
+  list: T[]
+): T[] {
+  const newList = [...list];
+  const index = newList.findIndex((elem) => elem.ref === element.ref);
+  if (index !== -1) {
+    newList.splice(index, 1);
+  }
+  return newList;
+}

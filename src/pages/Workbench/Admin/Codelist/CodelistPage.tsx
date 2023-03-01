@@ -4,11 +4,11 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { useFindCodelists } from '../../../../api/nexus2';
+import { CodelistForm, useFindCodelists } from '../../../../api/nexus2';
 import { CodelistPanel } from './CodelistPanel';
 import { CodePanel } from './CodePanel';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
-import SearchUtils from '../../../../common/SearchUtils';
+import { searchCodelist } from '../../../../common/SearchUtils';
 import { DFOSearchBar } from '../../../../components/DFOSearchBar/DFOSearchBar';
 import { EditableProvider } from '../../../../components/EditableContext/EditableContext';
 import {
@@ -17,7 +17,6 @@ import {
 } from '../../../../components/SearchContainer/SearchContainer';
 import { StandardContainer } from '../../../../components/StandardContainer/StandardContainer';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import { ICodelist } from '../../../../Nexus/entities/ICodelist';
 import { useSelectState } from './SelectContext';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
 
@@ -59,7 +58,7 @@ export default function CodeListPage(): React.ReactElement {
 
   useEffect(() => {
     if (loadedCodelists) {
-      setAllCodelists([]); // TODO: Fix type mismatch after merge
+      setAllCodelists(loadedCodelists); // TODO: Fix type mismatch after merge
       // setAllCodelists(loadedCodelists);
     }
   }, [setAllCodelists, loadedCodelists]);
@@ -72,17 +71,17 @@ export default function CodeListPage(): React.ReactElement {
     return <></>;
   }
 
-  const searchFieldCallback = (result: ICodelist[]) => {
+  const searchFieldCallback = (result: CodelistForm[]) => {
     setAllCodelists(result);
   };
 
-  const codelistSearch = (searchString: string, list: ICodelist[]) => {
-    return SearchUtils.searchCodelist(list, searchString);
+  const codelistSearch = (searchString: string, list: CodelistForm[]) => {
+    return searchCodelist(list, searchString);
   };
 
   const showCodeContainer = () => {
     if (selectedCodelist) {
-      return allCodelists.some((cl) => cl.id === selectedCodelist.id);
+      return allCodelists.some((cl) => cl.ref === selectedCodelist.ref);
     }
     return false;
   };
@@ -102,13 +101,14 @@ export default function CodeListPage(): React.ReactElement {
       <Box className={classes.tableContainer}>
         <Box className={classes.codelistContainer}>
           <EditableProvider>
-            <CodelistPanel project={project} />
+            <CodelistPanel projectRef={projectId} />
           </EditableProvider>
         </Box>
         <Box className={classes.codeContainer}>
           {showCodeContainer() && selectedCodelist && (
             <EditableProvider>
               <CodePanel
+                projectRef={projectId}
                 selectedCodelist={selectedCodelist}
                 setSelectedCodelist={setSelectedCodelist}
               />

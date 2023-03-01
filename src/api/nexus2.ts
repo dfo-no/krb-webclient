@@ -234,6 +234,36 @@ export const useFindCodelists = (projectRef: string) => {
   return { isLoading, codelists };
 };
 
+export const createCodelist = fetcher
+  .path('/api/v1/projects/{projectRef}/codelists')
+  .method('post')
+  .create();
+
+export const updateCodelist = fetcher
+  .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}')
+  .method('put')
+  .create();
+
+export const deleteCodelist = fetcher
+  .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}')
+  .method('delete')
+  .create();
+
+export const createCode = fetcher
+  .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes')
+  .method('post')
+  .create();
+
+export const updateCode = fetcher
+  .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes/{codeRef}')
+  .method('put')
+  .create();
+
+export const deleteCode = fetcher
+  .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes/{codeRef}')
+  .method('delete')
+  .create();
+
 export const createNeed = fetcher
   .path('/api/v1/projects/{projectRef}/needs')
   .method('post')

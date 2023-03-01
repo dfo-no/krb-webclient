@@ -1,26 +1,25 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
 
 import { FormButtons } from '../../../../components/Form/FormButtons';
 import Nexus from '../../../../Nexus/Nexus';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
-import { ICodelist } from '../../../../Nexus/entities/ICodelist';
+import { CodelistForm, createCodelist } from '../../../../api/nexus2';
 import { Alert } from '../../../../models/Alert';
-import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { ModelType } from '../../../../Nexus/enums';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 
 interface Props {
-  handleClose: (newCodelist: ICodelist) => void;
+  projectRef: string;
+  handleClose: (newCodelist: CodelistForm) => void;
   handleCancel: () => void;
 }
 
 export default function NewCodelistForm({
+  projectRef,
   handleClose,
   handleCancel,
 }: Props): React.ReactElement {
@@ -28,20 +27,19 @@ export default function NewCodelistForm({
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
   const formStyles = useFormStyles();
-  const { projectId } = useParams<IRouteProjectParams>();
-  const { addCodelist } = useProjectMutations();
 
-  const defaultValues: ICodelist =
-    nexus.codelistService.generateDefaultCodelistValues(projectId);
-
-  const methods = useForm<ICodelist>({
+  const methods = useForm<CodelistForm>({
     resolver: nexus.resolverService.postResolver(ModelType.codelist),
-    defaultValues,
+    defaultValues: {
+      title: '',
+      description: '',
+      codes: [],
+      ref: uuidv4(),
+    },
   });
 
-  async function onSubmit(post: ICodelist) {
-    const newCodelist = nexus.codelistService.createCodelistWithId(post);
-    await addCodelist(newCodelist).then(() => {
+  async function onSubmit(newCodelist: CodelistForm) {
+    await createCodelist({ projectRef, ...newCodelist }).then(() => {
       const alert: Alert = {
         id: uuidv4(),
         style: 'success',

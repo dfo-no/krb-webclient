@@ -4,27 +4,26 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { FormButtons } from '../../../../components/Form/FormButtons';
 import Nexus from '../../../../Nexus/Nexus';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import { Alert } from '../../../../models/Alert';
-import { ICode } from '../../../../Nexus/entities/ICode';
-import { ICodelist } from '../../../../Nexus/entities/ICodelist';
-import { Parentable } from '../../../../models/Parentable';
+import { CodeForm, updateCode } from '../../../../api/nexus2';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { ModelType } from '../../../../Nexus/enums';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import { FormContainerBox } from '../../../../components/Form/FormContainerBox';
 
 interface Props {
-  codelist: ICodelist;
-  code: Parentable<ICode>;
-  handleClose: (newCode: Parentable<ICode>) => void;
+  projectRef: string;
+  codelistRef: string;
+  code: CodeForm;
+  handleClose: (newCode: CodeForm) => void;
   handleCancel: () => void;
 }
 
-function EditCodeForm({
-  codelist,
+export function EditCodeForm({
+  projectRef,
+  codelistRef,
   code,
   handleClose,
   handleCancel,
@@ -33,22 +32,26 @@ function EditCodeForm({
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
   const formStyles = useFormStyles();
-  const { editCode } = useProjectMutations();
 
-  const methods = useForm<Parentable<ICode>>({
+  const methods = useForm<CodeForm>({
     defaultValues: code,
     resolver: nexus.resolverService.resolver(ModelType.code),
   });
 
-  async function onSubmit(put: Parentable<ICode>) {
-    await editCode(put, codelist).then(() => {
+  async function onSubmit(updatedeCode: CodeForm) {
+    await updateCode({
+      projectRef,
+      codelistRef,
+      codeRef: updatedeCode.ref,
+      ...updatedeCode,
+    }).then(() => {
       const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully edited code',
       };
       addAlert(alert);
-      handleClose(put);
+      handleClose(updatedeCode);
     });
   }
 
@@ -80,5 +83,3 @@ function EditCodeForm({
     </FormContainerBox>
   );
 }
-
-export default EditCodeForm;

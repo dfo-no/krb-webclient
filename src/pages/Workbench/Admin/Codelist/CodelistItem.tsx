@@ -4,35 +4,32 @@ import { v4 as uuidv4 } from 'uuid';
 import { Dispatch, SetStateAction } from 'react';
 
 import Nexus from '../../../../Nexus/Nexus';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
-import Utils from '../../../../common/Utils';
+import Utils, { removeElementFromList } from '../../../../common/Utils';
 import { DeleteFrame } from '../../../../components/DeleteFrame/DeleteFrame';
-import { ICodelist } from '../../../../Nexus/entities/ICodelist';
+import { CodelistForm, deleteCodelist } from '../../../../api/nexus2';
 import { Alert } from '../../../../models/Alert';
 import { ModelType } from '../../../../Nexus/enums';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
-import { IBank } from '../../../../Nexus/entities/IBank';
 import { EditCodelistForm } from './EditCodelistForm';
 import { useSelectState } from './SelectContext';
 import { DisplayCodelist } from './DisplayCodelist';
 
 interface Props {
-  project: IBank;
-  codelist: ICodelist;
+  projectRef: string;
+  codelist: CodelistForm;
   isSelected: boolean;
   key: string;
-  setSelectedCodelist: Dispatch<SetStateAction<ICodelist | null>>;
+  setSelectedCodelist: Dispatch<SetStateAction<CodelistForm | null>>;
 }
 
 export function CodelistItem({
-  project,
+  projectRef,
   codelist,
   isSelected,
   key,
   setSelectedCodelist,
 }: Props): React.ReactElement {
-  const { deleteCodelist } = useProjectMutations();
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
@@ -44,7 +41,7 @@ export function CodelistItem({
   } = useEditableState();
   const { allCodelists, setAllCodelists } = useSelectState();
 
-  const methods = useForm<ICodelist>({
+  const methods = useForm<CodelistForm>({
     defaultValues: codelist,
     resolver: nexus.resolverService.resolver(ModelType.codelist),
   });
@@ -57,40 +54,45 @@ export function CodelistItem({
       )}`
     : '';
 
-  const handleCloseEdit = (newCodelist: ICodelist) => {
+  const handleCloseEdit = (newCodelist: CodelistForm) => {
     setSelectedCodelist(newCodelist);
 
     setCurrentlyEditedItemId('');
   };
 
-  const handleCloseDelete = (deletedCodelist: ICodelist) => {
+  const handleCloseDelete = (deletedCodelist: CodelistForm) => {
     setSelectedCodelist(null);
-    setAllCodelists(Utils.removeElementFromList(deletedCodelist, allCodelists));
+    setAllCodelists(removeElementFromList(deletedCodelist, allCodelists));
 
     setDeleteCandidateId('');
   };
 
-  const onSubmit = (put: ICodelist): void => {
-    deleteCodelist(put).then(() => {
+  const onSubmit = (codelistToBeDeleted: CodelistForm): void => {
+    deleteCodelist({
+      projectRef,
+      codelistRef: codelistToBeDeleted.ref,
+      ...codelistToBeDeleted,
+    }).then(() => {
       const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully deleted codelist',
       };
       addAlert(alert);
-      handleCloseDelete(put);
+      handleCloseDelete(codelistToBeDeleted);
     });
   };
 
-  const isEditingItem = (maybeEditedCodelist: ICodelist) => {
+  const isEditingItem = (maybeEditedCodelist: CodelistForm) => {
     return (
-      maybeEditedCodelist && maybeEditedCodelist.id === currentlyEditedItemId
+      maybeEditedCodelist && maybeEditedCodelist.ref === currentlyEditedItemId
     );
   };
 
   if (isEditingItem(codelist)) {
     return (
       <EditCodelistForm
+        projectRef={projectRef}
         codelist={codelist}
         key={key}
         handleClose={handleCloseEdit}
@@ -107,7 +109,7 @@ export function CodelistItem({
           noValidate
         >
           <DeleteFrame
-            activated={deleteCandidateId === codelist.id}
+            activated={deleteCandidateId === codelist.ref}
             canBeDeleted={!isInUse}
             infoText={infoText}
             handleCancel={() => setDeleteCandidateId('')}

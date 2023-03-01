@@ -5,8 +5,6 @@ import { useParams } from 'react-router-dom';
 import DateService from '../../Nexus/services/DateService';
 import Utils from '../../common/Utils';
 import { IBank } from '../../Nexus/entities/IBank';
-import { ICode } from '../../Nexus/entities/ICode';
-import { ICodelist } from '../../Nexus/entities/ICodelist';
 import { IProduct } from '../../Nexus/entities/IProduct';
 import { IPublication } from '../../Nexus/entities/IPublication';
 import { IRouteProjectParams } from '../../models/IRouteProjectParams';
@@ -93,97 +91,12 @@ function useProjectMutations() {
     throw Error('Cant save changes to Project');
   }
 
-  // CODELISTS
-  async function addCodelist(codelist: ICodelist): Promise<BankOrError> {
-    if (project) {
-      const editedCodelists = Utils.addElementToList(
-        codelist,
-        project.codelist
-      );
-      return putProject({ ...project, codelist: editedCodelists });
-    }
-    throw Error('Cant save changes to Project');
-  }
-
-  async function editCodelist(codelist: ICodelist): Promise<BankOrError> {
-    if (project) {
-      const editedCodelists = Utils.replaceElementInList(
-        codelist,
-        project.codelist
-      );
-      return putProject({ ...project, codelist: editedCodelists });
-    }
-    throw Error('Cant save changes to Project');
-  }
-
-  async function deleteCodelist(codelist: ICodelist): Promise<BankOrError> {
-    if (project) {
-      const editedCodelists = Utils.removeElementFromList(
-        codelist,
-        project.codelist
-      );
-      return putProject({ ...project, codelist: editedCodelists });
-    }
-    throw Error('Cant save changes to Project');
-  }
-
-  // CODES
-  async function addCode(
-    code: Parentable<ICode>,
-    codelist: ICodelist
-  ): Promise<BankOrError> {
-    if (project) {
-      const editedCodes = Utils.addElementToList(code, codelist.codes);
-      return editCodelist({ ...codelist, codes: editedCodes });
-    }
-    throw Error('Cant save changes to Project');
-  }
-
-  async function editCode(
-    code: Parentable<ICode>,
-    codelist: ICodelist
-  ): Promise<BankOrError> {
-    if (project) {
-      const editedCodes = Utils.replaceElementInList(code, codelist.codes);
-      return editCodelist({ ...codelist, codes: editedCodes });
-    }
-    throw Error('Cant save changes to Project');
-  }
-
-  async function deleteCode(
-    code: Parentable<ICode>,
-    codelist: ICodelist
-  ): Promise<BankOrError> {
-    if (project) {
-      const editedCodes = Utils.removeElementFromList(code, codelist.codes);
-      return editCodelist({ ...codelist, codes: editedCodes });
-    }
-    throw Error('Cant save changes to Project');
-  }
-
-  async function editCodes(
-    codes: Parentable<ICode>[],
-    codelist: ICodelist
-  ): Promise<BankOrError> {
-    if (project) {
-      return editCodelist({ ...codelist, codes: codes });
-    }
-    throw Error('Cant save changes to Project');
-  }
-
   return {
     deletePublication,
     addProduct,
     editProduct,
     deleteProduct,
     editProducts,
-    addCodelist,
-    editCodelist,
-    deleteCodelist,
-    addCode,
-    editCode,
-    deleteCode,
-    editCodes,
   };
 }
 

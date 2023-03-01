@@ -5,6 +5,50 @@
 
 
 export type paths = {
+  "/": {
+    get: {
+      responses: {
+        /** @description OK */
+        200: never;
+      };
+    };
+  };
+  "/api/v1/banks": {
+    get: {
+      parameters: {
+        query: {
+          fieldname: string;
+          order: string;
+          page?: number;
+          pagesize?: number;
+        };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          content: {
+            "application/json": (components["schemas"]["Bank"])[];
+          };
+        };
+        /** @description Not Authorized */
+        401: never;
+        /** @description Not Allowed */
+        403: never;
+      };
+    };
+  };
+  "/api/v1/liquibase": {
+    get: {
+      responses: {
+        /** @description OK */
+        200: never;
+        /** @description Not Authorized */
+        401: never;
+        /** @description Not Allowed */
+        403: never;
+      };
+    };
+  };
   "/api/v1/projects": {
     get: {
       responses: {
@@ -186,115 +230,6 @@ export type paths = {
     delete: {
       parameters: {
         path: {
-          codelistRef: string;
-          projectRef: string;
-        };
-      };
-      responses: {
-        /** @description OK */
-        200: never;
-        /** @description Not Authorized */
-        401: never;
-        /** @description Not Allowed */
-        403: never;
-      };
-    };
-  };
-  "/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes": {
-    get: {
-      parameters: {
-        path: {
-          codelistRef: string;
-          projectRef: string;
-        };
-      };
-      responses: {
-        /** @description OK */
-        200: {
-          content: {
-            "application/json": (components["schemas"]["CodeForm"])[];
-          };
-        };
-        /** @description Not Authorized */
-        401: never;
-        /** @description Not Allowed */
-        403: never;
-      };
-    };
-    post: {
-      parameters: {
-        path: {
-          codelistRef: string;
-          projectRef: string;
-        };
-      };
-      requestBody?: {
-        content: {
-          "application/json": components["schemas"]["CodeForm"];
-        };
-      };
-      responses: {
-        /** @description OK */
-        200: never;
-        /** @description Not Authorized */
-        401: never;
-        /** @description Not Allowed */
-        403: never;
-      };
-    };
-  };
-  "/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes/{codeRef}": {
-    get: {
-      parameters: {
-        path: {
-          codeRef: string;
-          codelistRef: string;
-          projectRef: string;
-        };
-      };
-      responses: {
-        /** @description OK */
-        200: {
-          content: {
-            "application/json": components["schemas"]["CodeForm"];
-          };
-        };
-        /** @description Not Authorized */
-        401: never;
-        /** @description Not Allowed */
-        403: never;
-      };
-    };
-    put: {
-      parameters: {
-        path: {
-          codeRef: string;
-          codelistRef: string;
-          projectRef: string;
-        };
-      };
-      requestBody?: {
-        content: {
-          "application/json": components["schemas"]["CodeForm"];
-        };
-      };
-      responses: {
-        /** @description OK */
-        200: {
-          content: {
-            "application/json": components["schemas"]["CodeForm"];
-          };
-        };
-        /** @description Not Authorized */
-        401: never;
-        /** @description Not Allowed */
-        403: never;
-      };
-    };
-    delete: {
-      parameters: {
-        path: {
-          codeRef: string;
           codelistRef: string;
           projectRef: string;
         };
@@ -947,74 +882,30 @@ export type paths = {
       };
     };
   };
-  "/test/api/v1/admin": {
-    get: {
-      responses: {
-        /** @description OK */
-        200: {
-          content: {
-            "text/plain": {
-              [key: string]: string | undefined;
-            };
-          };
-        };
-        /** @description Not Authorized */
-        401: never;
-        /** @description Not Allowed */
-        403: never;
-      };
-    };
-  };
-  "/test/api/v1/users/info": {
-    get: {
-      responses: {
-        /** @description OK */
-        200: {
-          content: {
-            "application/json": {
-              [key: string]: string | undefined;
-            };
-          };
-        };
-        /** @description Not Authorized */
-        401: never;
-        /** @description Not Allowed */
-        403: never;
-      };
-    };
-  };
-  "/test/api/v1/users/user": {
-    get: {
-      responses: {
-        /** @description OK */
-        200: {
-          content: {
-            "application/json": {
-              [key: string]: components["schemas"]["Principal"] | undefined;
-            };
-          };
-        };
-        /** @description Not Authorized */
-        401: never;
-        /** @description Not Allowed */
-        403: never;
-      };
-    };
-  };
 };
 
 export type webhooks = Record<string, never>;
 
 export type components = {
   schemas: {
-    Code: {
-      /** Format: int64 */
-      id?: number;
+    Bank: {
+      id: string;
       title: string;
       description: string;
-      ref: string;
+      needs: (components["schemas"]["Need"])[];
+      codelist: (components["schemas"]["Codelist"])[];
+      products: (components["schemas"]["Product"])[];
+      publications: (components["schemas"]["Publication"])[];
+      /** Format: int64 */
+      version?: number | null;
+      publishedDate?: string | null;
+      type: string;
+      inheritedBanks?: (Record<string, never>)[] | null;
+      sourceOriginal?: Record<string, unknown> | null;
+      sourceRel?: Record<string, unknown> | null;
+      tags?: (components["schemas"]["Tag"])[] | null;
     };
-    CodeForm: {
+    Code: {
       ref: string;
       title: string;
       description: string;
@@ -1022,15 +913,17 @@ export type components = {
     Codelist: {
       /** Format: int64 */
       id?: number;
+      ref: string;
       title: string;
       description: string;
-      ref: string;
-      codes?: (components["schemas"]["Code"])[] | null;
+      serialized_codes: string;
     };
     CodelistForm: {
       ref: string;
       title: string;
       description: string;
+      serializedCodes: string;
+      codes?: (components["schemas"]["Code"])[] | null;
     };
     /**
      * Format: date-time 
@@ -1049,9 +942,6 @@ export type components = {
       ref: string;
       title: string;
       description: string;
-    };
-    Principal: {
-      name?: string;
     };
     Product: {
       /** Format: int64 */
@@ -1133,6 +1023,15 @@ export type components = {
       useProduct?: boolean;
       useSpecification?: boolean;
       useQualification?: boolean;
+    };
+    Tag: {
+      id: string;
+      title: string;
+      description?: string | null;
+      type: string;
+      parent: string;
+      sourceOriginal: string;
+      sourceRel?: Record<string, unknown> | null;
     };
   };
   responses: never;

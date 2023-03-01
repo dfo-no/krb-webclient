@@ -9,44 +9,47 @@ import { DeleteFrame } from '../../../../components/DeleteFrame/DeleteFrame';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { Alert } from '../../../../models/Alert';
-import { Parentable } from '../../../../models/Parentable';
-import { ICode } from '../../../../Nexus/entities/ICode';
-import { ICodelist } from '../../../../Nexus/entities/ICodelist';
+import { CodeForm, deleteCode } from '../../../../api/nexus2';
 import { ModelType } from '../../../../Nexus/enums';
 import Nexus from '../../../../Nexus/Nexus';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
 import theme from '../../../../theme';
 import { usePanelStyles } from './CodelistStyles';
 
 interface Props {
-  code: Parentable<ICode>;
-  codelist: ICodelist;
+  projectRef: string;
+  codelistRef: string;
+  code: CodeForm;
   dragHandle: React.ReactNode | null;
-  handleDelete: (code: Parentable<ICode>) => void;
+  handleDelete: (code: CodeForm) => void;
   handleCancel: () => void;
 }
 
 export function DisplayCode({
+  projectRef,
+  codelistRef,
   code,
-  codelist,
   dragHandle,
   handleDelete,
   handleCancel,
 }: Props): React.ReactElement {
   const classes = usePanelStyles();
   const { setCurrentlyEditedItemId, setDeleteCandidateId } = useEditableState();
-  const { deleteCode } = useProjectMutations();
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { deleteCandidateId } = useEditableState();
 
-  const methods = useForm<Parentable<ICode>>({
+  const methods = useForm<CodeForm>({
     defaultValues: code,
     resolver: nexus.resolverService.resolver(ModelType.code),
   });
 
-  const onSubmit = (codeToDelete: Parentable<ICode>): void => {
-    deleteCode(codeToDelete, codelist).then(() => {
+  const onSubmit = (codeToDelete: CodeForm): void => {
+    deleteCode({
+      projectRef,
+      codelistRef,
+      codeRef: codeToDelete.ref,
+      ...codeToDelete,
+    }).then(() => {
       const alert: Alert = {
         id: uuidv4(),
         style: 'success',
@@ -65,7 +68,7 @@ export function DisplayCode({
         noValidate
       >
         <DeleteFrame
-          activated={deleteCandidateId === code.id}
+          activated={deleteCandidateId === code.ref}
           canBeDeleted={true}
           infoText={''}
           handleCancel={handleCancel}
@@ -79,13 +82,13 @@ export function DisplayCode({
                 <Typography variant="smBold">{code.title}</Typography>
                 <FormIconButton
                   sx={{ marginLeft: 'auto' }}
-                  onClick={() => setCurrentlyEditedItemId(code.id)}
+                  onClick={() => setCurrentlyEditedItemId(code.ref)}
                 >
                   <EditOutlinedIcon />
                 </FormIconButton>
                 <FormIconButton
                   hoverColor={theme.palette.errorRed.main}
-                  onClick={() => setDeleteCandidateId(code.id)}
+                  onClick={() => setDeleteCandidateId(code.ref)}
                 >
                   <DeleteIcon />
                 </FormIconButton>
