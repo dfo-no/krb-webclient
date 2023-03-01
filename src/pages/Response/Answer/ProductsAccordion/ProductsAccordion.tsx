@@ -16,6 +16,7 @@ import ToolbarItem from '../../../../components/UI/Toolbar/ToolbarItem';
 import AnswerProduct from '../AnswerProduct';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { useResponseState } from '../../ResponseContext';
+import EditResponseProductPrice from './EditResponseProductPrice/EditResponseProductPrice';
 
 interface Props {
   specProducts: ISpecificationProduct[];
@@ -177,6 +178,9 @@ export default function ProductsAccordion({
                 </div>
                 <div className={productIndex == i ? css.Content : css.Hidden}>
                   <div className={css.AnswerProduct}>
+                    <EditResponseProductPrice
+                      responseProduct={productResponse}
+                    />
                     <AnswerProduct productId={p.id} />
                   </div>
                   <div className={css.ActionButtons}>

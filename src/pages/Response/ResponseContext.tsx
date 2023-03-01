@@ -26,6 +26,7 @@ type ResponseContextType = {
   response: IResponse;
   setResponse: Dispatch<SetStateAction<IResponse>>;
   editResponseProduct: Dispatch<IResponseProduct>;
+  editResponseProductPrice: Dispatch<{ productId: string; price: number }>;
   addRequirementAnswer: Dispatch<IRequirementAnswer>;
   addProductAnswer: Dispatch<{ answer: IRequirementAnswer; productId: string }>;
 };
@@ -34,6 +35,7 @@ const initialContext: ResponseContextType = {
   response: ResponseStoreService.defaultResponse(),
   setResponse: () => {},
   editResponseProduct: () => {},
+  editResponseProductPrice: () => {},
   addRequirementAnswer: () => {},
   addProductAnswer: () => {},
 };
@@ -70,6 +72,23 @@ export const ResponseProvider = ({ children, match }: Props) => {
           (product) => product.id === payload.id
         );
         draft.products[productIndex] = payload;
+      }
+    });
+    nexus.responseStore
+      .setResponse(updatedResponse)
+      .then(() => setResponse(updatedResponse));
+  };
+
+  const editResponseProductPrice = (payload: {
+    productId: string;
+    price: number;
+  }) => {
+    const updatedResponse = produce(response, (draft) => {
+      if (draft.products.find((product) => product.id === payload.productId)) {
+        const productIndex = draft.products.findIndex(
+          (product) => product.id === payload.productId
+        );
+        draft.products[productIndex].price = payload.price;
       }
     });
     nexus.responseStore
@@ -126,6 +145,7 @@ export const ResponseProvider = ({ children, match }: Props) => {
         response,
         setResponse,
         editResponseProduct,
+        editResponseProductPrice,
         addRequirementAnswer,
         addProductAnswer,
       }}
