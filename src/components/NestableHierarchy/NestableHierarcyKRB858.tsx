@@ -4,8 +4,8 @@ import 'react-nestable/dist/styles/index.css';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 
 import { NestableKRB858 } from '../../models/Nestable';
-import { ParentableKRB858 } from '../../models/Parentable';
-import Utils from '../../common/Utils';
+// import { ParentableKRB858 } from '../../models/Parentable';
+import Utils, { RefAndParentable } from '../../common/Utils';
 
 type NestableElementType =
   | React.ReactElement
@@ -19,9 +19,9 @@ type NestableElementType =
   | undefined;
 
 // TODO: This types does not belong here
-export type RefAndParentable = { ref: string } & ParentableKRB858;
+// export type RefAndParentable = { ref: string } & ParentableKRB858;
 
-interface IProps<T extends RefAndParentable> {
+interface Props<T extends RefAndParentable<unknown>> {
   className?: string;
   inputlist: T[];
   dispatchfunc: (newItems: T[]) => void;
@@ -34,14 +34,14 @@ interface IProps<T extends RefAndParentable> {
   renderCollapseIcon?: (obj: { isCollapsed: boolean }) => React.ReactElement;
 }
 
-const NestableHierarcy = <T extends RefAndParentable>({
+const NestableHierarcy = <T extends RefAndParentable<unknown>>({
   className,
   inputlist,
   dispatchfunc,
   renderItem,
   depth,
   renderCollapseIcon,
-}: IProps<T>): React.ReactElement => {
+}: Props<T>): React.ReactElement => {
   const nestedList = Utils.parentable2NestableKRB858(inputlist);
 
   const convertTreeToList = (tree: Item, key: string, collection: Item[]) => {

@@ -16,9 +16,10 @@ import { QuestionVariant } from '../Nexus/enums';
 import { DiscountValuePair } from '../Nexus/entities/ISliderQuestion';
 import { TimeDiscountPair } from '../Nexus/entities/ITimeQuestion';
 import { DateDiscountPair } from '../Nexus/entities/IPeriodDateQuestion';
+import { CodelistForm, NeedForm, ProjectForm } from '../api/nexus2';
 
 // TODO: Not sure this type belongs here
-export type RefAndParentable = { ref: string } & ParentableKRB858;
+export type RefAndParentable<T> = T & { ref: string } & ParentableKRB858;
 
 type NestableToBeFlattened<T extends IBaseModel> = T & {
   parent: string;
@@ -219,7 +220,7 @@ class Utils {
     }, []);
   }
 
-  private static flattenNestableKRB858<T extends RefAndParentable>(
+  private static flattenNestableKRB858<T extends RefAndParentable<unknown>>(
     items: NestableKRB858<T>[]
   ): NestableKRB858<T>[] {
     return items.reduce((result: NestableKRB858<T>[], current) => {
@@ -253,7 +254,7 @@ class Utils {
     return parentableItem as Parentable<T>;
   }
 
-  static nestable2ParentableKRB858<T extends RefAndParentable>(
+  static nestable2ParentableKRB858<T extends RefAndParentable<unknown>>(
     item: NestableKRB858<T>
   ): T {
     const parentableItem = { ...item } as NestableToBeFlattenedKRB858<T>;
@@ -276,7 +277,7 @@ class Utils {
     return result as Levelable<T>[]; // TODO: Can we remove as cast?
   }
 
-  static nestable2LevelableKRB858<T extends RefAndParentable>(
+  static nestable2LevelableKRB858<T extends RefAndParentable<unknown>>(
     items: NestableKRB858<T>[]
   ): LevelableKRB858<T>[] {
     const result = Utils.flattenNestableKRB858(items);
@@ -290,7 +291,7 @@ class Utils {
     return Utils.nestable2Levelable(nestable);
   }
 
-  static parentable2LevelableKRB858<T extends RefAndParentable>(
+  static parentable2LevelableKRB858<T extends RefAndParentable<unknown>>(
     items: T[]
   ): LevelableKRB858<T>[] {
     const nestable = Utils.parentable2NestableKRB858(items);
@@ -320,7 +321,7 @@ class Utils {
 
   // TODO: Clean up name
   // TODO: Update tests
-  static parentable2NestableKRB858<T extends RefAndParentable>(
+  static parentable2NestableKRB858<T extends RefAndParentable<unknown>>(
     items: T[],
     parent = '',
     level = 1
@@ -379,8 +380,8 @@ class Utils {
   }
 
   static codelistUsedInVariants(
-    selectedCodelist: ICodelist,
-    selectedProject: IBank
+    selectedCodelist: CodelistForm,
+    needs: NeedForm[],
   ): boolean {
     let returnValue = false;
     selectedProject.needs.forEach((need: Parentable<INeed>) => {
@@ -388,7 +389,7 @@ class Utils {
         requirement.variants.forEach((variant: IVariant) => {
           variant.questions.forEach((question: QuestionType) => {
             if (question.type === QuestionVariant.Q_CODELIST) {
-              if (question.config.codelist === selectedCodelist.id) {
+              if (question.config.codelist === selectedCodelist.ref) {
                 returnValue = true;
               }
             }

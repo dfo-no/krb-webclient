@@ -4,6 +4,7 @@ import { Parentable } from '../models/Parentable';
 import Utils from './Utils';
 import { ICodelist } from '../Nexus/entities/ICodelist';
 import { TitleAndDescription } from '../components/DFOSearchBar/DFOSearchBar'; // TODO: This probably needs to go somewhere else
+import { CodelistForm } from '../api/nexus2';
 
 interface SearchableParams {
   inSearch?: boolean;
@@ -110,3 +111,28 @@ class SearchUtils {
 }
 
 export default SearchUtils;
+
+function inTitleOrDescription(item: TitleAndDescription, searchString: string) {
+  const inTitle =
+    item.title && item.title.toLowerCase().includes(searchString.toLowerCase());
+  const inDescription =
+    item.description &&
+    item.description.toLowerCase().includes(searchString.toLowerCase());
+  return inTitle || inDescription;
+}
+
+export function searchCodelist(
+  codelists: CodelistForm[],
+  searchString: string
+): CodelistForm[] {
+  // Filters only codelist with match in title or with code with match in title
+  return codelists.filter((codelist) => {
+    if (inTitleOrDescription(codelist, searchString)) {
+      return true;
+    }
+
+    return codelist.codes.some((code) => {
+      return inTitleOrDescription(code, searchString);
+    });
+  });
+}
