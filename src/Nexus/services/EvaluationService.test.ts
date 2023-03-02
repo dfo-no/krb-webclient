@@ -343,7 +343,7 @@ describe('EvaluationService', () => {
           title: 'Product 1 answer',
           description: '',
           originProduct: specProduct1,
-          price: 0,
+          price: 300,
           requirementAnswers: [
             {
               ...specProduct1.requirementAnswers[0],
@@ -372,7 +372,7 @@ describe('EvaluationService', () => {
           title: 'Product 2 answer',
           description: '',
           originProduct: specProduct2,
-          price: 0,
+          price: 340,
           requirementAnswers: [
             {
               ...specProduct2.requirementAnswers[0],
@@ -423,6 +423,6 @@ describe('EvaluationService', () => {
     const nexus = Nexus.getInstance();
     const result = nexus.evaluationService.evaluateAll([response]);
 
-    expect(result[0].discount).toBe(320);
+    expect(result[0].offer).toBe(320);
   });
 });

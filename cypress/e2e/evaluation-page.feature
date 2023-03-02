@@ -16,5 +16,5 @@ Feature: Evalueringsside
     And Ser jeg "2022-11-30-citronen-response-5.pdf" på siden
     When Jeg klikker på "Manuell evaluering" knapp
     And Jeg klikker på "Evaluer besvarelser" knappen
-    Then Ser jeg "Citronen" har "465" som resultat
+    Then Ser jeg "Citronen" har "159535" som resultat
     Then Klikker jeg på "Last ned evaluering" knapp for å laste ned evaluering
