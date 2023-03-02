@@ -1,0 +1,13 @@
+.Price {
+  display: flex;
+  flex-direction: row;
+  gap: var(--tiny-gap);
+  width: fit-content;
+  margin-left: auto;
+  margin-top: var(--small-gap);
+  align-items: center;
+  padding: var(--small-gap) 0;
+  span:nth-of-type(1) {
+    font-size: var(--small-fontsize);
+  }
+}

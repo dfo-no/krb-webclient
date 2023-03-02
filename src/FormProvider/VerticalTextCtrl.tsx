@@ -24,6 +24,7 @@ interface IProps {
   children?: ReactNode;
   adornment?: string;
   color?: string;
+  defaultValue?: string | number;
 }
 
 const VerticalTextCtrl = ({
@@ -37,6 +38,7 @@ const VerticalTextCtrl = ({
   children,
   adornment,
   color,
+  defaultValue,
 }: IProps): React.ReactElement => {
   const {
     formState: { errors },
@@ -58,6 +60,7 @@ const VerticalTextCtrl = ({
       </Typography>
       <Controller
         name={name}
+        defaultValue={defaultValue}
         render={({ field }) => (
           <div className={css.VerticalTextCtrl} data-children={!!children}>
             <DFOInput
