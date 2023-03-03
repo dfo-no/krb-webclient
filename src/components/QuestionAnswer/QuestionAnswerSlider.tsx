@@ -51,6 +51,15 @@ const QuestionAnswerSlider = ({
     }
   }, [existingAnswer, methods]);
 
+  const validationMessage = () => {
+    if (!isInfo) {
+      return existingAnswer &&
+        !isAwardCriteria &&
+        !ValidationUtils.sliderQuestion(existingAnswer)
+        ? ValidationUtils.sliderQuestionValidationMsg(item)
+        : ValidationUtils.sliderQuestionValidationMsg(item, true);
+    }
+  };
   return (
     <div className={css.QuestionAnswer}>
       <FormProvider {...methods}>
@@ -68,15 +77,11 @@ const QuestionAnswerSlider = ({
           <ValidationMessageForm
             isError={
               !!existingAnswer &&
-              !ValidationUtils.sliderQuestion(existingAnswer)
-            }
-            message={
-              existingAnswer &&
+              !ValidationUtils.sliderQuestion(existingAnswer) &&
               !isAwardCriteria &&
-              !ValidationUtils.sliderQuestion(existingAnswer)
-                ? ValidationUtils.sliderQuestionValidationMsg(item)
-                : ValidationUtils.sliderQuestionValidationMsg(item, true)
+              !isInfo
             }
+            message={validationMessage()}
           >
             <FlexRowBox>
               <HorizontalTextCtrl
