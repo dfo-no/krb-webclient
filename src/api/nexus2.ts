@@ -6,6 +6,7 @@ import useSWR from 'swr';
 import { z } from 'zod';
 
 import { components, paths } from './generated';
+import i18n from '../i18n';
 
 export const baseUrl = 'https://krb-backend-api.azurewebsites.net';
 // export const baseUrl = 'http://localhost:1080';
@@ -34,7 +35,8 @@ const swrFetcher = (...args: FetcherArg[]) =>
 
 export type ProjectForm = components['schemas']['ProjectForm'];
 export type CodelistForm = components['schemas']['CodelistForm'];
-export type CodeForm = components['schemas']['CodeForm'];
+// We kept the suffix 'Form' for workbench naming consistency. Even though the component is not a retrieved Form from the backend anymore.
+export type CodeForm = components['schemas']['Code'];
 export type NeedForm = components['schemas']['NeedForm'];
 export type RequirementForm = components['schemas']['RequirementForm'];
 export type RequirementVariantForm =
@@ -43,59 +45,32 @@ export type ProductForm = components['schemas']['ProductForm'];
 export type PublicationForm = components['schemas']['PublicationForm'];
 
 export const ProjectSchema = z.object({
-  title: z
-    .string()
-    .min(
-      1,
-      'Project title to short TODO: temporary error mesage needs to be integrated with i18n '
-    ),
+  title: z.string().min(1, i18n.t('projectTitleTooShort')),
   description: z.string(),
-  ref: z.string(), // TODO: Validate UUID
+  ref: z.string().uuid(i18n.t('projectRefNotUuid')),
 });
 
 export const NeedSchema = z.object({
-  title: z
-    .string()
-    .min(
-      1,
-      'Need title too short TODO: temporary error mesage needs to be integrated with i18n '
-    ),
+  title: z.string().min(1, i18n.t('needTitleTooShort')),
   description: z.string(),
-  ref: z.string(), // TODO: Validate UUID
+  ref: z.string().uuid(i18n.t('needRefNotUuid')),
 });
 
 export const RequirementSchema = z.object({
-  title: z
-    .string()
-    .min(
-      1,
-      'Need title too short TODO: temporary error mesage needs to be integrated with i18n '
-    ),
+  title: z.string().min(1, i18n.t('requirementTitleTooShort')),
   description: z.string(),
-  ref: z.string(), // TODO: Validate UUID
-  needRef: z.string(), // TODO: Validate UUID
+  ref: z.string().uuid('requirementRefNotUuid'),
+  needRef: z.string().uuid('needRefNotUuid'),
 });
 
 export const RequirementVariantFormSchema = z.object({
-  ref: z.string(), // TODO: Validate UUID
-  description: z
-    .string()
-    .min(
-      1,
-      'Need title too short TODO: temporary error mesage needs to be integrated with i18n '
-    ),
-  requirementText: z
-    .string()
-    .min(
-      1,
-      'Need title too short TODO: temporary error mesage needs to be integrated with i18n '
-    ),
+  ref: z.string().uuid('requirementVariantRefNotUuid'),
+  title: z.string().min(1, i18n.t('requirementVariantTitleTooShort')),
+  description: z.string(),
+  requirementText: z.string().min(1, i18n.t('requirementVariantTextTooShort')),
   instruction: z
     .string()
-    .min(
-      1,
-      'Need title too short TODO: temporary error mesage needs to be integrated with i18n '
-    ),
+    .min(1, i18n.t('requirementVariantInstructionTooShort')),
   useProduct: z.boolean(), // TODO: optional
   useSpecification: z.boolean(), // TODO: optional
   useQualification: z.boolean(), // TODO: optional
@@ -249,20 +224,22 @@ export const deleteCodelist = fetcher
   .method('delete')
   .create();
 
-export const createCode = fetcher
-  .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes')
-  .method('post')
-  .create();
+//TODO remove
 
-export const updateCode = fetcher
-  .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes/{codeRef}')
-  .method('put')
-  .create();
-
-export const deleteCode = fetcher
-  .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes/{codeRef}')
-  .method('delete')
-  .create();
+// export const createCode = fetcher
+//   .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes')
+//   .method('post')
+//   .create();
+//
+// export const updateCode = fetcher
+//   .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes/{codeRef}')
+//   .method('put')
+//   .create();
+//
+// export const deleteCode = fetcher
+//   .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes/{codeRef}')
+//   .method('delete')
+//   .create();
 
 export const createNeed = fetcher
   .path('/api/v1/projects/{projectRef}/needs')
