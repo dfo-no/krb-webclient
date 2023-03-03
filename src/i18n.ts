@@ -47,6 +47,26 @@ i18n
         return value;
       },
     },
+    resources: {
+      en: {
+        translation: {
+          projectTitleTooShort: 'Project title too short',
+          projectRefNotUuid: 'Project ref not UUID',
+          needTitleTooShort: 'Need title too short',
+          requirementTitleTooShort: 'Requirement title too short',
+          needRefNotUuid: 'Need ref not UUID',
+          requirementRefNotUuid: 'Requirement ref not UUID',
+          requirementVariantRefNotUuid: 'Requirement variant ref not UUID',
+          requirementVariantTitleTooShort:
+            'Requirement variant title too short',
+          requirementVariantTextTooShort:
+            'Requirement variant requirement text too short',
+          requirementVariantInstructionTooShort:
+            'Requirement variant instruction too short',
+        },
+      },
+      // add translations for other languages here
+    },
   });
 
 export default i18n;
