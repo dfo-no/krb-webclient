@@ -20,7 +20,7 @@ export default function EvaluationResult(): ReactElement {
     return evaluations.map((response: IEvaluatedResponse, index) => (
       <li key={index}>
         <div>{getSupplierNameFor(response)}</div>
-        <div>{response.discount}</div>
+        <div>{response.offer}</div>
       </li>
     ));
   };

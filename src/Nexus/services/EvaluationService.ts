@@ -35,16 +35,31 @@ export default class EvaluationService {
       }, 0);
   }
 
-  evaluate(response: IResponse): IEvaluatedResponse {
-    let discount = this.calculateGeneralDiscount(response);
-
+  calculateTotalProductsDiscount(response: IResponse): number {
+    let totalDiscount = 0;
     response.products.forEach((product) => {
-      discount += this.calculateProductDiscount(product);
+      totalDiscount += this.calculateProductDiscount(product);
     });
+    return totalDiscount;
+  }
+
+  calculateTotalProductsPrice(response: IResponse): number {
+    let productPrice = 0;
+    response.products.forEach((product) => {
+      productPrice += Number(product.price);
+    });
+    return productPrice;
+  }
+
+  evaluate(response: IResponse): IEvaluatedResponse {
+    const totalProductsPrice = this.calculateTotalProductsPrice(response);
+    const generalDiscount = this.calculateGeneralDiscount(response);
+    const totalProductsDiscount = this.calculateTotalProductsDiscount(response);
+    const offer = totalProductsPrice - totalProductsDiscount - generalDiscount;
 
     return {
       supplier: response.supplier,
-      discount: discount,
+      offer: offer,
     };
   }
 }
