@@ -144,12 +144,3 @@ Then(
     }
 );
 
-
-Then(
-    'Jeg skriver pris {int} i feltet {string}',
-    (text: string, fieldName: number) => {
-        cy.get(`input[placeholder="${fieldName}"]`)
-            .clear({ force: true }).focus()
-            .type(text).blur().click();
-    }
-);
