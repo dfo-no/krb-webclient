@@ -54,11 +54,13 @@ Feature: Besvarelse
     And Ser jeg "Totalt evaluert fradrag" for produkt "El-bil" har "2,000.00 NOK"
     And Ser jeg absolutte krav av "El-bil" produkt er "svart"
 
-  Scenario: Jeg kan legge til pris på produkt
+  Scenario: Jeg kan legge til egenskaper til produkt
     Given Jeg lager besvarelse fra spesifikasjon "specification-el-bil-til-kommunedrift.pdf"
     When Jeg klikker på accordian knapp av produkt "El-bil"
     And Jeg skriver 1000 i feltet "Pris på produkt"
     Then Ser jeg "Pris på produkt" har verdi 1000
+    And Jeg skriver "El-bil endret" i feltet "Navn på produkt"
+    Then Ser jeg "El-bil endret" krav
 
   Scenario: Jeg kan ikke rediger krav av type informasjon
     Given Jeg lager besvarelse fra spesifikasjon "specification_all_answer_typer.pdf"

@@ -16,7 +16,7 @@ import ToolbarItem from '../../../../components/UI/Toolbar/ToolbarItem';
 import AnswerProduct from '../AnswerProduct';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { useResponseState } from '../../ResponseContext';
-import EditResponseProductPrice from './EditResponseProductPrice/EditResponseProductPrice';
+import ProductProperties from './ProductProperties/ProductProperties';
 
 interface Props {
   specProducts: ISpecificationProduct[];
@@ -81,6 +81,12 @@ export default function ProductsAccordion({
     );
   };
 
+  const isSupplierOwnProductTitle = (
+    originalTitle: string,
+    suppliersGivenTitle: string
+  ) => {
+    return originalTitle !== suppliersGivenTitle;
+  };
   const renderProducts = (
     product: ISpecificationProduct,
     responseProduct: IResponseProduct,
@@ -134,7 +140,18 @@ export default function ProductsAccordion({
     return (
       <div key={product.id} className={style.CardContent}>
         <div className={style.CardTitle}>
-          <Typography variant="mdBold">{product.title}</Typography>
+          <Typography variant="mdBold">
+            {isSupplierOwnProductTitle(product.title, responseProduct.title) ? (
+              <>
+                {responseProduct.title}
+                <span
+                  className={style.CardTitle__originalTitle}
+                >{` (${product.title})`}</span>
+              </>
+            ) : (
+              product.title
+            )}
+          </Typography>
           {absoluteRequirementAnswered(responseProduct.requirementAnswers) >
             0 &&
             (isAllRequirementsAnswered(responseProduct) ? (
@@ -177,10 +194,10 @@ export default function ProductsAccordion({
                   </span>
                 </div>
                 <div className={productIndex == i ? css.Content : css.Hidden}>
+                  <div className={css.ProductProperties}>
+                    <ProductProperties responseProduct={productResponse} />
+                  </div>
                   <div className={css.AnswerProduct}>
-                    <EditResponseProductPrice
-                      responseProduct={productResponse}
-                    />
                     <AnswerProduct productId={p.id} />
                   </div>
                   <div className={css.ActionButtons}>

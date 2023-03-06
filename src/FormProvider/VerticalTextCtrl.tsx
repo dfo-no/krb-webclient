@@ -16,7 +16,7 @@ import css from './FormProvider.module.scss';
 interface IProps {
   className?: string;
   name: string;
-  label: string;
+  label?: string;
   placeholder?: string;
   type?: string;
   autoFocus?: boolean;

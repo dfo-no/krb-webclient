@@ -10,6 +10,7 @@ export enum BadgeType {
   Warning = 'warning',
   Error = 'error',
   Primary = 'primary',
+  Properties = 'Properties',
 }
 
 interface BadgeProps {
@@ -28,6 +29,9 @@ export default function Badge({ type, displayText, icon }: BadgeProps) {
     }
     if (type === BadgeType.Award) {
       return Symbols.SortAmountDesc;
+    }
+    if (type === BadgeType.Properties) {
+      return Symbols.Tags;
     }
   };
   return (

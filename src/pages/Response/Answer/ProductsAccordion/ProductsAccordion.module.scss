@@ -33,7 +33,10 @@
         .AnswerProduct {
           padding: 0 var(--small-gap);
         }
-
+        .ProductProperties {
+          padding: 0 var(--small-gap);
+          background: var(--light-gray-color);
+        }
         .ActionButtons {
           display: flex;
           justify-content: space-between;

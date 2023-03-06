@@ -66,6 +66,10 @@
               overflow: hidden;
               text-overflow: ellipsis;
             }
+
+            &__originalTitle {
+              color: var(--gray-color);
+            }
           }
 
           .Description {
