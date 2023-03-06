@@ -26,7 +26,10 @@ interface Props {
   absoluteRequirementAnswered: (
     requirementAnswer: (IRequirementAnswer | undefined)[]
   ) => number;
-  totalEvaluatedDiscount: (requirementAnswer: IRequirementAnswer[]) => string;
+  totalEvaluatedProductPrice: (
+    requirementAnswer: IRequirementAnswer[],
+    responseProduct: IResponseProduct
+  ) => string;
   isMandatoryRequirements: (
     requirementAnswer: (IRequirementAnswer | undefined)[]
   ) => boolean;
@@ -39,7 +42,7 @@ export default function ProductsAccordion({
   specProducts,
   absoluteRequirements,
   absoluteRequirementAnswered,
-  totalEvaluatedDiscount,
+  totalEvaluatedProductPrice,
   isMandatoryRequirements,
   isAwardedRequirements,
 }: Props) {
@@ -120,9 +123,10 @@ export default function ProductsAccordion({
             responseProduct.originProduct.requirementAnswers
           ) && (
             <ToolbarItem
-              primaryText={t('Total evaluated discount')}
-              secondaryText={totalEvaluatedDiscount(
-                responseProduct.requirementAnswers
+              primaryText={t('Total evaluated price')}
+              secondaryText={totalEvaluatedProductPrice(
+                responseProduct.requirementAnswers,
+                responseProduct
               )}
               fontSize={'small'}
             />

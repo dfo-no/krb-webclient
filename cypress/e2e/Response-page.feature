@@ -41,8 +41,9 @@ Feature: Besvarelse
     Then Ser jeg "El-bil" krav
     And Ser jeg "Antall" for produkt "El-bil" har "1 Stk"
     And Ser jeg "Absolutte krav" for produkt "El-bil" har "0/4"
-    And Ser jeg "Totalt evaluert fradrag" for produkt "El-bil" har "0.00 NOK"
+    And Ser jeg "Totalt evaluert pris" for produkt "El-bil" har "0.00 NOK"
     When Jeg klikker på accordian knapp av produkt "El-bil"
+    And Jeg skriver pris 4000 i feltet "Pris på produkt"
     And Jeg besvarer kravet med "Ja"
     Then Ser jeg "Absolutte krav" for produkt "El-bil" har "1/4"
     And Ser jeg absolutte krav av "El-bil" produkt er "ikke svart"
@@ -51,7 +52,7 @@ Feature: Besvarelse
     And Jeg besvarer "Volum" kravet med bekreftet
     And Jeg besvarer "Sentrallås" kravet med bekreftet
     Then Ser jeg "Absolutte krav" for produkt "El-bil" har "4/4"
-    And Ser jeg "Totalt evaluert fradrag" for produkt "El-bil" har "2,000.00 NOK"
+    And Ser jeg "Totalt evaluert pris" for produkt "El-bil" har "2,000.00 NOK"
     And Ser jeg absolutte krav av "El-bil" produkt er "svart"
 
   Scenario: Jeg kan legge til pris på produkt
