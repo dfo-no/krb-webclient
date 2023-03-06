@@ -4,15 +4,15 @@ import React, { useState } from 'react';
 import Dialog from '../../../../components/DFODialog/DFODialog';
 import EditNeedForm from './EditNeedForm';
 import { DFOCardHeaderIconButton } from '../../../../components/DFOCard/DFOCardHeaderIconButton';
-import { INeed } from '../../../../Nexus/entities/INeed';
-import { Parentable } from '../../../../models/Parentable';
 import { useSelectState } from '../SelectContext';
+import { NeedForm } from '../../../../api/nexus2';
 
 interface Props {
-  need: Parentable<INeed>;
+  projectRef: string;
+  need: NeedForm;
 }
 
-const EditNeed = ({ need }: Props) => {
+export const EditNeed = ({ projectRef, need }: Props) => {
   const [isEditOpen, setEditOpen] = useState(false);
   const { setDeleteCandidateId } = useSelectState();
 
@@ -42,6 +42,7 @@ const EditNeed = ({ need }: Props) => {
         handleClose={onClose}
         children={
           <EditNeedForm
+            projectRef={projectRef}
             need={need}
             handleClose={onClose}
             handleCancel={onClose}
@@ -51,5 +52,3 @@ const EditNeed = ({ need }: Props) => {
     </>
   );
 };
-
-export default EditNeed;

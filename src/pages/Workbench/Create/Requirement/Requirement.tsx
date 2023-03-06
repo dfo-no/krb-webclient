@@ -3,17 +3,15 @@ import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Typography from '@mui/material/Typography';
 import makeStyles from '@mui/styles/makeStyles';
-import { useParams } from 'react-router-dom';
 
 import DeleteRequirement from './DeleteRequirement';
-import EditRequirement from './EditRequirement';
+import { EditRequirement } from './EditRequirement';
 import theme from '../../../../theme';
-import VariantsList from '../Variants/VariantsList';
+import { VariantsList } from '../Variants/VariantsList';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
-import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { useSelectState } from '../SelectContext';
 import { useVariantState } from '../../VariantContext';
+import { RequirementForm } from '../../../../api/nexus2';
 
 const useStyles = makeStyles({
   card: {
@@ -31,18 +29,17 @@ const useStyles = makeStyles({
 });
 
 interface Props {
-  requirementIndex: number;
+  projectRef: string;
+  requirement: RequirementForm;
 }
 
-const Requirement = ({ requirementIndex }: Props) => {
+const Requirement = ({ projectRef, requirement }: Props) => {
   const classes = useStyles();
   const { openVariants } = useVariantState();
-  const { projectId } = useParams<IRouteProjectParams>();
-  const { data: project } = useGetProjectQuery(projectId);
   const { needIndex, setDeleteCandidateId, setCreateVariant } =
     useSelectState();
 
-  if (!project || needIndex === null) {
+  if (needIndex === null) {
     return <></>;
   }
 
@@ -71,21 +68,12 @@ const Requirement = ({ requirementIndex }: Props) => {
             variant="mdBold"
             sx={{ alignSelf: 'center', fontFamily: 'var(--header-font)' }}
           >
-            {project.needs[needIndex].requirements[requirementIndex].title}
+            {requirement.title}
           </Typography>
-          <EditRequirement
-            need={project.needs[needIndex]}
-            requirement={
-              project.needs[needIndex].requirements[requirementIndex]
-            }
-          />
+          <EditRequirement projectRef={projectRef} requirement={requirement} />
           <FormIconButton
             hoverColor={theme.palette.errorRed.main}
-            onClick={() =>
-              setDeleteCandidateId(
-                project.needs[needIndex].requirements[requirementIndex].id
-              )
-            }
+            onClick={() => setDeleteCandidateId(requirement.ref)}
             sx={{ alignSelf: 'baseline' }}
           >
             <DeleteIcon />
@@ -93,18 +81,14 @@ const Requirement = ({ requirementIndex }: Props) => {
           <FormIconButton
             hoverColor={theme.palette.green.main}
             sx={{ alignSelf: 'baseline', marginLeft: 0, marginRight: -2 }}
-            onClick={() =>
-              setCreateVariant(
-                project.needs[needIndex].requirements[requirementIndex].id
-              )
-            }
+            onClick={() => setCreateVariant(requirement.ref)}
           >
             <AddIcon />
           </FormIconButton>
         </Box>
         <VariantsList
-          requirement={project.needs[needIndex].requirements[requirementIndex]}
-          requirementIndex={requirementIndex}
+          projectRef={projectRef}
+          requirementRef={requirement.ref}
         />
       </Box>
     );
@@ -113,8 +97,8 @@ const Requirement = ({ requirementIndex }: Props) => {
   return (
     <DeleteRequirement
       children={renderRequirement()}
-      need={project.needs[needIndex]}
-      requirement={project.needs[needIndex].requirements[requirementIndex]}
+      projectRef={projectRef}
+      requirementRef={requirement.ref}
       handleClose={requirementDeleted}
     />
   );

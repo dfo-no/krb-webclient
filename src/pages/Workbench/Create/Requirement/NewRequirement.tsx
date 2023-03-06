@@ -4,16 +4,16 @@ import { t } from 'i18next';
 import { useState } from 'react';
 
 import Dialog from '../../../../components/DFODialog/DFODialog';
-import NewRequirementForm from './NewRequirementForm';
-import { INeed } from '../../../../Nexus/entities/INeed';
-import { Parentable } from '../../../../models/Parentable';
+import { NewRequirementForm } from './NewRequirementForm';
 import { useSelectState } from '../SelectContext';
+import { NeedForm } from '../../../../api/nexus2';
 
 interface Props {
-  need: Parentable<INeed>;
+  projectRef: string;
+  need: NeedForm;
 }
 
-const NewRequirement = ({ need }: Props) => {
+export const NewRequirement = ({ projectRef, need }: Props) => {
   const [isNewOpen, setNewOpen] = useState(false);
   const { setCreateVariant } = useSelectState();
 
@@ -37,10 +37,14 @@ const NewRequirement = ({ need }: Props) => {
       <Dialog
         isOpen={isNewOpen}
         handleClose={() => setNewOpen(false)}
-        children={<NewRequirementForm need={need} handleClose={onClose} />}
+        children={
+          <NewRequirementForm
+            projectRef={projectRef}
+            need={need}
+            handleClose={onClose}
+          />
+        }
       />
     </Box>
   );
 };
-
-export default NewRequirement;

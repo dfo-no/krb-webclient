@@ -5,14 +5,14 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 import theme from '../../../../theme';
 import { usePanelStyles } from './CodelistStyles';
-import { ICodelist } from '../../../../Nexus/entities/ICodelist';
+import { CodelistForm } from '../../../../api/nexus2';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 
 interface Props {
-  codelist: ICodelist;
+  codelist: CodelistForm;
   isSelected: boolean;
-  setSelectedCodelist: Dispatch<SetStateAction<ICodelist | null>>;
+  setSelectedCodelist: Dispatch<SetStateAction<CodelistForm | null>>;
 }
 
 export const DisplayCodelist = ({
@@ -28,7 +28,7 @@ export const DisplayCodelist = ({
     setDeleteCandidateId,
   } = useEditableState();
 
-  const itemClicked = (clickedCodelist: ICodelist) => {
+  const itemClicked = (clickedCodelist: CodelistForm) => {
     if (currentlyEditedItemId !== '') {
       setCurrentlyEditedItemId('');
     }
@@ -42,14 +42,14 @@ export const DisplayCodelist = ({
     return isSelected ? classes.selectedItem : '';
   };
 
-  const enterEditMode = (codelistToEdit: ICodelist) => {
+  const enterEditMode = (codelistToEdit: CodelistForm) => {
     setSelectedCodelist(codelistToEdit);
-    setCurrentlyEditedItemId(codelistToEdit.id);
+    setCurrentlyEditedItemId(codelistToEdit.ref);
   };
 
-  const enterDeleteMode = (codelistToDelete: ICodelist) => {
+  const enterDeleteMode = (codelistToDelete: CodelistForm) => {
     setSelectedCodelist(codelistToDelete);
-    setDeleteCandidateId(codelistToDelete.id);
+    setDeleteCandidateId(codelistToDelete.ref);
   };
   return (
     <Box

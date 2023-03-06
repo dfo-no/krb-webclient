@@ -17,16 +17,21 @@ import {
 } from '../../components/ModalBox/ModalBox';
 import { ModelType } from '../../Nexus/enums';
 import { RESPONSE } from '../../common/PathConstants';
+import { updateObject } from './UpdateFormatsTools';
 
 interface IProps {
   handleClose: () => void;
   response: IResponse;
 }
 
-const NewResponseForm = ({ handleClose, response }: IProps) => {
+const NewResponseForm = ({
+  handleClose,
+  response: rawPrefilledResponse,
+}: IProps) => {
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
   const history = useHistory();
+  const response = updateObject({ ...rawPrefilledResponse });
 
   const methods = useForm<IResponse>({
     resolver: nexus.resolverService.resolver(ModelType.response),

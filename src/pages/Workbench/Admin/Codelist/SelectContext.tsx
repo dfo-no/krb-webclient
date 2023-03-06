@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { createContainer } from 'unstated-next';
 
-import { ICodelist } from '../../../../Nexus/entities/ICodelist';
+import { CodelistForm } from '../../../../api/nexus2';
 
 const useSelectContext = () => {
-  const [selectedCodelist, setSelectedCodelist] = useState<ICodelist | null>(
+  const [selectedCodelist, setSelectedCodelist] = useState<CodelistForm | null>(
     null
   );
-  const [allCodelists, setAllCodelists] = useState<ICodelist[]>([]);
+  const [allCodelists, setAllCodelists] = useState<CodelistForm[]>([]);
 
   return {
     selectedCodelist,

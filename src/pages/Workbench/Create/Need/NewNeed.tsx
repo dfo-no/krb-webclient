@@ -1,35 +1,26 @@
 import Box from '@mui/material/Box/Box';
 import Button from '@mui/material/Button';
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
 
 import Dialog from '../../../../components/DFODialog/DFODialog';
 import NewNeedForm from './NewNeedForm';
-import { INeed } from '../../../../Nexus/entities/INeed';
-import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import { Parentable } from '../../../../models/Parentable';
-import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { useSelectState } from '../SelectContext';
+import { NeedForm } from '../../../../api/nexus2';
 
 interface Props {
+  needs: NeedForm[];
   buttonText: string;
 }
 
-const NewNeed = ({ buttonText }: Props) => {
-  const { projectId } = useParams<IRouteProjectParams>();
-  const { data: project } = useGetProjectQuery(projectId);
+export const NewNeed = ({ needs, buttonText }: Props) => {
   const [isOpen, setOpen] = useState(false);
   const { setNeedIndex, setNeedId } = useSelectState();
 
-  if (!project) {
-    return <></>;
-  }
-
-  const onClose = (newNeed: Parentable<INeed>) => {
+  const onClose = (newNeed: NeedForm) => {
     setOpen(false);
 
-    setNeedIndex(project.needs.length);
-    setNeedId(newNeed.id);
+    setNeedIndex(needs.length);
+    setNeedId(newNeed.ref);
   };
 
   return (
@@ -56,5 +47,3 @@ const NewNeed = ({ buttonText }: Props) => {
     </Box>
   );
 };
-
-export default NewNeed;

@@ -1,9 +1,9 @@
 import { Route, Switch } from 'react-router-dom';
 
+import { WORKBENCH } from '../../common/PathConstants';
 import AuthenticatedLayout from '../../components/AuthenticatedLayout/AuthenticatedLayout';
 import ProjectGuard from './ProjectGuard';
-import Projects from './Projects/Projects';
-import { WORKBENCH } from '../../common/PathConstants';
+import { Projects } from './Projects/Projects';
 
 export default function WorkbenchModule(): React.ReactElement {
   return (

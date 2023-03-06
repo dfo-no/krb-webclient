@@ -1,37 +1,44 @@
 import classnames from 'classnames';
+import { useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { Control, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
 
 import CheckboxCtrl from '../../../../FormProvider/CheckboxCtrl';
 import css from './Variant.module.scss';
 import HorizontalTextCtrl from '../../../../FormProvider/HorizontalTextCtrl';
-import MultipleProductSelection from '../../../../components/ProductSelection/MultipleProductSelection';
+import { MultipleProductSelection } from '../../../../components/ProductSelection/MultipleProductSelectionKRB858';
 import QuestionsList from './QuestionsList';
 import RadioCtrl from '../../../../FormProvider/RadioCtrl';
 import TextAreaCtrl from '../../../../FormProvider/TextAreaCtrl';
-import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import { IVariant } from '../../../../Nexus/entities/IVariant';
-import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { VariantType } from '../../../../Nexus/enums';
+import {
+  findProducts,
+  ProductForm,
+  RequirementVariantForm,
+} from '../../../../api/nexus2';
 
 interface Props {
-  control: Control<IVariant>;
+  projectRef: string;
+  control: Control<RequirementVariantForm>;
 }
 
-const VariantFormContent = ({ control }: Props) => {
+export const VariantFormContent = ({ projectRef, control }: Props) => {
   const { t } = useTranslation();
-  const { projectId } = useParams<IRouteProjectParams>();
-  const { data: project } = useGetProjectQuery(projectId);
   const useProduct = useWatch({
     control,
     name: 'useProduct',
   });
 
-  if (!project) {
-    return <></>;
-  }
+  const [products, setProducts] = useState<ProductForm[]>([]);
+
+  useEffect(() => {
+    findProducts({
+      projectRef,
+    }).then((response) => {
+      setProducts(response.data);
+    });
+  }, [projectRef]);
 
   return (
     <div className={css.VariantContent}>
@@ -86,10 +93,7 @@ const VariantFormContent = ({ control }: Props) => {
         />
       </Box>
       {useProduct && (
-        <MultipleProductSelection
-          name={'products'}
-          products={project.products}
-        />
+        <MultipleProductSelection name={'products'} products={products} />
       )}
       <Typography className={css.TextTitle} variant={'smBold'}>
         {t('How to answer requirement')}
@@ -98,5 +102,3 @@ const VariantFormContent = ({ control }: Props) => {
     </div>
   );
 };
-
-export default VariantFormContent;

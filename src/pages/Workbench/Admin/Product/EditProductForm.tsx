@@ -2,7 +2,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 
-import FormButtons from '../../../../components/Form/FormButtons';
+import { FormButtons } from '../../../../components/Form/FormButtons';
 import Nexus from '../../../../Nexus/Nexus';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';

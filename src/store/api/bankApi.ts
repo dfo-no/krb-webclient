@@ -57,14 +57,6 @@ export const bankApi = createApi({
       invalidatesTags: [{ type: 'Banks' }],
     }),
 
-    postProject: builder.mutation<IBank, IBank>({
-      query: (project) => ({
-        url: `/api/bank`,
-        method: 'POST',
-        body: project,
-      }),
-      invalidatesTags: [{ type: 'Projects' }],
-    }),
     putProject: builder.mutation<IBank, IBank>({
       query: (project) => ({
         url: `/api/bank/${project.id}`,
@@ -72,21 +64,6 @@ export const bankApi = createApi({
         body: project,
       }),
       invalidatesTags: [{ type: 'Projects' }, { type: 'Project' }],
-    }),
-    deleteProject: builder.mutation<IBank, IBank>({
-      query: (project) => ({
-        url: `/api/bank/${project.id}`,
-        method: 'DELETE',
-        body: project,
-      }),
-      invalidatesTags: [{ type: 'Projects' }],
-    }),
-    deleteProjectById: builder.mutation<IBank, string>({
-      query: (id) => ({
-        url: `/api/bank/${id}`,
-        method: 'DELETE',
-      }),
-      invalidatesTags: [{ type: 'Projects' }],
     }),
   }),
 });
@@ -97,8 +74,5 @@ export const {
   useAddBankMutation,
   useGetProjectQuery,
   useGetProjectsQuery,
-  usePostProjectMutation,
   usePutProjectMutation,
-  useDeleteProjectMutation,
-  useDeleteProjectByIdMutation,
 } = bankApi;

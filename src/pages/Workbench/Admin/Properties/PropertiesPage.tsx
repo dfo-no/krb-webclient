@@ -3,38 +3,50 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect, useMemo, useState } from 'react';
+import { DevTool } from '@hookform/devtools';
 
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import Nexus from '../../../../Nexus/Nexus';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { Alert } from '../../../../models/Alert';
-import { IBank } from '../../../../Nexus/entities/IBank';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import { ModelType } from '../../../../Nexus/enums';
 import { StandardContainer } from '../../../../components/StandardContainer/StandardContainer';
-import {
-  useGetProjectQuery,
-  usePutProjectMutation,
-} from '../../../../store/api/bankApi';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
+import {
+  findOneProject,
+  ProjectForm,
+  ProjectSchema,
+  updateProject,
+} from '../../../../api/nexus2';
+import ErrorSummary from '../../../../Form/ErrorSummary';
 
 function PropertiesPage(): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
   const formStyles = useFormStyles();
-  const { projectId } = useParams<IRouteProjectParams>();
-  const { data: project, isLoading } = useGetProjectQuery(projectId);
-  const [putProject] = usePutProjectMutation();
+  const { projectId: projectRef } = useParams<IRouteProjectParams>();
 
-  const methods = useForm<IBank>({
-    resolver: nexus.resolverService.resolver(ModelType.bank),
-    defaultValues: project,
+  const methods = useForm<ProjectForm>({
+    resolver: zodResolver(ProjectSchema),
   });
 
-  const onSubmit = async (put: IBank) => {
-    await putProject(put).then(() => {
+  useEffect(() => {
+    findOneProject({
+      projectRef,
+    }).then((response) => {
+      methods.reset(response.data);
+    });
+  }, [methods, projectRef]);
+
+  const onSubmit = async (updatedProject: ProjectForm) => {
+    await updateProject({
+      projectRef,
+      ...updatedProject,
+    }).then(() => {
       const alert: Alert = {
         id: uuidv4(),
         style: 'success',
@@ -43,14 +55,6 @@ function PropertiesPage(): React.ReactElement {
       addAlert(alert);
     });
   };
-
-  if (isLoading) {
-    return <LoaderSpinner />;
-  }
-
-  if (!project) {
-    return <></>;
-  }
 
   return (
     <StandardContainer>
@@ -82,6 +86,7 @@ function PropertiesPage(): React.ReactElement {
               {t('Save')}
             </Button>
           </Box>
+          <ErrorSummary errors={methods.formState.errors} />
         </form>
       </FormProvider>
     </StandardContainer>

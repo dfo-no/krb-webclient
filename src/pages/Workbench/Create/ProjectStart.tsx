@@ -3,16 +3,22 @@ import { useTranslation } from 'react-i18next';
 
 import css from '../../Stylesheets/NoProducts.module.scss';
 import mainIllustration from '../../../assets/images/main-illustration.svg';
-import NewNeed from './Need/NewNeed';
+import { NewNeed } from './Need/NewNeed';
 import theme from '../../../theme';
-import { IBank } from '../../../Nexus/entities/IBank';
+import { ProjectForm } from '../../../api/nexus2';
+import { NeedForm } from '../../../api/nexus2';
 
 interface Props {
-  project: IBank;
+  project: ProjectForm;
+  needs: NeedForm[];
 }
 
-export default function ProjectStart({ project }: Props): React.ReactElement {
+export default function ProjectStart({
+  project,
+  needs,
+}: Props): React.ReactElement {
   const { t } = useTranslation();
+  console.log('===============');
 
   return (
     <div className={css.NoProducts}>
@@ -32,7 +38,7 @@ export default function ProjectStart({ project }: Props): React.ReactElement {
         </Typography>
         <Typography variant="md">{t('PROJ_CREATE_REQ_PROCUREMENT')}</Typography>
       </div>
-      <NewNeed buttonText={t('Create your first need')} />
+      <NewNeed needs={needs} buttonText={t('Create your first need')} />
     </div>
   );
 }

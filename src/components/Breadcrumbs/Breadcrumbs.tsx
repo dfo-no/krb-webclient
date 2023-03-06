@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import css from './Breadcrumbs.module.scss';
 import { IBreadcrumb } from '../../models/IBreadcrumb';
 import { HeaderContainer } from '../Header/HeaderContext';
-import ProjectActionsToolbar from '../../pages/Workbench/Projects/ProjectActionsToolbar';
+import { ProjectActionsToolbar } from '../../pages/Workbench/Projects/ProjectActionsToolbar';
 import {
   EVALUATION,
   PREFILLED_RESPONSE,

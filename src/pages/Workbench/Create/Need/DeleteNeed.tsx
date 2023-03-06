@@ -1,60 +1,60 @@
 import { useTranslation } from 'react-i18next';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 import { Box } from '@mui/material/';
 
-import { Alert } from '../../../../models/Alert';
-import { INeed } from '../../../../Nexus/entities/INeed';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
-import { Parentable } from '../../../../models/Parentable';
+// import { Alert } from '../../../../models/Alert';
 import { useSelectState } from '../SelectContext';
 import { DeleteFrame } from '../../../../components/DeleteFrame/DeleteFrame';
-import { AlertsContainer } from '../../../../components/Alert/AlertContext';
+// import { AlertsContainer } from '../../../../components/Alert/AlertContext';
+import { NeedForm } from '../../../../api/nexus2';
 
 interface Props {
   children: React.ReactElement;
-  need: Parentable<INeed>;
+  need: NeedForm;
+  canBeDeleted: boolean;
   handleClose: () => void;
 }
 
 // TODO Needs validating
-function DeleteNeed({
+export function DeleteNeed({
   children,
   need,
+  canBeDeleted,
   handleClose,
 }: Props): React.ReactElement {
-  const { addAlert } = AlertsContainer.useContainer();
+  // const { addAlert } = AlertsContainer.useContainer();
 
   const { t } = useTranslation();
-  const { deleteNeed } = useProjectMutations();
 
   const { deleteCandidateId } = useSelectState();
-  const hasChildren = need.requirements.length > 0;
+  // const hasChildren = need.requirements.length > 0; // TODO: Skal denne linja være med videre?
 
-  if (deleteCandidateId !== need.id) {
+  if (deleteCandidateId !== need.ref) {
     return children;
   }
 
-  const infoText = hasChildren
+  const infoText = canBeDeleted
     ? `${t('Cant delete this need')} ${t('Need has children')}`
     : '';
 
   const onDelete = (): void => {
-    deleteNeed(need).then(() => {
-      const alert: Alert = {
-        id: uuidv4(),
-        style: 'success',
-        text: 'Successfully deleted need',
-      };
-      addAlert(alert);
-      handleClose();
-    });
+    // TODO: Uncomment
+    // deleteNeed(need).then(() => {
+    //   const alert: Alert = {
+    //     id: uuidv4(),
+    //     style: 'success',
+    //     text: 'Successfully deleted need',
+    //   };
+    //   addAlert(alert);
+    //   handleClose();
+    // });
   };
 
   return (
     <Box>
       <DeleteFrame
         children={children}
-        canBeDeleted={!hasChildren}
+        canBeDeleted={canBeDeleted}
         infoText={infoText}
         handleCancel={handleClose}
         onDelete={onDelete}

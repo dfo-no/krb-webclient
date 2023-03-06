@@ -2,30 +2,30 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import Nexus from '../../../../Nexus/Nexus';
 import theme from '../../../../theme';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { Alert } from '../../../../models/Alert';
-import { INeed } from '../../../../Nexus/entities/INeed';
 import {
   ModalBox,
   ModalButton,
   ModalButtonsBox,
   ModalFieldsBox,
 } from '../../../../components/ModalBox/ModalBox';
-import { ModelType } from '../../../../Nexus/enums';
-import { Parentable } from '../../../../models/Parentable';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
+import { NeedForm, NeedSchema, updateNeed } from '../../../../api/nexus2';
 
 interface Props {
-  need: Parentable<INeed>;
-  handleClose: (need: Parentable<INeed>) => void;
+  projectRef: string;
+  need: NeedForm;
+  handleClose: (need: NeedForm) => void;
   handleCancel: () => void;
 }
 
 function EditNeedForm({
+  projectRef,
   need,
   handleClose,
   handleCancel,
@@ -33,22 +33,25 @@ function EditNeedForm({
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
-  const { editNeed } = useProjectMutations();
 
-  const methods = useForm<Parentable<INeed>>({
+  const methods = useForm<NeedForm>({
     defaultValues: need,
-    resolver: nexus.resolverService.resolver(ModelType.need),
+    resolver: zodResolver(NeedSchema),
   });
 
-  const onSubmit = async (put: Parentable<INeed>) => {
-    await editNeed(put).then(() => {
+  const onSubmit = async (updatedNeed: NeedForm) => {
+    await updateNeed({
+      projectRef,
+      needRef: updatedNeed.ref,
+      ...updatedNeed,
+    }).then(() => {
       const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully edited need',
       };
       addAlert(alert);
-      handleClose(put);
+      handleClose(updatedNeed);
     });
   };
 

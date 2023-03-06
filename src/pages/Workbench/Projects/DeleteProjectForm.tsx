@@ -1,57 +1,73 @@
-import React, { ReactElement } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { zodResolver } from '@hookform/resolvers/zod';
 
+import {
+  deleteProject,
+  findPublications,
+  ProjectForm,
+  PublicationForm,
+} from '../../../api/nexus2';
 import Nexus from '../../../Nexus/Nexus';
-import useProjectMutations from '../../../store/api/ProjectMutations';
 import UuidService from '../../../Nexus/services/UuidService';
 import { DeleteFrame } from '../../../components/DeleteFrame/DeleteFrame';
-import { IBank } from '../../../Nexus/entities/IBank';
 import { Alert } from '../../../models/Alert';
-import { ModelType } from '../../../Nexus/enums';
 import { useEditableState } from '../../../components/EditableContext/EditableContext';
 import { AlertsContainer } from '../../../components/Alert/AlertContext';
+import ErrorSummary from '../../../Form/ErrorSummary';
+import { ProjectSchema } from '../../../api/nexus2';
 
 interface Props {
   children: ReactElement;
-  bank: IBank;
+  project: ProjectForm;
   handleClose: () => void;
 }
 
-export default function DeleteProjectForm({
+export function DeleteProjectForm({
   children,
-  bank,
+  project,
   handleClose,
 }: Props): ReactElement {
   const { t } = useTranslation();
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
-  const { deleteProject } = useProjectMutations();
   const { deleteCandidateId } = useEditableState();
   const uuidService = new UuidService();
+  const [publications, setPublications] = useState<PublicationForm[]>([]);
 
-  const methods = useForm<IBank>({
-    defaultValues: bank,
-    resolver: nexus.resolverService.resolver(ModelType.bank),
+  const methods = useForm<ProjectForm>({
+    defaultValues: project,
+    resolver: zodResolver(ProjectSchema),
   });
 
-  if (deleteCandidateId !== bank.id) {
+  useEffect(() => {
+    if (deleteCandidateId === project.ref) {
+      findPublications({ projectref: project.ref }).then((response) =>
+        setPublications(response.data)
+      );
+    }
+  }, [deleteCandidateId, project.ref]);
+
+  if (deleteCandidateId !== project.ref) {
     return children;
   }
 
-  const isPublished = bank.publications.length > 0;
+  const isPublished = publications.length > 0;
 
   const infoText = isPublished ? t('Project is published') : '';
 
-  const onSubmit = (post: IBank): void => {
-    deleteProject(post).then(() => {
-      const alert: Alert = {
-        id: uuidService.generateId(),
-        style: 'success',
-        text: 'Successfully deleted project',
-      };
-      addAlert(alert);
-    });
+  const onSubmit = (projectForm: ProjectForm): void => {
+    if (projectForm.ref) {
+      deleteProject({ projectRef: projectForm.ref }).then(() => {
+        const alert: Alert = {
+          id: uuidService.generateId(),
+          style: 'success',
+          text: 'Successfully deleted project',
+        };
+        addAlert(alert);
+      });
+    }
   };
 
   return (
@@ -67,6 +83,7 @@ export default function DeleteProjectForm({
           infoText={infoText}
           handleCancel={handleClose}
         />
+        <ErrorSummary errors={methods.formState.errors} />
       </form>
     </FormProvider>
   );

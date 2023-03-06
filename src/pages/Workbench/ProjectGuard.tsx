@@ -1,30 +1,33 @@
-import { Route, useParams } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import AdminGuard from './Admin/AdminGuard';
 import Create from './Create/Create';
-import LoaderSpinner from '../../common/LoaderSpinner';
+// import LoaderSpinner from '../../common/LoaderSpinner';
 import Preview from './Preview/Preview';
-import ProjectNotFound from '../../components/ProjectNotFound/ProjectNotFound';
+// import ProjectNotFound from '../../components/ProjectNotFound/ProjectNotFound';
 import { PreviewProvider } from './Preview/PreviewContext';
 import { SelectProvider } from './Create/SelectContext';
-import { useGetProjectQuery } from '../../store/api/bankApi';
 import { WORKBENCH } from '../../common/PathConstants';
+// import { useFindOneProject } from '../../api/nexus2';
 
-interface IRouteParams {
-  projectId: string;
-}
+// interface RouteParams {
+//   projectId: string;
+// }
 
+// TODO: What about this name?
 export default function ProjectGuard(): React.ReactElement {
-  const { projectId } = useParams<IRouteParams>();
-  const { data: project, isLoading } = useGetProjectQuery(projectId);
+  // const { projectId: projectRef } = useParams<RouteParams>();
+  // console.log(projectRef);
+  // const { project, isLoading } = useFindOneProject(projectRef);
+  // console.log(project, isLoading);
 
-  if (isLoading) {
-    return <LoaderSpinner />;
-  }
+  // if (isLoading) {
+  //   return <LoaderSpinner />;
+  // }
 
-  if (!project) {
-    return <ProjectNotFound />;
-  }
+  // if (!project) {
+  //   return <ProjectNotFound />;
+  // }
 
   return (
     <div>

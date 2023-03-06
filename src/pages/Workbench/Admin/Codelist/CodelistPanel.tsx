@@ -4,21 +4,20 @@ import 'react-nestable/dist/styles/index.css';
 
 import { ListHeader } from './ListHeader';
 import NewCodelistForm from './NewCodelistForm';
-import Utils from '../../../../common/Utils';
+import { addElementToList } from '../../../../common/Utils';
 import { FormContainerBox } from '../../../../components/Form/FormContainerBox';
-import { ICodelist } from '../../../../Nexus/entities/ICodelist';
+import { CodelistForm } from '../../../../api/nexus2';
 import { ScrollableContainer } from '../../../../components/ScrollableContainer/ScrollableContainer';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { usePanelStyles } from './CodelistStyles';
 import { useSelectState } from './SelectContext';
 import { CodelistItem } from './CodelistItem';
-import { IBank } from '../../../../Nexus/entities/IBank';
 
 type Props = {
-  project: IBank;
+  projectRef: string;
 };
 
-const CodelistPanel = ({ project }: Props): React.ReactElement => {
+export const CodelistPanel = ({ projectRef }: Props): React.ReactElement => {
   const classes = usePanelStyles();
   const { t } = useTranslation();
   const {
@@ -29,10 +28,10 @@ const CodelistPanel = ({ project }: Props): React.ReactElement => {
   } = useSelectState();
   const { isCreating, setCreating } = useEditableState();
 
-  const handleCloseCreate = (newCodelist: ICodelist | null) => {
+  const handleCloseCreate = (newCodelist: CodelistForm | null) => {
     if (newCodelist) {
       setSelectedCodelist(newCodelist);
-      setAllCodelists(Utils.addElementToList(newCodelist, allCodelists));
+      setAllCodelists(addElementToList(newCodelist, allCodelists));
     }
     setCreating(false);
   };
@@ -48,6 +47,7 @@ const CodelistPanel = ({ project }: Props): React.ReactElement => {
       {isCreating && (
         <FormContainerBox>
           <NewCodelistForm
+            projectRef={projectRef}
             handleClose={handleCloseCreate}
             handleCancel={() => setCreating(false)}
           />
@@ -58,13 +58,13 @@ const CodelistPanel = ({ project }: Props): React.ReactElement => {
           {allCodelists &&
             allCodelists.map((codelist) => (
               <CodelistItem
-                project={project}
+                projectRef={projectRef}
                 codelist={codelist}
                 setSelectedCodelist={setSelectedCodelist}
                 isSelected={
-                  !!(selectedCodelist && selectedCodelist.id === codelist.id)
+                  !!(selectedCodelist && selectedCodelist.ref === codelist.ref)
                 }
-                key={codelist.id}
+                key={codelist.ref}
               />
             ))}
         </List>
@@ -72,5 +72,3 @@ const CodelistPanel = ({ project }: Props): React.ReactElement => {
     </Box>
   );
 };
-
-export default CodelistPanel;

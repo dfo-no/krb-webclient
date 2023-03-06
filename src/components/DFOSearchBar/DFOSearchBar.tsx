@@ -1,13 +1,17 @@
-import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
+import InputAdornment from '@mui/material/InputAdornment';
 import makeStyles from '@mui/styles/makeStyles';
 import React from 'react';
 
-import DFOInput from '../DFOTextField/DFOTextField';
 import theme from '../../theme';
-import { IBaseModel } from '../../Nexus/entities/IBaseModel';
+import DFOInput from '../DFOTextField/DFOTextField';
 
-interface DFOSearchBarProps<T extends IBaseModel> {
+// TODO: Move to where other entities are
+export type TitleAndDescription = {
+  title?: string;
+  description?: string;
+};
+interface DFOSearchBarProps<T extends TitleAndDescription> {
   list: T[];
   searchFunction: (searchString: string, list: T[]) => T[];
   callback: (list: T[]) => void;
@@ -26,7 +30,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function DFOSearchBar<T extends IBaseModel>({
+export function DFOSearchBar<T extends TitleAndDescription>({
   list,
   callback,
   searchFunction,

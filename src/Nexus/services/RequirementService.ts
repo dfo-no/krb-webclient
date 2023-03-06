@@ -24,7 +24,7 @@ export default class RequirementService {
       needId: needId ?? '',
       type: ModelType.requirement,
       variants: [],
-      tags: [],
+      // tags: [],
       sourceOriginal: projectId ?? null,
       sourceRel: null,
     };

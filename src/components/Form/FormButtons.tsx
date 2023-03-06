@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, Box, styled } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
@@ -10,28 +9,30 @@ const FormButtonBox = styled(Box)(() => ({
   marginLeft: 'auto',
 }));
 
-interface IProps {
+interface Props {
   handleCancel: () => void;
 }
 
-export default function FormButtons({
-  handleCancel,
-}: IProps): React.ReactElement {
+export const FormButtons = ({ handleCancel }: Props) => {
   const { t } = useTranslation();
 
   return (
     <FormButtonBox>
-      <Button variant="save" type="submit" aria-label="save">
-        {t('Save')}
-      </Button>
       <Button
         variant="cancel"
-        sx={{ marginLeft: 2 }}
         onClick={() => handleCancel()}
         aria-label="close"
       >
         {t('common.Cancel')}
       </Button>
+      <Button
+        variant="save"
+        sx={{ marginLeft: 2 }}
+        type="submit"
+        aria-label="save" // TODO: check if this is good practive
+      >
+        {t('Save')}
+      </Button>
     </FormButtonBox>
   );
-}
+};

@@ -8,18 +8,28 @@ import { IResponse } from '../Nexus/entities/IResponse';
 import { IRequirement } from '../Nexus/entities/IRequirement';
 import { ISpecification } from '../Nexus/entities/ISpecification';
 import { IVariant } from '../Nexus/entities/IVariant';
-import { Levelable } from '../models/Levelable';
-import { Nestable } from '../models/Nestable';
-import { Parentable } from '../models/Parentable';
+import { Levelable, LevelableKRB858 } from '../models/Levelable';
+import { Nestable, NestableKRB858 } from '../models/Nestable';
+import { Parentable, ParentableKRB858 } from '../models/Parentable';
 import { QuestionType } from '../Nexus/entities/QuestionType';
 import { QuestionVariant } from '../Nexus/enums';
 import { DiscountValuePair } from '../Nexus/entities/ISliderQuestion';
 import { TimeDiscountPair } from '../Nexus/entities/ITimeQuestion';
 import { DateDiscountPair } from '../Nexus/entities/IPeriodDateQuestion';
+import { CodelistForm, NeedForm, ProjectForm } from '../api/nexus2';
+
+// TODO: Not sure this type belongs here
+export type RefAndParentable<T> = T & { ref: string } & ParentableKRB858;
 
 type NestableToBeFlattened<T extends IBaseModel> = T & {
   parent: string;
   children?: Nestable<T>[];
+  level?: number;
+};
+
+export type NestableToBeFlattenedKRB858<T> = T & {
+  parent: string;
+  children?: NestableKRB858<T>[];
   level?: number;
 };
 
@@ -210,6 +220,23 @@ class Utils {
     }, []);
   }
 
+  private static flattenNestableKRB858<T extends RefAndParentable<unknown>>(
+    items: NestableKRB858<T>[]
+  ): NestableKRB858<T>[] {
+    return items.reduce((result: NestableKRB858<T>[], current) => {
+      if (current.children) {
+        const children = Utils.flattenNestableKRB858(current.children);
+        // eslint-disable-next-line no-param-reassign
+        current.children = [];
+        result.push(current);
+        result.push(...children);
+      } else {
+        result.push(current);
+      }
+      return result;
+    }, []);
+  }
+
   static nestableList2Parentable<T extends IBaseModel>(
     items: Nestable<T>[]
   ): Parentable<T>[] {
@@ -227,6 +254,15 @@ class Utils {
     return parentableItem as Parentable<T>;
   }
 
+  static nestable2ParentableKRB858<T extends RefAndParentable<unknown>>(
+    item: NestableKRB858<T>
+  ): T {
+    const parentableItem = { ...item } as NestableToBeFlattenedKRB858<T>;
+    delete parentableItem.level;
+    delete parentableItem.children;
+    return parentableItem;
+  }
+
   static levelable2Parentable<T extends IBaseModel>(
     item: Levelable<T>
   ): Parentable<T> {
@@ -238,7 +274,14 @@ class Utils {
     items: Nestable<T>[]
   ): Levelable<T>[] {
     const result = Utils.flattenNestable(items);
-    return result as Levelable<T>[];
+    return result as Levelable<T>[]; // TODO: Can we remove as cast?
+  }
+
+  static nestable2LevelableKRB858<T extends RefAndParentable<unknown>>(
+    items: NestableKRB858<T>[]
+  ): LevelableKRB858<T>[] {
+    const result = Utils.flattenNestableKRB858(items);
+    return result;
   }
 
   static parentable2Levelable<T extends IBaseModel>(
@@ -246,6 +289,13 @@ class Utils {
   ): Levelable<T>[] {
     const nestable = Utils.parentable2Nestable(items);
     return Utils.nestable2Levelable(nestable);
+  }
+
+  static parentable2LevelableKRB858<T extends RefAndParentable<unknown>>(
+    items: T[]
+  ): LevelableKRB858<T>[] {
+    const nestable = Utils.parentable2NestableKRB858(items);
+    return Utils.nestable2LevelableKRB858(nestable);
   }
 
   static parentable2Nestable<T extends IBaseModel>(
@@ -261,6 +311,29 @@ class Utils {
         levelNode.children = Utils.parentable2Nestable(
           items,
           levelNode.id,
+          level + 1
+        );
+        out.push(levelNode);
+      }
+    });
+    return out;
+  }
+
+  // TODO: Clean up name
+  // TODO: Update tests
+  static parentable2NestableKRB858<T extends RefAndParentable<unknown>>(
+    items: T[],
+    parent = '',
+    level = 1
+  ): NestableKRB858<T>[] {
+    const out: NestableKRB858<T>[] = [];
+    items.forEach((node) => {
+      const levelNode = { ...node } as NestableKRB858<T>;
+      if (levelNode.parent === parent) {
+        levelNode.level = level;
+        levelNode.children = Utils.parentable2NestableKRB858(
+          items,
+          levelNode.ref,
           level + 1
         );
         out.push(levelNode);
@@ -307,8 +380,8 @@ class Utils {
   }
 
   static codelistUsedInVariants(
-    selectedCodelist: ICodelist,
-    selectedProject: IBank
+    selectedCodelist: CodelistForm,
+    needs: NeedForm[],
   ): boolean {
     let returnValue = false;
     selectedProject.needs.forEach((need: Parentable<INeed>) => {
@@ -316,7 +389,7 @@ class Utils {
         requirement.variants.forEach((variant: IVariant) => {
           variant.questions.forEach((question: QuestionType) => {
             if (question.type === QuestionVariant.Q_CODELIST) {
-              if (question.config.codelist === selectedCodelist.id) {
+              if (question.config.codelist === selectedCodelist.ref) {
                 returnValue = true;
               }
             }
@@ -451,3 +524,36 @@ class Utils {
 }
 
 export default Utils;
+
+export function replaceElementInList<T extends { ref: string }>(
+  element: T,
+  list: T[]
+): T[] {
+  const newList = [...list];
+  const index = newList.findIndex((elem) => elem.ref === element.ref);
+  if (index !== -1) {
+    newList.splice(index, 1, element);
+  }
+  return newList;
+}
+
+export function addElementToList<T extends { ref: string }>(
+  element: T,
+  list: T[]
+): T[] {
+  const newList = [...list];
+  newList.push(element);
+  return newList;
+}
+
+export function removeElementFromList<T extends { ref: string }>(
+  element: T,
+  list: T[]
+): T[] {
+  const newList = [...list];
+  const index = newList.findIndex((elem) => elem.ref === element.ref);
+  if (index !== -1) {
+    newList.splice(index, 1);
+  }
+  return newList;
+}

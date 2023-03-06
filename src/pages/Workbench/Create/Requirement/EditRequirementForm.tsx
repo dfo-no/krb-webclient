@@ -3,59 +3,52 @@ import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import Nexus from '../../../../Nexus/Nexus';
 import theme from '../../../../theme';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { Alert } from '../../../../models/Alert';
-import { INeed } from '../../../../Nexus/entities/INeed';
-import { IRequirement } from '../../../../Nexus/entities/IRequirement';
 import {
   ModalBox,
   ModalButton,
   ModalButtonsBox,
   ModalFieldsBox,
 } from '../../../../components/ModalBox/ModalBox';
-import { ModelType } from '../../../../Nexus/enums';
-import { Parentable } from '../../../../models/Parentable';
-import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
+import {
+  RequirementForm,
+  RequirementSchema,
+  updateRequirement,
+} from '../../../../api/nexus2';
 
 interface Props {
-  requirement: IRequirement;
-  need: Parentable<INeed>;
+  projectRef: string;
+  requirement: RequirementForm;
   handleClose: () => void;
 }
 
-interface IRouteParams {
-  projectId: string;
-}
-
 function EditRequirementForm({
+  projectRef,
   requirement,
-  need,
   handleClose,
 }: Props): React.ReactElement {
-  const { projectId } = useParams<IRouteParams>();
-  const { data: project } = useGetProjectQuery(projectId);
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
   const { t } = useTranslation();
-  const { editRequirement } = useProjectMutations();
 
-  const methods = useForm<Parentable<IRequirement>>({
+  const methods = useForm<RequirementForm>({
     defaultValues: requirement,
-    resolver: nexus.resolverService.resolver(ModelType.requirement),
+    resolver: zodResolver(RequirementSchema),
   });
 
-  if (!project) {
-    return <LoaderSpinner />;
-  }
-
-  const onSubmit = async (put: Parentable<IRequirement>) => {
-    await editRequirement(put, need).then(() => {
+  const onSubmit = async (updatedRequirement: RequirementForm) => {
+    await updateRequirement({
+      projectRef,
+      requirementRef: requirement.ref,
+      ...updatedRequirement,
+    }).then(() => {
       const alert: Alert = {
         id: uuidv4(),
         style: 'success',

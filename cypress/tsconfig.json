@@ -2,7 +2,9 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "isolatedModules": false,
-    "types": ["cypress"]
+    "types": [
+      "cypress"
+    ]
   },
   "include": [
     "../node_modules/cypress",

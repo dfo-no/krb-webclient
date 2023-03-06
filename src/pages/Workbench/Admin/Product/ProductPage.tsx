@@ -5,11 +5,8 @@ import { useParams } from 'react-router-dom';
 
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import SearchUtils from '../../../../common/SearchUtils';
-import DFOSearchBar from '../../../../components/DFOSearchBar/DFOSearchBar';
-import { Parentable } from '../../../../models/Parentable';
-import { IProduct } from '../../../../Nexus/entities/IProduct';
-import { useGetProjectQuery } from '../../../../store/api/bankApi';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
+import Utils from '../../../../common/Utils';
+import { DFOSearchBar } from '../../../../components/DFOSearchBar/DFOSearchBar';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import NestableHierarcyEditableComponents from '../../../../components/NestableHierarchy/NestableHiarchyEditableComponents';
 import {
@@ -19,10 +16,13 @@ import {
 } from '../../../../components/SearchContainer/SearchContainer';
 import { StandardContainer } from '../../../../components/StandardContainer/StandardContainer';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
+import { Parentable } from '../../../../models/Parentable';
+import { IProduct } from '../../../../Nexus/entities/IProduct';
+import { useGetProjectQuery } from '../../../../store/api/bankApi';
+import useProjectMutations from '../../../../store/api/ProjectMutations';
 import DeleteProductForm from './DeleteProductForm';
 import EditProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
-import Utils from '../../../../common/Utils';
 
 export default function ProductPage(): React.ReactElement {
   const [products, setProducts] = useState<Parentable<IProduct>[]>([]);

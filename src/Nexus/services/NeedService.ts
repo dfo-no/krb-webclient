@@ -4,6 +4,7 @@ import UuidService from './UuidService';
 import { INeed } from '../entities/INeed';
 import { ModelType } from '../enums';
 import { Parentable } from '../../models/Parentable';
+import { NeedForm } from '../../api/nexus2';
 
 export default class NeedService {
   UuidService = new UuidService();
@@ -27,10 +28,8 @@ export default class NeedService {
     };
   };
 
-  createNeedWithId = (item: Parentable<INeed>): Parentable<INeed> => {
-    const tag = { ...item };
-    tag.id = this.UuidService.generateId();
-    return tag;
+  createNeedWithId = (item: NeedForm): NeedForm => {
+    return { ...item, ref: this.UuidService.generateId() };
   };
 
   async add(item: Parentable<INeed>): Promise<void> {

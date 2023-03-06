@@ -1,52 +1,42 @@
 import { v4 as uuidv4 } from 'uuid';
-import { useParams } from 'react-router-dom';
 import { Box } from '@mui/material/';
 
 import { Alert } from '../../../../models/Alert';
-import { Parentable } from '../../../../models/Parentable';
-import { IRequirement } from '../../../../Nexus/entities/IRequirement';
-import { useGetProjectQuery } from '../../../../store/api/bankApi';
-import { INeed } from '../../../../Nexus/entities/INeed';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
-import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { useSelectState } from '../SelectContext';
-import { IVariant } from '../../../../Nexus/entities/IVariant';
 import { DeleteFrame } from '../../../../components/DeleteFrame/DeleteFrame';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
+import { deleteRequirementVariant } from '../../../../api/nexus2';
 
 interface Props {
   children: React.ReactElement;
-  variant: IVariant;
-  requirement: IRequirement;
-  need: Parentable<INeed>;
+  projectRef: string;
+  requirementRef: string;
+  requirementVariantRef: string;
+
   handleClose: () => void;
 }
 
 // TODO Needs validating
-function DeleteVariant({
+export function DeleteVariant({
   children,
-  variant,
-  requirement,
-  need,
+  projectRef,
+  requirementRef,
+  requirementVariantRef,
   handleClose,
 }: Props): React.ReactElement {
-  const { projectId } = useParams<IRouteProjectParams>();
-  const { data: project } = useGetProjectQuery(projectId);
-
   const { addAlert } = AlertsContainer.useContainer();
-  const { deleteVariant } = useProjectMutations();
   const { deleteCandidateId } = useSelectState();
 
-  if (deleteCandidateId !== variant.id) {
+  if (deleteCandidateId !== requirementVariantRef) {
     return children;
   }
 
-  if (!project) {
-    return <></>;
-  }
-
   const onDelete = (): void => {
-    deleteVariant(variant, requirement, need).then(() => {
+    deleteRequirementVariant({
+      projectRef,
+      requirementRef,
+      requirementVariantRef,
+    }).then(() => {
       const alert: Alert = {
         id: uuidv4(),
         style: 'success',
@@ -69,5 +59,3 @@ function DeleteVariant({
     </Box>
   );
 }
-
-export default DeleteVariant;

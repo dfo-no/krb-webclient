@@ -5,7 +5,6 @@ import AdminSideBar from './AdminSideBar';
 import CodelistGuard from './Codelist/CodelistGuard';
 import ProductGuard from './Product/ProductGuard';
 import PropertiesPage from './Properties/PropertiesPage';
-import TagGuard from './Tags/TagGuard';
 import { PublicationsPage } from './Publications/PublicationsPage';
 import { WORKBENCH } from '../../../common/PathConstants';
 
@@ -16,9 +15,6 @@ export default function AdminGuard(): React.ReactElement {
       <div className={css.Content}>
         <Route exact path={`/${WORKBENCH}/:projectId/admin/`}>
           <PublicationsPage />
-        </Route>
-        <Route exact path={`/${WORKBENCH}/:projectId/admin/tags`}>
-          <TagGuard />
         </Route>
         <Route exact path={`/${WORKBENCH}/:projectId/admin/codelist`}>
           <CodelistGuard />

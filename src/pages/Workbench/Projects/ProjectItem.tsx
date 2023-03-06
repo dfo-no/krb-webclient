@@ -1,37 +1,37 @@
-import Card from '@mui/material/Card';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Card from '@mui/material/Card';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
 
-import css from './Projects.module.scss';
-import DeleteProjectForm from './DeleteProjectForm';
-import { FormIconButton } from '../../../components/Form/FormIconButton';
-import { IBank } from '../../../Nexus/entities/IBank';
-import { useEditableState } from '../../../components/EditableContext/EditableContext';
+import { ProjectForm } from '../../../api/nexus2';
 import { WORKBENCH } from '../../../common/PathConstants';
+import { useEditableState } from '../../../components/EditableContext/EditableContext';
+import { FormIconButton } from '../../../components/Form/FormIconButton';
+import { DeleteProjectForm } from './DeleteProjectForm';
+import css from './Projects.module.scss';
 
 interface Props {
-  project: IBank;
+  project: ProjectForm;
 }
 
-const ProjectItem = ({ project }: Props) => {
+export const ProjectItem = ({ project }: Props) => {
   const { setDeleteCandidateId } = useEditableState();
 
   const handleCloseDelete = () => {
     setDeleteCandidateId('');
   };
 
-  const enterDeleteMode = (item: IBank) => {
-    setDeleteCandidateId(item.id);
+  const enterDeleteMode = (item: ProjectForm) => {
+    if (item.ref) setDeleteCandidateId(item.ref);
   };
 
   return (
-    <DeleteProjectForm bank={project} handleClose={handleCloseDelete}>
+    <DeleteProjectForm project={project} handleClose={handleCloseDelete}>
       <ListItem
         className={css.Item}
-        key={project.id}
+        key={project.ref}
         secondaryAction={
           <FormIconButton
             className={css.IconButton}
@@ -44,7 +44,7 @@ const ProjectItem = ({ project }: Props) => {
           </FormIconButton>
         }
       >
-        <Link to={`/${WORKBENCH}/${project.id}/create`} className={css.Link}>
+        <Link to={`/${WORKBENCH}/${project.ref}/create`} className={css.Link}>
           <Card className={css.ItemCard}>
             <div className={css.CardContent}>
               <div className={css.TitleButton}>
@@ -59,5 +59,3 @@ const ProjectItem = ({ project }: Props) => {
     </DeleteProjectForm>
   );
 };
-
-export default ProjectItem;

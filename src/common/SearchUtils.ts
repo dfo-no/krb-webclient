@@ -3,6 +3,8 @@ import { IBaseModelWithTitleAndDesc } from '../models/IBaseModelWithTitleAndDesc
 import { Parentable } from '../models/Parentable';
 import Utils from './Utils';
 import { ICodelist } from '../Nexus/entities/ICodelist';
+import { TitleAndDescription } from '../components/DFOSearchBar/DFOSearchBar'; // TODO: This probably needs to go somewhere else
+import { CodelistForm } from '../api/nexus2';
 
 interface SearchableParams {
   inSearch?: boolean;
@@ -10,14 +12,15 @@ interface SearchableParams {
 
 type Searchable = SearchableParams & Nestable<IBaseModelWithTitleAndDesc>;
 
+// TODO: Get rid of this class :-D (return only functions)
 class SearchUtils {
   private static inTitleOrDescription(
-    item: IBaseModelWithTitleAndDesc,
+    item: TitleAndDescription,
     searchString: string
   ) {
-    const inTitle = item.title
-      .toLowerCase()
-      .includes(searchString.toLowerCase());
+    const inTitle =
+      item.title &&
+      item.title.toLowerCase().includes(searchString.toLowerCase());
     const inDescription =
       item.description &&
       item.description.toLowerCase().includes(searchString.toLowerCase());
@@ -74,10 +77,20 @@ class SearchUtils {
     return Utils.nestableList2Parentable(returnList);
   }
 
+  // TODO: can this be removed before I create the pull request?
   static searchBaseModel(
     items: IBaseModelWithTitleAndDesc[],
     searchString: string
   ): IBaseModelWithTitleAndDesc[] {
+    return items.filter((item) =>
+      this.inTitleOrDescription(item, searchString)
+    );
+  }
+
+  static searchTitleAndDescription<T extends TitleAndDescription>(
+    items: T[],
+    searchString: string
+  ) {
     return items.filter((item) =>
       this.inTitleOrDescription(item, searchString)
     );
@@ -98,3 +111,28 @@ class SearchUtils {
 }
 
 export default SearchUtils;
+
+function inTitleOrDescription(item: TitleAndDescription, searchString: string) {
+  const inTitle =
+    item.title && item.title.toLowerCase().includes(searchString.toLowerCase());
+  const inDescription =
+    item.description &&
+    item.description.toLowerCase().includes(searchString.toLowerCase());
+  return inTitle || inDescription;
+}
+
+export function searchCodelist(
+  codelists: CodelistForm[],
+  searchString: string
+): CodelistForm[] {
+  // Filters only codelist with match in title or with code with match in title
+  return codelists.filter((codelist) => {
+    if (inTitleOrDescription(codelist, searchString)) {
+      return true;
+    }
+
+    return codelist.codes.some((code) => {
+      return inTitleOrDescription(code, searchString);
+    });
+  });
+}

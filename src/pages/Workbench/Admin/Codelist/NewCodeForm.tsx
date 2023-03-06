@@ -1,31 +1,28 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 
-import FormButtons from '../../../../components/Form/FormButtons';
+import { FormButtons } from '../../../../components/Form/FormButtons';
 import Nexus from '../../../../Nexus/Nexus';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import { Alert } from '../../../../models/Alert';
-import { ICode } from '../../../../Nexus/entities/ICode';
-import { ICodelist } from '../../../../Nexus/entities/ICodelist';
-import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
+import { CodeForm, createCode } from '../../../../api/nexus2';
 import { ModelType } from '../../../../Nexus/enums';
-import { Parentable } from '../../../../models/Parentable';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import { FormContainerBox } from '../../../../components/Form/FormContainerBox';
 
 interface Props {
-  codelist: ICodelist;
-  handleClose: (newCode: Parentable<ICode>) => void;
+  projectRef: string;
+  codelistRef: string;
+  handleClose: (newCode: CodeForm) => void;
   handleCancel: () => void;
 }
 
 export default function NewCodeForm({
-  codelist,
+  projectRef,
+  codelistRef,
   handleClose,
   handleCancel,
 }: Props): React.ReactElement {
@@ -33,20 +30,18 @@ export default function NewCodeForm({
   const { t } = useTranslation();
   const nexus = Nexus.getInstance();
   const formStyles = useFormStyles();
-  const { projectId } = useParams<IRouteProjectParams>();
-  const { addCode } = useProjectMutations();
 
-  const defaultValues: Parentable<ICode> =
-    nexus.codelistService.generateDefaultCodeValues(projectId);
-
-  const methods = useForm<Parentable<ICode>>({
+  const methods = useForm<CodeForm>({
     resolver: nexus.resolverService.postResolver(ModelType.code),
-    defaultValues,
+    defaultValues: {
+      title: '',
+      description: '',
+      ref: uuidv4(),
+    },
   });
 
-  async function onSubmit(post: Parentable<ICode>) {
-    const newCode = nexus.codelistService.createCodeWithId(post);
-    await addCode(newCode, codelist).then(() => {
+  async function onSubmit(newCode: CodeForm) {
+    await createCode({ projectRef, codelistRef, ...newCode }).then(() => {
       const alert: Alert = {
         id: uuidv4(),
         style: 'success',

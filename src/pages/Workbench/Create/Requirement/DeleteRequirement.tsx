@@ -1,47 +1,51 @@
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import { useParams } from 'react-router-dom';
 import { Box } from '@mui/material/';
 
 import { Alert } from '../../../../models/Alert';
-import { Parentable } from '../../../../models/Parentable';
-import { IRequirement } from '../../../../Nexus/entities/IRequirement';
-import { useGetProjectQuery } from '../../../../store/api/bankApi';
-import { INeed } from '../../../../Nexus/entities/INeed';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
-import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { useSelectState } from '../SelectContext';
 import { DeleteFrame } from '../../../../components/DeleteFrame/DeleteFrame';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
+import {
+  deleteRequirement,
+  findRequirementVariants,
+  RequirementVariantForm,
+} from '../../../../api/nexus2';
 
 interface Props {
+  projectRef: string;
   children: React.ReactElement;
-  requirement: IRequirement;
-  need: Parentable<INeed>;
+  requirementRef: string;
   handleClose: () => void;
 }
 
 // TODO Needs validating
 function DeleteRequirement({
   children,
-  requirement,
-  need,
+  projectRef,
+  requirementRef,
   handleClose,
 }: Props): React.ReactElement {
-  const { projectId } = useParams<IRouteProjectParams>();
-  const { data: project } = useGetProjectQuery(projectId);
-
   const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
-  const { deleteRequirement } = useProjectMutations();
   const { deleteCandidateId } = useSelectState();
-  const hasChildren = requirement.variants.length > 0;
+  // const hasChildren = requirement.variants.length > 0; //TODO: Skal denne være med videre?
 
-  if (!project) {
-    return <></>;
-  }
+  const [variants, setVariants] = useState<RequirementVariantForm[]>([]);
 
-  if (deleteCandidateId !== requirement.id) {
+  useEffect(() => {
+    findRequirementVariants({
+      projectRef,
+      requirementRef,
+    }).then((response) => {
+      setVariants(response.data);
+    });
+  }, [projectRef, requirementRef]);
+
+  const hasChildren = variants.length > 0;
+
+  if (deleteCandidateId !== requirementRef) {
     return children;
   }
 
@@ -50,7 +54,7 @@ function DeleteRequirement({
     : '';
 
   const onDelete = (): void => {
-    deleteRequirement(requirement, need).then(() => {
+    deleteRequirement({ projectRef, requirementRef }).then(() => {
       const alert: Alert = {
         id: uuidv4(),
         style: 'success',

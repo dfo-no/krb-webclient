@@ -4,24 +4,30 @@ import { useTranslation } from 'react-i18next';
 
 import { ListHeader } from './ListHeader';
 import { DisplayCode } from './DisplayCode';
-import EditCodeForm from './EditCodeForm';
-import NestableHierarcy from '../../../../components/NestableHierarchy/NestableHierarcy';
+import { EditCodeForm } from './EditCodeForm';
+import NestableHierarcy from '../../../../components/NestableHierarchy/NestableHierarcyKRB858';
 import NewCodeForm from './NewCodeForm';
 import useProjectMutations from '../../../../store/api/ProjectMutations';
-import Utils from '../../../../common/Utils';
-import { ICode } from '../../../../Nexus/entities/ICode';
-import { Parentable } from '../../../../models/Parentable';
+import {
+  addElementToList,
+  RefAndParentable,
+  removeElementFromList,
+  replaceElementInList,
+} from '../../../../common/Utils';
+import { CodeForm, CodelistForm, updateCodelist } from '../../../../api/nexus2';
 import { ScrollableContainer } from '../../../../components/ScrollableContainer/ScrollableContainer';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { usePanelStyles } from './CodelistStyles';
-import { ICodelist } from '../../../../Nexus/entities/ICodelist';
+import { ParentableKRB858 } from '../../../../models/Parentable';
 
 type Props = {
-  selectedCodelist: ICodelist;
-  setSelectedCodelist: Dispatch<SetStateAction<ICodelist | null>>;
+  projectRef: string;
+  selectedCodelist: CodelistForm;
+  setSelectedCodelist: Dispatch<SetStateAction<CodelistForm | null>>;
 };
 
 export const CodePanel = ({
+  projectRef,
   selectedCodelist,
   setSelectedCodelist,
 }: Props): React.ReactElement => {
@@ -35,9 +41,9 @@ export const CodePanel = ({
     deleteCandidateId,
     setDeleteCandidateId,
   } = useEditableState();
-  const [codes, setCodes] = useState<Parentable<ICode>[]>([]);
+  const [codes, setCodes] = useState<CodeForm[] | null | undefined>([]);
 
-  const { editCodes } = useProjectMutations();
+  // const { editCodes } = useProjectMutations();
 
   useEffect(() => {
     if (selectedCodelist) {
@@ -47,51 +53,64 @@ export const CodePanel = ({
     }
   }, [selectedCodelist, setCurrentlyEditedItemId, setCreating]);
 
-  const updateCodesArrangement = (newCodes: Parentable<ICode>[]) => {
+  const updateCodesArrangement = (newCodes: CodeForm[]) => {
     setCodes(newCodes);
-    editCodes(newCodes, selectedCodelist);
+
+    const updateToSendToBackend = {
+      projectRef,
+      codelistRef: selectedCodelist.ref,
+      ...selectedCodelist,
+    };
+
+    updateToSendToBackend.codes = newCodes;
+
+    updateCodelist(updateToSendToBackend);
   };
 
   const isEditing = () => {
     return currentlyEditedItemId !== '' && deleteCandidateId !== '';
   };
 
-  const isEditingItem = (item: Parentable<ICode>) => {
-    return item && item.id === currentlyEditedItemId;
+  const isEditingItem = (item: CodeForm) => {
+    return item && item.ref === currentlyEditedItemId;
   };
 
-  const handleCloseEdit = (newCode: Parentable<ICode>) => {
-    const newCodes = Utils.replaceElementInList(
+  const handleCloseEdit = (newCode: CodeForm) => {
+    const newCodes = replaceElementInList(
       newCode,
-      selectedCodelist.codes
+      selectedCodelist.codes || []
     );
     setSelectedCodelist({ ...selectedCodelist, codes: newCodes });
 
     setCurrentlyEditedItemId('');
   };
 
-  const handleCloseCreate = (newCode: Parentable<ICode>) => {
-    const newCodes = Utils.addElementToList(newCode, selectedCodelist.codes);
+  const handleCloseCreate = (newCode: CodeForm) => {
+    const newCodes = addElementToList(newCode, selectedCodelist.codes || []);
     setSelectedCodelist({ ...selectedCodelist, codes: newCodes });
 
     setCreating(false);
   };
 
-  const handleCloseDelete = (deletedCode: Parentable<ICode>) => {
-    const newCodes = Utils.removeElementFromList(
+  const handleCloseDelete = (deletedCode: CodeForm) => {
+    const newCodes = removeElementFromList(
       deletedCode,
-      selectedCodelist.codes
+      selectedCodelist.codes || []
     );
     setSelectedCodelist({ ...selectedCodelist, codes: newCodes });
 
     setDeleteCandidateId('');
   };
 
-  const renderItem = (code: Parentable<ICode>, dragHandle: React.ReactNode) => {
+  const renderItem = (
+    code: RefAndParentable<CodeForm>,
+    dragHandle: React.ReactNode
+  ) => {
     if (isEditingItem(code)) {
       return (
         <EditCodeForm
-          codelist={selectedCodelist}
+          projectRef={projectRef}
+          codelistRef={selectedCodelist.ref}
           code={code}
           handleClose={handleCloseEdit}
           handleCancel={() => setCurrentlyEditedItemId('')}
@@ -100,8 +119,9 @@ export const CodePanel = ({
     } else {
       return (
         <DisplayCode
+          projectRef={projectRef}
+          codelistRef={selectedCodelist.ref}
           code={code}
-          codelist={selectedCodelist}
           dragHandle={isEditing() ? null : dragHandle}
           handleDelete={handleCloseDelete}
           handleCancel={() => setDeleteCandidateId('')}
@@ -119,7 +139,8 @@ export const CodePanel = ({
       />
       {isCreating && (
         <NewCodeForm
-          codelist={selectedCodelist}
+          projectRef={projectRef}
+          codelistRef={selectedCodelist.ref}
           handleClose={handleCloseCreate}
           handleCancel={() => setCreating(false)}
         />
@@ -127,7 +148,7 @@ export const CodePanel = ({
       <ScrollableContainer>
         <NestableHierarcy
           className={classes.nestableCustom}
-          inputlist={codes}
+          inputlist={codes || []}
           renderItem={renderItem}
           dispatchfunc={updateCodesArrangement}
           depth={1}

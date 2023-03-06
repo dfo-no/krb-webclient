@@ -12,6 +12,10 @@ export const updateObject = <T extends Record<string, unknown>>(
 
     const translate = (input: Input) => {
       for (const key of Object.keys(input)) {
+        if (key.toLowerCase() === 'tags') {
+          // eslint-disable-next-line no-param-reassign
+          delete input[key];
+        }
         if (key.toLowerCase().includes('weight')) {
           // eslint-disable-next-line no-param-reassign
           delete input[key];

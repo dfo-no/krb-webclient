@@ -9,7 +9,7 @@ export interface IRequirement extends IBaseModel {
   description: string;
   needId: string;
   variants: IVariant[];
-  tags: string[];
+  // tags: string[];
 }
 
 export const BaseRequirementSchema = BaseModelSchema.keys({
@@ -17,6 +17,6 @@ export const BaseRequirementSchema = BaseModelSchema.keys({
   description: CustomJoi.validateOptionalText(),
   needId: CustomJoi.validateId(),
   variants: CustomJoi.validateUniqueArray(VariantSchema),
-  tags: CustomJoi.validateIdArray(),
+  // tags: CustomJoi.validateIdArray(),
   type: CustomJoi.validateType(ModelType.requirement),
 });
