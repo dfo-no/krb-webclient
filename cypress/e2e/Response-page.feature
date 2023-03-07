@@ -60,7 +60,7 @@ Feature: Besvarelse
     And Jeg skriver 1000 i feltet "Pris på produkt"
     Then Ser jeg "Pris på produkt" har verdi 1000
     And Jeg skriver "El-bil endret" i feltet "Navn på produkt"
-    Then Ser jeg "El-bil endret" krav
+    Then Ser jeg "El-bil endret (El-bil)" krav
 
   Scenario: Jeg kan ikke rediger krav av type informasjon
     Given Jeg lager besvarelse fra spesifikasjon "specification_all_answer_typer.pdf"
