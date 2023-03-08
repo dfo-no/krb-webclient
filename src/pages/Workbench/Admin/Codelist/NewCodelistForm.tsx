@@ -1,16 +1,20 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
 import { useTranslation } from 'react-i18next';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import { FormButtons } from '../../../../components/Form/FormButtons';
-import Nexus from '../../../../Nexus/Nexus';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
-import { CodelistForm, createCodelist } from '../../../../api/nexus2';
+import {
+  CodelistForm,
+  CodelistFormSchema,
+  createCodelist,
+} from '../../../../api/nexus2';
 import { Alert } from '../../../../models/Alert';
-import { ModelType } from '../../../../Nexus/enums';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
+import ErrorSummary from '../../../../Form/ErrorSummary';
 
 interface Props {
   projectRef: string;
@@ -25,11 +29,10 @@ export default function NewCodelistForm({
 }: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
-  const nexus = Nexus.getInstance();
   const formStyles = useFormStyles();
 
   const methods = useForm<CodelistForm>({
-    resolver: nexus.resolverService.postResolver(ModelType.codelist),
+    resolver: zodResolver(CodelistFormSchema),
     defaultValues: {
       title: '',
       description: '',
@@ -39,6 +42,7 @@ export default function NewCodelistForm({
   });
 
   async function onSubmit(newCodelist: CodelistForm) {
+    console.log(newCodelist);
     await createCodelist({ projectRef, ...newCodelist }).then(() => {
       const alert: Alert = {
         id: uuidv4(),
@@ -73,6 +77,7 @@ export default function NewCodelistForm({
           />
           <FormButtons handleCancel={handleCancel} />
         </FormItemBox>
+        <ErrorSummary errors={methods.formState.errors} />
       </form>
     </FormProvider>
   );

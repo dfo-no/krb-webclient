@@ -18,7 +18,6 @@ import {
 import { StandardContainer } from '../../../../components/StandardContainer/StandardContainer';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import { useSelectState } from './SelectContext';
-import { useGetProjectQuery } from '../../../../store/api/bankApi';
 
 const useStyles = makeStyles({
   tableContainer: {
@@ -48,31 +47,41 @@ export default function CodeListPage(): React.ReactElement {
     setSelectedCodelist,
     allCodelists,
     setAllCodelists,
+    setFilteredCodelists,
   } = useSelectState();
   const classes = useStyles();
   const { t } = useTranslation();
 
   const { projectId } = useParams<IRouteProjectParams>();
-  const { data: project } = useGetProjectQuery(projectId);
   const { isLoading, codelists: loadedCodelists } = useFindCodelists(projectId);
 
   useEffect(() => {
     if (loadedCodelists) {
       setAllCodelists(loadedCodelists); // TODO: Fix type mismatch after merge
-      // setAllCodelists(loadedCodelists);
+      setSelectedCodelist(selectedCodelist);
+      setFilteredCodelists(allCodelists);
     }
-  }, [setAllCodelists, loadedCodelists]);
+  }, [
+    setAllCodelists,
+    loadedCodelists,
+    setSelectedCodelist,
+    selectedCodelist,
+    setFilteredCodelists,
+    allCodelists,
+  ]);
 
   if (isLoading) {
     return <LoaderSpinner />;
   }
 
-  if (!project || !loadedCodelists) {
+  if (!loadedCodelists) {
     return <></>;
   }
 
   const searchFieldCallback = (result: CodelistForm[]) => {
-    setAllCodelists(result);
+    if (result.length <= 0) {
+      setFilteredCodelists(allCodelists);
+    } else setFilteredCodelists(result);
   };
 
   const codelistSearch = (searchString: string, list: CodelistForm[]) => {

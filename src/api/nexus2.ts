@@ -76,6 +76,19 @@ export const RequirementVariantFormSchema = z.object({
   useQualification: z.boolean(), // TODO: optional
 });
 
+export const CodesFormSchema = z.object({
+  title: z.string().min(1, i18n.t('codelistTitleTooShort')),
+  description: z.string(),
+  ref: z.string().uuid(i18n.t('codelistRefNotUuid')),
+});
+
+export const CodelistFormSchema = z.object({
+  title: z.string().min(1, i18n.t('codelistTitleTooShort')),
+  description: z.string(),
+  ref: z.string().uuid(i18n.t('codelistRefNotUuid')),
+  codes: z.array(CodesFormSchema).nullable().optional(),
+});
+
 // interface Base<T> {
 //   [key: string]: keyof T;
 // }
@@ -209,6 +222,28 @@ export const useFindCodelists = (projectRef: string) => {
   return { isLoading, codelists };
 };
 
+export const useFindOneCodelist = (projectRef: string, codelistRef: string) => {
+  const [isLoading, setLoading] = useState(false);
+  const [codelist, setCodelist] = useState<CodelistForm>();
+
+  useEffect(() => {
+    const findCodelist = fetcher
+      .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}')
+      .method('get')
+      .create();
+
+    setLoading(true);
+    findCodelist({ projectRef, codelistRef }).then(async (projectsResponse) => {
+      setLoading(false);
+      if (projectsResponse) {
+        setCodelist(projectsResponse.data);
+      }
+    });
+  }, [projectRef, codelistRef]);
+
+  return { isLoading, codelist };
+};
+
 export const createCodelist = fetcher
   .path('/api/v1/projects/{projectRef}/codelists')
   .method('post')
@@ -224,7 +259,7 @@ export const deleteCodelist = fetcher
   .method('delete')
   .create();
 
-//TODO remove
+// TODO remove
 
 // export const createCode = fetcher
 //   .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes')
