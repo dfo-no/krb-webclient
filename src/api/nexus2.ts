@@ -1,12 +1,17 @@
 import { Fetcher } from 'openapi-typescript-fetch';
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { createContainer } from 'unstated-next';
 import useSWR from 'swr';
 // import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
+import { useParams } from 'react-router-dom';
 
 import { components, paths } from './generated';
 import i18n from '../i18n';
+import { IProduct } from '../Nexus/entities/IProduct';
+import { RefAndParentable } from '../common/Utils';
+import { IRouteProjectParams } from '../models/IRouteProjectParams';
+import { IRouteWorkbenchParams } from '../models/IRouteWorkbenchParams';
 
 export const baseUrl = 'https://krb-backend-api.azurewebsites.net';
 // export const baseUrl = 'http://localhost:1080';
@@ -54,6 +59,12 @@ export const NeedSchema = z.object({
   title: z.string().min(1, i18n.t('needTitleTooShort')),
   description: z.string(),
   ref: z.string().uuid(i18n.t('needRefNotUuid')),
+});
+
+export const ProductSchema = z.object({
+  title: z.string().min(1, i18n.t('needTitleTooShort')), // TODO
+  description: z.string(),
+  ref: z.string().uuid(i18n.t('needRefNotUuid')), // TODO
 });
 
 export const RequirementSchema = z.object({
@@ -148,6 +159,8 @@ export const useProject = (ref: string) => {
     swrFetcher
   );
 
+  // mutated
+
   return {
     project: data,
     isLoading,
@@ -224,7 +237,7 @@ export const deleteCodelist = fetcher
   .method('delete')
   .create();
 
-//TODO remove
+// TODO remove
 
 // export const createCode = fetcher
 //   .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes')
@@ -259,6 +272,19 @@ export const useNeeds = (ref: string) => {
   };
 };
 
+export const useFindProducts = (ref: string) => {
+  const { data, error, isLoading } = useSWR(
+    `/api/v1/projects/${ref}/products`,
+    swrFetcher
+  );
+
+  return {
+    products: data,
+    isLoading,
+    isError: error,
+  };
+};
+
 export const useFindNeeds = (projectRef: string) => {
   const [isLoading, setLoading] = useState(false);
   const [needs, setNeeds] = useState<NeedForm[]>();
@@ -280,6 +306,99 @@ export const useFindNeeds = (projectRef: string) => {
 
   return { isLoading, needs };
 };
+
+export const updateProduct = fetcher
+  .path('/api/v1/projects/{projectRef}/products/{productRef}')
+  .method('put')
+  .create();
+
+export const deleteProduct = fetcher
+    .path('/api/v1/projects/{projectRef}/products/{productRef}')
+    .method('delete')
+    .create();
+
+export const useDeleteProduct = (projectRef: string, productRef: string) => {
+  const [deletedProduct, setDeletedProduct] = useState<string>('');
+
+  useEffect(() => {
+    deleteProduct({projectRef, productRef}).then(async (resp: any) => {
+      if (resp) {
+        setDeletedProduct(resp.data);
+      }
+    });
+  }, [projectRef, productRef]);
+  return { deletedProduct };
+};
+
+
+  // export const useUpdateProduct = (projectRef: string, productRef: string) => {
+  // const [editProduct, setEditProduct] =
+  //   useState<RefAndParentable<ProductForm>[]>();
+  //
+  // useEffect(() => {
+  //   console.log('fetcher', updateProduct);
+  //   updateProduct({ projectRef, productRef }).then(
+  //     async (productResponse: {
+  //       data: SetStateAction<
+  //         | RefAndParentable<{
+  //             ref: string;
+  //             title: string;
+  //             description: string;
+  //             requirementVariantRef: string;
+  //           }>[]
+  //         | undefined
+  //       >;
+  //     }) => {
+  //      if (productResponse) {
+  //        setEditProduct(productResponse.data);
+  //      }
+  //    }
+  //  );
+ // }, [projectRef, productRef]);
+
+ // return { editProduct };
+// };
+
+// export const useFindProducts = (projectRef: string) => {
+//   const [isLoading, setLoading] = useState(false);
+//   const [products, setProducts] = useState<ProductForm[]>([]);
+//
+//   useEffect(() => {
+//     const findProducts = fetcher
+//       .path('/api/v1/projects/{projectRef}/products')
+//       .method('get')
+//       .create();
+//
+//     setLoading(true);
+//     findProducts({ projectRef: projectRef }).then(async (productResponse) => {
+//       setLoading(false);
+//       if (productResponse) {
+//         setProducts(productResponse.data);
+//       }
+//     });
+//   }, [projectRef]);
+//
+//   return { isLoading, products };
+// };
+
+// const { data, error } = useSWR(
+//   `/api/v1/projects/${projectId}/products`,
+//   swrFetcher
+// );
+//
+// if (error) {
+//   console.log('Error fetching products:', error);
+//   return null;
+// }
+//
+// if (!data) {
+//   return { isLoading: true, products: null };
+// }
+//
+// return data.map((product: IProduct) => ({
+//   title: product.title,
+//   description: product.description,
+// }));
 
 export const updateNeed = fetcher
   .path('/api/v1/projects/{projectRef}/needs/{needRef}')
@@ -349,11 +468,6 @@ export const deleteRequirementVariant = fetcher
     '/api/v1/projects/{projectRef}/requirements/{requirementRef}/requirementvariants/{requirementVariantRef}'
   )
   .method('delete')
-  .create();
-
-export const findProducts = fetcher
-  .path('/api/v1/projects/{projectRef}/products')
-  .method('get')
   .create();
 
 export const findPublications = fetcher

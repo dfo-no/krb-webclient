@@ -16,7 +16,7 @@ import { QuestionVariant } from '../Nexus/enums';
 import { DiscountValuePair } from '../Nexus/entities/ISliderQuestion';
 import { TimeDiscountPair } from '../Nexus/entities/ITimeQuestion';
 import { DateDiscountPair } from '../Nexus/entities/IPeriodDateQuestion';
-import { CodelistForm, NeedForm, ProjectForm } from '../api/nexus2';
+import {CodelistForm, NeedForm, ProductForm, ProjectForm} from '../api/nexus2';
 
 // TODO: Not sure this type belongs here
 export type RefAndParentable<T> = T & { ref: string } & ParentableKRB858;
@@ -349,17 +349,17 @@ class Utils {
     return list.some((listItem) => listItem.parent === item.id);
   }
 
-  static checkIfProductHasChildren<T extends Parentable<IProduct>>(
-    item: Parentable<T>,
-    list: Parentable<T>[]
+  static checkIfProductHasChildren<T extends RefAndParentable<ProductForm>>(
+    item: RefAndParentable<T>,
+    list: RefAndParentable<T>[]
   ): boolean {
     return list.some(
-      (listItem) => listItem.parent === item.id && !listItem.deletedDate
+      (listItem) => listItem.parent === item.ref // TODO && !listItem.deletedDate
     );
   }
 
   static productUsedInVariants(
-    selectedProduct: IProduct,
+    selectedProduct: ProductForm,
     selectedProject: IBank
   ): boolean {
     let returnValue = false;
@@ -368,7 +368,7 @@ class Utils {
         requirement.variants.forEach((variant: IVariant) => {
           if (
             variant.useProduct &&
-            variant.products.some((p) => p === selectedProduct.id)
+            variant.products.some((p) => p === selectedProduct.ref)
           ) {
             returnValue = true;
           }
@@ -381,7 +381,7 @@ class Utils {
 
   static codelistUsedInVariants(
     selectedCodelist: CodelistForm,
-    needs: NeedForm[],
+    needs: NeedForm[]
   ): boolean {
     let returnValue = false;
     selectedProject.needs.forEach((need: Parentable<INeed>) => {

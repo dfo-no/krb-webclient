@@ -1,6 +1,8 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useParams } from 'react-router-dom';
 
 import { FormButtons } from '../../../../components/Form/FormButtons';
 import Nexus from '../../../../Nexus/Nexus';
@@ -13,38 +15,49 @@ import { ModelType } from '../../../../Nexus/enums';
 import { Parentable } from '../../../../models/Parentable';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
+import { RefAndParentable } from '../../../../common/Utils';
+import {
+  ProductForm,
+  ProductSchema,
+  updateProduct,
+  useUpdateProduct,
+} from '../../../../api/nexus2';
 
 interface Props {
-  product: Parentable<IProduct>;
-  handleClose: (newProduct: Parentable<IProduct>) => void;
+  projectRef: string;
+  product: RefAndParentable<ProductForm>;
+  handleClose: (newProduct: RefAndParentable<ProductForm>) => void;
   handleCancel: () => void;
 }
 
 export default function EditProductForm({
+  projectRef,
   product,
   handleClose,
   handleCancel,
 }: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
-  const nexus = Nexus.getInstance();
   const { t } = useTranslation();
   const formStyles = useFormStyles();
-  const { editProduct } = useProjectMutations();
 
-  const methods = useForm<Parentable<IProduct>>({
+  const methods = useForm<RefAndParentable<ProductForm>>({
     defaultValues: product,
-    resolver: nexus.resolverService.resolver(ModelType.product),
+    resolver: zodResolver(ProductSchema),
   });
 
-  async function onSubmit(put: Parentable<IProduct>) {
-    await editProduct(put).then(() => {
+  async function onSubmit(updatedProduct: RefAndParentable<ProductForm>) {
+    await updateProduct({
+      projectRef,
+      productRef: updatedProduct.ref,
+      ...updatedProduct,
+    }).then(() => {
       const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully edited product',
       };
       addAlert(alert);
-      handleClose(put);
+      handleClose(updatedProduct);
     });
   }
 
