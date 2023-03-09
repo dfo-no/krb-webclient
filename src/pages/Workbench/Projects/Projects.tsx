@@ -18,8 +18,6 @@ import {
   SearchFieldContainer,
 } from '../../../components/SearchContainer/SearchContainer';
 
-// test here http://localhost:3000/workbench/4657069c-2893-4fde-b668-1cbf7cc03ce2/create
-
 export function Projects(): React.ReactElement {
   const { t } = useTranslation();
   const [completeProjectList, setCompleteProjectList] =

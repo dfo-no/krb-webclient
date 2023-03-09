@@ -73,9 +73,7 @@ export function CodelistItem({
     deleteCodelist({
       projectRef: projectRef,
       codelistRef: codelistToBeDeleted.ref,
-      ...codelistToBeDeleted,
     }).then(() => {
-      console.log(codelistToBeDeleted);
       const alert: Alert = {
         id: uuidv4(),
         style: 'success',
@@ -97,7 +95,6 @@ export function CodelistItem({
       <EditCodelistForm
         projectRef={projectRef}
         codelist={codelist}
-        // key={codelist.ref}
         handleClose={handleCloseEdit}
         handleCancel={() => setCurrentlyEditedItemId('')}
       />

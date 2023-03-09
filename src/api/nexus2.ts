@@ -259,23 +259,6 @@ export const deleteCodelist = fetcher
   .method('delete')
   .create();
 
-// TODO remove
-
-// export const createCode = fetcher
-//   .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes')
-//   .method('post')
-//   .create();
-//
-// export const updateCode = fetcher
-//   .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes/{codeRef}')
-//   .method('put')
-//   .create();
-//
-// export const deleteCode = fetcher
-//   .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes/{codeRef}')
-//   .method('delete')
-//   .create();
-
 export const createNeed = fetcher
   .path('/api/v1/projects/{projectRef}/needs')
   .method('post')
