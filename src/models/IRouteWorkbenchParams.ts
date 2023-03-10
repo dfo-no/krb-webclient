@@ -1,13 +1,4 @@
-import { SPECIFICATION, PRODUCTS, WORKBENCH } from '../common/PathConstants';
-
-export interface IRouteSpecificationParams {
-  specId: string;
-  productId: string;
-}
-
-export const SpecificationPath = `/${SPECIFICATION}/:specId`;
-export const SpecificationProductPath = `/${SPECIFICATION}/:specId/${PRODUCTS}/:productId`;
-
+import { PRODUCTS, WORKBENCH } from '../common/PathConstants';
 
 export interface IRouteWorkbenchParams {
   projectRef: string;

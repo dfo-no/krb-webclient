@@ -20,11 +20,9 @@ import EditProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
 import { ProductForm, useFindProducts } from '../../../../api/nexus2';
 import { RefAndParentable } from '../../../../common/Utils';
-import { IRouteWorkbenchParams } from '../../../../models/IRouteWorkbenchParams';
 
 export default function ProductPage(): React.ReactElement {
   const { projectId } = useParams<IRouteProjectParams>();
-  const { productRef } = useParams<IRouteWorkbenchParams>();
 
   const { products, isLoading, isError } = useFindProducts(projectId);
 
@@ -65,7 +63,6 @@ export default function ProductPage(): React.ReactElement {
   const updateProductsArrangement = (
     newProductList: RefAndParentable<ProductForm>[]
   ): void => {
-    console.log('productref: ', productRef);
     setProductsWithParent(newProductList);
     // editProduct(newProductList); // TODO
   };
