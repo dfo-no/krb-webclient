@@ -71,7 +71,7 @@ export const ProductSchema = z.object({
     .min(1, i18n.t('requirementVariantRefTooShort')), // TODO
 });
 
-export const ProductEditSchema = z.object({
+export const ProductTitleAndDescSchema = z.object({
   title: z.string().min(1, i18n.t('Product title too short')), // TODO not fetching error string from resource
   description: z.string(),
 });
@@ -317,7 +317,7 @@ export const useFindNeeds = (projectRef: string) => {
 };
 
 export const updateProduct = fetcher
-  .path('/api/v1/projects/{projectRef}/products/{productref}')
+  .path('/api/v1/projects/{projectRef}/products/{productRef}')
   .method('put')
   .create();
 

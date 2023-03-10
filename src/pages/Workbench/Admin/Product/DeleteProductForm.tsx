@@ -5,22 +5,19 @@ import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import Nexus from '../../../../Nexus/Nexus';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
-import Utils, { RefAndParentable } from '../../../../common/Utils';
+import { RefAndParentable } from '../../../../common/Utils';
 import { DeleteFrame } from '../../../../components/DeleteFrame/DeleteFrame';
 import { Alert } from '../../../../models/Alert';
-import { IProduct } from '../../../../Nexus/entities/IProduct';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import { ModelType } from '../../../../Nexus/enums';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
-import { useGetProjectQuery } from '../../../../store/api/bankApi';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import {
   deleteProduct,
+  ProductTitleAndDescSchema,
   ProductForm,
-  ProductSchema, useFindOneProject,
+  useFindOneProject,
 } from '../../../../api/nexus2';
+import ErrorSummary from '../../../../Form/ErrorSummary';
 
 interface Props {
   projectRef: string;
@@ -44,7 +41,7 @@ export default function DeleteProductForm({
 
   const methods = useForm<RefAndParentable<ProductForm>>({
     defaultValues: product,
-    resolver: zodResolver(ProductSchema),
+    resolver: zodResolver(ProductTitleAndDescSchema),
   });
 
   useEffect(() => {
@@ -84,10 +81,12 @@ export default function DeleteProductForm({
   //   console.log('hello from submit', productToDelete);
   // };
 
-  const onSubmit = async (productToDelete: RefAndParentable<ProductForm>): Promise<void> => {
+  const onSubmit = async (
+    productToDelete: RefAndParentable<ProductForm>
+  ): Promise<void> => {
     await deleteProduct({
       projectRef,
-      productRef: productToDelete.ref,
+      productRef: product.ref,
     }).then(() => {
       const alert: Alert = {
         id: uuidv4(),
