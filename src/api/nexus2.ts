@@ -12,6 +12,7 @@ import { IProduct } from '../Nexus/entities/IProduct';
 import { RefAndParentable } from '../common/Utils';
 import { IRouteProjectParams } from '../models/IRouteProjectParams';
 import { IRouteWorkbenchParams } from '../models/IRouteWorkbenchParams';
+import {t} from "i18next";
 
 export const baseUrl = 'https://krb-backend-api.azurewebsites.net';
 // export const baseUrl = 'http://localhost:1080';
@@ -62,9 +63,17 @@ export const NeedSchema = z.object({
 });
 
 export const ProductSchema = z.object({
-  title: z.string().min(1, i18n.t('needTitleTooShort')), // TODO
+  title: z.string().min(1, i18n.t('productTitleTooShort')),
   description: z.string(),
-  ref: z.string().uuid(i18n.t('needRefNotUuid')), // TODO
+  ref: z.string().uuid(i18n.t('productRefNotUuid')),
+  requirementVariantRef: z
+    .string()
+    .min(1, i18n.t('requirementVariantRefTooShort')), // TODO
+});
+
+export const ProductEditSchema = z.object({
+  title: z.string().min(1, i18n.t('Product title too short')), // TODO not fetching error string from resource
+  description: z.string(),
 });
 
 export const RequirementSchema = z.object({
@@ -308,20 +317,25 @@ export const useFindNeeds = (projectRef: string) => {
 };
 
 export const updateProduct = fetcher
-  .path('/api/v1/projects/{projectRef}/products/{productRef}')
+  .path('/api/v1/projects/{projectRef}/products/{productref}')
   .method('put')
   .create();
 
+export const createProduct = fetcher
+  .path('/api/v1/projects/{projectRef}/products/')
+  .method('post')
+  .create();
+
 export const deleteProduct = fetcher
-    .path('/api/v1/projects/{projectRef}/products/{productRef}')
-    .method('delete')
-    .create();
+  .path('/api/v1/projects/{projectRef}/products/{productRef}')
+  .method('delete')
+  .create();
 
 export const useDeleteProduct = (projectRef: string, productRef: string) => {
   const [deletedProduct, setDeletedProduct] = useState<string>('');
 
   useEffect(() => {
-    deleteProduct({projectRef, productRef}).then(async (resp: any) => {
+    deleteProduct({ projectRef, productRef }).then(async (resp: any) => {
       if (resp) {
         setDeletedProduct(resp.data);
       }
@@ -330,33 +344,32 @@ export const useDeleteProduct = (projectRef: string, productRef: string) => {
   return { deletedProduct };
 };
 
+// export const useUpdateProduct = (projectRef: string, productRef: string) => {
+// const [editProduct, setEditProduct] =
+//   useState<RefAndParentable<ProductForm>[]>();
+//
+// useEffect(() => {
+//   console.log('fetcher', updateProduct);
+//   updateProduct({ projectRef, productRef }).then(
+//     async (productResponse: {
+//       data: SetStateAction<
+//         | RefAndParentable<{
+//             ref: string;
+//             title: string;
+//             description: string;
+//             requirementVariantRef: string;
+//           }>[]
+//         | undefined
+//       >;
+//     }) => {
+//      if (productResponse) {
+//        setEditProduct(productResponse.data);
+//      }
+//    }
+//  );
+// }, [projectRef, productRef]);
 
-  // export const useUpdateProduct = (projectRef: string, productRef: string) => {
-  // const [editProduct, setEditProduct] =
-  //   useState<RefAndParentable<ProductForm>[]>();
-  //
-  // useEffect(() => {
-  //   console.log('fetcher', updateProduct);
-  //   updateProduct({ projectRef, productRef }).then(
-  //     async (productResponse: {
-  //       data: SetStateAction<
-  //         | RefAndParentable<{
-  //             ref: string;
-  //             title: string;
-  //             description: string;
-  //             requirementVariantRef: string;
-  //           }>[]
-  //         | undefined
-  //       >;
-  //     }) => {
-  //      if (productResponse) {
-  //        setEditProduct(productResponse.data);
-  //      }
-  //    }
-  //  );
- // }, [projectRef, productRef]);
-
- // return { editProduct };
+// return { editProduct };
 // };
 
 // export const useFindProducts = (projectRef: string) => {

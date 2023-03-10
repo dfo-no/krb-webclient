@@ -5,10 +5,7 @@ import { useParams } from 'react-router-dom';
 
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import SearchUtils from '../../../../common/SearchUtils';
-import {
-  DFOSearchBar,
-  TitleAndDescription,
-} from '../../../../components/DFOSearchBar/DFOSearchBar';
+import { DFOSearchBar } from '../../../../components/DFOSearchBar/DFOSearchBar';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import NestableHierarcyEditableComponents from '../../../../components/NestableHierarchy/NestableHiarchyEditableComponents';
 import {
@@ -21,12 +18,7 @@ import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
 import DeleteProductForm from './DeleteProductForm';
 import EditProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
-import {
-  ProductForm,
-  updateProduct,
-  useFindProducts,
-  useUpdateProduct,
-} from '../../../../api/nexus2';
+import { ProductForm, useFindProducts } from '../../../../api/nexus2';
 import { RefAndParentable } from '../../../../common/Utils';
 import { IRouteWorkbenchParams } from '../../../../models/IRouteWorkbenchParams';
 
@@ -51,18 +43,15 @@ export default function ProductPage(): React.ReactElement {
   // const { editProduct } = updateProduct(projectId, product.ref); // TODO rekkefølge
 
   useEffect(() => {
-   // setCurrentlyEditedItemId('');
+    // setCurrentlyEditedItemId('');
     setCreating(false);
-    //setDeleteCandidateId('');
+    // setDeleteCandidateId('');
     if (products) {
       setProductsWithParent(
         products.map((product: ProductForm) => ({ ...product, parent: '' }))
       );
-
-      products.map((p: ProductForm) => console.log(p));
     }
-  }, [products, setCreating, setCurrentlyEditedItemId, setDeleteCandidateId]);
-
+  }, [products, setCreating]);
 
   if (isLoading) {
     console.log(`Is loading => ${isLoading}`);
@@ -78,7 +67,7 @@ export default function ProductPage(): React.ReactElement {
   ): void => {
     console.log('productref: ', productRef);
     setProductsWithParent(newProductList);
-    editProduct(newProductList);
+    // editProduct(newProductList); // TODO
   };
 
   const searchFieldCallback = (
@@ -130,7 +119,10 @@ export default function ProductPage(): React.ReactElement {
           searchProducts.length > 0 ? searchProducts : productsWithParent
         }
         CreateComponent={
-          <NewProductForm handleClose={() => setCreating(false)} />
+          <NewProductForm
+            projectRef={projectId}
+            handleClose={() => setCreating(false)}
+          />
         }
         EditComponent={(item: RefAndParentable<ProductForm>) => (
           <EditProductForm

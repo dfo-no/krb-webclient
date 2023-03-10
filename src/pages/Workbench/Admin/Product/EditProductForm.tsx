@@ -2,31 +2,27 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useParams } from 'react-router-dom';
+import React from 'react';
 
 import { FormButtons } from '../../../../components/Form/FormButtons';
-import Nexus from '../../../../Nexus/Nexus';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import { Alert } from '../../../../models/Alert';
-import { IProduct } from '../../../../Nexus/entities/IProduct';
-import { ModelType } from '../../../../Nexus/enums';
-import { Parentable } from '../../../../models/Parentable';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import { RefAndParentable } from '../../../../common/Utils';
 import {
+  ProductEditSchema,
   ProductForm,
   ProductSchema,
   updateProduct,
-  useUpdateProduct,
 } from '../../../../api/nexus2';
+import ErrorSummary from "../../../../Form/ErrorSummary";
 
 interface Props {
   projectRef: string;
   product: RefAndParentable<ProductForm>;
-  handleClose: (newProduct: RefAndParentable<ProductForm>) => void;
+  handleClose: (newProduct: ProductForm) => void;
   handleCancel: () => void;
 }
 
@@ -42,13 +38,14 @@ export default function EditProductForm({
 
   const methods = useForm<RefAndParentable<ProductForm>>({
     defaultValues: product,
-    resolver: zodResolver(ProductSchema),
+    resolver: zodResolver(ProductEditSchema),
   });
+  console.log('hello', product.ref);
 
   async function onSubmit(updatedProduct: RefAndParentable<ProductForm>) {
     await updateProduct({
       projectRef,
-      productRef: updatedProduct.ref,
+      productref: product.ref,
       ...updatedProduct,
     }).then(() => {
       const alert: Alert = {
@@ -85,6 +82,7 @@ export default function EditProductForm({
           <FormButtons handleCancel={handleCancel} />
         </FormItemBox>
       </form>
+      <ErrorSummary errors={methods.formState.errors} />
     </FormProvider>
   );
 }
