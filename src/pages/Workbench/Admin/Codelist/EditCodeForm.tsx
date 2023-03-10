@@ -7,15 +7,12 @@ import { FormButtons } from '../../../../components/Form/FormButtons';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import { Alert } from '../../../../models/Alert';
-import {
-  CodeForm,
-  updateCodelist,
-  CodesFormSchema,
-} from '../../../../api/nexus2';
+import { CodeForm, codelistService } from '../../../../api/nexus2';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import { FormContainerBox } from '../../../../components/Form/FormContainerBox';
 import { useSelectState } from './SelectContext';
+import { CodeFormSchema } from '../../../../api/Zod';
 
 interface Props {
   projectRef: string;
@@ -39,7 +36,7 @@ export function EditCodeForm({
 
   const methods = useForm<CodeForm>({
     defaultValues: code,
-    resolver: zodResolver(CodesFormSchema),
+    resolver: zodResolver(CodeFormSchema),
   });
 
   async function onSubmit(updatedeCode: CodeForm) {
@@ -48,19 +45,21 @@ export function EditCodeForm({
         (item) => item.ref === updatedeCode.ref
       );
       selectedCodelist.codes[codesIndex] = updatedeCode;
-      await updateCodelist({
-        projectRef,
-        codelistRef: codelistRef,
-        ...selectedCodelist,
-      }).then(() => {
-        const alert: Alert = {
-          id: uuidv4(),
-          style: 'success',
-          text: 'Successfully edited code',
-        };
-        addAlert(alert);
-        handleClose(updatedeCode);
-      });
+      await codelistService
+        .updateCodelist({
+          projectRef,
+          codelistRef: codelistRef,
+          ...selectedCodelist,
+        })
+        .then(() => {
+          const alert: Alert = {
+            id: uuidv4(),
+            style: 'success',
+            text: 'Successfully edited code',
+          };
+          addAlert(alert);
+          handleClose(updatedeCode);
+        });
     }
   }
 

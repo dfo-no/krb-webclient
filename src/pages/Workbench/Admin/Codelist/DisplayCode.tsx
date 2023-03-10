@@ -10,14 +10,10 @@ import { DeleteFrame } from '../../../../components/DeleteFrame/DeleteFrame';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { Alert } from '../../../../models/Alert';
-import {
-  CodeForm,
-  CodesFormSchema,
-  updateCodelist,
-  useFindOneCodelist,
-} from '../../../../api/nexus2';
+import { CodeForm, codelistService } from '../../../../api/nexus2';
 import theme from '../../../../theme';
 import { usePanelStyles } from './CodelistStyles';
+import { CodeFormSchema } from '../../../../api/Zod';
 
 interface Props {
   projectRef: string;
@@ -40,14 +36,14 @@ export function DisplayCode({
   const { setCurrentlyEditedItemId, setDeleteCandidateId } = useEditableState();
   const { addAlert } = AlertsContainer.useContainer();
   const { deleteCandidateId } = useEditableState();
-  const { codelist: loadedCodelist } = useFindOneCodelist(
+  const { codelist: loadedCodelist } = codelistService.useFindOneCodelist(
     projectRef,
     codelistRef
   );
 
   const methods = useForm<CodeForm>({
     defaultValues: code,
-    resolver: zodResolver(CodesFormSchema),
+    resolver: zodResolver(CodeFormSchema),
   });
 
   const onSubmit = (codeToDelete: CodeForm): void => {
@@ -57,19 +53,21 @@ export function DisplayCode({
         (item) => item.ref === codeToDelete.ref
       );
       updatedCodeList.codes.splice(codesIndex, 1);
-      updateCodelist({
-        projectRef,
-        codelistRef: codelistRef,
-        ...updatedCodeList,
-      }).then(() => {
-        const alert: Alert = {
-          id: uuidv4(),
-          style: 'success',
-          text: 'Successfully deleted code',
-        };
-        addAlert(alert);
-        handleDelete(codeToDelete);
-      });
+      codelistService
+        .updateCodelist({
+          projectRef,
+          codelistRef: codelistRef,
+          ...updatedCodeList,
+        })
+        .then(() => {
+          const alert: Alert = {
+            id: uuidv4(),
+            style: 'success',
+            text: 'Successfully deleted code',
+          };
+          addAlert(alert);
+          handleDelete(codeToDelete);
+        });
     }
   };
 

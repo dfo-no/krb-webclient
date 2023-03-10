@@ -1,6 +1,5 @@
 /* eslint-disable class-methods-use-this */
 import Adapter from './Adapters/Adapter';
-import CodelistService from './services/CodelistService';
 import EvaluationService from './services/EvaluationService';
 import LocalStorageAdapter from './Adapters/LocalStorageAdapter';
 import NeedService from './services/NeedService';
@@ -40,8 +39,6 @@ export default class Nexus {
   public productService = new ProductService(this.store);
 
   public publicationService = new PublicationService();
-
-  public codelistService = new CodelistService(this.store);
 
   public projectService = new ProjectService(this.store);
 

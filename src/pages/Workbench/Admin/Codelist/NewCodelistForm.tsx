@@ -6,15 +6,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FormButtons } from '../../../../components/Form/FormButtons';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
-import {
-  CodelistForm,
-  CodelistFormSchema,
-  createCodelist,
-} from '../../../../api/nexus2';
+import { CodelistForm, codelistService } from '../../../../api/nexus2';
 import { Alert } from '../../../../models/Alert';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import ErrorSummary from '../../../../Form/ErrorSummary';
+import { CodelistFormSchema } from '../../../../api/Zod';
 
 interface Props {
   projectRef: string;
@@ -33,26 +30,22 @@ export default function NewCodelistForm({
 
   const methods = useForm<CodelistForm>({
     resolver: zodResolver(CodelistFormSchema),
-    defaultValues: {
-      title: '',
-      description: '',
-      codes: [],
-      ref: uuidv4(),
-    },
+    defaultValues: codelistService.defaultCodeValues,
   });
 
   async function onSubmit(newCodelist: CodelistForm) {
-    console.log(newCodelist);
-    await createCodelist({ projectRef, ...newCodelist }).then(() => {
-      const alert: Alert = {
-        id: uuidv4(),
-        style: 'success',
-        text: 'Successfully created codelist',
-      };
-      addAlert(alert);
-      methods.reset();
-      handleClose(newCodelist);
-    });
+    await codelistService
+      .createCodelist({ projectRef, ...newCodelist })
+      .then(() => {
+        const alert: Alert = {
+          id: uuidv4(),
+          style: 'success',
+          text: 'Successfully created codelist',
+        };
+        addAlert(alert);
+        methods.reset();
+        handleClose(newCodelist);
+      });
   }
 
   return (

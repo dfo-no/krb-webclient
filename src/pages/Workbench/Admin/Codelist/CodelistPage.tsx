@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
-import { CodelistForm, useFindCodelists } from '../../../../api/nexus2';
+import { CodelistForm, codelistService } from '../../../../api/nexus2';
 import { CodelistPanel } from './CodelistPanel';
 import { CodePanel } from './CodePanel';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
@@ -53,7 +53,8 @@ export default function CodeListPage(): React.ReactElement {
   const { t } = useTranslation();
 
   const { projectId } = useParams<IRouteProjectParams>();
-  const { isLoading, codelists: loadedCodelists } = useFindCodelists(projectId);
+  const { isLoading, codelists: loadedCodelists } =
+    codelistService.useFindCodelists(projectId);
 
   useEffect(() => {
     if (loadedCodelists) {

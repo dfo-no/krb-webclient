@@ -7,6 +7,7 @@ import { z } from 'zod';
 
 import { components, paths } from './generated';
 import i18n from '../i18n';
+import CodelistService from '../Nexus/services/CodelistService';
 
 export const baseUrl = 'https://krb-backend-api.azurewebsites.net';
 // export const baseUrl = 'http://localhost:1080';
@@ -16,7 +17,7 @@ export const baseUrl = 'https://krb-backend-api.azurewebsites.net';
 //   return { ...item, ref: uuidv4() };
 // };
 
-const fetcher = Fetcher.for<paths>();
+export const fetcher = Fetcher.for<paths>();
 
 fetcher.configure({
   baseUrl: baseUrl,
@@ -32,6 +33,8 @@ fetcher.configure({
 type FetcherArg = RequestInfo | URL;
 const swrFetcher = (...args: FetcherArg[]) =>
   fetch(baseUrl + args[0]).then((res) => res.json());
+
+export const codelistService = new CodelistService();
 
 export type ProjectForm = components['schemas']['ProjectForm'];
 export type CodelistForm = components['schemas']['CodelistForm'];
@@ -74,19 +77,6 @@ export const RequirementVariantFormSchema = z.object({
   useProduct: z.boolean(), // TODO: optional
   useSpecification: z.boolean(), // TODO: optional
   useQualification: z.boolean(), // TODO: optional
-});
-
-export const CodesFormSchema = z.object({
-  title: z.string().min(1, i18n.t('codelistTitleTooShort')),
-  description: z.string(),
-  ref: z.string().uuid(i18n.t('codelistRefNotUuid')),
-});
-
-export const CodelistFormSchema = z.object({
-  title: z.string().min(1, i18n.t('codelistTitleTooShort')),
-  description: z.string(),
-  ref: z.string().uuid(i18n.t('codelistRefNotUuid')),
-  codes: z.array(CodesFormSchema).nullable().optional(),
 });
 
 // interface Base<T> {
@@ -197,65 +187,6 @@ export const updateProject = fetcher
 
 export const deleteProject = fetcher
   .path('/api/v1/projects/{projectRef}')
-  .method('delete')
-  .create();
-
-export const useFindCodelists = (projectRef: string) => {
-  const [isLoading, setLoading] = useState(false);
-  const [codelists, setCodelists] = useState<CodelistForm[]>();
-
-  useEffect(() => {
-    const findCodelists = fetcher
-      .path('/api/v1/projects/{projectRef}/codelists')
-      .method('get')
-      .create();
-
-    setLoading(true);
-    findCodelists({ projectRef }).then(async (projectsResponse) => {
-      setLoading(false);
-      if (projectsResponse) {
-        setCodelists(projectsResponse.data);
-      }
-    });
-  }, [projectRef]);
-
-  return { isLoading, codelists };
-};
-
-export const useFindOneCodelist = (projectRef: string, codelistRef: string) => {
-  const [isLoading, setLoading] = useState(false);
-  const [codelist, setCodelist] = useState<CodelistForm>();
-
-  useEffect(() => {
-    const findCodelist = fetcher
-      .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}')
-      .method('get')
-      .create();
-
-    setLoading(true);
-    findCodelist({ projectRef, codelistRef }).then(async (projectsResponse) => {
-      setLoading(false);
-      if (projectsResponse) {
-        setCodelist(projectsResponse.data);
-      }
-    });
-  }, [projectRef, codelistRef]);
-
-  return { isLoading, codelist };
-};
-
-export const createCodelist = fetcher
-  .path('/api/v1/projects/{projectRef}/codelists')
-  .method('post')
-  .create();
-
-export const updateCodelist = fetcher
-  .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}')
-  .method('put')
-  .create();
-
-export const deleteCodelist = fetcher
-  .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}')
   .method('delete')
   .create();
 

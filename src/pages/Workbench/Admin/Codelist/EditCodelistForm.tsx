@@ -6,15 +6,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FormButtons } from '../../../../components/Form/FormButtons';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { Alert } from '../../../../models/Alert';
-import {
-  CodelistForm,
-  CodelistFormSchema,
-  updateCodelist,
-} from '../../../../api/nexus2';
+import { CodelistForm, codelistService } from '../../../../api/nexus2';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import { FormContainerBox } from '../../../../components/Form/FormContainerBox';
+import { CodelistFormSchema } from '../../../../api/Zod';
 
 interface Props {
   projectRef: string;
@@ -39,19 +36,21 @@ export function EditCodelistForm({
   });
 
   async function onSubmit(updatedCodelist: CodelistForm) {
-    await updateCodelist({
-      projectRef,
-      codelistRef: codelist.ref,
-      ...updatedCodelist,
-    }).then(() => {
-      const alert: Alert = {
-        id: uuidv4(),
-        style: 'success',
-        text: 'Successfully edited codelist',
-      };
-      addAlert(alert);
-      handleClose(updatedCodelist);
-    });
+    await codelistService
+      .updateCodelist({
+        projectRef,
+        codelistRef: codelist.ref,
+        ...updatedCodelist,
+      })
+      .then(() => {
+        const alert: Alert = {
+          id: uuidv4(),
+          style: 'success',
+          text: 'Successfully edited codelist',
+        };
+        addAlert(alert);
+        handleClose(updatedCodelist);
+      });
   }
 
   return (

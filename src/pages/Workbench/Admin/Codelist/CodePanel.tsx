@@ -13,7 +13,11 @@ import {
   removeElementFromList,
   replaceElementInList,
 } from '../../../../common/Utils';
-import { CodeForm, CodelistForm, updateCodelist } from '../../../../api/nexus2';
+import {
+  CodeForm,
+  CodelistForm,
+  codelistService,
+} from '../../../../api/nexus2';
 import { ScrollableContainer } from '../../../../components/ScrollableContainer/ScrollableContainer';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { usePanelStyles } from './CodelistStyles';
@@ -67,7 +71,7 @@ export const CodePanel = ({
       ...selectedCodelist,
     };
 
-    updateCodelist(updateToSendToBackend);
+    codelistService.updateCodelist(updateToSendToBackend);
   };
 
   const isEditing = () => {

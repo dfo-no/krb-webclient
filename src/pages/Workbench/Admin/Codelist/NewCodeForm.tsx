@@ -7,15 +7,11 @@ import { FormButtons } from '../../../../components/Form/FormButtons';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import { Alert } from '../../../../models/Alert';
-import {
-  CodeForm,
-  CodesFormSchema,
-  updateCodelist,
-  useFindOneCodelist,
-} from '../../../../api/nexus2';
+import { CodeForm, codelistService } from '../../../../api/nexus2';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import { FormContainerBox } from '../../../../components/Form/FormContainerBox';
+import { CodeFormSchema } from '../../../../api/Zod';
 
 interface Props {
   projectRef: string;
@@ -33,38 +29,36 @@ export default function NewCodeForm({
   const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
   const formStyles = useFormStyles();
-  const { codelist: loadedCodelist } = useFindOneCodelist(
+  const { codelist: loadedCodelist } = codelistService.useFindOneCodelist(
     projectRef,
     codelistRef
   );
 
   const methods = useForm<CodeForm>({
-    defaultValues: {
-      title: '',
-      description: '',
-      ref: uuidv4(),
-    },
-    resolver: zodResolver(CodesFormSchema),
+    defaultValues: codelistService.defaultCodeValues,
+    resolver: zodResolver(CodeFormSchema),
   });
 
   async function onSubmit(newCode: CodeForm) {
     const newCodeList = loadedCodelist;
     if (!!newCodeList) {
       newCodeList.codes?.push(newCode);
-      await updateCodelist({
-        projectRef,
-        codelistRef: newCodeList.ref,
-        ...newCodeList,
-      }).then(() => {
-        const alert: Alert = {
-          id: uuidv4(),
-          style: 'success',
-          text: 'Successfully created code',
-        };
-        addAlert(alert);
-        methods.reset();
-        handleClose(newCode);
-      });
+      await codelistService
+        .updateCodelist({
+          projectRef,
+          codelistRef: newCodeList.ref,
+          ...newCodeList,
+        })
+        .then(() => {
+          const alert: Alert = {
+            id: uuidv4(),
+            style: 'success',
+            text: 'Successfully created code',
+          };
+          addAlert(alert);
+          methods.reset();
+          handleClose(newCode);
+        });
     }
   }
 

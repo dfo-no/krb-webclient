@@ -6,11 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import Utils, { removeElementFromList } from '../../../../common/Utils';
 import { DeleteFrame } from '../../../../components/DeleteFrame/DeleteFrame';
-import {
-  CodelistForm,
-  deleteCodelist,
-  CodelistFormSchema,
-} from '../../../../api/nexus2';
+import { CodelistForm, codelistService } from '../../../../api/nexus2';
 import { Alert } from '../../../../models/Alert';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
@@ -18,6 +14,7 @@ import { EditCodelistForm } from './EditCodelistForm';
 import { useSelectState } from './SelectContext';
 import { DisplayCodelist } from './DisplayCodelist';
 import { useGetProjectQuery } from '../../../../store/api/bankApi';
+import { CodelistFormSchema } from '../../../../api/Zod';
 
 interface Props {
   projectRef: string;
@@ -70,18 +67,20 @@ export function CodelistItem({
   };
 
   const onSubmit = (codelistToBeDeleted: CodelistForm): void => {
-    deleteCodelist({
-      projectRef: projectRef,
-      codelistRef: codelistToBeDeleted.ref,
-    }).then(() => {
-      const alert: Alert = {
-        id: uuidv4(),
-        style: 'success',
-        text: 'Successfully deleted codelist',
-      };
-      addAlert(alert);
-      handleCloseDelete(codelistToBeDeleted);
-    });
+    codelistService
+      .deleteCodelist({
+        projectRef: projectRef,
+        codelistRef: codelistToBeDeleted.ref,
+      })
+      .then(() => {
+        const alert: Alert = {
+          id: uuidv4(),
+          style: 'success',
+          text: 'Successfully deleted codelist',
+        };
+        addAlert(alert);
+        handleCloseDelete(codelistToBeDeleted);
+      });
   };
 
   const isEditingItem = (maybeEditedCodelist: CodelistForm) => {
