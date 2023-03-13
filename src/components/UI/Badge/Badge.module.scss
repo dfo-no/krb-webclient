@@ -42,5 +42,12 @@
       background-color: var(--primary-color);
       color: var(--white-color);
     }
+    &[data-badge-type='Properties'] {
+      background-color: var(--primary-color);
+      color: var(--white-color);
+      svg path {
+        fill: var(--white-color);
+      }
+    }
   }
 }

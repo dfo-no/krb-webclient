@@ -1,0 +1,37 @@
+.ProductProperties {
+  display: flex;
+  flex-direction: column;
+  padding: var(--normal-gap) 0;
+  gap: var(--tiny-gap);
+  font-size: var(--small-fontsize);
+
+  .heading {
+    display: flex;
+    justify-content: space-between;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--normal-fontsize);
+  }
+
+  .Content {
+    width: 70%;
+
+    .text {
+      padding-top: var(--small-gap);
+
+      span {
+        font-weight: var(--font-weight-bold);
+      }
+    }
+
+    .description {
+      div {
+        align-items: flex-start;
+        height: 10rem;
+      }
+    }
+
+    .price {
+      width: fit-content;
+    }
+  }
+}

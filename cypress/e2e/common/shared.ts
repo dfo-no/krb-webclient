@@ -42,7 +42,7 @@ When(
 When(
   'Jeg skriver {string} i feltet {string}',
   (text: string, fieldName: string) => {
-    cy.get(`input[placeholder="${fieldName}"]`).clear().type(text);
+    cy.get(`input[placeholder="${fieldName}"]`).clear().focus().type(text).blur();
   }
 );
 
