@@ -38,7 +38,12 @@ export function CodelistItem({
     deleteCandidateId,
     setDeleteCandidateId,
   } = useEditableState();
-  const { allCodelists, setAllCodelists } = useSelectState();
+  const {
+    allCodelists,
+    setAllCodelists,
+    filteredCodelists,
+    setFilteredCodelists,
+  } = useSelectState();
 
   const methods = useForm<CodelistForm>({
     defaultValues: codelist,
@@ -79,6 +84,11 @@ export function CodelistItem({
           text: 'Successfully deleted codelist',
         };
         addAlert(alert);
+        const codelistsIndex = filteredCodelists.findIndex(
+          (item) => item.ref === codelistToBeDeleted.ref
+        );
+        filteredCodelists.splice(codelistsIndex, 1);
+        setFilteredCodelists(filteredCodelists);
         handleCloseDelete(codelistToBeDeleted);
       });
   };

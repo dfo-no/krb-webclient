@@ -18,18 +18,18 @@ export default class CodelistService {
     description: '',
   };
 
+  findCodelists = fetcher
+    .path('/api/v1/projects/{projectRef}/codelists')
+    .method('get')
+    .create();
+
   useFindCodelists = (projectRef: string) => {
     const [isLoading, setLoading] = useState(false);
     const [codelists, setCodelists] = useState<CodelistForm[]>();
 
     useEffect(() => {
-      const findCodelists = fetcher
-        .path('/api/v1/projects/{projectRef}/codelists')
-        .method('get')
-        .create();
-
       setLoading(true);
-      findCodelists({ projectRef }).then(async (projectsResponse) => {
+      this.findCodelists({ projectRef }).then(async (projectsResponse) => {
         setLoading(false);
         if (projectsResponse) {
           setCodelists(projectsResponse.data);

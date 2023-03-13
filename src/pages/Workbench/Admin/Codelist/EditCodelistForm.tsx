@@ -12,6 +12,7 @@ import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import { FormContainerBox } from '../../../../components/Form/FormContainerBox';
 import { CodelistFormSchema } from '../../../../api/Zod';
+import { useSelectState } from './SelectContext';
 
 interface Props {
   projectRef: string;
@@ -29,6 +30,7 @@ export function EditCodelistForm({
   const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
   const formStyles = useFormStyles();
+  const { filteredCodelists, setFilteredCodelists } = useSelectState();
 
   const methods = useForm<CodelistForm>({
     defaultValues: codelist,
@@ -49,6 +51,12 @@ export function EditCodelistForm({
           text: 'Successfully edited codelist',
         };
         addAlert(alert);
+        const codelistsIndex = filteredCodelists.findIndex(
+          (item) => item.ref === updatedCodelist.ref
+        );
+        filteredCodelists[codelistsIndex] = updatedCodelist;
+        setFilteredCodelists(filteredCodelists);
+
         handleClose(updatedCodelist);
       });
   }

@@ -12,6 +12,7 @@ import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import ErrorSummary from '../../../../Form/ErrorSummary';
 import { CodelistFormSchema } from '../../../../api/Zod';
+import { useSelectState } from './SelectContext';
 
 interface Props {
   projectRef: string;
@@ -27,6 +28,7 @@ export default function NewCodelistForm({
   const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
   const formStyles = useFormStyles();
+  const { filteredCodelists, setFilteredCodelists } = useSelectState();
 
   const methods = useForm<CodelistForm>({
     resolver: zodResolver(CodelistFormSchema),
@@ -43,7 +45,8 @@ export default function NewCodelistForm({
           text: 'Successfully created codelist',
         };
         addAlert(alert);
-        methods.reset();
+        filteredCodelists.push(newCodelist);
+        setFilteredCodelists(filteredCodelists);
         handleClose(newCodelist);
       });
   }
