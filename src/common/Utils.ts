@@ -16,6 +16,7 @@ import { QuestionVariant } from '../Nexus/enums';
 import { DiscountValuePair } from '../Nexus/entities/ISliderQuestion';
 import { TimeDiscountPair } from '../Nexus/entities/ITimeQuestion';
 import { DateDiscountPair } from '../Nexus/entities/IPeriodDateQuestion';
+import { IResponseProduct } from '../Nexus/entities/IResponseProduct';
 
 type NestableToBeFlattened<T extends IBaseModel> = T & {
   parent: string;
@@ -192,6 +193,21 @@ class Utils {
 
     return discount;
   }
+
+  static findTotalEvaluatedProductPrice = (
+    responseProduct: IResponseProduct
+  ) => {
+    let discount = 0;
+    const requirementAnswer = responseProduct.requirementAnswers;
+    if (requirementAnswer.length > 0) {
+      requirementAnswer.forEach((requirement) => {
+        if (requirement.question.answer.discount) {
+          discount += requirement.question.answer.discount;
+        }
+      });
+    }
+    return responseProduct.price - discount;
+  };
 
   private static flattenNestable<T extends IBaseModel>(
     items: Nestable<T>[]

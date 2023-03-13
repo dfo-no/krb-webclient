@@ -18,7 +18,7 @@ import { AccordionProvider } from '../../../components/DFOAccordion/AccordionCon
 import ProductsAccordion from '../Answer/ProductsAccordion/ProductsAccordion';
 import { QuestionVariant } from '../../../Nexus/enums';
 import ValidationUtils from '../../../common/ValidationUtils';
-import { IResponseProduct } from '../../../Nexus/entities/IResponseProduct';
+import Utils from '../../../common/Utils';
 
 function ResponseOverview(): React.ReactElement {
   const { t } = useTranslation();
@@ -130,24 +130,6 @@ function ResponseOverview(): React.ReactElement {
       });
     }
     return currencyService(response.specification.currencyUnit, discount);
-  };
-
-  const totalEvaluatedProductPrice = (
-    requirementAnswer: IRequirementAnswer[],
-    responseProduct: IResponseProduct
-  ) => {
-    let discount = 0;
-    if (requirementAnswer.length > 0) {
-      requirementAnswer.forEach((requirement) => {
-        if (requirement.question.answer.discount) {
-          discount += requirement.question.answer.discount;
-        }
-      });
-    }
-    return currencyService(
-      response.specification.currencyUnit,
-      responseProduct.price - discount
-    );
   };
 
   const isMandatoryRequirements = (
@@ -264,7 +246,7 @@ function ResponseOverview(): React.ReactElement {
             specProducts={specification.products}
             absoluteRequirements={absoluteRequirements}
             absoluteRequirementAnswered={absoluteRequirementAnswered}
-            totalEvaluatedProductPrice={totalEvaluatedProductPrice}
+            totalEvaluatedProductPrice={Utils.findTotalEvaluatedProductPrice}
             isMandatoryRequirements={isMandatoryRequirements}
             isAwardedRequirements={isAwardedRequirements}
           />
