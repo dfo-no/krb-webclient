@@ -70,11 +70,7 @@ export default function ProductProperties({
             </div>
             <div className={css.text}>
               <span>{t('Total price')}</span>
-              <div>
-                {t(
-                  'The price stated here is the total price this number of products can offer Note that all evaluated deductions only form the basis for evaluation, and it is the price stated here that is the actual price you indicate the product will cost'
-                )}
-              </div>
+              <div>{t('Response product price guidance')}</div>
               <VerticalTextCtrl
                 className={css.price}
                 name="price"

@@ -50,8 +50,8 @@ When(
   'Jeg skriver {int} i feltet {string}',
   (text: string, fieldName: number) => {
     cy.get(`input[placeholder="${fieldName}"]`)
-      .clear({ force: true })
-      .type(text, { force: true });
+      .clear({ force: true }).focus()
+      .type(text, { force: true }).blur();
   }
 );
 

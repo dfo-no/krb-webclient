@@ -16,6 +16,7 @@ import ToolbarItem from '../../../../components/UI/Toolbar/ToolbarItem';
 import AnswerProduct from '../AnswerProduct';
 import { IRequirementAnswer } from '../../../../Nexus/entities/IRequirementAnswer';
 import { useResponseState } from '../../ResponseContext';
+import { currencyService } from '../../../../Nexus/services/CurrencyService';
 import ProductProperties from './ProductProperties/ProductProperties';
 
 interface Props {
@@ -26,7 +27,7 @@ interface Props {
   absoluteRequirementAnswered: (
     requirementAnswer: (IRequirementAnswer | undefined)[]
   ) => number;
-  totalEvaluatedDiscount: (requirementAnswer: IRequirementAnswer[]) => string;
+  totalEvaluatedProductPrice: (responseProduct: IResponseProduct) => number;
   isMandatoryRequirements: (
     requirementAnswer: (IRequirementAnswer | undefined)[]
   ) => boolean;
@@ -39,7 +40,7 @@ export default function ProductsAccordion({
   specProducts,
   absoluteRequirements,
   absoluteRequirementAnswered,
-  totalEvaluatedDiscount,
+  totalEvaluatedProductPrice,
   isMandatoryRequirements,
   isAwardedRequirements,
 }: Props) {
@@ -126,9 +127,10 @@ export default function ProductsAccordion({
             responseProduct.originProduct.requirementAnswers
           ) && (
             <ToolbarItem
-              primaryText={t('Total evaluated discount')}
-              secondaryText={totalEvaluatedDiscount(
-                responseProduct.requirementAnswers
+              primaryText={t('Total evaluated price')}
+              secondaryText={currencyService(
+                response.specification.currencyUnit,
+                totalEvaluatedProductPrice(responseProduct)
               )}
               fontSize={'small'}
             />
