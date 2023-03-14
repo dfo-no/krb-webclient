@@ -1,6 +1,5 @@
 import { IBank } from '../Nexus/entities/IBank';
 import { IBaseModel } from '../Nexus/entities/IBaseModel';
-import { ICodelist } from '../Nexus/entities/ICodelist';
 import { ICodelistConfig } from '../Nexus/entities/ICodelistQuestion';
 import { INeed } from '../Nexus/entities/INeed';
 import { IProduct } from '../Nexus/entities/IProduct';
@@ -16,7 +15,7 @@ import { QuestionVariant } from '../Nexus/enums';
 import { DiscountValuePair } from '../Nexus/entities/ISliderQuestion';
 import { TimeDiscountPair } from '../Nexus/entities/ITimeQuestion';
 import { DateDiscountPair } from '../Nexus/entities/IPeriodDateQuestion';
-import { CodelistForm, NeedForm, ProjectForm } from '../api/nexus2';
+import { CodelistForm } from '../api/nexus2';
 
 // TODO: Not sure this type belongs here
 export type RefAndParentable<T> = T & { ref: string } & ParentableKRB858;
@@ -381,7 +380,7 @@ class Utils {
 
   static codelistUsedInVariants(
     selectedCodelist: CodelistForm,
-    needs: NeedForm[],
+    selectedProject: IBank
   ): boolean {
     let returnValue = false;
     selectedProject.needs.forEach((need: Parentable<INeed>) => {

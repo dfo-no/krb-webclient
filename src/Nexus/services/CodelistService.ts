@@ -1,76 +1,81 @@
-import StoreService from './StoreService';
-import UuidService from './UuidService';
-import { ICode } from '../entities/ICode';
-import { ICodelist } from '../entities/ICodelist';
-import { ModelType } from '../enums';
-import { Parentable } from '../../models/Parentable';
+import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+
+import { CodeForm, CodelistForm, fetcher } from '../../api/nexus2';
 
 export default class CodelistService {
-  UuidService = new UuidService();
-
-  private storeService: StoreService;
-
-  public constructor(store: StoreService) {
-    this.storeService = store;
-  }
-
-  generateDefaultCodelistValues = (projectId: string): ICodelist => {
-    return {
-      id: '',
-      title: '',
-      description: '',
-      codes: [],
-      type: ModelType.codelist,
-      sourceOriginal: projectId,
-      sourceRel: null,
-    };
+  defaultCodelistValues: CodelistForm = {
+    ref: uuidv4(),
+    title: '',
+    description: '',
+    codes: [],
+    serializedCodes: '',
   };
 
-  generateDefaultCodeValues = (projectId: string): Parentable<ICode> => {
-    return {
-      id: '',
-      title: '',
-      description: '',
-      type: ModelType.code,
-      sourceOriginal: projectId,
-      sourceRel: null,
-      parent: '',
-    };
+  defaultCodeValues: CodeForm = {
+    ref: uuidv4(),
+    title: '',
+    description: '',
   };
 
-  createCodelistWithId = (item: ICodelist): ICodelist => {
-    const codelist = { ...item };
-    codelist.id = this.UuidService.generateId();
-    return codelist;
+  findCodelists = fetcher
+    .path('/api/v1/projects/{projectRef}/codelists')
+    .method('get')
+    .create();
+
+  useFindCodelists = (projectRef: string) => {
+    const [isLoading, setLoading] = useState(false);
+    const [codelists, setCodelists] = useState<CodelistForm[]>();
+
+    useEffect(() => {
+      setLoading(true);
+      this.findCodelists({ projectRef }).then(async (projectsResponse) => {
+        setLoading(false);
+        if (projectsResponse) {
+          setCodelists(projectsResponse.data);
+        }
+      });
+    }, [projectRef]);
+
+    return { isLoading, codelists };
   };
 
-  createCodeWithId = (item: Parentable<ICode>): Parentable<ICode> => {
-    const code = { ...item };
-    code.id = this.UuidService.generateId();
-    return code;
+  useFindOneCodelist = (projectRef: string, codelistRef: string) => {
+    const [isLoading, setLoading] = useState(false);
+    const [codelist, setCodelist] = useState<CodelistForm>();
+
+    useEffect(() => {
+      const findCodelist = fetcher
+        .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}')
+        .method('get')
+        .create();
+
+      setLoading(true);
+      findCodelist({ projectRef, codelistRef }).then(
+        async (projectsResponse) => {
+          setLoading(false);
+          if (projectsResponse) {
+            setCodelist(projectsResponse.data);
+          }
+        }
+      );
+    }, [projectRef, codelistRef]);
+
+    return { isLoading, codelist };
   };
 
-  async addCodelist(item: ICodelist): Promise<void> {
-    return this.storeService.addCodelist(item);
-  }
+  createCodelist = fetcher
+    .path('/api/v1/projects/{projectRef}/codelists')
+    .method('post')
+    .create();
 
-  async editCodelist(item: ICodelist): Promise<void> {
-    return this.storeService.editCodelist(item);
-  }
+  updateCodelist = fetcher
+    .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}')
+    .method('put')
+    .create();
 
-  async deleteCodelist(item: ICodelist): Promise<void> {
-    return this.storeService.deleteCodelist(item);
-  }
-
-  async addCode(item: Parentable<ICode>, codelistId: string): Promise<void> {
-    return this.storeService.addCode(item, codelistId);
-  }
-
-  async editCode(item: Parentable<ICode>, codelistId: string): Promise<void> {
-    return this.storeService.editCode(item, codelistId);
-  }
-
-  async deleteCode(item: Parentable<ICode>, codelistId: string): Promise<void> {
-    return this.storeService.deleteCode(item, codelistId);
-  }
+  deleteCodelist = fetcher
+    .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}')
+    .method('delete')
+    .create();
 }

@@ -7,6 +7,7 @@ import { z } from 'zod';
 
 import { components, paths } from './generated';
 import i18n from '../i18n';
+import CodelistService from '../Nexus/services/CodelistService';
 
 export const baseUrl = 'https://krb-backend-api.azurewebsites.net';
 // export const baseUrl = 'http://localhost:1080';
@@ -16,7 +17,7 @@ export const baseUrl = 'https://krb-backend-api.azurewebsites.net';
 //   return { ...item, ref: uuidv4() };
 // };
 
-const fetcher = Fetcher.for<paths>();
+export const fetcher = Fetcher.for<paths>();
 
 fetcher.configure({
   baseUrl: baseUrl,
@@ -32,6 +33,8 @@ fetcher.configure({
 type FetcherArg = RequestInfo | URL;
 const swrFetcher = (...args: FetcherArg[]) =>
   fetch(baseUrl + args[0]).then((res) => res.json());
+
+export const codelistService = new CodelistService();
 
 export type ProjectForm = components['schemas']['ProjectForm'];
 export type CodelistForm = components['schemas']['CodelistForm'];
@@ -186,60 +189,6 @@ export const deleteProject = fetcher
   .path('/api/v1/projects/{projectRef}')
   .method('delete')
   .create();
-
-export const useFindCodelists = (projectRef: string) => {
-  const [isLoading, setLoading] = useState(false);
-  const [codelists, setCodelists] = useState<CodelistForm[]>();
-
-  useEffect(() => {
-    const findCodelists = fetcher
-      .path('/api/v1/projects/{projectRef}/codelists')
-      .method('get')
-      .create();
-
-    setLoading(true);
-    findCodelists({ projectRef }).then(async (projectsResponse) => {
-      setLoading(false);
-      if (projectsResponse) {
-        setCodelists(projectsResponse.data);
-      }
-    });
-  }, [projectRef]);
-
-  return { isLoading, codelists };
-};
-
-export const createCodelist = fetcher
-  .path('/api/v1/projects/{projectRef}/codelists')
-  .method('post')
-  .create();
-
-export const updateCodelist = fetcher
-  .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}')
-  .method('put')
-  .create();
-
-export const deleteCodelist = fetcher
-  .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}')
-  .method('delete')
-  .create();
-
-//TODO remove
-
-// export const createCode = fetcher
-//   .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes')
-//   .method('post')
-//   .create();
-//
-// export const updateCode = fetcher
-//   .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes/{codeRef}')
-//   .method('put')
-//   .create();
-//
-// export const deleteCode = fetcher
-//   .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes/{codeRef}')
-//   .method('delete')
-//   .create();
 
 export const createNeed = fetcher
   .path('/api/v1/projects/{projectRef}/needs')

@@ -24,6 +24,7 @@ export const CodelistPanel = ({ projectRef }: Props): React.ReactElement => {
     selectedCodelist,
     setSelectedCodelist,
     allCodelists,
+    filteredCodelists,
     setAllCodelists,
   } = useSelectState();
   const { isCreating, setCreating } = useEditableState();
@@ -38,7 +39,6 @@ export const CodelistPanel = ({ projectRef }: Props): React.ReactElement => {
 
   return (
     <Box className={classes.topContainer}>
-      {/* <Button onClick={() => setCreating(true)} /> */}
       <ListHeader
         heading={t('Codelist')}
         buttonText={t('Add new codelist')}
@@ -55,8 +55,8 @@ export const CodelistPanel = ({ projectRef }: Props): React.ReactElement => {
       )}
       <ScrollableContainer>
         <List className={classes.list} aria-label="codelist">
-          {allCodelists &&
-            allCodelists.map((codelist) => (
+          {filteredCodelists &&
+            filteredCodelists.map((codelist) => (
               <CodelistItem
                 projectRef={projectRef}
                 codelist={codelist}

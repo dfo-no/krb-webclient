@@ -24,7 +24,6 @@ const swrFetcher = (...args: FetcherArg[]) =>
 
 export type ProjectForm = components['schemas']['ProjectForm'];
 export type Codelist = components['schemas']['CodelistForm'];
-export type Code = components['schemas']['CodeForm'];
 export type Need = components['schemas']['NeedForm'];
 export type Requirement = components['schemas']['RequirementForm'];
 export type RequirementVariant =

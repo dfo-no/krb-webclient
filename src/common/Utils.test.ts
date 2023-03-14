@@ -189,7 +189,7 @@ describe('Utils functions should work', () => {
     const project = {
       ...projectTestData,
       needs: needHierarchyTestData,
-      codelist: codelistsTestData,
+      codelist: [],
     };
     const isInUse1 = Utils.codelistUsedInVariants(
       codelistsTestData[0],
