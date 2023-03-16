@@ -14,6 +14,7 @@ interface Props {
   products: ProductForm[];
 }
 
+
 export const MultipleProductSelection = ({
   name,
   products,
@@ -38,10 +39,12 @@ export const MultipleProductSelection = ({
     }
   };
 
-  products.map((p =>{console.log(p)}));
+  products.map((p) => {
+    console.log(p);
+  });
 
   const productChecked = (item: ProductForm, selected: string[]): boolean => {
-    return selected.some((elem) => elem === item.ref);
+    return selected ? selected.some((elem) => elem === item.ref) : false;
   };
 
   // const isDeleted = (item: ProductForm, selected: string[]): boolean => {

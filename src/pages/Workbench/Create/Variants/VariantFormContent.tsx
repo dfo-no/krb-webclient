@@ -96,7 +96,7 @@ export const VariantFormContent = ({ projectRef, control }: Props) => {
         />
       </Box>
       {useProduct && (
-        <MultipleProductSelection name={'products'} products={products} />
+        <MultipleProductSelection name={'products'} products={products || []} />
       )}
       <Typography className={css.TextTitle} variant={'smBold'}>
         {t('How to answer requirement')}
