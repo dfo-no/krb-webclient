@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom';
 
 import LoaderSpinner from '../../../../common/LoaderSpinner';
 import SearchUtils from '../../../../common/SearchUtils';
-import Utils from '../../../../common/Utils';
 import { DFOSearchBar } from '../../../../components/DFOSearchBar/DFOSearchBar';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import NestableHierarcyEditableComponents from '../../../../components/NestableHierarchy/NestableHiarchyEditableComponents';
@@ -16,58 +15,81 @@ import {
 } from '../../../../components/SearchContainer/SearchContainer';
 import { StandardContainer } from '../../../../components/StandardContainer/StandardContainer';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import { Parentable } from '../../../../models/Parentable';
-import { IProduct } from '../../../../Nexus/entities/IProduct';
-import { useGetProjectQuery } from '../../../../store/api/bankApi';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
 import DeleteProductForm from './DeleteProductForm';
 import EditProductForm from './EditProductForm';
 import NewProductForm from './NewProductForm';
+import { ProductForm, useFindProducts } from '../../../../api/nexus2';
+import { RefAndParentable } from '../../../../common/Utils';
 
 export default function ProductPage(): React.ReactElement {
-  const [products, setProducts] = useState<Parentable<IProduct>[]>([]);
+  const { projectId } = useParams<IRouteProjectParams>();
+
+  const { products, isLoading, isError } = useFindProducts(projectId);
+
+  const [productsWithParent, setProductsWithParent] = useState<
+    RefAndParentable<ProductForm>[]
+  >([]);
+
+  const [searchProducts, setSearchProducts] = useState<
+    RefAndParentable<ProductForm>[]
+  >([]);
+
   const { setCurrentlyEditedItemId, setCreating, setDeleteCandidateId } =
     useEditableState();
   const { t } = useTranslation();
 
-  const { projectId } = useParams<IRouteProjectParams>();
-  const { data: project, isLoading } = useGetProjectQuery(projectId);
-  const { editProducts } = useProjectMutations();
+  // const { editProduct } = updateProduct(projectId, product.ref); // TODO rekkefølge
 
   useEffect(() => {
-    if (project && project.products) {
-      setProducts(Utils.filterOutDeletedElements(project.products));
+    // setCurrentlyEditedItemId('');
+    setCreating(false);
+    // setDeleteCandidateId('');
+    if (products) {
+      setProductsWithParent(
+        products.map((product: ProductForm) => ({ ...product, parent: '' }))
+      );
     }
-  }, [project]);
+  }, [products, setCreating]);
 
-  if (isLoading || !project) {
+  if (isLoading) {
+    console.log(`Is loading => ${isLoading}`);
     return <LoaderSpinner />;
   }
 
+  if (isError) {
+    console.log(`Is error => ${isError}`);
+  }
+
   const updateProductsArrangement = (
-    newProductList: Parentable<IProduct>[]
+    newProductList: RefAndParentable<ProductForm>[]
   ): void => {
-    setProducts(newProductList);
-    editProducts(newProductList);
+    setProductsWithParent(newProductList);
+    // editProduct(newProductList); // TODO
   };
 
-  const searchFieldCallback = (result: Parentable<IProduct>[]): void => {
-    setProducts(result);
+  const searchFieldCallback = (
+    result: RefAndParentable<ProductForm>[]
+  ): void => {
+    if (result.length > 0) {
+      setSearchProducts(result);
+    } else {
+      setSearchProducts(products);
+    }
   };
 
-  const productsSearch = (
+  const productsListSearch = (
     searchString: string,
-    list: Parentable<IProduct>[]
-  ): Parentable<IProduct>[] => {
-    return SearchUtils.searchParentable(
+    list: RefAndParentable<ProductForm>[]
+  ): RefAndParentable<ProductForm>[] => {
+    return SearchUtils.searchTitleAndDescription(
       list,
       searchString
-    ) as Parentable<IProduct>[];
+    ) as RefAndParentable<ProductForm>[];
   };
 
   const afterDelete = (): void => {
     setDeleteCandidateId('');
-    setProducts(Utils.filterOutDeletedElements(project.products));
+    setProductsWithParent(productsWithParent);
   };
 
   return (
@@ -75,10 +97,10 @@ export default function ProductPage(): React.ReactElement {
       <SearchContainer>
         <SearchFieldContainer>
           <DFOSearchBar
-            list={Utils.filterOutDeletedElements(project.products)}
+            list={productsWithParent}
             placeholder={t('Search for product')}
             callback={searchFieldCallback}
-            searchFunction={productsSearch}
+            searchFunction={productsListSearch}
           />
         </SearchFieldContainer>
         <NewButtonContainer>
@@ -90,22 +112,29 @@ export default function ProductPage(): React.ReactElement {
 
       <NestableHierarcyEditableComponents
         dispatchfunc={updateProductsArrangement}
-        inputlist={products}
-        CreateComponent={
-          <NewProductForm handleClose={() => setCreating(false)} />
+        inputlist={
+          searchProducts.length > 0 ? searchProducts : productsWithParent
         }
-        EditComponent={(item: Parentable<IProduct>) => (
+        CreateComponent={
+          <NewProductForm
+            projectRef={projectId}
+            handleClose={() => setCreating(false)}
+          />
+        }
+        EditComponent={(item: RefAndParentable<ProductForm>) => (
           <EditProductForm
+            projectRef={projectId} // TODO name
             product={item}
             handleClose={() => setCurrentlyEditedItemId('')}
             handleCancel={() => setCurrentlyEditedItemId('')}
           />
         )}
         DeleteComponent={(
-          item: Parentable<IProduct>,
+          item: RefAndParentable<ProductForm>,
           child: React.ReactElement
         ) => (
           <DeleteProductForm
+            projectRef={projectId} // TODO name
             children={child}
             product={item}
             handleClose={afterDelete}

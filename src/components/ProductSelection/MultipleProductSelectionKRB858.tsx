@@ -38,6 +38,8 @@ export const MultipleProductSelection = ({
     }
   };
 
+  products.map((p =>{console.log(p)}));
+
   const productChecked = (item: ProductForm, selected: string[]): boolean => {
     return selected.some((elem) => elem === item.ref);
   };
@@ -50,6 +52,7 @@ export const MultipleProductSelection = ({
   //     !!item.deletedDate && !productChecked(item, selected) && childrenIsDeleted
   //   );
   // };
+
 
   return (
     <div className={css.ProductSelection}>

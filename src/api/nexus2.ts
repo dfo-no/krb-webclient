@@ -7,7 +7,6 @@ import { z } from 'zod';
 
 import { components, paths } from './generated';
 import i18n from '../i18n';
-import CodelistService from '../Nexus/services/CodelistService';
 
 // export const baseUrl = 'https://krb-backend-api.azurewebsites.net';
 // export const baseUrl = 'http://localhost:1080';
@@ -17,7 +16,7 @@ export const baseUrl = 'http://localhost:8080'; // Exported for use in tests
 //   return { ...item, ref: uuidv4() };
 // };
 
-export const fetcher = Fetcher.for<paths>();
+const fetcher = Fetcher.for<paths>();
 
 fetcher.configure({
   baseUrl: baseUrl,
@@ -33,8 +32,6 @@ fetcher.configure({
 type FetcherArg = RequestInfo | URL;
 const swrFetcher = (...args: FetcherArg[]) =>
   fetch(baseUrl + args[0]).then((res) => res.json());
-
-export const codelistService = new CodelistService();
 
 export type ProjectForm = components['schemas']['ProjectForm'];
 export type CodelistForm = components['schemas']['CodelistForm'];
@@ -57,6 +54,12 @@ export const NeedSchema = z.object({
   title: z.string().min(1, i18n.t('needTitleTooShort')),
   description: z.string(),
   ref: z.string().uuid(i18n.t('needRefNotUuid')),
+});
+
+export const ProductSchema = z.object({
+  title: z.string().min(1, i18n.t('productTitleTooShort')),
+  description: z.string(),
+  ref: z.string().uuid(i18n.t('productRefNotUuid')),
 });
 
 export const RequirementSchema = z.object({
@@ -189,6 +192,88 @@ export const deleteProject = fetcher
   .method('delete')
   .create();
 
+export const updateProduct = fetcher
+  .path('/api/v1/projects/{projectRef}/products/{productRef}')
+  .method('put')
+  .create();
+
+export const useFindProducts = (ref: string) => {
+  const { data, error, isLoading } = useSWR(
+    `/api/v1/projects/${ref}/products`,
+    swrFetcher
+  );
+
+  return {
+    products: data,
+    isLoading,
+    isError: error,
+  };
+};
+
+export const findProducts = fetcher
+  .path('/api/v1/projects/{projectRef}/products')
+  .method('get')
+  .create();
+
+export const createProduct = fetcher
+  .path('/api/v1/projects/{projectRef}/products/')
+  .method('post')
+  .create();
+
+export const deleteProduct = fetcher
+  .path('/api/v1/projects/{projectRef}/products/{productRef}')
+  .method('delete')
+  .create();
+
+export const useDeleteProduct = (projectRef: string, productRef: string) => {
+  const [deletedProduct, setDeletedProduct] = useState<string>('');
+
+  useEffect(() => {
+    deleteProduct({ projectRef, productRef }).then(async (resp: any) => {
+      if (resp) {
+        setDeletedProduct(resp.data);
+      }
+    });
+  }, [projectRef, productRef]);
+  return { deletedProduct };
+};
+export const useFindCodelists = (projectRef: string) => {
+  const [isLoading, setLoading] = useState(false);
+  const [codelists, setCodelists] = useState<CodelistForm[]>();
+
+  useEffect(() => {
+    const findCodelists = fetcher
+      .path('/api/v1/projects/{projectRef}/codelists')
+      .method('get')
+      .create();
+
+    setLoading(true);
+    findCodelists({ projectRef }).then(async (projectsResponse) => {
+      setLoading(false);
+      if (projectsResponse) {
+        setCodelists(projectsResponse.data);
+      }
+    });
+  }, [projectRef]);
+
+  return { isLoading, codelists };
+};
+
+export const createCodelist = fetcher
+  .path('/api/v1/projects/{projectRef}/codelists')
+  .method('post')
+  .create();
+
+export const updateCodelist = fetcher
+  .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}')
+  .method('put')
+  .create();
+
+export const deleteCodelist = fetcher
+  .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}')
+  .method('delete')
+  .create();
+
 export const createNeed = fetcher
   .path('/api/v1/projects/{projectRef}/needs')
   .method('post')
@@ -241,14 +326,10 @@ export const createRequirement = fetcher
 
 export const updateRequirement = fetcher
   .path(
-    '/api/v1/projects/{projectRef}/needs/{needRef}/requirements/{requirementRef}')
+    '/api/v1/projects/{projectRef}/needs/{needRef}/requirements/{requirementRef}'
+  )
   .method('put')
   .create();
-
-// export const findRequirements = fetcher
-//   .path('/api/v1/projects/{projectRef}/needs/{needRef}/requirements')
-//   .method('get')
-//   .create();
 
 export const useFindRequirements = (projectRef: string, needRef: string) => {
   const { data, error, isLoading } = useSWR(
@@ -296,11 +377,6 @@ export const deleteRequirementVariant = fetcher
     '/api/v1/projects/{projectRef}/needs/{needRef}/requirements/{requirementRef}/requirementvariants/{requirementVariantRef}'
   )
   .method('delete')
-  .create();
-
-export const findProducts = fetcher
-  .path('/api/v1/projects/{projectRef}/products')
-  .method('get')
   .create();
 
 export const findPublications = fetcher

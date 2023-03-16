@@ -40,6 +40,9 @@ export const VariantFormContent = ({ projectRef, control }: Props) => {
     });
   }, [projectRef]);
 
+
+
+
   return (
     <div className={css.VariantContent}>
       <Typography className={css.TextTitle} variant={'smBold'}>

@@ -50,6 +50,8 @@ i18n
     resources: {
       en: {
         translation: {
+          productTitleTooShort: 'Product title too short',
+          productRefNotUuid: 'Product ref not UUID',
           projectTitleTooShort: 'Project title too short',
           projectRefNotUuid: 'Project ref not UUID',
           needTitleTooShort: 'Need title too short',
