@@ -19,12 +19,14 @@ import { FormButtons } from '../../../../components/Form/FormButtons';
 
 interface Props {
   projectRef: string;
+  needRef: string;
   requirementRef: string;
   handleClose: () => void;
 }
 
 export function NewVariantForm({
   projectRef,
+  needRef,
   requirementRef,
   handleClose,
 }: Props): React.ReactElement {
@@ -47,6 +49,7 @@ export function NewVariantForm({
   const onSubmit = async (newVariant: RequirementVariantForm) => {
     await createRequirementVariant({
       projectRef,
+      needRef,
       requirementRef,
       ...newVariant,
     }).then(() => {

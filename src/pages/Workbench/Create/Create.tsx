@@ -18,7 +18,7 @@ import { HeaderContainer } from '../../../components/Header/HeaderContext';
 import {
   Need,
   useFindNeeds,
-  useFindRequirementsForProject,
+  useFindRequirements,
   useProject,
 } from '../../../api/nexus2';
 
@@ -28,12 +28,17 @@ export default function Create(): React.ReactElement {
   const { project, isLoading: projectIsLoading } = useProject(projectRef);
   const [needsWithParent, setNeedsWithParent] = useState<Need[]>([]);
 
-  const { requirements: allRequirements } =
-    useFindRequirementsForProject(projectRef);
-
   const { needIndex, setNeedIndex, setNeedId, setDeleteCandidateId } =
     useSelectState();
   const { setTitle } = HeaderContainer.useContainer();
+
+  const currentNeed = needIndex !== null ? needs?.[needIndex] : undefined;
+
+  const {
+    currentRequirements,
+    isLoading, // TODO 
+    isError, // TODO
+  } = useFindRequirements(projectRef, currentNeed?.ref || '');
 
   useEffect(() => {
     if (project && !needIndex) {
@@ -80,11 +85,6 @@ export default function Create(): React.ReactElement {
       </Box>
     );
   }
-  const currentNeed = needs[needIndex];
-
-  const currentRequirements = allRequirements?.filter(
-    (requirement) => requirement.needRef === currentNeed.ref
-  );
 
   const needDeleted = (): void => {
     setDeleteCandidateId('');
@@ -103,16 +103,26 @@ export default function Create(): React.ReactElement {
       <Box className={css.Need}>
         <NeedHeader project={project} need={currentNeed} />
         <Box className={css.Requirements}>
-          <NewRequirement projectRef={projectRef} need={currentNeed} />
+          <NewRequirement projectRef={projectRef} needRef={currentNeed.ref} />
           <ScrollableContainer className={css.List}>
             {currentRequirements &&
-              currentRequirements.map((req) => {
-                return (
-                  <VariantProvider key={req.ref}>
-                    <Requirement projectRef={projectRef} requirement={req} />
-                  </VariantProvider>
-                );
-              })}
+              currentRequirements.map(
+                (req: {
+                  ref: string;
+                  title?: string;
+                  description?: string;
+                }) => {
+                  return (
+                    <VariantProvider key={req.ref}>
+                      <Requirement
+                        projectRef={projectRef}
+                        needRef={currentNeed.ref}
+                        requirement={req}
+                      />
+                    </VariantProvider>
+                  );
+                }
+              )}
           </ScrollableContainer>
         </Box>
       </Box>

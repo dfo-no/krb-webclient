@@ -22,20 +22,22 @@ import {
   RequirementSchema,
   updateRequirement,
 } from '../../../../api/nexus2';
+import ErrorSummary from '../../../../Form/ErrorSummary';
 
 interface Props {
   projectRef: string;
+  needRef: string;
   requirement: RequirementForm;
   handleClose: () => void;
 }
 
 function EditRequirementForm({
   projectRef,
+  needRef,
   requirement,
   handleClose,
 }: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
-  const nexus = Nexus.getInstance();
   const { t } = useTranslation();
 
   const methods = useForm<RequirementForm>({
@@ -43,10 +45,12 @@ function EditRequirementForm({
     resolver: zodResolver(RequirementSchema),
   });
 
+  console.log('reqRef', requirement.ref);
   const onSubmit = async (updatedRequirement: RequirementForm) => {
     await updateRequirement({
       projectRef,
-      requirementRef: requirement.ref,
+      needRef,
+      requirementRef: updatedRequirement.ref,
       ...updatedRequirement,
     }).then(() => {
       const alert: Alert = {
@@ -88,6 +92,7 @@ function EditRequirementForm({
           </ModalButtonsBox>
         </ModalBox>
       </form>
+      <ErrorSummary errors={methods.formState.errors} />
     </FormProvider>
   );
 }

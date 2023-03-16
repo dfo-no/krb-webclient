@@ -9,9 +9,9 @@ import { components, paths } from './generated';
 import i18n from '../i18n';
 import CodelistService from '../Nexus/services/CodelistService';
 
-export const baseUrl = 'https://krb-backend-api.azurewebsites.net';
+// export const baseUrl = 'https://krb-backend-api.azurewebsites.net';
 // export const baseUrl = 'http://localhost:1080';
-// export const baseUrl = 'http://localhost:8080'; // Exported for use in tests
+export const baseUrl = 'http://localhost:8080'; // Exported for use in tests
 
 // export const setRefOnItem = <T extends { ref: string }>(item: T) => {
 //   return { ...item, ref: uuidv4() };
@@ -63,7 +63,6 @@ export const RequirementSchema = z.object({
   title: z.string().min(1, i18n.t('requirementTitleTooShort')),
   description: z.string(),
   ref: z.string().uuid('requirementRefNotUuid'),
-  needRef: z.string().uuid('needRefNotUuid'),
 });
 
 export const RequirementVariantFormSchema = z.object({
@@ -236,66 +235,65 @@ export const updateNeed = fetcher
   .create();
 
 export const createRequirement = fetcher
-  .path('/api/v1/projects/{projectRef}/requirements')
+  .path('/api/v1/projects/{projectRef}/needs/{needRef}/requirements')
   .method('post')
   .create();
 
 export const updateRequirement = fetcher
-  .path('/api/v1/projects/{projectRef}/requirements/{requirementRef}')
+  .path(
+    '/api/v1/projects/{projectRef}/needs/{needRef}/requirements/{requirementRef}')
   .method('put')
   .create();
 
-export const useFindRequirementsForProject = (projectRef: string) => {
-  const [isLoading, setLoading] = useState(false);
-  const [requirements, setRequirements] = useState<RequirementForm[]>();
+// export const findRequirements = fetcher
+//   .path('/api/v1/projects/{projectRef}/needs/{needRef}/requirements')
+//   .method('get')
+//   .create();
 
-  useEffect(() => {
-    const findCodelists = fetcher
-      .path('/api/v1/projects/{projectRef}/requirements')
-      .method('get')
-      .create();
+export const useFindRequirements = (projectRef: string, needRef: string) => {
+  const { data, error, isLoading } = useSWR(
+    `/api/v1/projects/${projectRef}/needs/${needRef}/requirements`,
+    swrFetcher
+  );
 
-    setLoading(true);
-    findCodelists({ projectRef: projectRef }).then(async (projectsResponse) => {
-      setLoading(false);
-      if (projectsResponse) {
-        setRequirements(projectsResponse.data);
-      }
-    });
-  }, [projectRef]);
-
-  return { isLoading, requirements };
+  return {
+    currentRequirements: data,
+    isLoading,
+    isError: error,
+  };
 };
 
 export const deleteRequirement = fetcher
-  .path('/api/v1/projects/{projectRef}/requirements/{requirementRef}')
+  .path(
+    '/api/v1/projects/{projectRef}/needs/{needRef}/requirements/{requirementRef}'
+  )
   .method('delete')
   .create();
 
 export const createRequirementVariant = fetcher
   .path(
-    '/api/v1/projects/{projectRef}/requirements/{requirementRef}/requirementvariants'
+    '/api/v1/projects/{projectRef}/needs/{needRef}/requirements/{requirementRef}/requirementvariants'
   )
   .method('post')
   .create();
 
 export const findRequirementVariants = fetcher
   .path(
-    '/api/v1/projects/{projectRef}/requirements/{requirementRef}/requirementvariants'
+    '/api/v1/projects/{projectRef}/needs/{needRef}/requirements/{requirementRef}/requirementvariants'
   )
   .method('get')
   .create();
 
 export const updateRequirementVariant = fetcher
   .path(
-    '/api/v1/projects/{projectRef}/requirements/{requirementRef}/requirementvariants/{requirementVariantRef}'
+    '/api/v1/projects/{projectRef}/needs/{needRef}/requirements/{requirementRef}/requirementvariants/{requirementVariantRef}'
   )
   .method('put')
   .create();
 
 export const deleteRequirementVariant = fetcher
   .path(
-    '/api/v1/projects/{projectRef}/requirements/{requirementRef}/requirementvariants/{requirementVariantRef}'
+    '/api/v1/projects/{projectRef}/needs/{needRef}/requirements/{requirementRef}/requirementvariants/{requirementVariantRef}'
   )
   .method('delete')
   .create();

@@ -10,10 +10,10 @@ import { NeedForm } from '../../../../api/nexus2';
 
 interface Props {
   projectRef: string;
-  need: NeedForm;
+  needRef: string;
 }
 
-export const NewRequirement = ({ projectRef, need }: Props) => {
+export const NewRequirement = ({ projectRef, needRef }: Props) => {
   const [isNewOpen, setNewOpen] = useState(false);
   const { setCreateVariant } = useSelectState();
 
@@ -40,7 +40,7 @@ export const NewRequirement = ({ projectRef, need }: Props) => {
         children={
           <NewRequirementForm
             projectRef={projectRef}
-            need={need}
+            needRef={needRef}
             handleClose={onClose}
           />
         }

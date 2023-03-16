@@ -36,11 +36,12 @@ import {
 
 interface Props {
   projectRef: string;
+  needRef: string;
   requirementRef: string;
   variant: RequirementVariantForm;
 }
 
-const Variant = ({ projectRef, requirementRef, variant }: Props) => {
+const Variant = ({ projectRef, needRef, requirementRef, variant }: Props) => {
   const { t } = useTranslation();
   const { addAlert } = AlertsContainer.useContainer();
   const nexus = Nexus.getInstance();
@@ -61,6 +62,7 @@ const Variant = ({ projectRef, requirementRef, variant }: Props) => {
   const onSubmit = async (updatedVariant: RequirementVariantForm) => {
     await updateRequirementVariant({
       projectRef,
+      needRef,
       requirementRef,
       requirementVariantRef: updatedVariant.ref,
       ...updatedVariant,

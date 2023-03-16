@@ -9,13 +9,19 @@ import { RequirementForm } from '../../../../api/nexus2';
 
 interface Props {
   projectRef: string;
+  needRef: string;
   requirement: RequirementForm;
 }
 
-export const EditRequirement = ({ projectRef, requirement }: Props) => {
+export const EditRequirement = ({
+  projectRef,
+  needRef,
+  requirement,
+}: Props) => {
   const [isEditOpen, setEditOpen] = useState(false);
   const { setDeleteCandidateId } = useSelectState();
 
+  console.log(needRef);
   const handleOpen = () => {
     setEditOpen(true);
     setDeleteCandidateId('');
@@ -39,6 +45,7 @@ export const EditRequirement = ({ projectRef, requirement }: Props) => {
         children={
           <EditRequirementForm
             projectRef={projectRef}
+            needRef={needRef}
             requirement={requirement}
             handleClose={onClose}
           />
