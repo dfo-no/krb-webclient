@@ -32,17 +32,16 @@ export default function NewProductForm({
   const { t } = useTranslation();
   const formStyles = useFormStyles();
 
-  const methods = useForm<RefAndParentable<ProductForm>>({
+  const methods = useForm<ProductForm>({
     defaultValues: {
       ref: uuidv4(),
       title: '',
       description: '',
-      requirementVariantRef: '',
     },
     resolver: zodResolver(ProductSchema),
   });
 
-  async function onSubmit(newProduct: RefAndParentable<ProductForm>) {
+  async function onSubmit(newProduct: ProductForm) {
     await createProduct({
       projectRef,
       ...newProduct,
@@ -77,11 +76,7 @@ export default function NewProductForm({
             label={t('Description')}
             placeholder={''}
           />
-          <VerticalTextCtrl
-            name="requirementVariantRef"
-            label={t('RequirementVariantRef')}
-            placeholder={''}
-          />
+          <VerticalTextCtrl name="unit" label={t('Unit')} placeholder={''} />
           <FormButtons handleCancel={() => handleClose()} />
         </FormItemBox>
       </form>

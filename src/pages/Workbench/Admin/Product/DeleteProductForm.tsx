@@ -13,9 +13,9 @@ import { useEditableState } from '../../../../components/EditableContext/Editabl
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import {
   deleteProduct,
-  ProductTitleAndDescSchema,
   ProductForm,
   useFindOneProject,
+  ProductSchema,
 } from '../../../../api/nexus2';
 import ErrorSummary from '../../../../Form/ErrorSummary';
 
@@ -23,7 +23,7 @@ interface Props {
   projectRef: string;
 
   children: React.ReactElement;
-  product: RefAndParentable<ProductForm>;
+  product: ProductForm;
   handleClose: (productToDelete: ProductForm) => void;
   handleCancel: () => void;
 }
@@ -39,9 +39,9 @@ export default function DeleteProductForm({
   const { t } = useTranslation();
   const { deleteCandidateId } = useEditableState();
 
-  const methods = useForm<RefAndParentable<ProductForm>>({
+  const methods = useForm<ProductForm>({
     defaultValues: product,
-    resolver: zodResolver(ProductTitleAndDescSchema),
+    resolver: zodResolver(ProductSchema),
   });
 
   useEffect(() => {
@@ -62,14 +62,8 @@ export default function DeleteProductForm({
     return <></>;
   }
 
-  // const hasChildren = Utils.checkIfProductHasChildren(
-  //   product,
-  //   project.products
-  // );
+  const infoText = ''; // TODO slette?
 
-  //  const isInUse = project && Utils.productUsedInVariants(product, project);
-
-  const infoText = '';
   // if (isInUse) {
   //   infoText = t('Product has connected requirements');
   // }
@@ -77,16 +71,10 @@ export default function DeleteProductForm({
   //   infoText = `${t('Cant delete this product')} ${t('Product has children')}`;
   // }
 
-  // const onSubmit = (productToDelete: RefAndParentable<ProductForm>) => {
-  //   console.log('hello from submit', productToDelete);
-  // };
-
-  const onSubmit = async (
-    productToDelete: RefAndParentable<ProductForm>
-  ): Promise<void> => {
+  const onSubmit = async (productToDelete: ProductForm): Promise<void> => {
     await deleteProduct({
       projectRef,
-      productRef: product.ref,
+      productRef: productToDelete.ref,
     }).then(() => {
       const alert: Alert = {
         id: uuidv4(),

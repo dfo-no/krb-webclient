@@ -16,7 +16,7 @@ import {t} from "i18next";
 
 export const baseUrl = 'https://krb-backend-api.azurewebsites.net';
 // export const baseUrl = 'http://localhost:1080';
-// export const baseUrl = 'http://localhost:8080'; // Exported for use in tests
+//export const baseUrl = 'http://localhost:8080'; // Exported for use in tests
 
 // export const setRefOnItem = <T extends { ref: string }>(item: T) => {
 //   return { ...item, ref: uuidv4() };
@@ -66,14 +66,6 @@ export const ProductSchema = z.object({
   title: z.string().min(1, i18n.t('productTitleTooShort')),
   description: z.string(),
   ref: z.string().uuid(i18n.t('productRefNotUuid')),
-  requirementVariantRef: z
-    .string()
-    .min(1, i18n.t('requirementVariantRefTooShort')), // TODO
-});
-
-export const ProductTitleAndDescSchema = z.object({
-  title: z.string().min(1, i18n.t('Product title too short')), // TODO not fetching error string from resource
-  description: z.string(),
 });
 
 export const RequirementSchema = z.object({

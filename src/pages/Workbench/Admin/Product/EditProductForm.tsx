@@ -12,11 +12,10 @@ import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import { RefAndParentable } from '../../../../common/Utils';
 import {
-  ProductTitleAndDescSchema,
   ProductForm,
   updateProduct,
+  ProductSchema,
 } from '../../../../api/nexus2';
-import ErrorSummary from '../../../../Form/ErrorSummary';
 
 interface Props {
   projectRef: string;
@@ -35,15 +34,15 @@ export default function EditProductForm({
   const { t } = useTranslation();
   const formStyles = useFormStyles();
 
-  const methods = useForm<RefAndParentable<ProductForm>>({
+  const methods = useForm<ProductForm>({
     defaultValues: product,
-    resolver: zodResolver(ProductTitleAndDescSchema),
+    resolver: zodResolver(ProductSchema),
   });
 
-  async function onSubmit(updatedProduct: RefAndParentable<ProductForm>) {
+  async function onSubmit(updatedProduct: ProductForm) {
     await updateProduct({
       projectRef,
-      productRef: product.ref,
+      productRef: updatedProduct.ref,
       ...updatedProduct,
     }).then(() => {
       const alert: Alert = {
