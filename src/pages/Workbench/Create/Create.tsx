@@ -17,6 +17,7 @@ import { VariantProvider } from '../VariantContext';
 import { HeaderContainer } from '../../../components/Header/HeaderContext';
 import {
   Need,
+  RequirementForm,
   useFindNeeds,
   useFindRequirements,
   useProject,
@@ -36,7 +37,7 @@ export default function Create(): React.ReactElement {
 
   const {
     currentRequirements,
-    isLoading, // TODO 
+    isLoading, // TODO
     isError, // TODO
   } = useFindRequirements(projectRef, currentNeed?.ref || '');
 
@@ -103,20 +104,24 @@ export default function Create(): React.ReactElement {
       <Box className={css.Need}>
         <NeedHeader project={project} need={currentNeed} />
         <Box className={css.Requirements}>
-          <NewRequirement projectRef={projectRef} needRef={currentNeed.ref} />
+          <NewRequirement
+            projectRef={projectRef}
+            needRef={currentNeed?.ref || ''}
+          />
           <ScrollableContainer className={css.List}>
             {currentRequirements &&
               currentRequirements.map(
-                (req: {
-                  ref: string;
-                  title?: string;
-                  description?: string;
-                }) => {
+                (
+                  req:
+                    | { ref: string; title: string; description: string }
+                    | undefined
+                ) => {
+                  if (!req) return null;
                   return (
                     <VariantProvider key={req.ref}>
                       <Requirement
                         projectRef={projectRef}
-                        needRef={currentNeed.ref}
+                        needRef={currentNeed?.ref || ''}
                         requirement={req}
                       />
                     </VariantProvider>
@@ -133,13 +138,19 @@ export default function Create(): React.ReactElement {
     <Box className={css.Create}>
       <CreateSideBar project={project} needs={needsWithParent} />
       <Box className={css.MainContent}>
-        <DeleteNeed
-          need={currentNeed}
-          canBeDeleted={!!currentRequirements && currentRequirements.length > 0}
-          handleClose={needDeleted}
-        >
-          {renderNeedCard()}
-        </DeleteNeed>
+        {currentNeed ? (
+          <DeleteNeed
+            need={currentNeed}
+            canBeDeleted={
+              !!currentRequirements && currentRequirements.length > 0
+            }
+            handleClose={needDeleted}
+          >
+            {renderNeedCard()}
+          </DeleteNeed>
+        ) : (
+          <>{renderNeedCard()}</>
+        )}
       </Box>
     </Box>
   );

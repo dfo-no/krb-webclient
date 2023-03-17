@@ -14,7 +14,6 @@ interface Props {
   products: ProductForm[];
 }
 
-
 export const MultipleProductSelection = ({
   name,
   products,
@@ -24,10 +23,10 @@ export const MultipleProductSelection = ({
 
   const onClick = (
     item: ProductForm,
-    selected: string[],
+    selected: string[] | undefined, // Update the type here
     onChange: (value: string[]) => void
   ): void => {
-    if (selected.some((elem) => elem === item.ref)) {
+    if (selected && selected.some((elem) => elem === item.ref)) {
       const selectedUpdated = [...selected];
       const index = selectedUpdated.findIndex((elem) => elem === item.ref);
       if (index !== -1) {
@@ -35,13 +34,9 @@ export const MultipleProductSelection = ({
       }
       onChange(selectedUpdated);
     } else {
-      onChange([...selected, item.ref]);
+      onChange([...(selected || []), item.ref]);
     }
   };
-
-  products.map((p) => {
-    console.log(p);
-  });
 
   const productChecked = (item: ProductForm, selected: string[]): boolean => {
     return selected ? selected.some((elem) => elem === item.ref) : false;
@@ -55,7 +50,6 @@ export const MultipleProductSelection = ({
   //     !!item.deletedDate && !productChecked(item, selected) && childrenIsDeleted
   //   );
   // };
-
 
   return (
     <div className={css.ProductSelection}>

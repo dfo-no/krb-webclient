@@ -160,6 +160,7 @@ const Variant = ({ projectRef, needRef, requirementRef, variant }: Props) => {
           </AccordionDetails>
         </Accordion>
       </form>
+      <ErrorSummary errors={methods.formState.errors} />
     </FormProvider>
   );
 };

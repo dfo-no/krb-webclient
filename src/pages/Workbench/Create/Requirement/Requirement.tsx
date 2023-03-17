@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 interface Props {
   projectRef: string;
   needRef: string;
-  requirement: RequirementForm | undefined;
+  requirement?: RequirementForm; // Make this optional
 }
 
 const Requirement = ({ projectRef, needRef, requirement }: Props) => {
@@ -39,6 +39,10 @@ const Requirement = ({ projectRef, needRef, requirement }: Props) => {
   const { openVariants } = useVariantState();
   const { needIndex, setDeleteCandidateId, setCreateVariant } =
     useSelectState();
+
+  if (!requirement) {
+    return null;
+  }
 
   if (needIndex === null) {
     return <></>;
@@ -69,7 +73,7 @@ const Requirement = ({ projectRef, needRef, requirement }: Props) => {
             variant="mdBold"
             sx={{ alignSelf: 'center', fontFamily: 'var(--header-font)' }}
           >
-            {requirement.title}
+            {requirement?.title}
           </Typography>
           <EditRequirement
             projectRef={projectRef}

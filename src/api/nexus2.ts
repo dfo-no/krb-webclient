@@ -7,6 +7,7 @@ import { z } from 'zod';
 
 import { components, paths } from './generated';
 import i18n from '../i18n';
+// import CodelistService from '../Nexus/services/CodelistService';
 
 // export const baseUrl = 'https://krb-backend-api.azurewebsites.net';
 // export const baseUrl = 'http://localhost:1080';
@@ -44,6 +45,9 @@ export type RequirementVariantForm =
 export type ProductForm = components['schemas']['ProductForm'];
 export type PublicationForm = components['schemas']['PublicationForm'];
 
+
+//export const codelistService = new CodelistService();
+
 export const ProjectSchema = z.object({
   title: z.string().min(1, i18n.t('projectTitleTooShort')),
   description: z.string(),
@@ -70,7 +74,6 @@ export const RequirementSchema = z.object({
 
 export const RequirementVariantFormSchema = z.object({
   ref: z.string().uuid('requirementVariantRefNotUuid'),
-  title: z.string().min(1, i18n.t('requirementVariantTitleTooShort')),
   description: z.string(),
   requirementText: z.string().min(1, i18n.t('requirementVariantTextTooShort')),
   instruction: z
