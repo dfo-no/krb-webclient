@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { RefAndParentable } from '../../../../common/Utils';
 import { DeleteFrame } from '../../../../components/DeleteFrame/DeleteFrame';
 import { Alert } from '../../../../models/Alert';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
@@ -17,7 +16,6 @@ import {
   useFindOneProject,
   ProductSchema,
 } from '../../../../api/nexus2';
-import ErrorSummary from '../../../../Form/ErrorSummary';
 
 interface Props {
   projectRef: string;

@@ -11,7 +11,7 @@ import CodelistService from '../Nexus/services/CodelistService';
 
 export const baseUrl = 'https://krb-backend-api.azurewebsites.net';
 // export const baseUrl = 'http://localhost:1080';
-// export const baseUrl = 'http://localhost:8080'; // Exported for use in tests
+//export const baseUrl = 'http://localhost:8080'; // Exported for use in tests
 
 // export const setRefOnItem = <T extends { ref: string }>(item: T) => {
 //   return { ...item, ref: uuidv4() };
@@ -64,6 +64,7 @@ export const ProductSchema = z.object({
   description: z.string(),
   ref: z.string().uuid(i18n.t('productRefNotUuid')),
 });
+
 
 export const RequirementSchema = z.object({
   title: z.string().min(1, i18n.t('requirementTitleTooShort')),
@@ -313,75 +314,6 @@ export const useDeleteProduct = (projectRef: string, productRef: string) => {
   }, [projectRef, productRef]);
   return { deletedProduct };
 };
-
-// export const useUpdateProduct = (projectRef: string, productRef: string) => {
-// const [editProduct, setEditProduct] =
-//   useState<RefAndParentable<ProductForm>[]>();
-//
-// useEffect(() => {
-//   console.log('fetcher', updateProduct);
-//   updateProduct({ projectRef, productRef }).then(
-//     async (productResponse: {
-//       data: SetStateAction<
-//         | RefAndParentable<{
-//             ref: string;
-//             title: string;
-//             description: string;
-//             requirementVariantRef: string;
-//           }>[]
-//         | undefined
-//       >;
-//     }) => {
-//      if (productResponse) {
-//        setEditProduct(productResponse.data);
-//      }
-//    }
-//  );
-// }, [projectRef, productRef]);
-
-// return { editProduct };
-// };
-
-// export const useFindProducts = (projectRef: string) => {
-//   const [isLoading, setLoading] = useState(false);
-//   const [products, setProducts] = useState<ProductForm[]>([]);
-//
-//   useEffect(() => {
-//     const findProducts = fetcher
-//       .path('/api/v1/projects/{projectRef}/products')
-//       .method('get')
-//       .create();
-//
-//     setLoading(true);
-//     findProducts({ projectRef: projectRef }).then(async (productResponse) => {
-//       setLoading(false);
-//       if (productResponse) {
-//         setProducts(productResponse.data);
-//       }
-//     });
-//   }, [projectRef]);
-//
-//   return { isLoading, products };
-// };
-
-// const { data, error } = useSWR(
-//   `/api/v1/projects/${projectId}/products`,
-//   swrFetcher
-// );
-//
-// if (error) {
-//   console.log('Error fetching products:', error);
-//   return null;
-// }
-//
-// if (!data) {
-//   return { isLoading: true, products: null };
-// }
-//
-// return data.map((product: IProduct) => ({
-//   title: product.title,
-//   description: product.description,
-// }));
 
 export const updateNeed = fetcher
   .path('/api/v1/projects/{projectRef}/needs/{needRef}')
