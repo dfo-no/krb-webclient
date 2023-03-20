@@ -11,7 +11,7 @@ import CodelistService from '../Nexus/services/CodelistService';
 
 export const baseUrl = 'https://krb-backend-api.azurewebsites.net';
 // export const baseUrl = 'http://localhost:1080';
-//export const baseUrl = 'http://localhost:8080'; // Exported for use in tests
+// export const baseUrl = 'http://localhost:8080'; // Exported for use in tests
 
 // export const setRefOnItem = <T extends { ref: string }>(item: T) => {
 //   return { ...item, ref: uuidv4() };
@@ -64,7 +64,6 @@ export const ProductSchema = z.object({
   description: z.string(),
   ref: z.string().uuid(i18n.t('productRefNotUuid')),
 });
-
 
 export const RequirementSchema = z.object({
   title: z.string().min(1, i18n.t('requirementTitleTooShort')),
