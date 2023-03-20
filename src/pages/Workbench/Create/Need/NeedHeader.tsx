@@ -11,14 +11,13 @@ import { NeedForm, ProjectForm } from '../../../../api/nexus2';
 
 type Props = {
   project: ProjectForm; // TODO: only needs ref
-  need: NeedForm;
+  need: NeedForm | undefined;
 };
 
 export function NeedHeader({ project, need }: Props): React.ReactElement {
   const { needIndex, setDeleteCandidateId } = useSelectState();
 
-  if (!project || needIndex === null) {
-    // TODO: not needed
+  if (!project || !need) {
     return <></>;
   }
 

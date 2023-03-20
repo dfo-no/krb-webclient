@@ -15,6 +15,7 @@ import {
 
 interface Props {
   projectRef: string;
+  needRef: string;
   children: React.ReactElement;
   requirementRef: string;
   handleClose: () => void;
@@ -24,6 +25,7 @@ interface Props {
 function DeleteRequirement({
   children,
   projectRef,
+  needRef,
   requirementRef,
   handleClose,
 }: Props): React.ReactElement {
@@ -37,11 +39,12 @@ function DeleteRequirement({
   useEffect(() => {
     findRequirementVariants({
       projectRef,
+      needRef,
       requirementRef,
     }).then((response) => {
       setVariants(response.data);
     });
-  }, [projectRef, requirementRef]);
+  }, [needRef, projectRef, requirementRef]);
 
   const hasChildren = variants.length > 0;
 
@@ -54,7 +57,7 @@ function DeleteRequirement({
     : '';
 
   const onDelete = (): void => {
-    deleteRequirement({ projectRef, requirementRef }).then(() => {
+    deleteRequirement({ projectRef, needRef, requirementRef }).then(() => {
       const alert: Alert = {
         id: uuidv4(),
         style: 'success',

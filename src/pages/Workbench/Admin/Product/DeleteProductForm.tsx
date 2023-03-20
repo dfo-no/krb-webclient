@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import { RefAndParentable } from '../../../../common/Utils';
 import { DeleteFrame } from '../../../../components/DeleteFrame/DeleteFrame';
 import { Alert } from '../../../../models/Alert';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
@@ -16,6 +17,7 @@ import {
   useFindOneProject,
   ProductSchema,
 } from '../../../../api/nexus2';
+import ErrorSummary from '../../../../Form/ErrorSummary';
 
 interface Props {
   projectRef: string;
@@ -72,7 +74,7 @@ export default function DeleteProductForm({
   const onSubmit = async (productToDelete: ProductForm): Promise<void> => {
     await deleteProduct({
       projectRef,
-      productref: productToDelete.ref,
+      productRef: productToDelete.ref,
     }).then(() => {
       const alert: Alert = {
         id: uuidv4(),
@@ -93,7 +95,7 @@ export default function DeleteProductForm({
       >
         <DeleteFrame
           children={children}
-          canBeDeleted={true}
+          canBeDeleted={true} // TODO
           infoText={infoText}
           handleCancel={handleCancel}
         />

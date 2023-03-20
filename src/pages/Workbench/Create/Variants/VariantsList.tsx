@@ -13,10 +13,15 @@ import {
 
 interface Props {
   projectRef: string;
+  needRef: string;
   requirementRef: string;
 }
 
-export const VariantsList = ({ projectRef, requirementRef }: Props) => {
+export const VariantsList = ({
+  projectRef,
+  needRef,
+  requirementRef,
+}: Props) => {
   const { needIndex, setDeleteCandidateId, createVariant, setCreateVariant } =
     useSelectState();
   const { setOpenVariants } = useVariantState();
@@ -26,11 +31,12 @@ export const VariantsList = ({ projectRef, requirementRef }: Props) => {
   useEffect(() => {
     findRequirementVariants({
       projectRef,
+      needRef,
       requirementRef,
     }).then((response) => {
       setVariants(response.data);
     });
-  }, [projectRef, requirementRef]);
+  }, [needRef, projectRef, requirementRef]);
 
   if (needIndex === null) {
     return <></>;
@@ -54,6 +60,7 @@ export const VariantsList = ({ projectRef, requirementRef }: Props) => {
       {createVariant === requirementRef && (
         <NewVariantForm
           projectRef={projectRef}
+          needRef={needRef}
           requirementRef={requirementRef}
           handleClose={() => variantCreated()}
         />
@@ -62,6 +69,7 @@ export const VariantsList = ({ projectRef, requirementRef }: Props) => {
         return (
           <DeleteVariant
             projectRef={projectRef}
+            needRef={needRef}
             key={index}
             requirementRef={requirementRef}
             requirementVariantRef={variant.ref}
@@ -69,6 +77,7 @@ export const VariantsList = ({ projectRef, requirementRef }: Props) => {
           >
             <Variant
               projectRef={projectRef}
+              needRef={needRef}
               requirementRef={requirementRef}
               variant={variant}
             />

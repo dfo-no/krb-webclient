@@ -21,16 +21,17 @@ import {
   RequirementForm,
   RequirementSchema,
 } from '../../../../api/nexus2';
+import ErrorSummary from '../../../../Form/ErrorSummary';
 
 interface Props {
   projectRef: string;
-  need: NeedForm;
+  needRef: string;
   handleClose: (id: string) => void;
 }
 
 export function NewRequirementForm({
   projectRef,
-  need,
+  needRef,
   handleClose,
 }: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
@@ -43,12 +44,15 @@ export function NewRequirementForm({
       title: '',
       description: '',
       ref: uuidv4(),
-      needRef: need.ref,
     },
   });
 
   const onSubmit = async (newRequirement: RequirementForm) => {
-    await createRequirement({ projectRef, ...newRequirement }).then(() => {
+    await createRequirement({
+      projectRef: projectRef,
+      needRef: needRef, // TODO Fredrik
+      ...newRequirement,
+    }).then(() => {
       const alert: Alert = {
         id: uuidv4(),
         style: 'success',
@@ -89,6 +93,7 @@ export function NewRequirementForm({
           </ModalButtonsBox>
         </ModalBox>
       </form>
+      <ErrorSummary errors={methods.formState.errors} />
     </FormProvider>
   );
 }

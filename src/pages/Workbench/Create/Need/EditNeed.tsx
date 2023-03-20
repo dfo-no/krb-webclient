@@ -9,7 +9,7 @@ import { NeedForm } from '../../../../api/nexus2';
 
 interface Props {
   projectRef: string;
-  need: NeedForm;
+  need: NeedForm | undefined;
 }
 
 export const EditNeed = ({ projectRef, need }: Props) => {

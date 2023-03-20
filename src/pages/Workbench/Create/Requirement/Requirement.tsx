@@ -30,14 +30,19 @@ const useStyles = makeStyles({
 
 interface Props {
   projectRef: string;
-  requirement: RequirementForm;
+  needRef: string;
+  requirement?: RequirementForm; // Make this optional
 }
 
-const Requirement = ({ projectRef, requirement }: Props) => {
+const Requirement = ({ projectRef, needRef, requirement }: Props) => {
   const classes = useStyles();
   const { openVariants } = useVariantState();
   const { needIndex, setDeleteCandidateId, setCreateVariant } =
     useSelectState();
+
+  if (!requirement) {
+    return null;
+  }
 
   if (needIndex === null) {
     return <></>;
@@ -68,9 +73,13 @@ const Requirement = ({ projectRef, requirement }: Props) => {
             variant="mdBold"
             sx={{ alignSelf: 'center', fontFamily: 'var(--header-font)' }}
           >
-            {requirement.title}
+            {requirement?.title}
           </Typography>
-          <EditRequirement projectRef={projectRef} requirement={requirement} />
+          <EditRequirement
+            projectRef={projectRef}
+            needRef={needRef}
+            requirement={requirement}
+          />
           <FormIconButton
             hoverColor={theme.palette.errorRed.main}
             onClick={() => setDeleteCandidateId(requirement.ref)}
@@ -88,6 +97,7 @@ const Requirement = ({ projectRef, requirement }: Props) => {
         </Box>
         <VariantsList
           projectRef={projectRef}
+          needRef={needRef}
           requirementRef={requirement.ref}
         />
       </Box>
@@ -98,6 +108,7 @@ const Requirement = ({ projectRef, requirement }: Props) => {
     <DeleteRequirement
       children={renderRequirement()}
       projectRef={projectRef}
+      needRef={needRef}
       requirementRef={requirement.ref}
       handleClose={requirementDeleted}
     />

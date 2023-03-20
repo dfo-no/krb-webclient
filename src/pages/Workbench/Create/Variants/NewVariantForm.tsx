@@ -16,26 +16,33 @@ import { VariantFormContent } from './VariantFormContent';
 import { Alert } from '../../../../models/Alert';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import { FormButtons } from '../../../../components/Form/FormButtons';
+import ErrorSummary from '../../../../Form/ErrorSummary';
 
 interface Props {
   projectRef: string;
+  needRef: string;
   requirementRef: string;
   handleClose: () => void;
 }
 
 export function NewVariantForm({
   projectRef,
+  needRef,
   requirementRef,
   handleClose,
 }: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
-  const nexus = Nexus.getInstance();
-
   const methods = useForm<RequirementVariantForm>({
     resolver: zodResolver(RequirementVariantFormSchema),
     defaultValues: {
       ref: uuidv4(),
+      description: '',
+      requirementText: '',
+      instruction: '',
+      useProduct: false,
+      useSpecification: false,
+      useQualification: false,
     },
   });
 
@@ -47,6 +54,7 @@ export function NewVariantForm({
   const onSubmit = async (newVariant: RequirementVariantForm) => {
     await createRequirementVariant({
       projectRef,
+      needRef,
       requirementRef,
       ...newVariant,
     }).then(() => {
@@ -78,6 +86,7 @@ export function NewVariantForm({
             <GeneralErrorMessage errors={methods.formState.errors} />
           </Box>
         </form>
+        <ErrorSummary errors={methods.formState.errors} />
       </FormProvider>
     </>
   );

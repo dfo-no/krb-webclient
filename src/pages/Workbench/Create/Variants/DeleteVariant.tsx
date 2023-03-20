@@ -10,6 +10,7 @@ import { deleteRequirementVariant } from '../../../../api/nexus2';
 interface Props {
   children: React.ReactElement;
   projectRef: string;
+  needRef: string;
   requirementRef: string;
   requirementVariantRef: string;
 
@@ -20,6 +21,7 @@ interface Props {
 export function DeleteVariant({
   children,
   projectRef,
+  needRef,
   requirementRef,
   requirementVariantRef,
   handleClose,
@@ -34,6 +36,7 @@ export function DeleteVariant({
   const onDelete = (): void => {
     deleteRequirementVariant({
       projectRef,
+      needRef,
       requirementRef,
       requirementVariantRef,
     }).then(() => {

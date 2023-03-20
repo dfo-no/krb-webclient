@@ -348,6 +348,229 @@ export type paths = {
       };
     };
   };
+  "/api/v1/projects/{projectRef}/needs/{needRef}/requirements": {
+    get: {
+      parameters: {
+        path: {
+          needRef: string;
+          projectRef: string;
+        };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          content: {
+            "application/json": (components["schemas"]["RequirementForm"])[];
+          };
+        };
+        /** @description Not Authorized */
+        401: never;
+        /** @description Not Allowed */
+        403: never;
+      };
+    };
+    post: {
+      parameters: {
+        path: {
+          needRef: string;
+          projectRef: string;
+        };
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["RequirementForm"];
+        };
+      };
+      responses: {
+        /** @description OK */
+        200: never;
+        /** @description Not Authorized */
+        401: never;
+        /** @description Not Allowed */
+        403: never;
+      };
+    };
+  };
+  "/api/v1/projects/{projectRef}/needs/{needRef}/requirements/{requirementRef}": {
+    get: {
+      parameters: {
+        path: {
+          needRef: string;
+          projectRef: string;
+          requirementRef: string;
+        };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          content: {
+            "application/json": components["schemas"]["RequirementForm"];
+          };
+        };
+        /** @description Not Authorized */
+        401: never;
+        /** @description Not Allowed */
+        403: never;
+      };
+    };
+    put: {
+      parameters: {
+        path: {
+          needRef: string;
+          projectRef: string;
+          requirementRef: string;
+        };
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["RequirementForm"];
+        };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          content: {
+            "application/json": components["schemas"]["RequirementForm"];
+          };
+        };
+        /** @description Not Authorized */
+        401: never;
+        /** @description Not Allowed */
+        403: never;
+      };
+    };
+    delete: {
+      parameters: {
+        path: {
+          needRef: string;
+          projectRef: string;
+          requirementRef: string;
+        };
+      };
+      responses: {
+        /** @description OK */
+        200: never;
+        /** @description Not Authorized */
+        401: never;
+        /** @description Not Allowed */
+        403: never;
+      };
+    };
+  };
+  "/api/v1/projects/{projectRef}/needs/{needRef}/requirements/{requirementRef}/requirementvariants": {
+    get: {
+      parameters: {
+        path: {
+          needRef: string;
+          projectRef: string;
+          requirementRef: string;
+        };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          content: {
+            "application/json": (components["schemas"]["RequirementVariantForm"])[];
+          };
+        };
+        /** @description Not Authorized */
+        401: never;
+        /** @description Not Allowed */
+        403: never;
+      };
+    };
+    post: {
+      parameters: {
+        path: {
+          needRef: string;
+          projectRef: string;
+          requirementRef: string;
+        };
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["RequirementVariantForm"];
+        };
+      };
+      responses: {
+        /** @description OK */
+        200: never;
+        /** @description Not Authorized */
+        401: never;
+        /** @description Not Allowed */
+        403: never;
+      };
+    };
+  };
+  "/api/v1/projects/{projectRef}/needs/{needRef}/requirements/{requirementRef}/requirementvariants/{requirementVariantRef}": {
+    get: {
+      parameters: {
+        path: {
+          needRef: string;
+          projectRef: string;
+          requirementRef: string;
+          requirementVariantRef: string;
+        };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          content: {
+            "application/json": components["schemas"]["RequirementVariantForm"];
+          };
+        };
+        /** @description Not Authorized */
+        401: never;
+        /** @description Not Allowed */
+        403: never;
+      };
+    };
+    put: {
+      parameters: {
+        path: {
+          needRef: string;
+          projectRef: string;
+          requirementRef: string;
+          requirementVariantRef: string;
+        };
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["RequirementVariantForm"];
+        };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          content: {
+            "application/json": components["schemas"]["RequirementVariantForm"];
+          };
+        };
+        /** @description Not Authorized */
+        401: never;
+        /** @description Not Allowed */
+        403: never;
+      };
+    };
+    delete: {
+      parameters: {
+        path: {
+          needRef: string;
+          projectRef: string;
+          requirementRef: string;
+          requirementVariantRef: string;
+        };
+      };
+      responses: {
+        /** @description OK */
+        200: never;
+        /** @description Not Authorized */
+        401: never;
+        /** @description Not Allowed */
+        403: never;
+      };
+    };
+  };
   "/api/v1/projects/{projectRef}/products": {
     get: {
       parameters: {
@@ -389,11 +612,11 @@ export type paths = {
       };
     };
   };
-  "/api/v1/projects/{projectRef}/products/{productref}": {
+  "/api/v1/projects/{projectRef}/products/{productRef}": {
     get: {
       parameters: {
         path: {
-          productref: string;
+          productRef: string;
           projectRef: string;
         };
       };
@@ -413,7 +636,7 @@ export type paths = {
     put: {
       parameters: {
         path: {
-          productref: string;
+          productRef: string;
           projectRef: string;
         };
       };
@@ -438,7 +661,7 @@ export type paths = {
     delete: {
       parameters: {
         path: {
-          productref: string;
+          productRef: string;
           projectRef: string;
         };
       };
@@ -506,219 +729,6 @@ export type paths = {
             "application/json": components["schemas"]["PublicationExportForm"];
           };
         };
-        /** @description Not Authorized */
-        401: never;
-        /** @description Not Allowed */
-        403: never;
-      };
-    };
-  };
-  "/api/v1/projects/{projectRef}/requirements": {
-    get: {
-      parameters: {
-        path: {
-          projectRef: string;
-        };
-      };
-      responses: {
-        /** @description OK */
-        200: {
-          content: {
-            "application/json": (components["schemas"]["RequirementForm"])[];
-          };
-        };
-        /** @description Not Authorized */
-        401: never;
-        /** @description Not Allowed */
-        403: never;
-      };
-    };
-    post: {
-      parameters: {
-        path: {
-          projectRef: string;
-        };
-      };
-      requestBody?: {
-        content: {
-          "application/json": components["schemas"]["RequirementForm"];
-        };
-      };
-      responses: {
-        /** @description OK */
-        200: never;
-        /** @description Not Authorized */
-        401: never;
-        /** @description Not Allowed */
-        403: never;
-      };
-    };
-  };
-  "/api/v1/projects/{projectRef}/requirements/{requirementRef}": {
-    get: {
-      parameters: {
-        path: {
-          projectRef: string;
-          requirementRef: string;
-        };
-      };
-      responses: {
-        /** @description OK */
-        200: {
-          content: {
-            "application/json": components["schemas"]["RequirementForm"];
-          };
-        };
-        /** @description Not Authorized */
-        401: never;
-        /** @description Not Allowed */
-        403: never;
-      };
-    };
-    put: {
-      parameters: {
-        path: {
-          projectRef: string;
-          requirementRef: string;
-        };
-      };
-      requestBody?: {
-        content: {
-          "application/json": components["schemas"]["RequirementForm"];
-        };
-      };
-      responses: {
-        /** @description OK */
-        200: {
-          content: {
-            "application/json": components["schemas"]["RequirementForm"];
-          };
-        };
-        /** @description Not Authorized */
-        401: never;
-        /** @description Not Allowed */
-        403: never;
-      };
-    };
-    delete: {
-      parameters: {
-        path: {
-          projectRef: string;
-          requirementRef: string;
-        };
-      };
-      responses: {
-        /** @description OK */
-        200: never;
-        /** @description Not Authorized */
-        401: never;
-        /** @description Not Allowed */
-        403: never;
-      };
-    };
-  };
-  "/api/v1/projects/{projectRef}/requirements/{requirementRef}/requirementvariants": {
-    get: {
-      parameters: {
-        path: {
-          projectRef: string;
-          requirementRef: string;
-        };
-      };
-      responses: {
-        /** @description OK */
-        200: {
-          content: {
-            "application/json": (components["schemas"]["RequirementVariantForm"])[];
-          };
-        };
-        /** @description Not Authorized */
-        401: never;
-        /** @description Not Allowed */
-        403: never;
-      };
-    };
-    post: {
-      parameters: {
-        path: {
-          projectRef: string;
-          requirementRef: string;
-        };
-      };
-      requestBody?: {
-        content: {
-          "application/json": components["schemas"]["RequirementVariantForm"];
-        };
-      };
-      responses: {
-        /** @description OK */
-        200: never;
-        /** @description Not Authorized */
-        401: never;
-        /** @description Not Allowed */
-        403: never;
-      };
-    };
-  };
-  "/api/v1/projects/{projectRef}/requirements/{requirementRef}/requirementvariants/{requirementVariantRef}": {
-    get: {
-      parameters: {
-        path: {
-          projectRef: string;
-          requirementRef: string;
-          requirementVariantRef: string;
-        };
-      };
-      responses: {
-        /** @description OK */
-        200: {
-          content: {
-            "application/json": components["schemas"]["RequirementVariantForm"];
-          };
-        };
-        /** @description Not Authorized */
-        401: never;
-        /** @description Not Allowed */
-        403: never;
-      };
-    };
-    put: {
-      parameters: {
-        path: {
-          projectRef: string;
-          requirementRef: string;
-          requirementVariantRef: string;
-        };
-      };
-      requestBody?: {
-        content: {
-          "application/json": components["schemas"]["RequirementVariantForm"];
-        };
-      };
-      responses: {
-        /** @description OK */
-        200: {
-          content: {
-            "application/json": components["schemas"]["RequirementVariantForm"];
-          };
-        };
-        /** @description Not Authorized */
-        401: never;
-        /** @description Not Allowed */
-        403: never;
-      };
-    };
-    delete: {
-      parameters: {
-        path: {
-          projectRef: string;
-          requirementRef: string;
-          requirementVariantRef: string;
-        };
-      };
-      responses: {
-        /** @description OK */
-        200: never;
         /** @description Not Authorized */
         401: never;
         /** @description Not Allowed */
@@ -946,15 +956,17 @@ export type components = {
     Product: {
       /** Format: int64 */
       id?: number;
+      ref: string;
       title: string;
       description: string;
-      ref: string;
     };
     ProductForm: {
       ref: string;
       title: string;
       description: string;
-      requirementVariantRef: string;
+    };
+    ProductRefForm: {
+      ref: string;
     };
     Project: {
       /** Format: int64 */
@@ -1013,7 +1025,6 @@ export type components = {
       ref: string;
       title: string;
       description: string;
-      needRef: string;
     };
     RequirementVariantForm: {
       ref: string;
@@ -1023,6 +1034,7 @@ export type components = {
       useProduct?: boolean;
       useSpecification?: boolean;
       useQualification?: boolean;
+      products?: (components["schemas"]["ProductRefForm"])[] | null;
     };
     Tag: {
       id: string;

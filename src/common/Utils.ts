@@ -1,5 +1,6 @@
 import { IBank } from '../Nexus/entities/IBank';
 import { IBaseModel } from '../Nexus/entities/IBaseModel';
+import { ICodelist } from '../Nexus/entities/ICodelist';
 import { ICodelistConfig } from '../Nexus/entities/ICodelistQuestion';
 import { INeed } from '../Nexus/entities/INeed';
 import { IProduct } from '../Nexus/entities/IProduct';

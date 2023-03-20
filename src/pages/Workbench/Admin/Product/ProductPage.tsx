@@ -52,7 +52,6 @@ export default function ProductPage(): React.ReactElement {
   }, [products, setCreating]);
 
   if (isLoading) {
-    console.log(`Is loading => ${isLoading}`);
     return <LoaderSpinner />;
   }
 

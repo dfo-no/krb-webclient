@@ -23,10 +23,10 @@ export const MultipleProductSelection = ({
 
   const onClick = (
     item: ProductForm,
-    selected: string[],
+    selected: string[] | undefined, // Update the type here
     onChange: (value: string[]) => void
   ): void => {
-    if (selected.some((elem) => elem === item.ref)) {
+    if (selected && selected.some((elem) => elem === item.ref)) {
       const selectedUpdated = [...selected];
       const index = selectedUpdated.findIndex((elem) => elem === item.ref);
       if (index !== -1) {
@@ -34,12 +34,12 @@ export const MultipleProductSelection = ({
       }
       onChange(selectedUpdated);
     } else {
-      onChange([...selected, item.ref]);
+      onChange([...(selected || []), item.ref]);
     }
   };
 
   const productChecked = (item: ProductForm, selected: string[]): boolean => {
-    return selected.some((elem) => elem === item.ref);
+    return selected ? selected.some((elem) => elem === item.ref) : false;
   };
 
   // const isDeleted = (item: ProductForm, selected: string[]): boolean => {
