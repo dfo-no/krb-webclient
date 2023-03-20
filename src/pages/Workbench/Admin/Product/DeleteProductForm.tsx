@@ -72,7 +72,7 @@ export default function DeleteProductForm({
   const onSubmit = async (productToDelete: ProductForm): Promise<void> => {
     await deleteProduct({
       projectRef,
-      productRef: productToDelete.ref,
+      productref: productToDelete.ref,
     }).then(() => {
       const alert: Alert = {
         id: uuidv4(),

@@ -42,7 +42,7 @@ export default function EditProductForm({
   async function onSubmit(updatedProduct: ProductForm) {
     await updateProduct({
       projectRef,
-      productRef: updatedProduct.ref,
+      productref: updatedProduct.ref,
       ...updatedProduct,
     }).then(() => {
       const alert: Alert = {

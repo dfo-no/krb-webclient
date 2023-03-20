@@ -380,7 +380,7 @@ class Utils {
 
   static codelistUsedInVariants(
     selectedCodelist: CodelistForm,
-    needs: NeedForm[]
+    selectedProject: IBank
   ): boolean {
     let returnValue = false;
     selectedProject.needs.forEach((need: Parentable<INeed>) => {
