@@ -292,7 +292,7 @@ export const updateProduct = fetcher
   .create();
 
 export const createProduct = fetcher
-  .path('/api/v1/projects/{projectRef}/products/')
+  .path('/api/v1/projects/{projectRef}/products')
   .method('post')
   .create();
 
@@ -320,66 +320,76 @@ export const updateNeed = fetcher
   .create();
 
 export const createRequirement = fetcher
-  .path('/api/v1/projects/{projectRef}/requirements')
+  .path('/api/v1/projects/{projectRef}/needs/{needRef}/requirements')
   .method('post')
   .create();
 
 export const updateRequirement = fetcher
-  .path('/api/v1/projects/{projectRef}/requirements/{requirementRef}')
+  .path(
+    '/api/v1/projects/{projectRef}/needs/{needRef}/requirements/{requirementRef}'
+  )
   .method('put')
   .create();
 
-export const useFindRequirementsForProject = (projectRef: string) => {
+export const useFindRequirementsForProject = (
+  projectRef: string,
+  needRef: string
+) => {
   const [isLoading, setLoading] = useState(false);
   const [requirements, setRequirements] = useState<RequirementForm[]>();
 
   useEffect(() => {
     const findCodelists = fetcher
-      .path('/api/v1/projects/{projectRef}/requirements')
+      .path('/api/v1/projects/{projectRef}/needs/{needRef}/requirements')
       .method('get')
       .create();
 
     setLoading(true);
-    findCodelists({ projectRef: projectRef }).then(async (projectsResponse) => {
+    findCodelists({
+      projectRef: projectRef,
+      needRef: needRef,
+    }).then(async (projectsResponse) => {
       setLoading(false);
       if (projectsResponse) {
         setRequirements(projectsResponse.data);
       }
     });
-  }, [projectRef]);
+  }, [needRef, projectRef]);
 
   return { isLoading, requirements };
 };
 
 export const deleteRequirement = fetcher
-  .path('/api/v1/projects/{projectRef}/requirements/{requirementRef}')
+  .path(
+    '/api/v1/projects/{projectRef}/needs/{needRef}/requirements/{requirementRef}'
+  )
   .method('delete')
   .create();
 
 export const createRequirementVariant = fetcher
   .path(
-    '/api/v1/projects/{projectRef}/requirements/{requirementRef}/requirementvariants'
+    '/api/v1/projects/{projectRef}/needs/{needRef}/requirements/{requirementRef}/requirementvariants'
   )
   .method('post')
   .create();
 
 export const findRequirementVariants = fetcher
   .path(
-    '/api/v1/projects/{projectRef}/requirements/{requirementRef}/requirementvariants'
+    '/api/v1/projects/{projectRef}/needs/{needRef}/requirements/{requirementRef}/requirementvariants'
   )
   .method('get')
   .create();
 
 export const updateRequirementVariant = fetcher
   .path(
-    '/api/v1/projects/{projectRef}/requirements/{requirementRef}/requirementvariants/{requirementVariantRef}'
+    '/api/v1/projects/{projectRef}/needs/{needRef}/requirements/{requirementRef}/requirementvariants/{requirementVariantRef}'
   )
   .method('put')
   .create();
 
 export const deleteRequirementVariant = fetcher
   .path(
-    '/api/v1/projects/{projectRef}/requirements/{requirementRef}/requirementvariants/{requirementVariantRef}'
+    '/api/v1/projects/{projectRef}/needs/{needRef}/requirements/{requirementRef}/requirementvariants/{requirementVariantRef}'
   )
   .method('delete')
   .create();
