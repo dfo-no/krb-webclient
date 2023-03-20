@@ -17,8 +17,7 @@ type Props = {
 export function NeedHeader({ project, need }: Props): React.ReactElement {
   const { needIndex, setDeleteCandidateId } = useSelectState();
 
-  if (!project || needIndex === null) {
-    // TODO: not needed
+  if (!project || !need) {
     return <></>;
   }
 

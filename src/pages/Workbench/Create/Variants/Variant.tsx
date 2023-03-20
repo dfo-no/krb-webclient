@@ -17,13 +17,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import GeneralErrorMessage from '../../../../Form/GeneralErrorMessage';
 import LoaderSpinner from '../../../../common/LoaderSpinner';
-import Nexus from '../../../../Nexus/Nexus';
-// import theme from '../../../../theme';
 import { VariantFormContent } from './VariantFormContent';
-// import { FormIconButton } from '../../../../components/Form/FormIconButton';
-// import { DFOChip } from '../../../../components/DFOChip/DFOChip';
 import { Alert } from '../../../../models/Alert';
-// import { VariantType } from '../../../../Nexus/enums';
 import { useSelectState } from '../SelectContext';
 import { useVariantState } from '../../VariantContext';
 import ErrorSummary from '../../../../Form/ErrorSummary';
@@ -44,7 +39,6 @@ interface Props {
 const Variant = ({ projectRef, needRef, requirementRef, variant }: Props) => {
   const { t } = useTranslation();
   const { addAlert } = AlertsContainer.useContainer();
-  const nexus = Nexus.getInstance();
 
   const { openVariants, setOpenVariants } = useVariantState();
   const { needIndex, setDeleteCandidateId } = useSelectState();

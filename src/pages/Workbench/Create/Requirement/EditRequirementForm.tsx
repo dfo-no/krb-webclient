@@ -45,7 +45,6 @@ function EditRequirementForm({
     resolver: zodResolver(RequirementSchema),
   });
 
-  console.log('reqRef', requirement.ref);
   const onSubmit = async (updatedRequirement: RequirementForm) => {
     await updateRequirement({
       projectRef,

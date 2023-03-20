@@ -21,7 +21,6 @@ export const EditRequirement = ({
   const [isEditOpen, setEditOpen] = useState(false);
   const { setDeleteCandidateId } = useSelectState();
 
-  console.log(needRef);
   const handleOpen = () => {
     setEditOpen(true);
     setDeleteCandidateId('');

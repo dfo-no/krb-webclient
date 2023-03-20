@@ -53,16 +53,16 @@ export const ProjectSchema = z.object({
   ref: z.string().uuid(i18n.t('projectRefNotUuid')),
 });
 
-export const ProductSchema = z.object({
-  title: z.string().min(1, i18n.t('productTitleTooShort')),
-  description: z.string(),
-  ref: z.string().uuid(i18n.t('productRefNotUuid')),
-});
-
 export const NeedSchema = z.object({
   title: z.string().min(1, i18n.t('needTitleTooShort')),
   description: z.string(),
   ref: z.string().uuid(i18n.t('needRefNotUuid')),
+});
+
+export const ProductSchema = z.object({
+  title: z.string().min(1, i18n.t('productTitleTooShort')),
+  description: z.string(),
+  ref: z.string().uuid(i18n.t('productRefNotUuid')),
 });
 
 export const RequirementSchema = z.object({
@@ -73,7 +73,6 @@ export const RequirementSchema = z.object({
 
 export const RequirementVariantFormSchema = z.object({
   ref: z.string().uuid('requirementVariantRefNotUuid'),
-  title: z.string().min(1, i18n.t('requirementVariantTitleTooShort')),
   description: z.string(),
   requirementText: z.string().min(1, i18n.t('requirementVariantTextTooShort')),
   instruction: z
@@ -195,6 +194,75 @@ export const deleteProject = fetcher
   .method('delete')
   .create();
 
+export const updateProduct = fetcher
+  .path('/api/v1/projects/{projectRef}/products/{productRef}')
+  .method('put')
+  .create();
+
+export const findProducts = fetcher
+  .path('/api/v1/projects/{projectRef}/products')
+  .method('get')
+  .create();
+
+export const createProduct = fetcher
+  .path('/api/v1/projects/{projectRef}/products')
+  .method('post')
+  .create();
+
+export const deleteProduct = fetcher
+  .path('/api/v1/projects/{projectRef}/products/{productRef}')
+  .method('delete')
+  .create();
+
+export const useDeleteProduct = (projectRef: string, productRef: string) => {
+  const [deletedProduct, setDeletedProduct] = useState<string>('');
+
+  useEffect(() => {
+    deleteProduct({ projectRef, productRef }).then(async (resp: any) => {
+      if (resp) {
+        setDeletedProduct(resp.data);
+      }
+    });
+  }, [projectRef, productRef]);
+  return { deletedProduct };
+};
+export const useFindCodelists = (projectRef: string) => {
+  const [isLoading, setLoading] = useState(false);
+  const [codelists, setCodelists] = useState<CodelistForm[]>();
+
+  useEffect(() => {
+    const findCodelists = fetcher
+      .path('/api/v1/projects/{projectRef}/codelists')
+      .method('get')
+      .create();
+
+    setLoading(true);
+    findCodelists({ projectRef }).then(async (projectsResponse) => {
+      setLoading(false);
+      if (projectsResponse) {
+        setCodelists(projectsResponse.data);
+      }
+    });
+  }, [projectRef]);
+
+  return { isLoading, codelists };
+};
+
+export const createCodelist = fetcher
+  .path('/api/v1/projects/{projectRef}/codelists')
+  .method('post')
+  .create();
+
+export const updateCodelist = fetcher
+  .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}')
+  .method('put')
+  .create();
+
+export const deleteCodelist = fetcher
+  .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}')
+  .method('delete')
+  .create();
+
 export const createNeed = fetcher
   .path('/api/v1/projects/{projectRef}/needs')
   .method('post')
@@ -213,18 +281,18 @@ export const useNeeds = (ref: string) => {
   };
 };
 
+const findNeeds = fetcher
+  .path('/api/v1/projects/{projectRef}/needs')
+  .method('get')
+  .create();
+
 export const useFindNeeds = (projectRef: string) => {
   const [isLoading, setLoading] = useState(false);
   const [needs, setNeeds] = useState<NeedForm[]>();
 
   useEffect(() => {
-    const findCodelists = fetcher
-      .path('/api/v1/projects/{projectRef}/needs')
-      .method('get')
-      .create();
-
     setLoading(true);
-    findCodelists({ projectRef }).then(async (projectsResponse) => {
+    findNeeds({ projectRef }).then(async (projectsResponse) => {
       setLoading(false);
       if (projectsResponse) {
         setNeeds(projectsResponse.data);
@@ -247,14 +315,10 @@ export const createRequirement = fetcher
 
 export const updateRequirement = fetcher
   .path(
-    '/api/v1/projects/{projectRef}/needs/{needRef}/requirements/{requirementRef}')
+    '/api/v1/projects/{projectRef}/needs/{needRef}/requirements/{requirementRef}'
+  )
   .method('put')
   .create();
-
-// export const findRequirements = fetcher
-//   .path('/api/v1/projects/{projectRef}/needs/{needRef}/requirements')
-//   .method('get')
-//   .create();
 
 export const useFindRequirements = (projectRef: string, needRef: string) => {
   const { data, error, isLoading } = useSWR(
@@ -304,39 +368,6 @@ export const deleteRequirementVariant = fetcher
   .method('delete')
   .create();
 
-export const updateProduct = fetcher
-  .path('/api/v1/projects/{projectRef}/products/{productref}')
-  .method('put')
-  .create();
-
-export const deleteProduct = fetcher
-  .path('/api/v1/projects/{projectRef}/products/{productref}')
-  .method('delete')
-  .create();
-
-export const useDeleteProduct = (projectRef: string, productref: string) => {
-  const [deletedProduct, setDeletedProduct] = useState<string>('');
-
-  useEffect(() => {
-    deleteProduct({ projectRef, productref }).then(async (resp: any) => {
-      if (resp) {
-        setDeletedProduct(resp.data);
-      }
-    });
-  }, [projectRef, productref]);
-  return { deletedProduct };
-};
-
-export const createProduct = fetcher
-  .path('/api/v1/projects/{projectRef}/products')
-  .method('post')
-  .create();
-
-export const findProducts = fetcher
-  .path('/api/v1/projects/{projectRef}/products')
-  .method('get')
-  .create();
-
 export const useFindProducts = (ref: string) => {
   const { data, error, isLoading } = useSWR(
     `/api/v1/projects/${ref}/products`,
@@ -354,6 +385,7 @@ export const findPublications = fetcher
   .path('/api/v1/projects/{projectref}/publications')
   .method('get')
   .create();
+
 export class Project implements Base<ProjectForm> {
   title: string;
 
