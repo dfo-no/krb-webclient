@@ -2,53 +2,56 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
+import { zodResolver } from '@hookform/resolvers/zod/dist/zod';
 
 import { FormButtons } from '../../../../components/Form/FormButtons';
-import Nexus from '../../../../Nexus/Nexus';
-import ProductService from '../../../../Nexus/services/ProductService';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { FormItemBox } from '../../../../components/Form/FormItemBox';
 import { Alert } from '../../../../models/Alert';
-import { IProduct } from '../../../../Nexus/entities/IProduct';
 import { IRouteProjectParams } from '../../../../models/IRouteProjectParams';
-import { ModelType } from '../../../../Nexus/enums';
-import { Parentable } from '../../../../models/Parentable';
 import { useFormStyles } from '../../../../components/Form/FormStyles';
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
+import { RefAndParentable } from '../../../../common/Utils';
+import {
+  createProduct,
+  ProductForm,
+  ProductSchema,
+} from '../../../../api/nexus2';
 
 interface Props {
+  projectRef: string;
+
   handleClose: () => void;
 }
 
 export default function NewProductForm({
+  projectRef,
   handleClose,
 }: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
   const { t } = useTranslation();
-  const nexus = Nexus.getInstance();
   const formStyles = useFormStyles();
-  const { projectId } = useParams<IRouteProjectParams>();
-  const { addProduct } = useProjectMutations();
 
-  const defaultValues: Parentable<IProduct> =
-    ProductService.defaultProduct(projectId);
-
-  const methods = useForm<Parentable<IProduct>>({
-    resolver: nexus.resolverService.postResolver(ModelType.product),
-    defaultValues,
+  const methods = useForm<ProductForm>({
+    defaultValues: {
+      ref: uuidv4(),
+      title: '',
+      description: '',
+    },
+    resolver: zodResolver(ProductSchema),
   });
 
-  async function onSubmit(post: Parentable<IProduct>) {
-    const newProduct = nexus.productService.createProductWithId(post);
-    await addProduct(newProduct).then(() => {
+  async function onSubmit(newProduct: ProductForm) {
+    await createProduct({
+      projectRef,
+      ...newProduct,
+    }).then(() => {
       const alert: Alert = {
         id: uuidv4(),
         style: 'success',
         text: 'Successfully created product',
       };
       addAlert(alert);
-      methods.reset();
       handleClose();
     });
   }
