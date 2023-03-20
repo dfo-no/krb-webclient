@@ -8,15 +8,14 @@ import {
   findPublications,
   ProjectForm,
   PublicationForm,
+  ProjectSchema,
 } from '../../../api/nexus2';
-import Nexus from '../../../Nexus/Nexus';
 import UuidService from '../../../Nexus/services/UuidService';
 import { DeleteFrame } from '../../../components/DeleteFrame/DeleteFrame';
 import { Alert } from '../../../models/Alert';
 import { useEditableState } from '../../../components/EditableContext/EditableContext';
 import { AlertsContainer } from '../../../components/Alert/AlertContext';
 import ErrorSummary from '../../../Form/ErrorSummary';
-import { ProjectSchema } from '../../../api/nexus2';
 
 interface Props {
   children: ReactElement;
@@ -31,7 +30,6 @@ export function DeleteProjectForm({
 }: Props): ReactElement {
   const { t } = useTranslation();
   const { addAlert } = AlertsContainer.useContainer();
-  const nexus = Nexus.getInstance();
   const { deleteCandidateId } = useEditableState();
   const uuidService = new UuidService();
   const [publications, setPublications] = useState<PublicationForm[]>([]);

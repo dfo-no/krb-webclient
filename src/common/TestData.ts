@@ -218,22 +218,18 @@ export const productsTestData = [
 
 export const codelistsTestData = [
   {
-    id: '7aa1c0e8-d8f0-45f5-9bfc-3584ef3ba052',
+    ref: '7aa1c0e8-d8f0-45f5-9bfc-3584ef3ba052',
     title: 'A Codelist',
     description: '',
     codes: [],
-    type: ModelType.codelist,
-    sourceOriginal: null,
-    sourceRel: null,
+    serializedCodes: '',
   },
   {
-    id: 'c71f3e4a-baf9-4625-969f-58d206f9794b',
+    ref: 'c71f3e4a-baf9-4625-969f-58d206f9794b',
     title: 'B Codelist',
     description: '',
     codes: [],
-    type: ModelType.codelist,
-    sourceOriginal: null,
-    sourceRel: null,
+    serializedCodes: '',
   },
 ];
 

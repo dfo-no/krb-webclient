@@ -3,17 +3,17 @@ import { v4 as uuidv4 } from 'uuid';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Box, Typography } from '@mui/material/';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import { AlertsContainer } from '../../../../components/Alert/AlertContext';
 import { DeleteFrame } from '../../../../components/DeleteFrame/DeleteFrame';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { FormIconButton } from '../../../../components/Form/FormIconButton';
 import { Alert } from '../../../../models/Alert';
-import { CodeForm, deleteCode } from '../../../../api/nexus2';
-import { ModelType } from '../../../../Nexus/enums';
-import Nexus from '../../../../Nexus/Nexus';
+import { CodeForm, codelistService } from '../../../../api/nexus2';
 import theme from '../../../../theme';
 import { usePanelStyles } from './CodelistStyles';
+import { CodeFormSchema } from '../../../../api/Zod';
 
 interface Props {
   projectRef: string;
@@ -35,29 +35,40 @@ export function DisplayCode({
   const classes = usePanelStyles();
   const { setCurrentlyEditedItemId, setDeleteCandidateId } = useEditableState();
   const { addAlert } = AlertsContainer.useContainer();
-  const nexus = Nexus.getInstance();
   const { deleteCandidateId } = useEditableState();
+  const { codelist: loadedCodelist } = codelistService.useFindOneCodelist(
+    projectRef,
+    codelistRef
+  );
 
   const methods = useForm<CodeForm>({
     defaultValues: code,
-    resolver: nexus.resolverService.resolver(ModelType.code),
+    resolver: zodResolver(CodeFormSchema),
   });
 
   const onSubmit = (codeToDelete: CodeForm): void => {
-    deleteCode({
-      projectRef,
-      codelistRef,
-      codeRef: codeToDelete.ref,
-      ...codeToDelete,
-    }).then(() => {
-      const alert: Alert = {
-        id: uuidv4(),
-        style: 'success',
-        text: 'Successfully deleted code',
-      };
-      addAlert(alert);
-      handleDelete(codeToDelete);
-    });
+    const updatedCodeList = loadedCodelist;
+    if (!!updatedCodeList?.codes) {
+      const codesIndex = updatedCodeList.codes.findIndex(
+        (item) => item.ref === codeToDelete.ref
+      );
+      updatedCodeList.codes.splice(codesIndex, 1);
+      codelistService
+        .updateCodelist({
+          projectRef,
+          codelistRef: codelistRef,
+          ...updatedCodeList,
+        })
+        .then(() => {
+          const alert: Alert = {
+            id: uuidv4(),
+            style: 'success',
+            text: 'Successfully deleted code',
+          };
+          addAlert(alert);
+          handleDelete(codeToDelete);
+        });
+    }
   };
 
   return (

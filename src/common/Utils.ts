@@ -16,7 +16,7 @@ import { QuestionVariant } from '../Nexus/enums';
 import { DiscountValuePair } from '../Nexus/entities/ISliderQuestion';
 import { TimeDiscountPair } from '../Nexus/entities/ITimeQuestion';
 import { DateDiscountPair } from '../Nexus/entities/IPeriodDateQuestion';
-import {CodelistForm, NeedForm, ProductForm, ProjectForm} from '../api/nexus2';
+import { CodelistForm } from '../api/nexus2';
 
 // TODO: Not sure this type belongs here
 export type RefAndParentable<T> = T & { ref: string } & ParentableKRB858;

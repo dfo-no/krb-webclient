@@ -7,18 +7,20 @@ import { DisplayCode } from './DisplayCode';
 import { EditCodeForm } from './EditCodeForm';
 import NestableHierarcy from '../../../../components/NestableHierarchy/NestableHierarcyKRB858';
 import NewCodeForm from './NewCodeForm';
-import useProjectMutations from '../../../../store/api/ProjectMutations';
 import {
   addElementToList,
   RefAndParentable,
   removeElementFromList,
   replaceElementInList,
 } from '../../../../common/Utils';
-import { CodeForm, CodelistForm, updateCodelist } from '../../../../api/nexus2';
+import {
+  CodeForm,
+  CodelistForm,
+  codelistService,
+} from '../../../../api/nexus2';
 import { ScrollableContainer } from '../../../../components/ScrollableContainer/ScrollableContainer';
 import { useEditableState } from '../../../../components/EditableContext/EditableContext';
 import { usePanelStyles } from './CodelistStyles';
-import { ParentableKRB858 } from '../../../../models/Parentable';
 
 type Props = {
   projectRef: string;
@@ -41,30 +43,35 @@ export const CodePanel = ({
     deleteCandidateId,
     setDeleteCandidateId,
   } = useEditableState();
-  const [codes, setCodes] = useState<CodeForm[] | null | undefined>([]);
-
-  // const { editCodes } = useProjectMutations();
+  const [codesWithParent, setCodesWithParent] = useState<
+    RefAndParentable<CodeForm>[]
+  >([]);
 
   useEffect(() => {
     if (selectedCodelist) {
       setCurrentlyEditedItemId('');
       setCreating(false);
-      setCodes(selectedCodelist.codes);
+      if (!!selectedCodelist?.codes) {
+        setCodesWithParent(
+          selectedCodelist.codes.map((code) => ({ ...code, parent: '' }))
+        );
+      }
     }
-  }, [selectedCodelist, setCurrentlyEditedItemId, setCreating]);
+  }, [
+    selectedCodelist,
+    setCurrentlyEditedItemId,
+    setCreating,
+    setSelectedCodelist,
+  ]);
 
-  const updateCodesArrangement = (newCodes: CodeForm[]) => {
-    setCodes(newCodes);
-
+  const updateCodesArrangement = () => {
     const updateToSendToBackend = {
       projectRef,
       codelistRef: selectedCodelist.ref,
       ...selectedCodelist,
     };
 
-    updateToSendToBackend.codes = newCodes;
-
-    updateCodelist(updateToSendToBackend);
+    codelistService.updateCodelist(updateToSendToBackend);
   };
 
   const isEditing = () => {
@@ -148,7 +155,7 @@ export const CodePanel = ({
       <ScrollableContainer>
         <NestableHierarcy
           className={classes.nestableCustom}
-          inputlist={codes || []}
+          inputlist={codesWithParent || []}
           renderItem={renderItem}
           dispatchfunc={updateCodesArrangement}
           depth={1}

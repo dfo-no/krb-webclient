@@ -131,7 +131,7 @@ export function searchCodelist(
       return true;
     }
 
-    return codelist.codes.some((code) => {
+    return codelist?.codes?.some((code) => {
       return inTitleOrDescription(code, searchString);
     });
   });

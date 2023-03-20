@@ -65,6 +65,8 @@ i18n
             'Requirement variant requirement text too short',
           requirementVariantInstructionTooShort:
             'Requirement variant instruction too short',
+          codelistTitleTooShort: 'Codelist title too short',
+          codelistRefNotUuid: 'Codelist ref not UUID',
         },
       },
       // add translations for other languages here

@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import Nexus from '../../../../Nexus/Nexus';
 import theme from '../../../../theme';
 import VerticalTextCtrl from '../../../../FormProvider/VerticalTextCtrl';
 import { Alert } from '../../../../models/Alert';
@@ -31,7 +30,6 @@ function EditNeedForm({
   handleCancel,
 }: Props): React.ReactElement {
   const { addAlert } = AlertsContainer.useContainer();
-  const nexus = Nexus.getInstance();
   const { t } = useTranslation();
 
   const methods = useForm<NeedForm>({

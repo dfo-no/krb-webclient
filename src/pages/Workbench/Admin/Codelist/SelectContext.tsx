@@ -8,10 +8,15 @@ const useSelectContext = () => {
     null
   );
   const [allCodelists, setAllCodelists] = useState<CodelistForm[]>([]);
+  const [filteredCodelists, setFilteredCodelists] = useState<CodelistForm[]>(
+    []
+  );
 
   return {
     selectedCodelist,
     setSelectedCodelist,
+    filteredCodelists,
+    setFilteredCodelists,
     allCodelists,
     setAllCodelists,
   };

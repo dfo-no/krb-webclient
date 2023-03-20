@@ -1,28 +1,23 @@
 import { Fetcher } from 'openapi-typescript-fetch';
-import { SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createContainer } from 'unstated-next';
 import useSWR from 'swr';
 // import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
-import { useParams } from 'react-router-dom';
 
 import { components, paths } from './generated';
 import i18n from '../i18n';
-import { IProduct } from '../Nexus/entities/IProduct';
-import { RefAndParentable } from '../common/Utils';
-import { IRouteProjectParams } from '../models/IRouteProjectParams';
-import { IRouteWorkbenchParams } from '../models/IRouteWorkbenchParams';
-import {t} from "i18next";
+import CodelistService from '../Nexus/services/CodelistService';
 
 export const baseUrl = 'https://krb-backend-api.azurewebsites.net';
 // export const baseUrl = 'http://localhost:1080';
-//export const baseUrl = 'http://localhost:8080'; // Exported for use in tests
+// export const baseUrl = 'http://localhost:8080'; // Exported for use in tests
 
 // export const setRefOnItem = <T extends { ref: string }>(item: T) => {
 //   return { ...item, ref: uuidv4() };
 // };
 
-const fetcher = Fetcher.for<paths>();
+export const fetcher = Fetcher.for<paths>();
 
 fetcher.configure({
   baseUrl: baseUrl,
@@ -38,6 +33,8 @@ fetcher.configure({
 type FetcherArg = RequestInfo | URL;
 const swrFetcher = (...args: FetcherArg[]) =>
   fetch(baseUrl + args[0]).then((res) => res.json());
+
+export const codelistService = new CodelistService();
 
 export type ProjectForm = components['schemas']['ProjectForm'];
 export type CodelistForm = components['schemas']['CodelistForm'];
@@ -160,8 +157,6 @@ export const useProject = (ref: string) => {
     swrFetcher
   );
 
-  // mutated
-
   return {
     project: data,
     isLoading,
@@ -237,23 +232,6 @@ export const deleteCodelist = fetcher
   .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}')
   .method('delete')
   .create();
-
-// TODO remove
-
-// export const createCode = fetcher
-//   .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes')
-//   .method('post')
-//   .create();
-//
-// export const updateCode = fetcher
-//   .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes/{codeRef}')
-//   .method('put')
-//   .create();
-//
-// export const deleteCode = fetcher
-//   .path('/api/v1/projects/{projectRef}/codelists/{codelistRef}/codes/{codeRef}')
-//   .method('delete')
-//   .create();
 
 export const createNeed = fetcher
   .path('/api/v1/projects/{projectRef}/needs')
@@ -473,6 +451,11 @@ export const deleteRequirementVariant = fetcher
     '/api/v1/projects/{projectRef}/requirements/{requirementRef}/requirementvariants/{requirementVariantRef}'
   )
   .method('delete')
+  .create();
+
+export const findProducts = fetcher
+  .path('/api/v1/projects/{projectRef}/products')
+  .method('get')
   .create();
 
 export const findPublications = fetcher
