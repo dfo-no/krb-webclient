@@ -53,6 +53,12 @@ export const ProjectSchema = z.object({
   ref: z.string().uuid(i18n.t('projectRefNotUuid')),
 });
 
+export const ProductSchema = z.object({
+  title: z.string().min(1, i18n.t('productTitleTooShort')),
+  description: z.string(),
+  ref: z.string().uuid(i18n.t('productRefNotUuid')),
+});
+
 export const NeedSchema = z.object({
   title: z.string().min(1, i18n.t('needTitleTooShort')),
   description: z.string(),
@@ -300,10 +306,51 @@ export const deleteRequirementVariant = fetcher
   .method('delete')
   .create();
 
+export const updateProduct = fetcher
+  .path('/api/v1/projects/{projectRef}/products/{productref}')
+  .method('put')
+  .create();
+
+export const deleteProduct = fetcher
+  .path('/api/v1/projects/{projectRef}/products/{productref}')
+  .method('delete')
+  .create();
+
+export const useDeleteProduct = (projectRef: string, productref: string) => {
+  const [deletedProduct, setDeletedProduct] = useState<string>('');
+
+  useEffect(() => {
+    deleteProduct({ projectRef, productref }).then(async (resp: any) => {
+      if (resp) {
+        setDeletedProduct(resp.data);
+      }
+    });
+  }, [projectRef, productref]);
+  return { deletedProduct };
+};
+
+export const createProduct = fetcher
+  .path('/api/v1/projects/{projectRef}/products')
+  .method('post')
+  .create();
+
 export const findProducts = fetcher
   .path('/api/v1/projects/{projectRef}/products')
   .method('get')
   .create();
+
+export const useFindProducts = (ref: string) => {
+  const { data, error, isLoading } = useSWR(
+    `/api/v1/projects/${ref}/products`,
+    swrFetcher
+  );
+
+  return {
+    products: data,
+    isLoading,
+    isError: error,
+  };
+};
 
 export const findPublications = fetcher
   .path('/api/v1/projects/{projectref}/publications')

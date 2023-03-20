@@ -6,13 +6,13 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import theme from '../../theme';
-import NestableHierarcy from './NestableHierarcy';
-import { Parentable } from '../../models/Parentable';
+import NestableHierarcy from './NestableHierarcyKRB858';
 import { useEditableState } from '../EditableContext/EditableContext';
-import { IBaseModelWithTitleAndDesc } from '../../models/IBaseModelWithTitleAndDesc';
 import { FormContainerBox } from '../Form/FormContainerBox';
 import { ScrollableContainer } from '../ScrollableContainer/ScrollableContainer';
 import { FormIconButton } from '../Form/FormIconButton';
+import { RefAndParentable } from '../../common/Utils';
+import { ProductForm } from '../../api/nexus2';
 
 const useStyles = makeStyles({
   nestableItemCustom: {
@@ -74,20 +74,20 @@ const useStyles = makeStyles({
   },
 });
 
-interface IProps<T extends IBaseModelWithTitleAndDesc> {
-  dispatchfunc: (items: Parentable<T>[]) => void;
-  inputlist: Parentable<T>[];
+interface IProps<T extends RefAndParentable<ProductForm>> {
+  dispatchfunc: (items: RefAndParentable<T>[]) => void;
+  inputlist: RefAndParentable<T>[];
   CreateComponent: React.ReactElement;
-  EditComponent: (item: Parentable<T>) => React.ReactElement;
+  EditComponent: (item: RefAndParentable<T>) => React.ReactElement;
   DeleteComponent?: (
-    item: Parentable<T>,
+    item: RefAndParentable<T>,
     children: React.ReactElement
   ) => React.ReactElement;
   depth: number;
 }
 
 const NestableHierarcyEditableComponents = <
-  T extends IBaseModelWithTitleAndDesc
+  T extends RefAndParentable<ProductForm>
 >({
   dispatchfunc,
   inputlist,
@@ -107,11 +107,14 @@ const NestableHierarcyEditableComponents = <
   const isEditing = () => {
     return currentlyEditedItemId !== '';
   };
-  const isEditingItem = (item: Parentable<T>) => {
-    return item && item.id === currentlyEditedItemId;
+  const isEditingItem = (item: RefAndParentable<T>) => {
+    return item && item.ref === currentlyEditedItemId;
   };
 
-  const renderTextBox = (item: Parentable<T>, dragHandle: React.ReactNode) => {
+  const renderTextBox = (
+    item: RefAndParentable<T>,
+    dragHandle: React.ReactNode
+  ) => {
     return (
       <Box className={classes.nestableItemCustom}>
         {!isEditing() && (
@@ -123,13 +126,13 @@ const NestableHierarcyEditableComponents = <
         <Box className={classes.textItemDescription}>
           <Typography variant="sm">{item.description}</Typography>
         </Box>
-        <FormIconButton onClick={() => setCurrentlyEditedItemId(item.id)}>
+        <FormIconButton onClick={() => setCurrentlyEditedItemId(item.ref)}>
           <EditOutlinedIcon />
         </FormIconButton>
         {DeleteComponent && (
           <FormIconButton
             hoverColor={theme.palette.errorRed.main}
-            onClick={() => setDeleteCandidateId(item.id)}
+            onClick={() => setDeleteCandidateId(item.ref)}
           >
             <DeleteIcon />
           </FormIconButton>
@@ -138,7 +141,10 @@ const NestableHierarcyEditableComponents = <
     );
   };
 
-  const renderItem = (item: Parentable<T>, dragHandle: React.ReactNode) => {
+  const renderItem = (
+    item: RefAndParentable<T>,
+    dragHandle: React.ReactNode
+  ) => {
     if (isEditingItem(item)) {
       return <FormContainerBox>{EditComponent(item)}</FormContainerBox>;
     }

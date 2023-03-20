@@ -926,7 +926,7 @@ export type components = {
       codes?: (components["schemas"]["Code"])[] | null;
     };
     /**
-     * Format: date-time 
+     * Format: date-time
      * @example "2022-03-10T12:15:50.000Z"
      */
     LocalDateTime: string;

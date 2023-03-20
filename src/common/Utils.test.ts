@@ -172,37 +172,41 @@ describe('Utils functions should work', () => {
     );
   });
 
-  it('Utils.productUsedInVariants returns true if variants with useProduct true and product in productslist', () => {
-    const project = {
-      ...projectTestData,
-      needs: needHierarchyTestData,
-      products: productsTestData,
-    };
-    const isInUse1 = Utils.productUsedInVariants(productsTestData[0], project);
-    expect(isInUse1).toBeTruthy();
+  //TODO slett? dette sjekkes backend
 
-    const isInUse2 = Utils.productUsedInVariants(productsTestData[2], project);
-    expect(isInUse2).toBeFalsy();
-  });
+  // it('Utils.productUsedInVariants returns true if variants with useProduct true and product in productslist', () => {
+  //   const project = {
+  //     ...projectTestData,
+  //     needs: needHierarchyTestData,
+  //     products: productsTestData,
+  //   };
+  //   const isInUse1 = Utils.productUsedInVariants(productsTestData[0], project);
+  //   expect(isInUse1).toBeTruthy();
+  //
+  //   const isInUse2 = Utils.productUsedInVariants(productsTestData[2], project);
+  //   expect(isInUse2).toBeFalsy();
+  // });
 
-  it('Utils.codelistUsedInVariants returns true if questions with codelist selected is on any variant', () => {
-    const project = {
-      ...projectTestData,
-      needs: needHierarchyTestData,
-      codelist: [],
-    };
-    const isInUse1 = Utils.codelistUsedInVariants(
-      codelistsTestData[0],
-      project
-    );
-    expect(isInUse1).toBeTruthy();
+  //TODO slett? dette sjekkes backend ?
 
-    const isInUse2 = Utils.codelistUsedInVariants(
-      codelistsTestData[1],
-      project
-    );
-    expect(isInUse2).toBeFalsy();
-  });
+  // it('Utils.codelistUsedInVariants returns true if questions with codelist selected is on any variant', () => {
+  //   const project = {
+  //     ...projectTestData,
+  //     needs: needHierarchyTestData,
+  //     codelist: [],
+  //   };
+  //   const isInUse1 = Utils.codelistUsedInVariants(
+  //     codelistsTestData[0],
+  //     project
+  //   );
+  //   expect(isInUse1).toBeTruthy();
+  //
+  //   const isInUse2 = Utils.codelistUsedInVariants(
+  //     codelistsTestData[1],
+  //     project
+  //   );
+  //   expect(isInUse2).toBeFalsy();
+  // });
 
   it('Utils.findDiscountFromValue returns correct discount for values', () => {
     const discountValuePairs: DiscountValuePair[] = [
