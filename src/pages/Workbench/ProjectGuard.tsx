@@ -36,7 +36,7 @@ export default function ProjectGuard(): React.ReactElement {
           <Create />
         </SelectProvider>
       </Route>
-      <Route path={`${WORKBENCH}/:projectId/preview`}>
+      <Route path={`/${WORKBENCH}/:projectId/preview`}>
         <PreviewProvider>
           <Preview />
         </PreviewProvider>
